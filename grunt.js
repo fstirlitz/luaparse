@@ -32,7 +32,7 @@ module.exports = function (grunt) {
       }
     },
     mocha: {
-      index: ['test/client/*.html']
+      index: ['test/*.html']
     },
     lint: {
       beforeconcat: ['grunt.js'],
