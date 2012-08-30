@@ -75,7 +75,7 @@ module.exports = function (grunt) {
         globals: { node: true, console: true, require: true, process: true }
       },
       test: {
-        globals: { require: true, describe: true, it: true, before: true, beforeEach: true, afterEach: true }
+        globals: { require: true, describe: true, it: true, before: true, beforeEach: true, afterEach: true, expect: true }
       }
     },
     uglify: {}
