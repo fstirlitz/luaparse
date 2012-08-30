@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       index: ['test/client/*.html']
     },
     lint: {
-      beforeconcat: ['grunt.js', 'src/**/*.js'],
+      beforeconcat: ['grunt.js'],
       afterconcat: ['<config.concat.dest>'],
       bin: 'bin/*',
       test: 'test/*.js'
