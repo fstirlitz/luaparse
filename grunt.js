@@ -1,4 +1,4 @@
-/* jslint node:true */
+/* global node:true */
 
 module.exports = function (grunt) {
   var task = grunt.task;
@@ -35,7 +35,10 @@ module.exports = function (grunt) {
       index: ['test/client/*.html']
     },
     lint: {
-      files: ['grunt.js', 'src/**/*.js']
+      beforeconcat: ['grunt.js', 'src/**/*.js'],
+      afterconcat: ['<config.concat.dest>'],
+      bin: 'bin/*',
+      test: 'test/*.js'
     },
     watch: {
       files: '<config:lint.files>',
@@ -67,6 +70,12 @@ module.exports = function (grunt) {
         exports: true,
         module: false,
         define: true
+      },
+      bin: {
+        globals: { node: true, console: true, require: true, process: true }
+      },
+      test: {
+        globals: { require: true, describe: true, it: true, before: true, beforeEach: true, afterEach: true }
       }
     },
     uglify: {}

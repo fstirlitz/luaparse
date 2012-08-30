@@ -1,5 +1,6 @@
 // AMD & CommonJS compliance.
 (function (name, definition) {
+
   'use strict';
 
   var exported = definition();
@@ -89,4 +90,4 @@
   return exports;
 }));
 
-/* vim: set sw=2 ts=2 et tw=80 */
+/* vim: set sw=2 ts=2 et tw=80 : */
