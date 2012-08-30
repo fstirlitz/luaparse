@@ -22,6 +22,8 @@
   "dependencies": {},
   "devDependencies": {
     "mocha": "*",
-    "grunt-mocha": "*"
+    "grunt-mocha": "*",
+    "expect.js": "*",
+    "serve": "*",
   }
 }
