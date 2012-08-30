@@ -39,8 +39,7 @@ module.exports = function (grunt) {
     lint: {
       beforeconcat: ['grunt.js'],
       afterconcat: ['<config.concat.dest>'],
-      bin: 'bin/*',
-      test: 'test/*.js'
+      bin: 'bin/*'
     },
     watch: {
       files: '<config:lint.files>',
@@ -75,9 +74,6 @@ module.exports = function (grunt) {
       },
       bin: {
         globals: { node: true, console: true, require: true, process: true }
-      },
-      test: {
-        globals: { require: true, describe: true, it: true, before: true, beforeEach: true, afterEach: true, expect: true }
       }
     },
     uglify: {}

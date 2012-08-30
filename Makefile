@@ -17,7 +17,7 @@ test-unit:
 
 test-browser:
 	@$(BROWSER) http://localhost:3000 &
-	@./node_modules/.bin/serve ./test
+	@./node_modules/.bin/serve .
 
 test-md:
 	@./node_modules/.bin/mocha \

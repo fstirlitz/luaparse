@@ -7,7 +7,7 @@
 
   // AMD
   if (typeof define === 'function' && define.amd) {
-    define(exported);
+    define(name, exported);
   // CommonJS
   } else if (typeof exports !== 'undefined') {
     exports[name] = exported;

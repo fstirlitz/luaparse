@@ -1,4 +1,4 @@
-var exports
+var exports = {}
   , REGEXP
   , ERROR
   , slice = Array.prototype.slice;
@@ -47,9 +47,7 @@ function isKeyword(id) {
       keyword = (id === 'function');
       break;
   }
-  if (keyword) {
-    return true;
-  }
+  return keyword;
   // We make room here for reserved words, engine differences etc.
 }
 
@@ -63,7 +61,7 @@ function isPunctuator(id) {
 // Boolean Literals
 // Numeric Literals
 function isDecDigit(char) {
-  return ~'0123456789'.indexOf(char);
+  return '0123456789'.indexOf(char) >= 0;
 }
 function isHexDigit(char) {
   return REGEXP.hexDigit.test(char);
@@ -104,4 +102,5 @@ REGEXP = {
     punctuator: /^(\+|\-|\*|\/|%|\^|#|==|~=|<=|>=|<|>|=|\(|\)|\{|\}|\[|\]|::|;|:|,|\.|\.\.|\.\.\.)$/
   , hexDigit: /^[0-9a-fA-F]$/
 };
+
 /* vim: set sw=2 ts=2 et tw=80 : */
