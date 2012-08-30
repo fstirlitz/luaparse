@@ -62,6 +62,14 @@
   // String Literals
   // Regular Expression Literals
 
+  function sprintf(format) {
+    var args = slice.call(arguments, 1);
+    format.replace(/%(\d)/g, function (match, index) {
+      return args[index] || '';
+    });
+    return format;
+  }
+
   exports.parse = function (code, options) {
     // @TODO figure out options, but we probably want them.
 
