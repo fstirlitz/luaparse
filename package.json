@@ -1,0 +1,27 @@
+{
+  "name": "luaparse",
+  "description": "A Lua Parser in JS",
+  "version": "0.0.1",
+  "homepage": "https://github.com/oxyc/luaparse",
+  "author": {
+    "name": "Oskar Schöldström",
+    "email": "public@oxy.fi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oxyc/luaparse.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/oxyc/luaparse/blob/master/LICENSE"
+    }
+  ],
+  "main" : "./dist/luaparse",
+  "bin": { "luaparse" : "./bin/luaparse" },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "grunt-mocha": "*"
+  }
+}

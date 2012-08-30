@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var fs = require('fs')
+  , luaparse = require('./luaparse')
+  , files = process.argv.splice(2);
+
+if (files.length === 0) {
+  console.log("Usage:\n\tluaparse [file]...");
+  process.exit(1);
+}
+
+files.forEach(function(file) {
+  var content = fs.readFileSync(file, 'utf-8');
+  console.log(JSON.stringify(luaparse.parse(content)));
+});
+
+/* vim: set sw=2 ts=2 et tw=80 ft=javascript */
