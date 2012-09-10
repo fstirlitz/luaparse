@@ -4,20 +4,8 @@ REPORTER=dot
 
 all: grunt
 
-test: test-unit
-
 grunt:
 	@grunt
-
-test-unit:
-	@./node_modules/.bin/mocha \
-		--reporter $(REPORTER)
-		$(MOCHA_OPTS)
-
-
-test-browser:
-	@$(BROWSER) http://localhost:3000 &
-	@./node_modules/.bin/serve .
 
 test-md:
 	@./node_modules/.bin/mocha \
@@ -35,4 +23,4 @@ docs: test-md $(patsubst %.md,%.html,$(wildcard docs/*.md))
 clean:
 	@rm -f dist/* docs/*.html docs/*.1
 
-.PHONY: test docs
+.PHONY: docs

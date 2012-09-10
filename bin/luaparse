@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-var fs = require('fs')
-  , luaparse = require('./luaparse')
-  , files = process.argv.splice(2);
+var fs = require('fs'),
+  luaparse = require('./luaparse'),
+  files = process.argv.splice(2);
 
 if (files.length === 0) {
   console.log("Usage:\n\tluaparse [file]...");

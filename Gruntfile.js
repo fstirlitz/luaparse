@@ -1,9 +1,8 @@
-/* global node:true */
-
 module.exports = function (grunt) {
-  var task = grunt.task;
+  'use strict';
 
   grunt.initConfig({
+    // Meta
     pkg: "<json:package.json>",
     meta: {
       banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
@@ -13,35 +12,42 @@ module.exports = function (grunt) {
         ' Licensed MIT\n' +
         ' */'
     },
-    test: {
-      files: ['test/**/*.js']
-    },
+
+    // Build
+    staging: 'temp',
+    output: 'dist',
+    mkdirs: { staging: 'app/' },
+
+    // Minification
     concat: {
       dist: {
         src: [
-          '<banner:meta.banner>',
-          'src/luaparse.js',
+          '<config:meta.banner>',
+          'src/luaparse.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
     min: {
       dist: {
-        src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
+        src: ['<config:meta.banner>', '<config:concat.dist.dest>'],
         dest: 'dist/<%= pkg.name %>.min.js'
       }
+    },
+
+    // Tests
+    test: {
+      files: ['test/**/*.js']
     },
     mocha: {
       index: ['test/*.html']
     },
+
+
+    // Linting
     lint: {
-      beforeconcat: ['grunt.js'],
-      afterconcat: ['<config.concat.dest>'],
-      bin: 'bin/*'
-    },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'lint '
+      beforeconcat: ['Gruntfile.js', 'bin/*'],
+      afterconcat: ['<config.concat.dest>']
     },
     jshint: {
       options: {
@@ -69,16 +75,15 @@ module.exports = function (grunt) {
         exports: true,
         module: false,
         define: true
-      },
-      bin: {
-        globals: { node: true, console: true, require: true, process: true }
       }
     },
-    uglify: {}
+    watch: {}
   });
 
-  grunt.loadNpmTasks('grunt-mocha');
+  grunt.registerTask('test', 'mocha');
+  grunt.registerTask('default', 'concat min lint');
 
-  task.registerTask('test', 'mocha');
-  task.registerTask('default', 'lint concat min');
+  // Override what yeoman provides
+  grunt.registerTask('build', 'concat min lint');
+
 };

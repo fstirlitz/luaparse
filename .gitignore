@@ -1,3 +1,4 @@
 *.log
-node_modules/
-.temp/
+node_modules
+temp
+dist
