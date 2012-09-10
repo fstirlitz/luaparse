@@ -47,7 +47,7 @@ module.exports = function (grunt) {
     // Linting
     lint: {
       beforeconcat: ['Gruntfile.js', 'bin/*'],
-      afterconcat: ['<config.concat.dest>']
+      afterconcat: ['<config:concat.dist.dest>']
     },
     jshint: {
       options: {

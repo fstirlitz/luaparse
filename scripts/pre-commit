@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+var spawn = require('child_process').spawn;
+
+run('yeoman lint').on('next', run.bind({}, 'yeoman test'));
+
+function run(args) {
+  args = args.split(' ');
+  var cmd = args.shift();
+  var ch = spawn(cmd, args);
+  ch.stdout.pipe(process.stdout);
+  ch.stderr.pipe(process.stderr);
+  ch.on('exit', function (code) {
+    if(code) process.exit(code);
+    var end = !ch.emit('next');
+  });
+  return ch;
+}
