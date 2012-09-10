@@ -149,7 +149,7 @@
 
     for (var i = 0, l = args.length; i < l; i++) {
       src = args[i];
-      for (prop in src) if src.hasOwnProperty(prop) {
+      for (prop in src) if (src.hasOwnProperty(prop)) {
         dest[prop] = src[prop];
       }
     }
