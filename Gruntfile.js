@@ -23,7 +23,7 @@ module.exports = function (grunt) {
       dist: {
         src: [
           '<config:meta.banner>',
-          'src/luaparse.js'
+          'lib/luaparse.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
       }
@@ -37,44 +37,43 @@ module.exports = function (grunt) {
 
     // Tests
     test: {
-      files: ['test/**/*.js']
+      files: ['test/spec/*.js']
     },
     mocha: {
       index: ['test/*.html']
     },
 
-
     // Linting
     lint: {
-      beforeconcat: ['Gruntfile.js', 'bin/*'],
-      afterconcat: ['<config:concat.dist.dest>']
-    },
-    jshint: {
+      files: ['Gruntfile.js'],
+      afterconcat: ['<config:concat.dist.dest>'],
       options: {
-        curly: false,
-        eqeqeq: true,
-        forin: true,
-        immed: true,
-        indent: 2,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        noempty: true,
-        nonew: true,
-        quotmark: 'single',
-        regexp: true,
-        undef: true,
-        unusd: true,
-        trailing: true,
-        sub: true,
-        boss: true,
-        eqnull: true,
-        laxcomma: true
-      },
-      globals: {
-        exports: true,
-        module: false,
-        define: true
+        options: {
+          curly: false,
+          eqeqeq: true,
+          forin: true,
+          immed: true,
+          indent: 2,
+          latedef: true,
+          newcap: true,
+          noarg: true,
+          noempty: true,
+          nonew: true,
+          regexp: true,
+          undef: true,
+          //unused: false,
+          trailing: true,
+          sub: true,
+          boss: true,
+          eqnull: true,
+          laxcomma: true
+        },
+        globals: {
+          exports: true,
+          module: false,
+          define: true,
+          window: true
+        }
       }
     },
     watch: {}

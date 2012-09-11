@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require('fs'),
-  luaparse = require('./luaparse'),
+  luaparse = require('../'),
   files = process.argv.splice(2);
 
 if (files.length === 0) {

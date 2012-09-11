@@ -1,1 +1,1 @@
-../../dist/luaparse.js
+../../lib/luaparse.js

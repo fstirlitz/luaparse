@@ -12,7 +12,7 @@ body > *:first-child {
 body > *:last-child {
   margin-bottom: 0 !important; }
 
-a {
+a[href] {
   color: #4183C4; }
 a.absent {
   color: #cc0000; }
