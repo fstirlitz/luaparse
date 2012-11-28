@@ -1,6 +1,6 @@
 describe('Expressions', function() {
-  it('LogicalExpression', function() {
-    expectTree("while true and true do end", {
+  describe('Types', function() {
+    testTree("while true and true do end", {
         type: 'WhileStatement'
       , condition: {
           type: 'LogicalExpression'
@@ -10,9 +10,7 @@ describe('Expressions', function() {
       }
       , body: []
     });
-  });
-  it('UnaryExpression', function() {
-    expectTree("while not true do end", {
+    testTree("while not true do end", {
         type: 'WhileStatement'
       , condition: {
           type: 'UnaryExpression'
@@ -21,9 +19,7 @@ describe('Expressions', function() {
       }
       , body: []
     });
-  });
-  it('BinaryExpression', function() {
-    expectTree("while 1 > 2 do end", {
+    testTree("while 1 > 2 do end", {
         type: 'WhileStatement'
       , condition: {
           type: 'BinaryExpression'
@@ -33,9 +29,7 @@ describe('Expressions', function() {
       }
       , body: []
     });
-  });
-  it('Nested UnaryExpression', function() {
-    expectTree("while not not true do end", {
+    testTree("while not not true do end", {
         type: 'WhileStatement'
       , condition: {
           type: 'UnaryExpression'
@@ -48,9 +42,7 @@ describe('Expressions', function() {
       }
       , body: []
     });
-  });
-  it('Nested BinaryExpression', function() {
-    expectTree("while ( 1 + 1 ) > 2 do end", {
+    testTree("while ( 1 + 1 ) > 2 do end", {
         type: 'WhileStatement'
       , condition: {
           type: 'BinaryExpression'
@@ -67,8 +59,8 @@ describe('Expressions', function() {
     });
   });
 
-  it('Grouping', function() {
-    expectTree("while ( 1 + ( 1 * 2 ) / 2 ) > 2 do end", {
+  describe('Grouping', function() {
+    testTree("while ( 1 + ( 1 * 2 ) / 2 ) > 2 do end", {
         type: 'WhileStatement'
       , condition: {
           type: 'BinaryExpression'
@@ -93,9 +85,7 @@ describe('Expressions', function() {
       }
       , body: []
     });
-  });
 
-  it('Grouping #2', function() {
     testTree("while ( 1 + 1 * ( 2 / 2 ) ) > 2 do end", {
         type: 'WhileStatement'
       , condition: {
@@ -122,9 +112,7 @@ describe('Expressions', function() {
       , body: []
     });
   });
-});
 
-describe('Expressions', function() {
   describe('Whitespace', function() {
     testPrecedence('1 + 1', '1 + 1');
     testPrecedence('(1 + 1)', '(1 + 1)');
