@@ -1,3 +1,4 @@
+/*globals module:true */
 module.exports = function (grunt) {
   'use strict';
 
@@ -12,11 +13,6 @@ module.exports = function (grunt) {
         ' Licensed MIT\n' +
         ' */'
     },
-
-    // Build
-    staging: 'temp',
-    output: 'dist',
-    mkdirs: { staging: 'app/' },
 
     // Minification
     concat: {
@@ -37,7 +33,7 @@ module.exports = function (grunt) {
 
     // Tests
     test: {
-      files: ['test/spec/*.js']
+      files: ['test/spec/statement.js']
     },
     mocha: {
       index: ['test/*.html']
@@ -45,41 +41,23 @@ module.exports = function (grunt) {
 
     // Linting
     lint: {
-      files: ['Gruntfile.js'],
-      afterconcat: ['<config:concat.dist.dest>'],
-      options: {
+      dist: {
+        src: ['Gruntfile.js', 'lib/*.js'],
         options: {
-          curly: false,
-          eqeqeq: true,
-          forin: true,
-          immed: true,
-          indent: 2,
-          latedef: true,
-          newcap: true,
-          noarg: true,
-          noempty: true,
-          nonew: true,
-          regexp: true,
-          undef: true,
-          //unused: false,
-          trailing: true,
-          sub: true,
-          boss: true,
-          eqnull: true,
-          laxcomma: true
-        },
-        globals: {
-          exports: true,
-          module: false,
-          define: true,
-          window: true
+          jshintrc: '.jshintrc'
+        }
+      },
+      test: {
+        src: ['test/spec/**/*.js'],
+        options: {
+          jshintrc: 'test/spec/.jshintrc'
         }
       }
     },
     watch: {}
   });
 
-  grunt.registerTask('test', 'mocha');
+  // grunt.registerTask('test', 'mocha');
   grunt.registerTask('default', 'concat min lint');
 
   // Override what yeoman provides
