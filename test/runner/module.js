@@ -1,2 +1,4 @@
 expect = require('chai').expect;
-luaparse = require('../../').luaparse;
+parser = require('../../');
+util = require('util');
+helpers = require('../helpers');
