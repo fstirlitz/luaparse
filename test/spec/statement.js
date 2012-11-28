@@ -34,6 +34,17 @@ describe('Statements', function() {
       , body: []
     });
   });
+  it('FunctionStatement', function() {
+    expectTree("function Test () end", {
+        type: 'FunctionStatement'
+      , identifier: {
+          type: 'Identifier'
+        , name: 'Test'
+      }
+      , parameters: []
+      , body: []
+    });
+  });
   // it('IfStatement', function() {
   //   expectTree("if true then end", {
   //       type: 'IfStatement'
@@ -46,6 +57,55 @@ describe('Statements', function() {
   //     }]
   //   });
   // });
+});
+
+describe('Function statements', function() {
+  testTree("function Test.test() end", {
+      type: 'FunctionStatement'
+    , identifier: {
+        type: 'MemberExpression'
+      , base: {
+          type: 'Identifier'
+        , name: 'Test'
+      }
+      , indexer: '.'
+      , identifier: { type: 'Identifier', name: 'test' }
+    }
+    , parameters: []
+    , body: []
+  });
+
+  testTree("function Test:hurr() end", {
+      type: 'FunctionStatement'
+    , identifier: {
+        type: 'MemberExpression'
+      , base: {
+          type: 'Identifier'
+        , name: 'Test'
+      }
+      , indexer: ':'
+      , identifier: { type: 'Identifier', name: 'hurr' }
+    }
+    , parameters: []
+    , body: []
+  });
+
+  testTree("function Test.test:hurr() end", {
+      type: 'FunctionStatement'
+    , identifier: {
+        type: 'MemberExpression'
+      , base: {
+          type: 'MemberExpression'
+        , base: { type: 'Identifier', name: 'Test' }
+        , indexer: '.'
+        , identifier: { type: 'Identifier', name: 'test' }
+      }
+      , indexer: ':'
+      , identifier: { type: 'Identifier', name: 'hurr' }
+    }
+    , parameters: []
+    , body: []
+  });
 });
 
 // describe('IfStatement clauses', function() {
