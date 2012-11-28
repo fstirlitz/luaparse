@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
     // Tests
     test: {
-      files: ['test/spec/statement.js']
+      files: ['test/spec/*.js']
     },
     mocha: {
       index: ['test/*.html']

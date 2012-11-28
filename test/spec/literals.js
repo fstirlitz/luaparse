@@ -1,12 +1,52 @@
 describe('Literals', function () {
-  it('should detect 9 as decimal digit', function () {
-    //expect(isDecDigit(9)).to.be(true);
-  });
-  it('should not detect a as a decimal digit', function () {
-    //expect(isDecDigit('a')).to.be(false);
-  });
+  describe('Numeric', function() {
+    testExpression("1 + 1", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '1' }
+    });
 
-  it('should instead detect a as hexadecimal', function () {
-    //expect(isHexDigit('a')).to.be(true);
+    testExpression("1 + 1e1", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '1e1' }
+    });
+
+    testExpression("1 + 1E1", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '1E1' }
+    });
+
+    testExpression("1 + 0xf", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '0xf' }
+    });
+
+    testExpression("1 + 0xfp+1", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '0xfp+1' }
+    });
+
+    testExpression("1 + 0xfP-1", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '0xfP-1' }
+    });
+
+    testExpression("1 + 0xFp+10", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '0xFp+10' }
+    });
   });
 });

@@ -17,6 +17,8 @@
   "laxcomma": true,
   "predef": [
     "describe", "it", "before", "after",
-    "parser", "expect", "console", "util", "helpers", "require", "exports"
+    "parser", "expect", "console", "util", "helpers", "require", "exports",
+    "expectStatement", "expectTree", "expectPrecedence", "logger",
+    "testPrecedence", "testExpression", "testTree"
   ]
 }
