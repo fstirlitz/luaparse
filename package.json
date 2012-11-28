@@ -23,6 +23,7 @@
   "dependencies": {},
   "devDependencies": {
     "mocha": "*",
-    "chai": "*"
+    "chai": "*",
+    "difflet": "*"
   }
 }

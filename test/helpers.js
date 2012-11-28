@@ -12,12 +12,21 @@ function testIt(name, fn, debug) {
 }
 
 // Expect unparsed statement to equal tree (without chunk part).
-function expectTree(statement, obj, log) {
+function expectTree(statement, obj, debug) {
   var tree = {
       type: 'Chunk'
     , body: [obj]
   };
   var result = parser.parse(statement);
+  if (debug) {
+    logger('Result: ', result);
+    logger('Expected: ', tree);
+    if (require) {
+      var diff = require('difflet')({ index: 2});
+      logger('Diff: ');
+      console.log(diff.compare(result, tree));
+    }
+  }
 
   expect(result).to.deep.equal(tree);
 }
