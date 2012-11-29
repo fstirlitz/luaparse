@@ -41,6 +41,7 @@ describe('Statements', function() {
           type: 'Identifier'
         , name: 'Test'
       }
+      , vararg: false
       , parameters: []
       , body: []
     });
@@ -60,6 +61,33 @@ describe('Statements', function() {
 });
 
 describe('Function statements', function() {
+  testTree("function Test (foo, bar) end", {
+      type: 'FunctionStatement'
+    , identifier: {
+        type: 'Identifier'
+      , name: 'Test'
+    }
+    , vararg: false
+    , parameters: [
+        { type: 'Identifier', name: 'foo' }
+      , { type: 'Identifier', name: 'bar' }
+    ]
+    , body: []
+  });
+
+  testTree("function Test (foo, ...) end", {
+      type: 'FunctionStatement'
+    , identifier: {
+        type: 'Identifier'
+      , name: 'Test'
+    }
+    , vararg: true
+    , parameters: [
+        { type: 'Identifier', name: 'foo' }
+    ]
+    , body: []
+  });
+
   testTree("function Test.test() end", {
       type: 'FunctionStatement'
     , identifier: {
@@ -71,6 +99,7 @@ describe('Function statements', function() {
       , indexer: '.'
       , identifier: { type: 'Identifier', name: 'test' }
     }
+    , vararg: false
     , parameters: []
     , body: []
   });
@@ -86,6 +115,7 @@ describe('Function statements', function() {
       , indexer: ':'
       , identifier: { type: 'Identifier', name: 'hurr' }
     }
+    , vararg: false
     , parameters: []
     , body: []
   });
@@ -103,6 +133,7 @@ describe('Function statements', function() {
       , indexer: ':'
       , identifier: { type: 'Identifier', name: 'hurr' }
     }
+    , vararg: false
     , parameters: []
     , body: []
   });
