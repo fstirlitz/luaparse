@@ -34,9 +34,9 @@ describe('Statements', function() {
       , body: []
     });
   });
-  it('FunctionStatement', function() {
+  it('FunctionDeclaration', function() {
     expectTree("function Test () end", {
-        type: 'FunctionStatement'
+        type: 'FunctionDeclaration'
       , identifier: {
           type: 'Identifier'
         , name: 'Test'
@@ -62,7 +62,7 @@ describe('Statements', function() {
 
 describe('Function statements', function() {
   testTree("function Test (foo, bar) end", {
-      type: 'FunctionStatement'
+      type: 'FunctionDeclaration'
     , identifier: {
         type: 'Identifier'
       , name: 'Test'
@@ -76,7 +76,7 @@ describe('Function statements', function() {
   });
 
   testTree("function Test (foo, ...) end", {
-      type: 'FunctionStatement'
+      type: 'FunctionDeclaration'
     , identifier: {
         type: 'Identifier'
       , name: 'Test'
@@ -89,7 +89,7 @@ describe('Function statements', function() {
   });
 
   testTree("function Test.test() end", {
-      type: 'FunctionStatement'
+      type: 'FunctionDeclaration'
     , identifier: {
         type: 'MemberExpression'
       , base: {
@@ -105,7 +105,7 @@ describe('Function statements', function() {
   });
 
   testTree("function Test:hurr() end", {
-      type: 'FunctionStatement'
+      type: 'FunctionDeclaration'
     , identifier: {
         type: 'MemberExpression'
       , base: {
@@ -121,7 +121,7 @@ describe('Function statements', function() {
   });
 
   testTree("function Test.test:hurr() end", {
-      type: 'FunctionStatement'
+      type: 'FunctionDeclaration'
     , identifier: {
         type: 'MemberExpression'
       , base: {
