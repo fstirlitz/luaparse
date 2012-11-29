@@ -46,18 +46,18 @@ describe('Statements', function() {
       , body: []
     });
   });
-  // it('IfStatement', function() {
-  //   expectTree("if true then end", {
-  //       type: 'IfStatement'
-  //     , clauses: [{
-  //         condition: {
-  //           type: 'Literal'
-  //         , value: true
-  //       }
-  //       , body: []
-  //     }]
-  //   });
-  // });
+  it('IfStatement', function() {
+    expectTree("if true then end", {
+        type: 'IfStatement'
+      , clauses: [{
+          condition: {
+            type: 'Literal'
+          , value: true
+        }
+        , body: []
+      }]
+    });
+  });
 });
 
 describe('Function statements', function() {
@@ -139,55 +139,27 @@ describe('Function statements', function() {
   });
 });
 
-// describe('IfStatement clauses', function() {
-//   it('Else', function() {
-//     expectTree("if true then else end", {
-//         type: 'IfStatement'
-//       , clauses: [
-//           {
-//             condition: { type: 'Literal', value: true }
-//           , body: []
-//         }
-//         , {
-//             condition: null
-//           , body: []
-//         }
-//       ]
-//     });
-//   });
-//   it('Elseif', function() {
-//     expectTree("if true then elseif false then end", {
-//         type: 'IfStatement'
-//       , clauses: [
-//           {
-//             condition: { type: 'Literal', value: true }
-//           , body: []
-//         }
-//         , {
-//             condition: { type: 'Literal', value: false }
-//           , body: []
-//         }
-//       ]
-//     });
-//   });
-//   it('Elseif Else', function() {
-//     expectTree("if true then elseif false then else end", {
-//         type: 'IfStatement'
-//       , clauses: [
-//           {
-//             condition: { type: 'Literal', value: true }
-//           , body: []
-//         }
-//         , {
-//             condition: { type: 'Literal', value: false }
-//           , body: []
-//         }
-//         , {
-//             condition: null
-//           , body: []
-//         }
-//       ]
-//     });
-//   });
-// });
-//
+describe('IfStatement clauses', function() {
+  testTree("if true then else end", {
+      type: 'IfStatement'
+    , clauses: [
+        { condition: { type: 'Literal', value: true }, body: [] }
+      , { condition: null, body: [] }
+    ]
+  });
+  testTree("if true then elseif false then end", {
+      type: 'IfStatement'
+    , clauses: [
+        { condition: { type: 'Literal', value: true }, body: [] }
+      , { condition: { type: 'Literal', value: false }, body: [] }
+    ]
+  });
+  testTree("if true then elseif false then else end", {
+      type: 'IfStatement'
+    , clauses: [
+        { condition: { type: 'Literal', value: true }, body: [] }
+      , { condition: { type: 'Literal', value: false }, body: [] }
+      , { condition: null, body: [] }
+    ]
+  });
+});
