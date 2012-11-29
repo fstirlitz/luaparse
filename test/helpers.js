@@ -34,7 +34,7 @@ function expectTree(statement, obj, debug) {
 // Test if a tree (without chunk part) equals the unparsed statement.
 function testTree(statement, obj, debug) {
   testIt(statement, function() {
-    expectTree(statement, obj);
+    expectTree(statement, obj, debug);
   }, debug);
 }
 
