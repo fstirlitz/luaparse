@@ -137,6 +137,29 @@ describe('Function statements', function() {
     , parameters: []
     , body: []
   });
+
+  testTree("function Test.test.foo:hurr() end", {
+      type: 'FunctionDeclaration'
+    , identifier: {
+        type: 'MemberExpression'
+      , indexer: ':'
+      , identifier: { type: 'Identifier', name: 'hurr' }
+      , base: {
+          type: 'MemberExpression'
+        , identifier: { type: 'Identifier', name: 'foo' }
+        , indexer: '.'
+        , base: {
+            type: 'MemberExpression'
+          , indexer: '.'
+          , identifier: { type: 'Identifier', name: 'test' }
+          , base: { type: 'Identifier', name: 'Test' }
+        }
+      }
+    }
+    , vararg: false
+    , parameters: []
+    , body: []
+  });
 });
 
 describe('IfStatement clauses', function() {
@@ -160,6 +183,14 @@ describe('IfStatement clauses', function() {
         { condition: { type: 'Literal', value: true }, body: [] }
       , { condition: { type: 'Literal', value: false }, body: [] }
       , { condition: null, body: [] }
+    ]
+  });
+  testTree("if true then elseif false then elseif false then end", {
+      type: 'IfStatement'
+    , clauses: [
+        { condition: { type: 'Literal', value: true }, body: [] }
+      , { condition: { type: 'Literal', value: false }, body: [] }
+      , { condition: { type: 'Literal', value: false }, body: [] }
     ]
   });
 });
