@@ -1,10 +1,10 @@
 describe('Literals', function () {
   describe('Numeric', function() {
-    testExpression("1 + 1", {
+    testExpression("1 + 10", {
         type: 'BinaryExpression'
       , operator: '+'
       , left: { type: 'Literal', value: '1' }
-      , right: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '10' }
     });
 
     testExpression("1 + 1e1", {
