@@ -34,6 +34,16 @@ describe('Statements', function() {
       , body: []
     });
   });
+  it('RepeatStatement', function() {
+    expectTree("repeat until false", {
+        type: 'RepeatStatement'
+      , condition: {
+          type: 'Literal'
+        , value: false
+      }
+      , body: []
+    });
+  });
   it('FunctionDeclaration', function() {
     expectTree("function Test () end", {
         type: 'FunctionDeclaration'
