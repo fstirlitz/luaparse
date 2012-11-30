@@ -9,6 +9,15 @@ describe('Statements', function() {
         type: 'BreakStatement'
     });
   });
+  it('LabelStatement', function() {
+    expectTree('::test::', {
+        type: 'LabelStatement'
+      , label: {
+          type: 'Identifier'
+        , name: 'test'
+      }
+    });
+  });
   it('GotoStatement', function() {
     expectTree('goto test', {
         type: 'GotoStatement'
