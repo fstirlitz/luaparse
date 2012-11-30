@@ -57,7 +57,6 @@ module.exports = function (grunt) {
     watch: {}
   });
 
-  // grunt.registerTask('test', 'mocha');
   grunt.registerTask('default', 'concat min lint');
 
   // Override what yeoman provides

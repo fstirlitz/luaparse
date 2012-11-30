@@ -1,3 +1,1 @@
-module.exports = process.env.LUAPARSE_COV
-  ? require('./lib-cov/luaparse')
-  : require('./lib/luaparse');
+module.exports = require(process.env.COVERAGE ? './lib-cov/luaparse' : './lib/luaparse');

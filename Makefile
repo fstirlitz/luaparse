@@ -5,7 +5,10 @@ HTMLDOCS=$(DOCS:.md=.html)
 all: build
 
 build:
-	@yeoman build
+	@./node_modules/.bin/grunt build
+
+lint:
+	@./node_modules/.bin/grunt lint
 
 test: test-spec
 
@@ -19,26 +22,30 @@ test-all: test-spec
 coverage:
 	@rm -rf lib-cov
 	@jscoverage lib lib-cov
-	@LUAPARSE_COV=1 $(MAKE) -s test REPORTER=html-cov > docs/coverage.html
+	@COVERAGE=1 $(MAKE) -s test REPORTER=html-cov > docs/coverage.html
 
-test-md:
-	@$(MAKE) -s test REPORTER=markdown > docs/tests.md
+lcov:
+	@rm -rf lib-cov
+	@istanbul instrument --output lib-cov --no-compact --variable global.__coverage__ lib
+	@COVERAGE=1 ./node_modules/.bin/mocha --reporter mocha-istanbul test/spec/*
 
 docco:
-	@docco lib/*.js
+	@./node_modules/.bin/doccoh lib/*.js
 
-docs-test: test-md $(patsubst %.md,%.html,$(wildcard docs/*.md))
+docs-test:
+	@$(MAKE) -s test REPORTER=doc \
+		| cat docs/layout/head.html - docs/layout/foot.html \
+		> docs/tests.html
 
-docs: docco coverage docs-test
+docs-index:
+	@cat README.md docs/index.md | ./node_modules/.bin/marked --gfm\
+		| cat docs/layout/head.html - docs/layout/foot.html \
+		> docs/index.html
 
-%.html: %.md
-	@cat docs/layout/head.html > $@
-	@markdown $< >> $@
-	@cat docs/layout/foot.html >> $@
-
+docs: docco coverage docs-test docs-index
 
 clean:
-	@rm -f dist/* docs/*.html docs/*.1
-	@rm -rf lib-cov
+	@rm -f docs/*.html docs/*.1
+	@rm -rf lib-cov coverage html-report
 
 .PHONY: test test-md coverage test-all docs

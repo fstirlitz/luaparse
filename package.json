@@ -18,12 +18,16 @@
   "main" : "./index",
   "bin": { "luaparse" : "./bin/luaparse" },
   "scripts": {
-    "test" : "make test-all"
+    "test" : "make test"
   },
   "dependencies": {},
   "devDependencies": {
-    "mocha": "*",
+    "mocha": "~1.7.2",
     "chai": "*",
-    "difflet": "*"
+    "difflet": "*",
+    "mocha-istanbul": "*",
+    "grunt": "*",
+    "doccoh": "*",
+    "marked": "*"
   }
 }
