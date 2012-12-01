@@ -132,6 +132,8 @@ describe('Expressions', function() {
     testPrecedence('not 1 + 1', '(not 1) + 1');
     testPrecedence('not not 1 + 1', '(not (not (1)) + 1)');
     testPrecedence('1 + #1', '1 + (#1)');
+    testPrecedence('-x^2', '-(x^2)');
+
   });
 
   describe('Left vs Right associative', function() {
