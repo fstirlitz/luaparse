@@ -44,8 +44,12 @@ function testPrecedence(nongrouped, grouped, debug) {
   testIt(nongrouped, function() {
     var result = parser.parse('while ' + nongrouped + ' do end').body[0];
     var tree = parser.parse('while ' + grouped + ' do end').body[0];
+    if (debug) {
+      logger("Result", result);
+      logger("expected", tree);
+    }
     expect(result).to.deep.equal(tree);
-  });
+  }, debug);
 }
 
 // Test an expression statement against its tree.

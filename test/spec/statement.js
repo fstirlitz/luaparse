@@ -109,173 +109,173 @@ describe('Statements', function() {
       , body: []
     });
   });
-});
 
-describe('Function statements', function() {
-  testTree("function Test (foo, bar) end", {
-      type: 'FunctionDeclaration'
-    , identifier: {
-        type: 'Identifier'
-      , name: 'Test'
-    }
-    , vararg: false
-    , parameters: [
-        { type: 'Identifier', name: 'foo' }
-      , { type: 'Identifier', name: 'bar' }
-    ]
-    , body: []
-  });
-
-  testTree("function Test (foo, ...) end", {
-      type: 'FunctionDeclaration'
-    , identifier: {
-        type: 'Identifier'
-      , name: 'Test'
-    }
-    , vararg: true
-    , parameters: [
-        { type: 'Identifier', name: 'foo' }
-    ]
-    , body: []
-  });
-
-  testTree("function Test.test() end", {
-      type: 'FunctionDeclaration'
-    , identifier: {
-        type: 'MemberExpression'
-      , base: {
+  describe('FunctionDeclaration', function() {
+    testTree("function Test (foo, bar) end", {
+        type: 'FunctionDeclaration'
+      , identifier: {
           type: 'Identifier'
         , name: 'Test'
       }
-      , indexer: '.'
-      , identifier: { type: 'Identifier', name: 'test' }
-    }
-    , vararg: false
-    , parameters: []
-    , body: []
-  });
+      , vararg: false
+      , parameters: [
+          { type: 'Identifier', name: 'foo' }
+        , { type: 'Identifier', name: 'bar' }
+      ]
+      , body: []
+    });
 
-  testTree("function Test:hurr() end", {
-      type: 'FunctionDeclaration'
-    , identifier: {
-        type: 'MemberExpression'
-      , base: {
+    testTree("function Test (foo, ...) end", {
+        type: 'FunctionDeclaration'
+      , identifier: {
           type: 'Identifier'
         , name: 'Test'
       }
-      , indexer: ':'
-      , identifier: { type: 'Identifier', name: 'hurr' }
-    }
-    , vararg: false
-    , parameters: []
-    , body: []
-  });
+      , vararg: true
+      , parameters: [
+          { type: 'Identifier', name: 'foo' }
+      ]
+      , body: []
+    });
 
-  testTree("function Test.test:hurr() end", {
-      type: 'FunctionDeclaration'
-    , identifier: {
-        type: 'MemberExpression'
-      , base: {
+    testTree("function Test.test() end", {
+        type: 'FunctionDeclaration'
+      , identifier: {
           type: 'MemberExpression'
-        , base: { type: 'Identifier', name: 'Test' }
+        , base: {
+            type: 'Identifier'
+          , name: 'Test'
+        }
         , indexer: '.'
         , identifier: { type: 'Identifier', name: 'test' }
       }
-      , indexer: ':'
-      , identifier: { type: 'Identifier', name: 'hurr' }
-    }
-    , vararg: false
-    , parameters: []
-    , body: []
-  });
+      , vararg: false
+      , parameters: []
+      , body: []
+    });
 
-  testTree("function Test.test.foo:hurr() end", {
-      type: 'FunctionDeclaration'
-    , identifier: {
-        type: 'MemberExpression'
-      , indexer: ':'
-      , identifier: { type: 'Identifier', name: 'hurr' }
-      , base: {
+    testTree("function Test:hurr() end", {
+        type: 'FunctionDeclaration'
+      , identifier: {
           type: 'MemberExpression'
-        , identifier: { type: 'Identifier', name: 'foo' }
-        , indexer: '.'
+        , base: {
+            type: 'Identifier'
+          , name: 'Test'
+        }
+        , indexer: ':'
+        , identifier: { type: 'Identifier', name: 'hurr' }
+      }
+      , vararg: false
+      , parameters: []
+      , body: []
+    });
+
+    testTree("function Test.test:hurr() end", {
+        type: 'FunctionDeclaration'
+      , identifier: {
+          type: 'MemberExpression'
         , base: {
             type: 'MemberExpression'
+          , base: { type: 'Identifier', name: 'Test' }
           , indexer: '.'
           , identifier: { type: 'Identifier', name: 'test' }
-          , base: { type: 'Identifier', name: 'Test' }
+        }
+        , indexer: ':'
+        , identifier: { type: 'Identifier', name: 'hurr' }
+      }
+      , vararg: false
+      , parameters: []
+      , body: []
+    });
+
+    testTree("function Test.test.foo:hurr() end", {
+        type: 'FunctionDeclaration'
+      , identifier: {
+          type: 'MemberExpression'
+        , indexer: ':'
+        , identifier: { type: 'Identifier', name: 'hurr' }
+        , base: {
+            type: 'MemberExpression'
+          , identifier: { type: 'Identifier', name: 'foo' }
+          , indexer: '.'
+          , base: {
+              type: 'MemberExpression'
+            , indexer: '.'
+            , identifier: { type: 'Identifier', name: 'test' }
+            , base: { type: 'Identifier', name: 'Test' }
+          }
         }
       }
-    }
-    , vararg: false
-    , parameters: []
-    , body: []
-  });
-});
-
-describe('IfStatement clauses', function() {
-  testTree("if true then else end", {
-      type: 'IfStatement'
-    , clauses: [
-        { condition: { type: 'Literal', value: true }, body: [] }
-      , { condition: null, body: [] }
-    ]
-  });
-  testTree("if true then elseif false then end", {
-      type: 'IfStatement'
-    , clauses: [
-        { condition: { type: 'Literal', value: true }, body: [] }
-      , { condition: { type: 'Literal', value: false }, body: [] }
-    ]
-  });
-  testTree("if true then elseif false then else end", {
-      type: 'IfStatement'
-    , clauses: [
-        { condition: { type: 'Literal', value: true }, body: [] }
-      , { condition: { type: 'Literal', value: false }, body: [] }
-      , { condition: null, body: [] }
-    ]
-  });
-  testTree("if true then elseif false then elseif false then end", {
-      type: 'IfStatement'
-    , clauses: [
-        { condition: { type: 'Literal', value: true }, body: [] }
-      , { condition: { type: 'Literal', value: false }, body: [] }
-      , { condition: { type: 'Literal', value: false }, body: [] }
-    ]
-  });
-});
-
-describe('ReturnStatement', function() {
-  testTree('return', {
-      type: 'ReturnStatement'
-    , arguments: []
+      , vararg: false
+      , parameters: []
+      , body: []
+    });
   });
 
-  testTree('return;', {
-      type: 'ReturnStatement'
-    , arguments: []
+  describe('IfStatement', function() {
+    testTree("if true then else end", {
+        type: 'IfStatement'
+      , clauses: [
+          { condition: { type: 'Literal', value: true }, body: [] }
+        , { condition: null, body: [] }
+      ]
+    });
+    testTree("if true then elseif false then end", {
+        type: 'IfStatement'
+      , clauses: [
+          { condition: { type: 'Literal', value: true }, body: [] }
+        , { condition: { type: 'Literal', value: false }, body: [] }
+      ]
+    });
+    testTree("if true then elseif false then else end", {
+        type: 'IfStatement'
+      , clauses: [
+          { condition: { type: 'Literal', value: true }, body: [] }
+        , { condition: { type: 'Literal', value: false }, body: [] }
+        , { condition: null, body: [] }
+      ]
+    });
+    testTree("if true then elseif false then elseif false then end", {
+        type: 'IfStatement'
+      , clauses: [
+          { condition: { type: 'Literal', value: true }, body: [] }
+        , { condition: { type: 'Literal', value: false }, body: [] }
+        , { condition: { type: 'Literal', value: false }, body: [] }
+      ]
+    });
   });
 
-  testTree('return true;', {
-      type: 'ReturnStatement'
-    , arguments: [{
-        type: 'Literal'
-      , value: true
-    }]
-  });
+  describe('ReturnStatement', function() {
+    testTree('return', {
+        type: 'ReturnStatement'
+      , arguments: []
+    });
 
-  testTree('return true, false', {
-      type: 'ReturnStatement'
-    , arguments: [
-        { type: 'Literal', value: true }
-      , { type: 'Literal', value: false }
-    ]
-  });
+    testTree('return;', {
+        type: 'ReturnStatement'
+      , arguments: []
+    });
 
-  testTree('return end', { // @TODO this should probably throw error
-      type: 'ReturnStatement'
-    , arguments: []
-  });
+    testTree('return true;', {
+        type: 'ReturnStatement'
+      , arguments: [{
+          type: 'Literal'
+        , value: true
+      }]
+    });
 
+    testTree('return true, false', {
+        type: 'ReturnStatement'
+      , arguments: [
+          { type: 'Literal', value: true }
+        , { type: 'Literal', value: false }
+      ]
+    });
+
+    testTree('return end', { // @TODO this should probably throw error
+        type: 'ReturnStatement'
+      , arguments: []
+    });
+
+  });
 });
