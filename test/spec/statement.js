@@ -18,6 +18,15 @@ describe('Statements', function() {
       }
     });
   });
+  it('ReturnStatement', function() {
+    expectTree('return true;', {
+        type: 'ReturnStatement'
+      , arguments: [{
+          type: 'Literal'
+        , value: true
+      }]
+    });
+  });
   it('GotoStatement', function() {
     expectTree('goto test', {
         type: 'GotoStatement'
@@ -235,4 +244,38 @@ describe('IfStatement clauses', function() {
       , { condition: { type: 'Literal', value: false }, body: [] }
     ]
   });
+});
+
+describe('ReturnStatement', function() {
+  testTree('return', {
+      type: 'ReturnStatement'
+    , arguments: []
+  });
+
+  testTree('return;', {
+      type: 'ReturnStatement'
+    , arguments: []
+  });
+
+  testTree('return true;', {
+      type: 'ReturnStatement'
+    , arguments: [{
+        type: 'Literal'
+      , value: true
+    }]
+  });
+
+  testTree('return true, false', {
+      type: 'ReturnStatement'
+    , arguments: [
+        { type: 'Literal', value: true }
+      , { type: 'Literal', value: false }
+    ]
+  });
+
+  testTree('return end', { // @TODO this should probably throw error
+      type: 'ReturnStatement'
+    , arguments: []
+  });
+
 });
