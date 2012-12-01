@@ -124,11 +124,11 @@ describe('Expressions', function() {
   });
 
   describe('Precedence', function() {
-    testPrecedence('(1 + 1 * 2) > 2', '( 1 + ( 1 * 2 ) ) > 2');
-    testPrecedence('(1 / 2 + 4 * 2) > 2', '((1 / 2) + (4 * 2)) > 2');
-    testPrecedence('(1 / 2 - 4 * 2 * 2) > 2', '((1 / 2) - ((4 * 2) * 2 )) > 2');
+    testPrecedence('1 + 1 * 2 > 3', '( 1 + ( 1 * 2 ) ) > 3');
+    testPrecedence('1 < 2 and 2 < 1', '(1 < 2) and (2 < 1)');
+    testPrecedence('1 / 2 + 4 * 2 > 8', '((1 / 2) + (4 * 2)) > 8');
     testPrecedence('2 < 1 == true', '(2 < 1) == true');
-    testPrecedence('2 < 1 + 1 == true', '(2 < 1 + 1) == true');
+    testPrecedence('2 < 1 + 1 == true', '(2 < (1 + 1)) == true');
     testPrecedence('not 1 + 1', '(not 1) + 1');
     testPrecedence('not not 1 + 1', '(not (not (1)) + 1)');
     testPrecedence('1 + #1', '1 + (#1)');
