@@ -7,6 +7,27 @@ describe('Literals', function () {
       , right: { type: 'Literal', value: '10' }
     });
 
+    testExpression(".1 + 10", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '.1' }
+      , right: { type: 'Literal', value: '10' }
+    });
+
+    testExpression("1.1 + 10", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1.1' }
+      , right: { type: 'Literal', value: '10' }
+    });
+
+    testExpression("1 + 10.1", {
+        type: 'BinaryExpression'
+      , operator: '+'
+      , left: { type: 'Literal', value: '1' }
+      , right: { type: 'Literal', value: '10.1' }
+    });
+
     testExpression("1 + 1e1", {
         type: 'BinaryExpression'
       , operator: '+'
