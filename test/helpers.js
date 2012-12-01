@@ -5,6 +5,18 @@ function logger() {
   });
 }
 
+function debugTree(result, expected) {
+  logger('Result: ', result);
+  logger('Expected: ', expected);
+
+  if (require) {
+    var diff = require('difflet')({ index: 2 });
+
+    logger('Diff: ');
+    console.log(JSON.parse(diff.compare(result, expected), null, '  '));
+  }
+}
+
 // Make it possible to only test one scenario.
 function testIt(name, fn, debug) {
   if (debug) it.only(name, fn);
@@ -16,19 +28,15 @@ function expectTree(statement, obj, debug) {
   var tree = {
       type: 'Chunk'
     , body: [obj]
+    , comments: []
   };
   var result = parser.parse(statement);
-  if (debug) {
-    logger('Result: ', result);
-    logger('Expected: ', tree);
-    if (require) {
-      var diff = require('difflet')({ index: 2});
-      logger('Diff: ');
-      console.log(diff.compare(result, tree));
-    }
-  }
+  expectObj(result, tree, debug);
+}
 
-  expect(result).to.deep.equal(tree);
+function expectObj(result, expected, debug) {
+  if (debug) debugTree(result, expected);
+  expect(result).to.deep.equal(expected);
 }
 
 // Test if a tree (without chunk part) equals the unparsed statement.
@@ -65,5 +73,7 @@ function testExpression(expression, tree, debug) {
 exports.testTree = testTree;
 exports.logger = logger;
 exports.expectTree = expectTree;
+exports.expectObj = expectObj;
 exports.testPrecedence = testPrecedence;
 exports.testExpression = testExpression;
+exports.debugTree = debugTree;

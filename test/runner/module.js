@@ -10,3 +10,5 @@ logger = helpers.logger;
 testPrecedence = helpers.testPrecedence;
 testExpression = helpers.testExpression;
 testTree = helpers.testTree;
+debugTree = helpers.debugTree;
+expectObj = helpers.expectObj;

@@ -19,6 +19,6 @@
     "describe", "it", "before", "after",
     "parser", "expect", "console", "util", "helpers", "require", "exports",
     "expectStatement", "expectTree", "expectPrecedence", "logger",
-    "testPrecedence", "testExpression", "testTree"
+    "testPrecedence", "testExpression", "testTree", "debugTree", "expectObj"
   ]
 }
