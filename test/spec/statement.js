@@ -77,6 +77,29 @@ describe('Statements', function() {
       }]
     });
   });
+  it('ForNumericStatement', function() {
+    expectTree("for i = 0, 3, 0.5 do end", {
+        type: 'ForNumericStatement'
+      , variable: { type: 'Identifier', name: 'i' }
+      , start: { type: 'Literal', value: '0' }
+      , end: { type: 'Literal', value: '3' }
+      , step: { type: 'Literal', value: '0.5' }
+      , body: []
+    });
+  });
+
+  it('ForGenericStatement', function() {
+    expectTree("for i in pairs(days) do end", {
+        type: 'ForGenericStatement'
+      , variables: [{ type: 'Identifier', name: 'i' }]
+      , iterators: [{
+          type: 'CallExpression'
+        , identifier: { type: 'Identifier', name: 'pairs' }
+        , arguments: [{ type: 'Identifier', name: 'days' }]
+      }]
+      , body: []
+    });
+  });
 });
 
 describe('Function statements', function() {
