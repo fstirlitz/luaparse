@@ -4,6 +4,9 @@ HTMLDOCS=$(DOCS:.md=.html)
 
 all: build
 
+install:
+	@npm install
+
 build:
 	@./node_modules/.bin/grunt build
 
