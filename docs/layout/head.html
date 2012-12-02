@@ -5,21 +5,38 @@
     <title>Luaparse</title>
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <style>
+      .hero-unit .nav-pills a {
+        font-size: 70%;
+        color: #797979;
+        margin-top: 4px;
+      }
+      .hero-unit .nav-pills a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <div class="hero-unit">
       <div class="container">
-        <h1>Luaparse</h1>
         <div class="row">
           <div class="span6">
+            <h1>Luaparse</h1>
             <p>A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.</p>
           </div>
-          <div class="btn-group span6">
-            <a class="btn" href="index.html">Readme</a>
-            <a class="btn" href="luaparse.html">Annotated source</a>
-            <a class="btn" href="coverage.html">Coverage</a>
-            <a class="btn" href="../test/index.html">Tests</a>
-            <a class="btn" href="tests.html">Test documentation</a>
+          <div class="span6" style="padding-top: 35px;">
+            <div class="btn-group">
+              <a class="btn" href="https://github.com/oxyc/luaparse">Github</a>
+              <a class="btn" href="luaparse.html">Annotated source</a>
+              <a class="btn" href="tests.html">Test docs</a>
+            </div>
+            <ul class="nav nav-pills">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="coverage.html">Coverage</a></li>
+              <li><a href="../test/index.html">Tests</a></li>
+              <li class="disabled"><a href="#"><del>Examples</del></a></li>
+              <li class="disabled"><a href="#"><del>Benchmarks</del></a></li>
+            </ul>
           </div>
         </div>
       </div>
