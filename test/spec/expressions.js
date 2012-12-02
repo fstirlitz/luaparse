@@ -123,7 +123,7 @@ describe('Expressions', function() {
       , init: [{
           type: 'TableConstructorExpression'
         , fields: [{
-            type: 'TableKey'
+            type: 'TableKeyString'
           , key: { type: 'Literal', value: 'bar' }
           , value: { type: 'Literal', value: 'baz' }
         }]
