@@ -113,6 +113,24 @@ describe('Expressions', function() {
     });
   });
 
+  describe('TableConstructorExpression', function() {
+    testTree("foo = { bar = 'baz' }", {
+        type: 'AssignmentStatement'
+      , variables: [{
+          type: 'Identifier'
+        , name : 'foo'
+      }]
+      , init: [{
+          type: 'TableConstructorExpression'
+        , fields: [{
+            type: 'TableKey'
+          , key: { type: 'Identifier', name: 'bar' }
+          , value: { type: 'Literal', value: 'baz' }
+        }]
+      }]
+    });
+  });
+
   describe('Whitespace', function() {
     testPrecedence('1 + 1', '1 + 1');
     testPrecedence('(1 + 1)', '(1 + 1)');
