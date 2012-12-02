@@ -10,5 +10,6 @@ checkout:
 	@cp -rf luaparse/test .
 
 clean:
-	@rm -rf layout
-	@rm -rf luaparse
+	@rm -f *.md
+	@rm -rf layout luaparse
+
