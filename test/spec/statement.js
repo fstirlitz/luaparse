@@ -65,6 +65,7 @@ describe('Statements', function() {
         , name: 'Test'
       }
       , vararg: false
+      , local: false
       , parameters: []
       , body: []
     });
@@ -99,9 +100,43 @@ describe('Statements', function() {
       , iterators: [{
           type: 'CallExpression'
         , identifier: { type: 'Identifier', name: 'pairs' }
-        , arguments: [{ type: 'Identifier', name: 'days' }]
+        , 'arguments': [{ type: 'Identifier', name: 'days' }]
       }]
       , body: []
+    });
+  });
+
+  it('LocalStatement', function() {
+    expectTree("local var = 12", {
+        type: 'LocalStatement'
+      , variables: [{ type: 'Identifier', name: 'var' }]
+      , init: [{ type: 'Literal', value: '12' }]
+    });
+  });
+
+  describe('LocalStatement', function() {
+
+    testTree("local foo, bar = 12, 13", {
+        type: 'LocalStatement'
+      , variables: [
+          { type: 'Identifier', name: 'foo' }
+        , { type: 'Identifier', name: 'bar' }
+      ]
+      , init: [
+          { type: 'Literal', value: '12' }
+        , { type: 'Literal', value: '13' }
+      ]
+    });
+
+    testTree("local foo, bar = 12", {
+        type: 'LocalStatement'
+      , variables: [
+          { type: 'Identifier', name: 'foo' }
+        , { type: 'Identifier', name: 'bar' }
+      ]
+      , init: [
+          { type: 'Literal', value: '12' }
+      ]
     });
   });
 
@@ -113,6 +148,22 @@ describe('Statements', function() {
         , name: 'Test'
       }
       , vararg: false
+      , local: false
+      , parameters: [
+          { type: 'Identifier', name: 'foo' }
+        , { type: 'Identifier', name: 'bar' }
+      ]
+      , body: []
+    });
+
+    testTree("local function Test (foo, bar) end", {
+        type: 'FunctionDeclaration'
+      , identifier: {
+          type: 'Identifier'
+        , name: 'Test'
+      }
+      , vararg: false
+      , local: true
       , parameters: [
           { type: 'Identifier', name: 'foo' }
         , { type: 'Identifier', name: 'bar' }
@@ -127,6 +178,7 @@ describe('Statements', function() {
         , name: 'Test'
       }
       , vararg: true
+      , local: false
       , parameters: [
           { type: 'Identifier', name: 'foo' }
       ]
@@ -145,6 +197,7 @@ describe('Statements', function() {
         , identifier: { type: 'Identifier', name: 'test' }
       }
       , vararg: false
+      , local: false
       , parameters: []
       , body: []
     });
@@ -161,6 +214,7 @@ describe('Statements', function() {
         , identifier: { type: 'Identifier', name: 'hurr' }
       }
       , vararg: false
+      , local: false
       , parameters: []
       , body: []
     });
@@ -179,6 +233,7 @@ describe('Statements', function() {
         , identifier: { type: 'Identifier', name: 'hurr' }
       }
       , vararg: false
+      , local: false
       , parameters: []
       , body: []
     });
@@ -202,6 +257,7 @@ describe('Statements', function() {
         }
       }
       , vararg: false
+      , local: false
       , parameters: []
       , body: []
     });
