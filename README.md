@@ -4,6 +4,18 @@ A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 
 *Still in development*
 
+### Todo
+
+- Implement grammar (done)
+- Test expression types
+- Exceptions
+- Error handling
+- Location tracking
+- Clean up
+- Figure out methods to make expose
+- Optimize hot functions
+- Finish all @TODO in code.
+
 ## Getting started
 
 ## Features
