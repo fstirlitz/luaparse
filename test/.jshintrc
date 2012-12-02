@@ -1,0 +1,24 @@
+{
+  "curly": false,
+  "eqeqeq": true,
+  "forin": true,
+  "immed": true,
+  "latedef": false,
+  "newcap": true,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "regexp": true,
+  "undef": true,
+  "trailing": true,
+  "sub": true,
+  "boss": true,
+  "eqnull": true,
+  "laxcomma": true,
+  "predef": [
+    "describe", "it", "before", "after",
+    "parser", "expect", "console", "util", "helpers", "require", "exports",
+    "expectStatement", "expectTree", "expectPrecedence", "logger",
+    "testPrecedence", "testExpression", "testTree", "debugTree", "expectObj"
+  ]
+}

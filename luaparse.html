@@ -1,0 +1,1145 @@
+<!DOCTYPE html>  <html> <head>   <title>luaparse.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               luaparse.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="comment">/*global exports:true require:true define:true console:true */</span>
+
+(<span class="function"><span class="keyword">function</span> <span class="params">(root, name, factory)</span> {</span>
+  <span class="string">'use strict'</span>;
+
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> exports === <span class="string">'object'</span>) {
+    factory(exports);
+  } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">'function'</span> &amp;&amp; define.amd) {
+    define(name, <span class="keyword">function</span>() {
+      <span class="keyword">var</span> exports = {};
+      factory(exports);
+      <span class="keyword">return</span> exports;
+    });
+  } <span class="keyword">else</span> {
+    factory((root[name] = {}));
+  }
+}(<span class="keyword">this</span>, <span class="string">'luaparse'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span>
+  <span class="string">'use strict'</span>;
+
+  exports.version = <span class="string">'0.0.1'</span>;
+
+  <span class="keyword">var</span> ast
+    , regexp
+    , defaultOptions
+    , lexer
+    , Tokens
+    , enable_log = <span class="literal">true</span> <span class="comment">// @TODO</span>
+
+    , input
+    , options
+
+    , length
+    , line <span class="comment">// @TODO</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>V8 uses the following error messages: http://goo.gl/KhTAv
+@TODO we should read read up on LUA errors</p>             </td>             <td class="code">               <div class="highlight"><pre>    , errorMessages = {
+    };
+
+  exports.Tokens = Tokens = {
+      EOF: <span class="number">0</span>
+    , StringLiteral: <span class="number">1</span>
+    , Keyword: <span class="number">2</span>
+    , Identifier: <span class="number">3</span>
+    , NumericLiteral: <span class="number">4</span>
+    , Punctuator: <span class="number">5</span>
+    , BooleanLiteral: <span class="number">6</span>
+    , NilLiteral: <span class="number">7</span>
+    , DotsLiteral: <span class="number">8</span>
+  };
+
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>@TODO In the future add comments and locations.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.defaultOptions = defaultOptions = {
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Explicitly tell the parser when the input ends.</p>             </td>             <td class="code">               <div class="highlight"><pre>      wait: <span class="literal">false</span>
+    , comments: <span class="literal">true</span>
+  };
+
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Regular expression matches exposed for modification.
+<em>These will most likely be optimized into procedural functions later.</em></p>             </td>             <td class="code">               <div class="highlight"><pre>
+  exports.regexp = regexp = {
+      punctuator: <span class="regexp">/^(\+|\-|\*|\/|%|\^|#|==|~=|&lt;=|&gt;=|&lt;|&gt;|=|\(|\)|\{|\}|\[|\]|::|;|:|,|\.|\.\.|\.\.\.)$/</span>
+    , decDigit: <span class="regexp">/^[0-9]$/</span>
+    , hexDigit: <span class="regexp">/^[0-9a-fA-F]$/</span>
+    , whiteSpace: <span class="regexp">/^[ \t\u000B\u000C\u0020\u00A0\uFEFF]$/</span>
+    , lineTerminator: <span class="regexp">/^[\n\r\u2028\u2029]$/</span>
+    , identifierStart: <span class="regexp">/^[a-zA-Z_]$/</span>
+    , identifierPart: <span class="regexp">/^[a-zA-Z0-9_]$/</span>
+  };
+
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Default AST structure exposed for modification.
+<em>These won't get inlined by V8 due to their insignificant call count.</em></p>             </td>             <td class="code">               <div class="highlight"><pre>
+  exports.ast = ast = {
+      labelStatement: <span class="keyword">function</span>(label) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'LabelStatement'</span>
+        , label: label
+      };
+    }
+
+    , breakStatement: <span class="keyword">function</span>() {
+      <span class="keyword">return</span> {
+          type: <span class="string">'BreakStatement'</span>
+      };
+    }
+
+    , gotoStatement: <span class="keyword">function</span>(label) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'GotoStatement'</span>
+        , label: label
+      };
+    }
+
+    , returnStatement: <span class="keyword">function</span>(args) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'ReturnStatement'</span>
+        , <span class="string">'arguments'</span>: args <span class="comment">// @TODO list?</span>
+      };
+    }
+
+    , ifStatement: <span class="keyword">function</span>(clauses) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'IfStatement'</span>
+        , clauses: clauses
+      };
+    }
+
+    , clause: <span class="keyword">function</span>(condition, body) {
+      <span class="keyword">return</span> {
+          condition: condition
+        , body: body
+      };
+    }
+
+    , whileStatement: <span class="keyword">function</span>(condition, body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'WhileStatement'</span>
+        , condition: condition
+        , body: body
+      };
+    }
+
+    , doStatement: <span class="keyword">function</span>(body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'DoStatement'</span>
+        , body: body
+      };
+    }
+
+    , repeatStatement: <span class="keyword">function</span>(condition, body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'RepeatStatement'</span>
+        , condition: condition
+        , body: body
+      };
+    }
+
+    , localStatement: <span class="keyword">function</span>(variables, init) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'LocalStatement'</span>
+        , variables: variables
+        , init: init
+      };
+    }
+
+    , assignmentStatement: <span class="keyword">function</span>(variables, init) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'AssignmentStatement'</span>
+        , variables: variables
+        , init: init
+      };
+    }
+
+    , callStatement: <span class="keyword">function</span>(expression) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'CallStatement'</span>
+        , expression: expression
+      };
+    }
+
+    , functionStatement: <span class="keyword">function</span>(identifier, parameters, isVararg, isLocal, body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'FunctionDeclaration'</span>
+        , identifier: identifier
+        , vararg: isVararg
+        , local: isLocal
+        , parameters: parameters
+        , body: body
+      };
+    }
+
+    , forNumericStatement: <span class="keyword">function</span>(variable, start, end, step, body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'ForNumericStatement'</span>
+        , variable: variable
+        , start: start
+        , end: end
+        , step: step
+        , body: body
+      };
+    }
+
+    , forGenericStatement: <span class="keyword">function</span>(variables, iterators, body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'ForGenericStatement'</span>
+        , variables: variables
+        , iterators: iterators
+        , body: body
+      };
+    }
+
+    , chunk: <span class="keyword">function</span>(body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'Chunk'</span>
+        , body: body
+      };
+    }
+    , identifier: <span class="keyword">function</span>(name) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'Identifier'</span>
+        , name: name
+      };
+    }
+    , literal: <span class="keyword">function</span>(value) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'Literal'</span>
+        , value: value
+      };
+    }
+    , tableConstructorExpression: <span class="keyword">function</span>(fields) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'TableConstructorExpression'</span>
+        , fields: fields
+      };
+    }
+    , tableKey: <span class="keyword">function</span>(key, value) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'TableKey'</span>
+        , key: key
+        , value: value
+      };
+    }
+    , tableKeyString: <span class="keyword">function</span>(key, value) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'TableKeyString'</span>
+        , key: key
+        , value: value
+      };
+    }
+    , tableValue: <span class="keyword">function</span>(value) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'TableValue'</span>
+        , value: value
+      };
+    }
+
+    , binaryExpression: <span class="keyword">function</span>(operator, left, right) {
+      <span class="keyword">var</span> type = (operator === <span class="string">'and'</span> || operator === <span class="string">'or'</span>) ?
+        <span class="string">'LogicalExpression'</span> :
+        <span class="string">'BinaryExpression'</span>;
+
+      <span class="keyword">return</span> {
+          type: type
+        , operator: operator
+        , left: left
+        , right: right
+      };
+    }
+    , unaryExpression: <span class="keyword">function</span>(operator, argument) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'UnaryExpression'</span>
+        , operator: operator
+        , argument: argument
+      };
+    }
+    , memberExpression: <span class="keyword">function</span>(base, indexer, identifier) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'MemberExpression'</span>
+        , indexer: indexer
+        , identifier: identifier
+        , base: base
+      };
+    }
+
+    , indexExpression: <span class="keyword">function</span>(base, index) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'IndexExpression'</span>
+        , base: base
+        , index: index
+      };
+    }
+
+    , callExpression: <span class="keyword">function</span>(base, args) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'CallExpression'</span>
+        , base: base
+        , <span class="string">'arguments'</span>: args
+      };
+    }
+
+    , tableCallExpression: <span class="keyword">function</span>(base, argument) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'TableCallExpression'</span>
+        , base: base
+        , argument: argument
+      };
+    }
+
+    , stringCallExpression: <span class="keyword">function</span>(base, argument) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'StringCallExpression'</span>
+        , base: base
+        , argument: argument
+      };
+    }
+  };
+
+</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h2>Helpers</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="keyword">var</span> slice = Array.prototype.slice
+    , toString = Object.prototype.toString;
+
+</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>JS really should get a sprintf function. This one uses %INDEX to input
+arguments in the supplied format string.</p>
+
+<p>Example:</p>
+
+<ul>
+<li><code>sprintf('Unexpected %2 in %1.', 'token', 'function');</code></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">sprintf</span><span class="params">(format)</span> {</span>
+    <span class="keyword">var</span> args = slice.call(arguments, <span class="number">1</span>);
+    format.replace(<span class="regexp">/%(\d)/g</span>, <span class="function"><span class="keyword">function</span> <span class="params">(match, index)</span> {</span>
+      match = <span class="string">''</span>; <span class="comment">// jshint</span>
+      <span class="keyword">return</span> args[index] || <span class="string">''</span>;
+    });
+    <span class="keyword">return</span> format;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Returns a new object with the properties from all objectes passed as
+arguments. Last argument takes precedence.</p>
+
+<p>Example:</p>
+
+<ul>
+<li><code>this.options = extend(options, { output: false });</code></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">extend</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> args = slice.call(arguments)
+      , dest = {}
+      , src, prop;
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = args.length; i &lt; l; i++) {
+      src = args[i];
+      <span class="keyword">for</span> (prop <span class="keyword">in</span> src) <span class="keyword">if</span> (src.hasOwnProperty(prop)) {
+        dest[prop] = src[prop];
+      }
+    }
+    <span class="keyword">return</span> dest;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">logger</span><span class="params">()</span> {</span>
+    <span class="keyword">if</span> (!enable_log) <span class="keyword">return</span>;
+    <span class="keyword">var</span> util = require(<span class="string">'util'</span>);
+    <span class="keyword">var</span> args = slice.call(arguments);
+    args.forEach(<span class="keyword">function</span>(el) {
+      console.log(util.inspect(el, <span class="literal">false</span>, <span class="literal">null</span>, <span class="literal">true</span>));
+    });
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Raise an expection</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">raise</span><span class="params">(message)</span> {</span>
+    <span class="keyword">throw</span> <span class="keyword">new</span> SyntaxError(message);
+  }
+  <span class="function"><span class="keyword">function</span> <span class="title">unexpected</span><span class="params">(msg)</span> {</span>
+    raise(<span class="string">"Unexpected "</span> + msg);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h2>Lexer</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="keyword">var</span> index
+    , token
+    , lookahead
+    , comments;
+
+  <span class="function"><span class="keyword">function</span> <span class="title">readToken</span><span class="params">()</span> {</span>
+</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>@TODO track comments, whitespace and line numbers at some point.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">while</span> (isWhiteSpace(input[index])) index++;
+
+    <span class="keyword">if</span> (input[index] === <span class="string">'-'</span> &amp;&amp; input[index + <span class="number">1</span>] === <span class="string">'-'</span>) scanComment();
+    <span class="keyword">while</span> (isWhiteSpace(input[index])) index++;
+    <span class="keyword">if</span> (index &gt;= length) <span class="keyword">return</span> { type : Tokens.EOF }; <span class="comment">// EOF</span>
+
+    <span class="keyword">var</span> char = input[index]
+      , next = input[index + <span class="number">1</span>]; <span class="comment">// @TODO what if EOF?</span>
+
+    <span class="keyword">if</span> (isIdentifierStart(char)) <span class="keyword">return</span> scanIdentifierOrKeyword();
+
+    <span class="keyword">switch</span> (char) {
+      <span class="keyword">case</span> <span class="string">'\''</span>: <span class="keyword">case</span> <span class="string">'"'</span>:
+        <span class="keyword">return</span> scanStringLiteral();
+
+      <span class="keyword">case</span> <span class="string">'['</span>:
+</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>@TODO is this <em>always</em> true?</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (next === <span class="string">'['</span> || next === <span class="string">'='</span>) scanStringLiteral(<span class="literal">true</span>);
+        <span class="keyword">return</span> scanPunctuator(char);
+
+      <span class="keyword">case</span> <span class="string">'0'</span>: <span class="keyword">case</span> <span class="string">'1'</span>: <span class="keyword">case</span> <span class="string">'1'</span>: <span class="keyword">case</span> <span class="string">'2'</span>: <span class="keyword">case</span> <span class="string">'3'</span>: <span class="keyword">case</span> <span class="string">'4'</span>: <span class="keyword">case</span> <span class="string">'5'</span>:
+      <span class="keyword">case</span> <span class="string">'6'</span>: <span class="keyword">case</span> <span class="string">'7'</span>: <span class="keyword">case</span> <span class="string">'8'</span>: <span class="keyword">case</span> <span class="string">'9'</span>:
+        <span class="keyword">return</span> scanNumericLiteral();
+
+      <span class="keyword">case</span> <span class="string">'.'</span>:
+        <span class="keyword">if</span> (isDecDigit(next)) <span class="keyword">return</span> scanNumericLiteral();
+        <span class="keyword">if</span> (next === <span class="string">'.'</span>) {
+          <span class="keyword">if</span> (input[index + <span class="number">2</span>] === <span class="string">'.'</span>) <span class="keyword">return</span> scanPunctuator(<span class="string">'...'</span>);
+          <span class="keyword">return</span> scanPunctuator(<span class="string">'..'</span>);
+        }
+        <span class="keyword">return</span> scanPunctuator(char);
+
+      <span class="keyword">case</span> <span class="string">'&gt;'</span>:
+        <span class="keyword">if</span> (next === <span class="string">'='</span>) <span class="keyword">return</span> scanPunctuator(<span class="string">'&gt;='</span>);
+        <span class="keyword">return</span> scanPunctuator(char);
+
+      <span class="keyword">case</span> <span class="string">'='</span>:
+        <span class="keyword">if</span> (next === <span class="string">'='</span>) <span class="keyword">return</span> scanPunctuator(<span class="string">'=='</span>);
+        <span class="keyword">return</span> scanPunctuator(char);
+
+      <span class="keyword">case</span> <span class="string">'&lt;'</span>:
+        <span class="keyword">if</span> (next === <span class="string">'='</span>) <span class="keyword">return</span> scanPunctuator(<span class="string">'&lt;='</span>);
+        <span class="keyword">return</span> scanPunctuator(char);
+
+      <span class="keyword">case</span> <span class="string">'~'</span>:
+        <span class="keyword">if</span> (next === <span class="string">'='</span>) <span class="keyword">return</span> scanPunctuator(<span class="string">'~='</span>);
+        <span class="keyword">return</span> unexpected(<span class="string">'~'</span>);
+
+      <span class="keyword">case</span> <span class="string">':'</span>:
+        <span class="keyword">if</span> (next === <span class="string">':'</span>) <span class="keyword">return</span> scanPunctuator(<span class="string">'::'</span>);
+        <span class="keyword">return</span> scanPunctuator(char);
+
+      <span class="keyword">case</span> <span class="string">'*'</span>: <span class="keyword">case</span> <span class="string">'/'</span>: <span class="keyword">case</span> <span class="string">'^'</span>: <span class="keyword">case</span> <span class="string">'%'</span>: <span class="keyword">case</span> <span class="string">','</span>: <span class="keyword">case</span> <span class="string">'{'</span>: <span class="keyword">case</span> <span class="string">'}'</span>:
+      <span class="keyword">case</span> <span class="string">'['</span>: <span class="keyword">case</span> <span class="string">']'</span>: <span class="keyword">case</span> <span class="string">'('</span>: <span class="keyword">case</span> <span class="string">')'</span>: <span class="keyword">case</span> <span class="string">';'</span>: <span class="keyword">case</span> <span class="string">'#'</span>: <span class="keyword">case</span> <span class="string">'-'</span>:
+      <span class="keyword">case</span> <span class="string">'+'</span>:
+        <span class="keyword">return</span> scanPunctuator(char);
+    }
+
+    <span class="keyword">return</span> unexpected(<span class="string">"readToken "</span> + char);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>DotsLiteral is not included in this</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">scanIdentifierOrKeyword</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> word = input[index++]
+      , type;
+
+    <span class="keyword">while</span> (isIdentifierPart(input[index])) {
+      word += input[index++];
+    }
+
+    type = isKeyword(word) ? Tokens.Keyword
+      : word === <span class="string">'true'</span> || word === <span class="string">'false'</span> ? Tokens.BooleanLiteral
+      : word === <span class="string">'nil'</span> ? Tokens.NilLiteral
+      : Tokens.Identifier;
+
+    <span class="keyword">return</span> {
+        type: type
+      , value: word
+    };
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">scanPunctuator</span><span class="params">(value)</span> {</span>
+    index += value.length;
+    <span class="keyword">return</span> {
+        type: Tokens.Punctuator
+      , value: value
+    };
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">scanStringLiteral</span><span class="params">(long)</span> {</span>
+    <span class="keyword">var</span> delimiter = input[index++]
+      , string = <span class="string">''</span>
+      , char;
+
+    <span class="keyword">if</span> (long) string = readLongString();
+    <span class="keyword">else</span> {
+      <span class="keyword">while</span> (index &lt; length) {
+        char = input[index++];
+        <span class="keyword">if</span> (char === delimiter) <span class="keyword">break</span>;
+        <span class="keyword">if</span> (char === <span class="string">'\\'</span>) string += char + input[index++];
+        <span class="keyword">else</span> <span class="keyword">if</span> (!isLineTerminator(char)) string += char;
+        <span class="keyword">else</span> {
+          unexpected(<span class="string">'line terminator in string'</span>);
+          <span class="keyword">break</span>;
+        }
+      }
+    }
+
+    <span class="keyword">return</span> {
+        type: Tokens.StringLiteral
+      , value: string
+    };
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">scanNumericLiteral</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> number = input[index++]
+      , char = number
+      , next = input[index];
+
+    <span class="keyword">if</span> (char === <span class="string">'0'</span> &amp;&amp; ~<span class="string">'xX'</span>.indexOf(next)) {
+      number += next;
+      next = input[++index];
+</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>if (!isHexDigit(input[index])) raise('Invalid hex');</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">while</span> (isHexDigit(next)) {
+        number += char = input[index++];
+        next = input[index];
+      }
+      <span class="keyword">if</span> (~<span class="string">'pP'</span>.indexOf(next)) {
+        number += input[index++]; <span class="comment">// append p</span>
+        next = input[index];
+        <span class="keyword">if</span> (~<span class="string">'+-'</span>.indexOf(next)) number += next;
+        <span class="keyword">else</span> raise(<span class="string">'missing +- in hex'</span>); <span class="comment">// @TODO are +- mandatory?</span>
+        index++;
+        <span class="keyword">if</span> (!isDecDigit(input[index])) raise(<span class="string">'Invalid p in hex'</span>);
+        <span class="keyword">while</span> (isDecDigit(input[index])) number += input[index++];
+      }
+    } <span class="keyword">else</span> {
+      <span class="keyword">while</span> (isDecDigit(input[index])) number += input[index++];
+      <span class="keyword">if</span> (input[index] === <span class="string">'.'</span>) {
+        number += input[index++];
+        <span class="keyword">while</span> (isDecDigit(input[index])) number += input[index++];
+      }
+      <span class="keyword">if</span> (~<span class="string">'eE'</span>.indexOf(input[index])) {
+        number += input[index++]; <span class="comment">// append e</span>
+</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>@TODO +-</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (!isDecDigit(input[index])) raise(<span class="string">'invalid e in dec'</span>); <span class="comment">// @TODO mandatory?</span>
+        <span class="keyword">while</span> (isDecDigit(input[index])) number += input[index++];
+      }
+    }
+
+    <span class="keyword">return</span> {
+        type: Tokens.NumericLiteral
+      , value: number
+    };
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">scanComment</span><span class="params">()</span> {</span>
+    index += <span class="number">2</span>; <span class="comment">// --</span>
+    <span class="keyword">var</span> char = input[index]
+      , content = <span class="string">''</span>;
+
+    <span class="keyword">if</span> (char === <span class="string">'['</span>) {
+      index++;
+      content = readLongString();
+    } <span class="keyword">else</span> {
+      <span class="keyword">while</span> (index &lt; length) {
+        <span class="keyword">if</span> (isLineTerminator(char = input[index++])) <span class="keyword">break</span>;
+        content += char;
+      }
+    }
+
+    comments.push({
+        type: <span class="string">'Comment'</span>
+      , value: content
+    });
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">readLongString</span><span class="params">(type)</span> {</span>
+    <span class="keyword">var</span> level = <span class="number">0</span>
+      , content = <span class="string">''</span>
+      , char
+      , commentTerminator = <span class="literal">false</span>;
+
+    <span class="keyword">while</span> (input[index + level] === <span class="string">'='</span>) level++;
+    <span class="keyword">if</span> (input[index + level] !== <span class="string">'['</span>) <span class="keyword">return</span> unexpected(<span class="string">'char, expected ['</span>); <span class="comment">// @TODO ?</span>
+
+    index += level + <span class="number">1</span>;
+    char = input[index];
+
+</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>If the first character is a newline, ignore it and begin on next line.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isLineTerminator(char)) char = input[++index];
+
+    <span class="keyword">while</span> (index &lt; length) {
+      char = input[index++];
+      <span class="keyword">if</span> (char === <span class="string">']'</span>) {
+        commentTerminator = <span class="literal">true</span>;
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; level; i++) {
+          <span class="keyword">if</span> (input[index + i] !== <span class="string">'='</span>) commentTerminator = <span class="literal">false</span>;
+        }
+        <span class="keyword">if</span> (input[index + level] !== <span class="string">']'</span>) commentTerminator = <span class="literal">false</span>;
+      }
+
+      <span class="keyword">if</span> (commentTerminator) <span class="keyword">break</span>;
+      content += char;
+    }
+    index += level + <span class="number">3</span>;
+
+    <span class="keyword">return</span> content;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">next</span><span class="params">()</span> {</span>
+    token = lookahead;
+    lookahead = readToken();
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">peek</span><span class="params">()</span> {</span>
+    lookahead = readToken();
+    <span class="keyword">return</span> lookahead;
+  }
+
+
+  <span class="function"><span class="keyword">function</span> <span class="title">match</span><span class="params">()</span> {</span>
+
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">consume</span><span class="params">(value)</span> {</span>
+    <span class="keyword">if</span> (token.value === value) {
+      next();
+      <span class="keyword">return</span> <span class="literal">true</span>;
+    }
+    <span class="keyword">return</span> <span class="literal">false</span>;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">expect</span><span class="params">(value)</span> {</span>
+    <span class="keyword">if</span> (token.value === value) next();
+    <span class="keyword">else</span> unexpected(token.value + <span class="string">' expecting '</span> + value);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>@TODO add "Any other Unicode space separator"</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">isWhiteSpace</span><span class="params">(char)</span> {</span>
+    <span class="keyword">return</span> regexp.whiteSpace.test(char) || isLineTerminator(char);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>@TODO does lua conform with the unicode standard?
+@see http://en.wikipedia.org/wiki/Newline#Unicode</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">isLineTerminator</span><span class="params">(char)</span> {</span>
+    <span class="keyword">return</span> regexp.lineTerminator.test(char);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Punctuators</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">isPunctuator</span><span class="params">(id)</span> {</span>
+    <span class="keyword">return</span> regexp.punctuator.test(id);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">isDecDigit</span><span class="params">(char)</span> {</span>
+    <span class="keyword">return</span> regexp.decDigit.test(char);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">isHexDigit</span><span class="params">(char)</span> {</span>
+    <span class="keyword">return</span> regexp.hexDigit.test(char);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Lua identifiers cannot use locale-dependent letters.
+http://www.lua.org/manual/5.2/manual.html#8.1</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">isIdentifierStart</span><span class="params">(char)</span> {</span>
+    <span class="keyword">return</span> regexp.identifierStart.test(char);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">isIdentifierPart</span><span class="params">(char)</span> {</span>
+    <span class="keyword">return</span> regexp.identifierPart.test(char);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>@see http://www.lua.org/manual/5.2/manual.html#3.1
+Nil, true, false</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">isKeyword</span><span class="params">(id)</span> {</span>
+    <span class="keyword">var</span> keyword = <span class="literal">false</span>;
+
+    <span class="keyword">switch</span> (id.length) {
+      <span class="keyword">case</span> <span class="number">2</span>:
+        keyword = (id === <span class="string">'do'</span> || id === <span class="string">'if'</span> || id === <span class="string">'in'</span> || id === <span class="string">'or'</span>);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="number">3</span>:
+        keyword = (id === <span class="string">'and'</span> || id === <span class="string">'end'</span> || id === <span class="string">'for'</span> || id === <span class="string">'not'</span>);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="number">4</span>:
+        keyword = (id === <span class="string">'else'</span> || id === <span class="string">'goto'</span> || id === <span class="string">'then'</span>);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="number">5</span>:
+        keyword = (id === <span class="string">'break'</span> || id === <span class="string">'local'</span> || id === <span class="string">'until'</span> || id === <span class="string">'while'</span>);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="number">6</span>:
+        keyword = (id === <span class="string">'elseif'</span> || id === <span class="string">'repeat'</span> || id === <span class="string">'return'</span>);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="number">8</span>:
+        keyword = (id === <span class="string">'function'</span>);
+        <span class="keyword">break</span>;
+    }
+</pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>We make room here for reserved words, modifications etc.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">return</span> keyword;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">isCallExpression</span><span class="params">(expression)</span> {</span>
+    <span class="keyword">if</span> (expression) {
+      <span class="keyword">switch</span> (expression.type) {
+        <span class="keyword">case</span> <span class="string">'CallExpression'</span>:
+        <span class="keyword">case</span> <span class="string">'TableCallExpression'</span>:
+        <span class="keyword">case</span> <span class="string">'StringCallExpression'</span>:
+          <span class="keyword">return</span> <span class="literal">true</span>;
+      }
+    }
+    <span class="keyword">return</span> <span class="literal">false</span>;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <h2>Parse function</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Syntactically same as block</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">parseChunk</span><span class="params">()</span> {</span>
+    peek();
+    next();
+    <span class="keyword">var</span> body = parseBlock();
+    <span class="keyword">return</span> ast.chunk(body);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseBlock</span><span class="params">(terminator)</span> {</span>
+    <span class="keyword">var</span> block = []
+      , statement;
+
+    <span class="keyword">while</span> (token.type !== Tokens.EOF) {
+      statement = parseStatement();
+      <span class="keyword">if</span> (!statement) <span class="keyword">break</span>;
+      block.push(statement);
+    }
+</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Doesn't really need an ast node</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">return</span> block;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseLabelStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> label = parseIdentifier();
+    expect(<span class="string">'::'</span>);
+    <span class="keyword">return</span> ast.labelStatement(label);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseBreakStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">return</span> ast.breakStatement();
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseGotoStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> label = parseIdentifier();
+    <span class="keyword">return</span> ast.gotoStatement(label);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseDoStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> body = parseBlock();
+    <span class="keyword">return</span> ast.doStatement(body);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseWhileStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> condition = parseExpression();
+    expect(<span class="string">'do'</span>);
+    <span class="keyword">var</span> body = parseBlock();
+    <span class="keyword">return</span> ast.whileStatement(condition, body);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseRepeatStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> body = parseBlock();
+    expect(<span class="string">'until'</span>);
+    <span class="keyword">var</span> condition = parseExpression();
+    <span class="keyword">return</span> ast.repeatStatement(condition, body);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseReturnStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> expressions = [];
+</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>@TODO what happens if return is somewhere in the middle of a block as
+lua \n dont have semantic meaning? Lua C compiler ends return
+statements if they are followed by else|elseif|end|eos.
+@see block_follow</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (token.value !== <span class="string">'end'</span>) {
+      <span class="keyword">var</span> expression = parseExpression();
+      <span class="keyword">if</span> (expression) {
+        expressions.push(expression);
+        <span class="keyword">while</span> (consume(<span class="string">','</span>)) expressions.push(parseExpression());
+      }
+      consume(<span class="string">';'</span>); <span class="comment">// grammar tells us ; is optional here.</span>
+    }
+    <span class="keyword">return</span> ast.returnStatement(expressions);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>3.3.4 Control Structures</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">parseIfStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> clauses = []
+      , condition
+      , body;
+
+    <span class="keyword">do</span> {
+      condition = parseExpression();
+      expect(<span class="string">'then'</span>);
+      body = parseBlock();
+      clauses.push(ast.clause(condition, body));
+    } <span class="keyword">while</span> (consume(<span class="string">'elseif'</span>));
+
+    <span class="keyword">if</span> (consume(<span class="string">'else'</span>)) {
+      body = parseBlock();
+      clauses.push(ast.clause(<span class="literal">null</span>, body));
+    }
+
+    expect(<span class="string">'end'</span>);
+    <span class="keyword">return</span> ast.ifStatement(clauses);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseForStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> variable = parseIdentifier();
+    <span class="keyword">var</span> body;
+    <span class="keyword">if</span> (consume(<span class="string">'='</span>)) {
+      <span class="keyword">var</span> start = parseExpression();
+      consume(<span class="string">','</span>);
+      <span class="keyword">var</span> end = parseExpression();
+      <span class="keyword">var</span> step = <span class="literal">null</span>;
+      <span class="keyword">if</span> (consume(<span class="string">','</span>)) step = parseExpression();
+      expect(<span class="string">'do'</span>);
+      body = parseBlock();
+      expect(<span class="string">'end'</span>);
+      <span class="keyword">return</span> ast.forNumericStatement(variable, start, end, step, body);
+    } <span class="keyword">else</span> {
+</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Generic For Statement</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> variables = [variable];
+      <span class="keyword">while</span> (consume(<span class="string">','</span>)) variables.push(parseIdentifier());
+      expect(<span class="string">'in'</span>);
+      <span class="keyword">var</span> iterators = [];
+      <span class="keyword">do</span> {
+        iterators.push(parseExpression());
+      } <span class="keyword">while</span>(consume(<span class="string">','</span>));
+      expect(<span class="string">'do'</span>);
+      body = parseBlock();
+      <span class="keyword">return</span> ast.forGenericStatement(variables, iterators, body);
+    }
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>3.4.10 Function Definitions</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">parseFunctionDeclaration</span><span class="params">(name, isLocal)</span> {</span>
+    <span class="keyword">var</span> isVararg = <span class="literal">false</span>;
+    <span class="keyword">var</span> parameters = [];
+    expect(<span class="string">'('</span>);
+    <span class="keyword">while</span> (token.type === Tokens.Identifier) { <span class="comment">// @TODO not only identifiers</span>
+      parameters.push(ast.identifier(token.value));
+      next();
+      <span class="keyword">if</span> (!consume(<span class="string">','</span>)) <span class="keyword">break</span>;
+    }
+    <span class="keyword">if</span> (consume(<span class="string">'...'</span>)) isVararg = <span class="literal">true</span>;
+    expect(<span class="string">')'</span>);
+    <span class="keyword">var</span> body = parseBlock();
+    <span class="keyword">return</span> ast.functionStatement(name, parameters, isVararg, isLocal || <span class="literal">false</span>, body);
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseFunctionName</span><span class="params">()</span> {</span>
+    <span class="keyword">if</span> (token.type !== Tokens.Identifier) unexpected(<span class="string">'Function name required'</span>);
+    <span class="keyword">var</span> base = ast.identifier(token.value);
+    next();
+    <span class="keyword">while</span> (consume(<span class="string">'.'</span>)) {
+      <span class="keyword">if</span> (token.type !== Tokens.Identifier) <span class="keyword">return</span> unexpected(<span class="string">'identifier'</span>);
+      base = ast.memberExpression(base, <span class="string">'.'</span>, ast.identifier(token.value));
+      next();
+    }
+    <span class="keyword">if</span> (consume(<span class="string">':'</span>)) {
+      <span class="keyword">if</span> (token.type !== Tokens.Identifier) unexpected(<span class="string">'not identifier'</span>);
+      base = ast.memberExpression(base, <span class="string">':'</span>, ast.identifier(token.value));
+      next();
+    }
+    <span class="keyword">return</span> base;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseLocalStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">if</span> (token.type === Tokens.Identifier) {
+      <span class="keyword">var</span> variables = [];
+      <span class="keyword">var</span> init = [];
+      <span class="keyword">do</span> {
+        variables.push(parseIdentifier());
+      } <span class="keyword">while</span> (consume(<span class="string">','</span>));
+</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>@TODO = has to be followed by at least one exp right?
+@TODO should we create all array elements and set them as null?</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (consume(<span class="string">'='</span>)) {
+        <span class="keyword">do</span> {
+          init.push(parseExpression());
+        } <span class="keyword">while</span> (consume(<span class="string">','</span>));
+      }
+      <span class="keyword">return</span> ast.localStatement(variables, init);
+    }
+    <span class="keyword">if</span> (consume(<span class="string">'function'</span>)) {
+      <span class="keyword">var</span> name = parseIdentifier();
+      <span class="keyword">return</span> parseFunctionDeclaration(name, <span class="literal">true</span>);
+    } <span class="keyword">else</span> {
+      raise(<span class="string">'local var or function definition expected.'</span>);
+    }
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>There are two types of statements, simple and compound.
+Statements are executed solely for their side effects.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">parseStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">if</span> (token.type === Tokens.Keyword) {
+      <span class="keyword">switch</span> (token.value) { <span class="comment">// @TODO would be nice to make these v8 inlinable</span>
+        <span class="keyword">case</span> <span class="string">'break'</span>:    next(); <span class="keyword">return</span> parseBreakStatement();
+        <span class="keyword">case</span> <span class="string">'goto'</span>:     next(); <span class="keyword">return</span> parseGotoStatement();
+        <span class="keyword">case</span> <span class="string">'do'</span>:       next(); <span class="keyword">return</span> parseDoStatement();
+        <span class="keyword">case</span> <span class="string">'while'</span>:    next(); <span class="keyword">return</span> parseWhileStatement();
+        <span class="keyword">case</span> <span class="string">'repeat'</span>:   next(); <span class="keyword">return</span> parseRepeatStatement();
+        <span class="keyword">case</span> <span class="string">'return'</span>:   next(); <span class="keyword">return</span> parseReturnStatement();
+        <span class="keyword">case</span> <span class="string">'if'</span>:       next(); <span class="keyword">return</span> parseIfStatement();
+        <span class="keyword">case</span> <span class="string">'for'</span>:      next(); <span class="keyword">return</span> parseForStatement();
+        <span class="keyword">case</span> <span class="string">'function'</span>:
+          next();
+          <span class="keyword">var</span> name = parseFunctionName();
+          <span class="keyword">return</span> parseFunctionDeclaration(name);
+        <span class="keyword">case</span> <span class="string">'local'</span>:    next(); <span class="keyword">return</span> parseLocalStatement(); <span class="comment">// @TODO</span>
+      }
+    }
+
+    <span class="keyword">if</span> (token.type === Tokens.Punctuator) {
+      <span class="keyword">if</span> (consume(<span class="string">'::'</span>)) <span class="keyword">return</span> parseLabelStatement();
+    }
+
+    <span class="keyword">var</span> expression = parsePrefixExpression();
+</pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>AssignmentStatement</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (~<span class="string">',='</span>.indexOf(token.value)) {
+      <span class="keyword">var</span> variables = [expression];
+      <span class="keyword">var</span> init = [];
+</pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>@TODO need to check grammar properly for this
+we should only allow Name | Indexed | Member</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">while</span> (consume(<span class="string">','</span>)) variables.push(parsePrefixExpression());
+      expect(<span class="string">'='</span>);
+      <span class="keyword">do</span> {
+        init.push(parseExpression());
+      } <span class="keyword">while</span> (consume(<span class="string">','</span>));
+      <span class="keyword">return</span> ast.assignmentStatement(variables, init);
+    }
+</pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>CallStatement</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isCallExpression(expression)) { <span class="comment">// @TODO ast change can break this.</span>
+      <span class="keyword">return</span> ast.callStatement(expression);
+    }
+
+    <span class="keyword">return</span> <span class="literal">false</span>;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseIdentifier</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> identifier = token.value;
+    <span class="keyword">if</span> (token.type !== Tokens.Identifier) unexpected(token.type);
+    next();
+    <span class="keyword">return</span> ast.identifier(identifier);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>As unary - can't be distinguished from binary - unary precedence isn't
+described in this table but in parseSubExpression itself.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">binaryPrecedence</span><span class="params">(operator)</span> {</span>
+    <span class="keyword">switch</span> (operator) {
+      <span class="keyword">case</span> <span class="string">'^'</span>: <span class="keyword">return</span> <span class="number">10</span>;
+      <span class="keyword">case</span> <span class="string">'*'</span>: <span class="keyword">case</span> <span class="string">'/'</span>: <span class="keyword">case</span> <span class="string">'%'</span>: <span class="keyword">return</span> <span class="number">7</span>;
+      <span class="keyword">case</span> <span class="string">'+'</span>: <span class="keyword">case</span> <span class="string">'-'</span>: <span class="keyword">return</span> <span class="number">6</span>;
+      <span class="keyword">case</span> <span class="string">'..'</span>: <span class="keyword">return</span> <span class="number">5</span>;
+      <span class="keyword">case</span> <span class="string">'&lt;'</span>: <span class="keyword">case</span> <span class="string">'&lt;='</span>: <span class="keyword">case</span> <span class="string">'&gt;'</span>: <span class="keyword">case</span> <span class="string">'&gt;='</span>: <span class="keyword">case</span> <span class="string">'=='</span>: <span class="keyword">case</span> <span class="string">'~='</span>: <span class="keyword">return</span> <span class="number">3</span>;
+      <span class="keyword">case</span> <span class="string">'and'</span>: <span class="keyword">return</span> <span class="number">2</span>;
+      <span class="keyword">case</span> <span class="string">'or'</span>: <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <h2>Expression parser</h2>
+
+<p>Expressions are evaluated and always return a value. Sometimes with side
+effects depending on the language.
+@see http://striky.ece.jhu.edu/~sasha/SOFTWARE/FORTRAN/007-0710-060/sgi_html/ch03.html</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>exp ::= (unop exp | primary | prefixexp ) { binop exp }
+primary ::= nil | false | true | Number | String | '...' | functiondef | tableconstructor
+prefixexp ::= (Name | '(' exp ')' ) { '[' exp ']' | '.' Name | ':' Name args | args }</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">parseExpression</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> expression = parseSubExpression(<span class="number">0</span>);
+
+    <span class="keyword">return</span> expression;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <p>Implement this the same way as Lua does it to make sure precedence is
+correct. <em>Previous implementation should work.</em>
+@benchmark</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>exp ::= (unop exp | primary | prefixexp ) { binop exp }</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">parseSubExpression</span><span class="params">(minPrecedence)</span> {</span>
+    <span class="keyword">var</span> operator = token.value;
+</pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>The left-hand side in binary operations.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression;
+
+</pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>UnaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (operator === <span class="string">'#'</span> || operator === <span class="string">'-'</span> || operator === <span class="string">'not'</span>) {
+      next();
+      <span class="keyword">var</span> argument = parseSubExpression(<span class="number">8</span>);
+      expression = ast.unaryExpression(operator, argument);
+    } <span class="keyword">else</span> {
+</pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>PrimaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      expression = parsePrimaryExpression();
+
+</pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>PrefixExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!expression) {
+        expression = parsePrefixExpression();
+      }
+    }
+
+    <span class="keyword">while</span> (<span class="literal">true</span>) {
+      operator = token.value;
+      <span class="keyword">var</span> precedence = binaryPrecedence(operator);
+      <span class="keyword">if</span> (precedence === <span class="number">0</span> || precedence &lt;= minPrecedence) <span class="keyword">break</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <p>Right-hand precedence operators</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (operator === <span class="string">'^'</span> || operator === <span class="string">'..'</span>) precedence--;
+      next();
+      <span class="keyword">var</span> right = parseSubExpression(precedence);
+      expression = ast.binaryExpression(operator, expression, right);
+    }
+    <span class="keyword">return</span> expression;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <blockquote>
+  <p>(Name | '(' exp ')' ) { '[' exp ']' | '.' Name | ':' Name args | args }</p>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">parsePrefixExpression</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> base;
+</pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>The prefix</p>
+
+<blockquote>
+  <p>Name | '(' exp ')'</p>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (token.type === Tokens.Identifier) {
+      base = parseIdentifier();
+    } <span class="keyword">else</span> <span class="keyword">if</span> (consume(<span class="string">'('</span>)) {
+      base = parseExpression();
+      expect(<span class="string">')'</span>);
+    } <span class="keyword">else</span> {
+      <span class="keyword">return</span> <span class="literal">null</span>;
+    }
+
+</pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Suffix</p>
+
+<blockquote>
+  <p>{ '[' exp ']' | '.' Name | ':' Name args | args }</p>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression, identifier;
+    <span class="keyword">while</span> (<span class="literal">true</span>) {
+      <span class="keyword">switch</span> (token.value) {
+        <span class="keyword">case</span> <span class="string">'['</span>:
+          expression = parseExpression();
+          base = ast.indexExpression(base, expression);
+          <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'.'</span>:
+          identifier = parseIdentifier();
+          base = ast.memberExpression(base, <span class="string">'.'</span>, identifier);
+          <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">':'</span>:
+          identifier = parseIdentifier();
+          base = ast.memberExpression(base, <span class="string">':'</span>, identifier);
+          base = parseCallExpression(base);
+          <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'('</span>: <span class="keyword">case</span> <span class="string">'"'</span>: <span class="keyword">case</span> <span class="string">'{'</span>: <span class="comment">// args</span>
+          base = parseCallExpression(base);
+          <span class="keyword">break</span>;
+        <span class="keyword">default</span>:
+          <span class="keyword">return</span> base;
+      }
+    }
+
+    <span class="keyword">return</span> base;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <blockquote>
+  <p>'(' [explist] ')' | tableconstructor | String</p>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">parseCallExpression</span><span class="params">(base)</span> {</span>
+    <span class="keyword">if</span> (token.type === Tokens.Punctuator) {
+      <span class="keyword">switch</span> (token.value) {
+        <span class="keyword">case</span> <span class="string">'('</span>:
+          next();
+          <span class="keyword">var</span> expressions = [];
+          <span class="keyword">var</span> expression = parseExpression();
+          <span class="keyword">if</span> (expression) expressions.push(expression);
+          <span class="keyword">while</span> (consume(<span class="string">','</span>)) expressions.push(parseExpression());
+          expect(<span class="string">')'</span>);
+          <span class="keyword">return</span> ast.callExpression(base, expressions);
+        <span class="keyword">case</span> <span class="string">'{'</span>:
+          next();
+          <span class="keyword">var</span> table = parseTableConstructor();
+          <span class="keyword">return</span> ast.tableCallExpression(base, table);
+      }
+    } <span class="keyword">else</span> <span class="keyword">if</span> (token.type === Tokens.StringLiteral) {
+      <span class="keyword">return</span> ast.stringCallExpression(base, token.value);
+    }
+    <span class="keyword">return</span>;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-50">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-50">&#182;</a>               </div>               <blockquote>
+  <p>String | Numeric | nil | true | false | functiondef | tableconstructor | '...'</p>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">parsePrimaryExpression</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> node;
+    <span class="keyword">switch</span> (token.type) {
+      <span class="keyword">case</span> Tokens.StringLiteral:
+      <span class="keyword">case</span> Tokens.NumericLiteral:
+</pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>We don't want to cast numbers as lua allows exponents in hexadecimal
+while javascript do not.</p>             </td>             <td class="code">               <div class="highlight"><pre>        node = ast.literal(token.value);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> Tokens.NilLiteral:
+        node = ast.literal(<span class="literal">null</span>);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> Tokens.BooleanLiteral:
+        node = ast.literal(token.value === <span class="string">'true'</span>);
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> Tokens.Keyword:
+        <span class="keyword">if</span> (token.value === <span class="string">'function'</span>) {
+          next();
+          node = parseFunctionDeclaration(<span class="literal">null</span>); <span class="comment">// @TODO isLocal?</span>
+        }
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> Tokens.Punctuator:
+        <span class="keyword">if</span> (consume(<span class="string">'...'</span>)) <span class="keyword">return</span> ast.dotsLiteral(token.value); <span class="comment">// @TODO needs check?</span>
+        <span class="keyword">if</span> (consume(<span class="string">'{'</span>)) {
+          node = parseTableConstructor();
+        }
+        <span class="keyword">break</span>;
+    }
+    <span class="keyword">if</span> (node) next();
+    <span class="keyword">return</span> node;
+  }
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parseTableConstructor</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> fields = []
+      , key, value;
+
+    <span class="keyword">while</span> (index &lt;= length) {
+</pre></div>             </td>           </tr>                               <tr id="section-52">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-52">&#182;</a>               </div>               <p>@TODO optional fieldlist?</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (token.type === Tokens.Punctuator &amp;&amp; consume(<span class="string">'['</span>)) {
+        key = parseExpression();
+        expect(<span class="string">']'</span>);
+        expect(<span class="string">'='</span>);
+        value = parseExpression();
+        fields.push(ast.tableKey(key, value));
+      } <span class="keyword">else</span> <span class="keyword">if</span> (token.type === Tokens.Identifier) {
+        key = ast.literal(token.value);
+        next();
+        <span class="keyword">if</span> (consume(<span class="string">'='</span>)) {
+          value = parseExpression();
+          fields.push(ast.tableKeyString(key, value));
+        } <span class="keyword">else</span> {
+          fields.push(ast.tableValue(key));
+        }
+      } <span class="keyword">else</span> {
+        value = parseExpression();
+        fields.push(ast.tableValue(value));
+      }
+      <span class="keyword">if</span> (~<span class="string">',;'</span>.indexOf(token.value)) {
+        next();
+        <span class="keyword">continue</span>;
+      }
+      <span class="keyword">if</span> (token.value === <span class="string">'}'</span>) <span class="keyword">break</span>;
+    }
+    expect(<span class="string">'}'</span>);
+    <span class="keyword">return</span> ast.tableConstructorExpression(fields);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-53">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-53">&#182;</a>               </div>               <h2>Parser</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-54">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-54">&#182;</a>               </div>               <p>Export the main parser.</p>
+
+<ul>
+<li><code>wait</code> Hold parsing until end() is called. Defaults to false</li>
+</ul>
+
+<p>Example:</p>
+
+<pre><code>var parser = require('luaparser');
+parser.parse('i = 0');
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+  exports.parse = parse;
+
+  <span class="function"><span class="keyword">function</span> <span class="title">parse</span><span class="params">(_input, _options)</span> {</span>
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> _options === <span class="string">'undefined'</span> &amp;&amp; <span class="keyword">typeof</span> _input === <span class="string">'object'</span>) {
+      _options = _input;
+      _input = <span class="literal">undefined</span>;
+    }
+    <span class="keyword">if</span> (!_options) _options = {};
+
+    input = _input || <span class="string">''</span>;
+    options = extend(defaultOptions, _options);
+
+    <span class="keyword">if</span> (options.comments) comments = [];
+
+    <span class="keyword">if</span> (!options.wait) <span class="keyword">return</span> end();
+    <span class="keyword">return</span> exports;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-55">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-55">&#182;</a>               </div>               <p>Write to the source code buffer without beginning the parse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.write = write;
+
+  <span class="function"><span class="keyword">function</span> <span class="title">write</span><span class="params">(_input)</span> {</span>
+    input += String(_input);
+    <span class="keyword">return</span> exports;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-56">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-56">&#182;</a>               </div>               <p>Send an EOF and begin parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.end = end;
+
+  <span class="function"><span class="keyword">function</span> <span class="title">end</span><span class="params">(_input)</span> {</span>
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> _input !== <span class="string">'undefined'</span>) write(_input);
+
+    length = input.length;
+    line = <span class="number">1</span>;
+    index = <span class="number">0</span>;
+
+    <span class="keyword">var</span> chunk = parseChunk();
+    <span class="keyword">if</span> (options.comments) chunk.comments = comments;
+    <span class="keyword">return</span> chunk;
+  }
+
+}));
+<span class="comment">/* vim: set sw=2 ts=2 et tw=80 : */</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

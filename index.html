@@ -1,48 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Luaparse by oxyc</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <title>Luaparse</title>
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/oxyc/luaparse">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/oxyc/luaparse/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/oxyc/luaparse/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
-    <div class="wrapper">
-
-      <section>
-        <div id="title">
-          <h1>Luaparse</h1>
-          <p>A Lua parser written in JS</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/oxyc">oxyc</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+    <div class="hero-unit">
+      <div class="container">
+        <h1>Luaparse</h1>
+        <div class="row">
+          <div class="span6">
+            <p>A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.</p>
+          </div>
+          <div class="btn-group span6">
+            <a class="btn" href="index.html">Readme</a>
+            <a class="btn" href="luaparse.html">Annotated source</a>
+            <a class="btn" href="coverage.html">Coverage</a>
+            <a class="btn" href="test/index.html">Tests</a>
+            <a class="btn" href="tests.html">Test documentation</a>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="container">
+<h1>luaparse</h1>
+<p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.
 
-        <p>A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.</p>
-      </section>
+</p>
+<p><em>Still in development</em>
+
+</p>
+<h3>Todo</h3>
+<ul>
+<li><del>Implement grammar</del></li>
+<li>Test expression types</li>
+<li>Exceptions</li>
+<li>Error handling</li>
+<li>Location tracking</li>
+<li>Clean up</li>
+<li>Figure out methods to make expose</li>
+<li>Optimize hot functions</li>
+<li>Finish all @TODO in code.</li>
+<li>Polish test helpers</li>
+<li>Support testing in browsers</li>
+<li>Switch over to istanbul coverage analysis</li>
+</ul>
+<h2>Getting started</h2>
+<h2>Features</h2>
+<h2>Makefile</h2>
+<p>Run the tests
+
+</p>
+<pre><code>$ make test</code></pre>
+<p>Create the documentation
+
+</p>
+<pre><code>$ make docs</code></pre>
+<p>Report test coverage (more accurate than docs/coverage.html)
+
+</p>
+<pre><code>$ make lcov</code></pre>
+<p>Build a distribution file
+
+</p>
+<pre><code>$ make build</code></pre>
+<h2>License</h2>
+<p>MIT
+</p>
 
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
   </body>
 </html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Luaparse</title>
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="hero-unit">
+      <div class="container">
+        <h1>Luaparse</h1>
+        <div class="row">
+          <div class="span6">
+            <p>A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.</p>
+          </div>
+          <div class="btn-group span6">
+            <a class="btn" href="index.html">Readme</a>
+            <a class="btn" href="luaparse.html">Annotated source</a>
+            <a class="btn" href="coverage.html">Coverage</a>
+            <a class="btn" href="test/index.html">Tests</a>
+            <a class="btn" href="tests.html">Test documentation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+    <section class="suite">
+      <h1>Comments</h1>
+      <dl>
+        <dt>-- comment</dt>
+        <dd><pre><code>expectObj(parser.parse('-- comment'), {
+    type: 'Chunk'
+  , body: []
+  , comments: [
+      { type: 'Comment', value: ' comment' }
+  ]
+});</code></pre></dd>
+        <dt>--comment</dt>
+        <dd><pre><code>expectObj(parser.parse('--comment'), {
+    type: 'Chunk'
+  , body: []
+  , comments: [
+      { type: 'Comment', value: 'comment' }
+  ]
+});</code></pre></dd>
+        <dt>-- comment\nbreak</dt>
+        <dd><pre><code>expectObj(parser.parse('-- comment\nbreak'), {
+    type: 'Chunk'
+  , body: [{ type: 'BreakStatement' }]
+  , comments: [
+      { type: 'Comment', value: ' comment' }
+  ]
+});</code></pre></dd>
+        <dt>break--comment</dt>
+        <dd><pre><code>expectObj(parser.parse('break--comment'), {
+    type: 'Chunk'
+  , body: [{ type: 'BreakStatement' }]
+  , comments: [
+      { type: 'Comment', value: 'comment' }
+  ]
+});</code></pre></dd>
+        <dt>--[[comment]]--</dt>
+        <dd><pre><code>expectObj(parser.parse('--[[comment]]--'), {
+    type: 'Chunk'
+  , body: []
+  , comments: [
+      { type: 'Comment', value: 'comment' }
+  ]
+});</code></pre></dd>
+        <dt>--[[comment]]--break</dt>
+        <dd><pre><code>expectObj(parser.parse('--[[comment]]--break'), {
+    type: 'Chunk'
+  , body: [{ type: 'BreakStatement' }]
+  , comments: [
+      { type: 'Comment', value: 'comment' }
+  ]
+});</code></pre></dd>
+        <dt>--[=[comment]=]--break</dt>
+        <dd><pre><code>expectObj(parser.parse('--[=[comment]=]--break'), {
+    type: 'Chunk'
+  , body: [{ type: 'BreakStatement' }]
+  , comments: [
+      { type: 'Comment', value: 'comment' }
+  ]
+});</code></pre></dd>
+        <dt>--[===[comment\n--[=[sub]=]--]===]--break</dt>
+        <dd><pre><code>expectObj(parser.parse('--[===[comment\n--[=[sub]=]--]===]--break'), {
+    type: 'Chunk'
+  , body: [{ type: 'BreakStatement' }]
+  , comments: [
+      { type: 'Comment', value: 'comment\n--[=[sub]=]--' }
+  ]
+});</code></pre></dd>
+        <dt>--[[comment\nline two]]--</dt>
+        <dd><pre><code>expectObj(parser.parse('--[[comment\nline two]]--'), {
+    type: 'Chunk'
+  , body: []
+  , comments: [
+      { type: 'Comment', value: 'comment\nline two' }
+  ]
+});</code></pre></dd>
+        <dt>--[[\ncomment\nline two]]--</dt>
+        <dd><pre><code>expectObj(parser.parse('--[[\ncomment\nline two]]--'), {
+    type: 'Chunk'
+  , body: []
+  , comments: [
+      { type: 'Comment', value: 'comment\nline two' }
+  ]
+});</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Expressions</h1>
+      <dl>
+        <section class="suite">
+          <h1>Types</h1>
+          <dl>
+            <dt>while true and true do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>while not true do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>while 1 &gt; 2 do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>while not not true do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>while ( 1 + 1 ) &gt; 2 do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>Grouping</h1>
+          <dl>
+            <dt>while ( 1 + ( 1 * 2 ) / 2 ) &gt; 2 do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>while ( 1 + 1 * ( 2 / 2 ) ) &gt; 2 do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>TableConstructorExpression</h1>
+          <dl>
+            <dt>foo = { bar = 'baz' }</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>foo = { ['bar'] = 'baz' }</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>foo = { 'baz' }</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>Whitespace</h1>
+          <dl>
+            <dt>1 + 1</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>(1 + 1)</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>(1+1)</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>(1+ 1)</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>(1 + 1)</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>( 1 + 1 )</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>  ( 1 + 1 )  </dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>Precedence</h1>
+          <dl>
+            <dt>1 + 1 * 2 &gt; 3</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 &lt; 2 and 2 &lt; 1</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 / 2 + 4 * 2 &gt; 8</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>2 &lt; 1 == true</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>2 &lt; 1 + 1 == true</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>not 1 + 1</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>not not 1 + 1</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 + #1</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>-x^2</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>Left vs Right associative</h1>
+          <dl>
+            <dt>2 ^ 2 ^ 3</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>2 ^ 2 ^ 3 ^ 4</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>2 ^ 2 ^ 3 ^ 4 + 1</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 * 2 / 3</dt>
+            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
+var tree = parser.parse('while ' + grouped + ' do end').body[0];
+if (debug) {
+  logger(&quot;Result&quot;, result);
+  logger(&quot;expected&quot;, tree);
+}
+expect(result).to.deep.equal(tree);</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Literals</h1>
+      <dl>
+        <section class="suite">
+          <h1>Numeric</h1>
+          <dl>
+            <dt>1 + 10</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>.1 + 10</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>1.1 + 10</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 + 10.1</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 + 1e1</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 + 1E1</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 + 0xf</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 + 0xfp+1</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+            <dt>1 + 0xFP-1</dt>
+            <dd><pre><code>expect(result.body[0].condition).to.deep.equal(tree);</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>API</h1>
+      <dl>
+        <dt>should have parse functions</dt>
+        <dd><pre><code>expect(parser).to.be.a('object');
+expect(parser.parse).to.be.a('function');
+expect(parser.write).to.be.a('function');
+expect(parser.end).to.be.a('function');</code></pre></dd>
+        <dt>should produce empty tree on empty input</dt>
+        <dd><pre><code>expectObj(parser.parse(''), {
+    type: 'Chunk'
+  , body: []
+  , comments: []
+});</code></pre></dd>
+        <dt>should support waiting on input</dt>
+        <dd><pre><code>var parse = parser.parse({ wait: true });
+expectObj(parse.end('break'), {
+    type: 'Chunk'
+  , body: [{ type: 'BreakStatement' }]
+  , comments: []
+});</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Statements</h1>
+      <dl>
+        <dt>BreakStatement</dt>
+        <dd><pre><code>expectTree('break', {
+    type: 'BreakStatement'
+});</code></pre></dd>
+        <dt>LabelStatement</dt>
+        <dd><pre><code>expectTree('::test::', {
+    type: 'LabelStatement'
+  , label: {
+      type: 'Identifier'
+    , name: 'test'
+  }
+});</code></pre></dd>
+        <dt>ReturnStatement</dt>
+        <dd><pre><code>expectTree('return true;', {
+    type: 'ReturnStatement'
+  , 'arguments': [{
+      type: 'Literal'
+    , value: true
+  }]
+});</code></pre></dd>
+        <dt>GotoStatement</dt>
+        <dd><pre><code>expectTree('goto test', {
+    type: 'GotoStatement'
+  , label: {
+      type: 'Identifier'
+    , name: 'test'
+  }
+});</code></pre></dd>
+        <dt>DoStatement</dt>
+        <dd><pre><code>expectTree(&quot;do end&quot;, {
+    type: 'DoStatement'
+  , body: []
+});</code></pre></dd>
+        <dt>WhileStatement</dt>
+        <dd><pre><code>expectTree(&quot;while true do end&quot;, {
+    type: 'WhileStatement'
+  , condition: {
+      type: 'Literal'
+    , value: true
+  }
+  , body: []
+});</code></pre></dd>
+        <dt>RepeatStatement</dt>
+        <dd><pre><code>expectTree(&quot;repeat until false&quot;, {
+    type: 'RepeatStatement'
+  , condition: {
+      type: 'Literal'
+    , value: false
+  }
+  , body: []
+});</code></pre></dd>
+        <dt>FunctionDeclaration</dt>
+        <dd><pre><code>expectTree(&quot;function Test () end&quot;, {
+    type: 'FunctionDeclaration'
+  , identifier: {
+      type: 'Identifier'
+    , name: 'Test'
+  }
+  , vararg: false
+  , local: false
+  , parameters: []
+  , body: []
+});</code></pre></dd>
+        <dt>IfStatement</dt>
+        <dd><pre><code>expectTree(&quot;if true then end&quot;, {
+    type: 'IfStatement'
+  , clauses: [{
+      condition: {
+        type: 'Literal'
+      , value: true
+    }
+    , body: []
+  }]
+});</code></pre></dd>
+        <dt>ForNumericStatement</dt>
+        <dd><pre><code>expectTree(&quot;for i = 0, 3, 0.5 do end&quot;, {
+    type: 'ForNumericStatement'
+  , variable: { type: 'Identifier', name: 'i' }
+  , start: { type: 'Literal', value: '0' }
+  , end: { type: 'Literal', value: '3' }
+  , step: { type: 'Literal', value: '0.5' }
+  , body: []
+});</code></pre></dd>
+        <dt>ForGenericStatement</dt>
+        <dd><pre><code>expectTree(&quot;for i in pairs(days) do end&quot;, {
+    type: 'ForGenericStatement'
+  , variables: [{ type: 'Identifier', name: 'i' }]
+  , iterators: [{
+      type: 'CallExpression'
+    , base: { type: 'Identifier', name: 'pairs' }
+    , 'arguments': [{ type: 'Identifier', name: 'days' }]
+  }]
+  , body: []
+});</code></pre></dd>
+        <dt>LocalStatement</dt>
+        <dd><pre><code>expectTree(&quot;local var = 12&quot;, {
+    type: 'LocalStatement'
+  , variables: [{ type: 'Identifier', name: 'var' }]
+  , init: [{ type: 'Literal', value: '12' }]
+});</code></pre></dd>
+        <dt>CallStatement</dt>
+        <dd><pre><code>expectTree(&quot;foo(bar)&quot;, {
+    type: 'CallStatement'
+  , expression: {
+      type: 'CallExpression'
+    , base: {
+        type: 'Identifier'
+      , name: 'foo'
+    }
+    , 'arguments': [{ type: 'Identifier', name: 'bar' }]
+  }
+});</code></pre></dd>
+        <dt>AssignmentStatement</dt>
+        <dd><pre><code>expectTree(&quot;foo = bar&quot;, {
+    type: 'AssignmentStatement'
+  , variables: [{ type: 'Identifier', name: 'foo' }]
+  , init: [{ type: 'Identifier', name: 'bar' }]
+});</code></pre></dd>
+        <section class="suite">
+          <h1>LocalStatement</h1>
+          <dl>
+            <dt>local foo, bar = 12, 13</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>local foo, bar = 12</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>FunctionDeclaration</h1>
+          <dl>
+            <dt>function Test (foo, bar) end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>local function Test (foo, bar) end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>function Test (foo, ...) end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>function Test.test() end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>function Test:hurr() end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>function Test.test:hurr() end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>function Test.test.foo:hurr() end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>IfStatement</h1>
+          <dl>
+            <dt>if true then else end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>if true then elseif false then end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>if true then elseif false then else end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>if true then elseif false then elseif false then end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>ReturnStatement</h1>
+          <dl>
+            <dt>return</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>return;</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>return true;</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>return true, false</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>return end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
+          <h1>ForStatement</h1>
+          <dl>
+            <dt>for i = 0, 3 do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+            <dt>for i, j in ipairs(days) do end</dt>
+            <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
+          </dl>
+        </section>
+      </dl>
+    </section>
+    </div>
+  </body>
+</html>
