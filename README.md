@@ -6,7 +6,7 @@ A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 
 ### Todo
 
-- Implement grammar (done)
+- <del>Implement grammar</del>
 - Test expression types
 - Exceptions
 - Error handling
@@ -15,6 +15,9 @@ A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 - Figure out methods to make expose
 - Optimize hot functions
 - Finish all @TODO in code.
+- Polish test helpers
+- Support testing in browsers
+- Switch over to istanbul coverage analysis
 
 ## Getting started
 
