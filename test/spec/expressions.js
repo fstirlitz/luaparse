@@ -124,7 +124,36 @@ describe('Expressions', function() {
           type: 'TableConstructorExpression'
         , fields: [{
             type: 'TableKey'
-          , key: { type: 'Identifier', name: 'bar' }
+          , key: { type: 'Literal', value: 'bar' }
+          , value: { type: 'Literal', value: 'baz' }
+        }]
+      }]
+    });
+    testTree("foo = { ['bar'] = 'baz' }", {
+        type: 'AssignmentStatement'
+      , variables: [{
+          type: 'Identifier'
+        , name : 'foo'
+      }]
+      , init: [{
+          type: 'TableConstructorExpression'
+        , fields: [{
+            type: 'TableKey'
+          , key: { type: 'Literal', value: 'bar' }
+          , value: { type: 'Literal', value: 'baz' }
+        }]
+      }]
+    });
+    testTree("foo = { 'baz' }", {
+        type: 'AssignmentStatement'
+      , variables: [{
+          type: 'Identifier'
+        , name : 'foo'
+      }]
+      , init: [{
+          type: 'TableConstructorExpression'
+        , fields: [{
+            type: 'TableValue'
           , value: { type: 'Literal', value: 'baz' }
         }]
       }]
