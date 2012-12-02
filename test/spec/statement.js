@@ -99,7 +99,7 @@ describe('Statements', function() {
       , variables: [{ type: 'Identifier', name: 'i' }]
       , iterators: [{
           type: 'CallExpression'
-        , identifier: { type: 'Identifier', name: 'pairs' }
+        , base: { type: 'Identifier', name: 'pairs' }
         , 'arguments': [{ type: 'Identifier', name: 'days' }]
       }]
       , body: []
@@ -349,7 +349,7 @@ describe('Statements', function() {
       ]
       , iterators: [{
           type: 'CallExpression'
-        , identifier: { type: 'Identifier', name: 'ipairs' }
+        , base: { type: 'Identifier', name: 'ipairs' }
         , 'arguments': [{ type: 'Identifier', name: 'days' }]
       }]
       , body: []
