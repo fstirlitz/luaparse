@@ -16,7 +16,7 @@ describe('Statements', function() {
   it('ReturnStatement', function() {
     expectTree('return true;', {
         type: 'ReturnStatement'
-      , arguments: [{
+      , 'arguments': [{
           type: 'Literal'
         , value: true
       }]
@@ -299,17 +299,17 @@ describe('Statements', function() {
   describe('ReturnStatement', function() {
     testTree('return', {
         type: 'ReturnStatement'
-      , arguments: []
+      , 'arguments': []
     });
 
     testTree('return;', {
         type: 'ReturnStatement'
-      , arguments: []
+      , 'arguments': []
     });
 
     testTree('return true;', {
         type: 'ReturnStatement'
-      , arguments: [{
+      , 'arguments': [{
           type: 'Literal'
         , value: true
       }]
@@ -317,7 +317,7 @@ describe('Statements', function() {
 
     testTree('return true, false', {
         type: 'ReturnStatement'
-      , arguments: [
+      , 'arguments': [
           { type: 'Literal', value: true }
         , { type: 'Literal', value: false }
       ]
@@ -325,8 +325,34 @@ describe('Statements', function() {
 
     testTree('return end', { // @TODO this should probably throw error
         type: 'ReturnStatement'
-      , arguments: []
+      , 'arguments': []
     });
 
+  });
+
+  describe('ForStatement', function() {
+
+    testTree("for i = 0, 3 do end", {
+        type: 'ForNumericStatement'
+      , variable: { type: 'Identifier', name: 'i' }
+      , start: { type: 'Literal', value: '0' }
+      , end: { type: 'Literal', value: '3' }
+      , step: null
+      , body: []
+    });
+
+    testTree("for i, j in ipairs(days) do end", {
+        type: 'ForGenericStatement'
+      , variables: [
+          { type: 'Identifier', name: 'i' }
+        , { type: 'Identifier', name: 'j' }
+      ]
+      , iterators: [{
+          type: 'CallExpression'
+        , identifier: { type: 'Identifier', name: 'ipairs' }
+        , 'arguments': [{ type: 'Identifier', name: 'days' }]
+      }]
+      , body: []
+    });
   });
 });
