@@ -114,6 +114,28 @@ describe('Statements', function() {
     });
   });
 
+  it('CallStatement', function() {
+    expectTree("foo(bar)", {
+        type: 'CallStatement'
+      , expression: {
+          type: 'CallExpression'
+        , base: {
+            type: 'Identifier'
+          , name: 'foo'
+        }
+        , 'arguments': [{ type: 'Identifier', name: 'bar' }]
+      }
+    });
+  });
+
+  it('AssignmentStatement', function() {
+    expectTree("foo = bar", {
+        type: 'AssignmentStatement'
+      , variables: [{ type: 'Identifier', name: 'foo' }]
+      , init: [{ type: 'Identifier', name: 'bar' }]
+    });
+  });
+
   describe('LocalStatement', function() {
 
     testTree("local foo, bar = 12, 13", {
