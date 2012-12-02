@@ -1,9 +1,4 @@
 describe('Statements', function() {
-  it('EmptyStatement', function() {
-    expectTree(";", {
-        type: 'EmptyStatement'
-    });
-  });
   it('BreakStatement', function() {
     expectTree('break', {
         type: 'BreakStatement'
