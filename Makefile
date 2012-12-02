@@ -5,9 +5,10 @@ HTMLDOCS=$(DOCS:.md=.html)
 all: build
 
 install:
-	@echo "istanbul is required to generate coverage report"
-	@echo "run: npm install -g istanbul"
 	@npm install
+	@echo
+	@echo "Istanbul is required to generate coverage report"
+	@echo "> npm install -g istanbul"
 
 build:
 	@./node_modules/.bin/grunt build
