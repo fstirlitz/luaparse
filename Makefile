@@ -7,7 +7,7 @@ checkout:
 	@sed -i 's/\.\.\///g' luaparse/docs/layout/head.html
 	@$(MAKE) -s -C luaparse install docs
 	@mv luaparse/docs/* .
-	@mv luaparse/test .
+	@cp -rf luaparse/test .
 
 clean:
 	@rm -rf layout
