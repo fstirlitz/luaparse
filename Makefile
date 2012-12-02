@@ -5,6 +5,8 @@ HTMLDOCS=$(DOCS:.md=.html)
 all: build
 
 install:
+	@echo "istanbul is required to generate coverage report"
+	@echo "run: npm install -g istanbul"
 	@npm install
 
 build:
@@ -17,20 +19,18 @@ test: test-spec
 
 test-spec:
 	@./node_modules/.bin/mocha \
-			--reporter $(REPORTER) \
-			test/spec/*.js
+		--reporter $(REPORTER) \
+		test/spec/*.js
 
 test-all: test-spec
 
 coverage:
-	@rm -rf lib-cov
-	@jscoverage lib lib-cov
-	@COVERAGE=1 $(MAKE) -s test REPORTER=html-cov > docs/coverage.html
-
-lcov:
-	@rm -rf lib-cov
-	@istanbul instrument --output lib-cov --no-compact --variable global.__coverage__ lib
-	@COVERAGE=1 ./node_modules/.bin/mocha --reporter mocha-istanbul test/spec/*
+	@rm -rf lib-cov docs/coverage
+	@istanbul instrument \
+		--output lib-cov --no-compact --variable global.__coverage__ \
+		lib
+	@COVERAGE=1 $(MAKE) -s test REPORTER=mocha-istanbul
+	@mv html-report docs/coverage
 
 docco:
 	@./node_modules/.bin/doccoh lib/*.js
@@ -41,14 +41,22 @@ docs-test:
 		> docs/tests.html
 
 docs-index:
-	@cat README.md docs/index.md | ./node_modules/.bin/marked --gfm\
+	@cat README.md | ./node_modules/.bin/marked --gfm \
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> docs/index.html
 
-docs: docco coverage docs-test docs-index
+docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
+
+%.html: %.md
+	@echo $<
+	@cat $< | ./node_modules/.bin/marked --gfm \
+		| cat docs/layout/head.html - docs/layout/foot.html \
+		> $@
+
+docs: docco coverage docs-test docs-md
 
 clean:
 	@rm -f docs/*.html docs/*.1
-	@rm -rf lib-cov coverage html-report
+	@rm -rf lib-cov coverage html-report docs/coverage/
 
 .PHONY: test test-md coverage test-all docs

@@ -1,5 +1,7 @@
 node_modules
-docs
+docs/*
+!docs/*.md
+!docs/layout/
 lib-cov
 html-report
 dist
