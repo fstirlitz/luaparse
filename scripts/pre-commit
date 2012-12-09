@@ -2,7 +2,7 @@
 
 var spawn = require('child_process').spawn;
 
-run('yeoman lint').on('next', run.bind({}, 'yeoman test'));
+run('npm test');
 
 function run(args) {
   args = args.split(' ');
@@ -16,3 +16,5 @@ function run(args) {
   });
   return ch;
 }
+
+/* vim: set sw=2 ts=2 et tw=80 ft=javascript : */
