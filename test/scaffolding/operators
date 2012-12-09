@@ -1,0 +1,68 @@
+a = -10
+a = -"foo"
+a = -a
+a = -nil
+a = -true
+a = -{}
+a = -function() end
+a = -a()
+a = -(a)
+a = -                                   -- FAIL
+a = not 10
+a = not "foo"
+a = not a
+a = not nil
+a = not true
+a = not {}
+a = not function() end
+a = not a()
+a = not (a)
+a = not                                 -- FAIL
+a = 1 + 2; a = 1 - 2
+a = 1 * 2; a = 1 / 2
+a = 1 ^ 2; a = 1 .. 2
+a = 1 +                                 -- FAIL
+a = 1 ..                                -- FAIL
+a = 1 * /                               -- FAIL
+a = 1 + -2; a = 1 - -2
+a = 1 * -                               -- FAIL
+a = 1 * not 2; a = 1 / not 2
+a = 1 / not                             -- FAIL
+a = 1 + 2 - 3 * 4 / 5 ^ 6
+a = ((1 + 2) - 3) * (4 / (5 ^ 6))
+a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))
+a = ((1                                 -- FAIL
+a = ((1 + 2)                            -- FAIL
+a = 1)                                  -- FAIL
+a = a + b - c
+a = "foo" + "bar"
+a = "foo".."bar".."baz"
+a = true + false - nil
+a = {} * {}
+a = function() end / function() end
+a = a() ^ b()
+a = 1 == 2; a = 1 ~= 2
+a = 1 < 2; a = 1 <= 2
+a = 1 > 2; a = 1 >= 2
+a = 1 < 2 < 3
+a = 1 >= 2 >= 3
+a = 1 ==                                -- FAIL
+a = ~= 2                                -- FAIL
+a = "foo" == "bar"
+a = "foo" > "bar"
+a = a ~= b
+a = true == false
+a = 1 and 2; a = 1 or 2
+a = 1 and                               -- FAIL
+a = or 1                                -- FAIL
+a = 1 and 2 and 3
+a = 1 or 2 or 3
+a = 1 and 2 or 3
+a = a and b or c
+a = a() and (b)() or c.d
+a = "foo" and "bar"
+a = true or false
+a = {} and {} or {}
+a = (1) and ("foo") or (nil)
+a = function() end == function() end
+a = function() end or function() end
