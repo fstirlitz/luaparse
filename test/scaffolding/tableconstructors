@@ -1,0 +1,32 @@
+a = {                                   -- FAIL
+a = {}
+a = {,}                                 -- FAIL
+a = {;}
+a = {,,}                                -- FAIL
+a = {;;}                                -- FAIL
+a = {{                                  -- FAIL
+a = {{{}}}
+a = {{},{},{{}},}
+a = { 1 }
+a = { 1, }
+a = { 1; }
+a = { 1, 2 }
+a = { a, b, c, }
+a = { true; false, nil; }
+a = { a.b, a[b]; a:c(), }
+a = { 1 + 2, a > b, "a" or "b" }
+a = { a=1, }
+a = { a=1, b="foo", c=nil }
+a = { a                                 -- FAIL
+a = { a=                                -- FAIL
+a = { a=,                               -- FAIL
+a = { a=;                               -- FAIL
+a = { 1, a="foo"                        -- FAIL
+a = { 1, a="foo"; b={}, d=true; }
+a = { [                                 -- FAIL
+a = { [1                                -- FAIL
+a = { [1]                               -- FAIL
+a = { [a]=                              -- FAIL
+a = { ["foo"]="bar" }
+a = { [1]=a, [2]=b, }
+a = { true, a=1; ["foo"]="bar", }

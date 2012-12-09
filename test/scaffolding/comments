@@ -1,0 +1,10 @@
+-- comment
+--coment
+-- comment\nbreak
+break--comment
+--[[comment]]--
+--[[comment]]--break
+--[=[comment]=]--break
+-[===[comment\n--[=[sub]=]--\n]===]--break
+--[[comment\nline two]]--
+--[[\ncomment\nline two\n]]--

@@ -1,0 +1,26 @@
+a                                       -- FAIL
+a,                                      -- FAIL
+a,b,c                                   -- FAIL
+a,b =                                   -- FAIL
+a = 1
+a = 1,2,3
+a,b,c = 1
+a,b,c = 1,2,3
+a.b = 1
+a.b.c = 1
+a[b] = 1
+a[b][c] = 1
+a.b[c] = 1
+a[b].c = 1
+0 =                                     -- FAIL
+"foo" =                                 -- FAIL
+true =                                  -- FAIL
+(a) =                                   -- FAIL
+{} =                                    -- FAIL
+a:b() =                                 -- FAIL
+a() =                                   -- FAIL
+a.b:c() =                               -- FAIL
+a[b]() =                                -- FAIL
+a = a b                                 -- FAIL
+a = 1 2                                 -- FAIL
+a = a = 1                               -- FAIL
