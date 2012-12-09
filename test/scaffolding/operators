@@ -66,3 +66,13 @@ a = {} and {} or {}
 a = (1) and ("foo") or (nil)
 a = function() end == function() end
 a = function() end or function() end
+a = (((1 or false) and true) or false) == true
+a = (((nil and true) or false) and true) == false
+a = not ((true or false) and nil)
+a = true or false  and nil
+a = 2^-2 == 1/4 and -2^- -2 == - - -4
+a = -3-1-5 == 0+0-9
+a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0
+a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"
+a = not nil and 2 and not(2>3 or 3<2)
+a = not(2+1 > 3*1) and "a".."b" > "a"
