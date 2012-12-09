@@ -2,31 +2,108 @@
 
 var fs = require('fs')
   , luaparse = require('../')
-  , args = [''].concat(process.argv.splice(2))
   , indent = '  '
-  , snippets = []
+  , verbose = true
   , testName
-  , output = '';
+  , snippets = []
+  , notifications = [];
+
+// Scaffold the file, with possible description.
+function scaffoldFile() {
+  var output = '';
+  if (testName) output += "describe('" + testName + "', function() {\n";
+
+  // Iterate over all snippets and generate their tests.
+  snippets.forEach(function(snippet) {
+    output += scaffoldIt(snippet) + "\n";
+  });
+
+  if (testName) output += "});\n";
+
+  return output;
+}
+
+// Scaffold an it-test.
+function scaffoldIt(snippet) {
+  var result = ''
+    , name = snippet.replace(/(\\|')/g, "\\$1")
+    , intro = "it('" + name + "', function() {\n"
+    , outro = "\n});"
+    , assertion
+    , success = true;
+
+  switch (/-- FAIL\s*$/.test(snippet)) {
+    case true:
+      snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
+      try {
+        luaparse.parse(snippet);
+        // For some reason it didnt throw a error, output the regular assertion
+        // but comment on it in the source.
+        intro += indent + "// This fails in semantic analysis!\n";
+        notifications.push('\033[33mExpected failure: \033[0m' + name);
+      } catch(error) {
+        assertion = scaffoldThrowAssertion(snippet, error);
+        break;
+      }
+    case false:
+      try {
+        result = JSON.stringify(luaparse.parse(snippet), null, indent)
+        assertion = scaffoldAssertion(snippet, result);
+      } catch (error) {
+        notifications.push('\033[31m' + error + ':\033[0m ' + name);
+        success = false;
+      }
+      break;
+  }
+  if (verbose && !success) return '';
+
+  return (intro + assertion + outro).replace(/^(.)/gm, indent + "$1");
+}
+
+// Scaffold a deep equals assertion.
+function scaffoldAssertion(snippet, result) {
+  result = result.split('\n');
+  var firstline = result.splice(0, 1);
+  result = result.join('\n');
+  return indent + "expect(parser.parse('" + snippet + "')).to.deep.equal(" +
+    firstline + "\n" +
+    result.replace(/^(.)/gm, indent + "$1") +
+    ");";
+}
+
+// Scaffold an expect throw assertion.
+function scaffoldThrowAssertion(snippet, error) {
+  return indent + "expect(parser.parse('" + snippet + "')).to.throw('" + error + "');";
+}
+
+// Main ---------------------------------------------------
+
+var args = process.argv.splice(2);
 
 if (!args.length) {
-  console.log("Usage:");
-  console.log("\tmake-test [snippet|file]...");
-  console.log("\tmake-test \"locale foo = \\\"bar\\\"\"");
-  console.log("\tmake-test ./tests");
+  console.log([
+      "Usage:"
+    , "\tmake-test [snippet|file]..."
+    , "\tmake-test \"locale foo = \\\"bar\\\"\""
+    , "\tmake-test ./tests"
+    , "\nOptions:"
+    , "\t--ignore-errors"
+  ].join('\n'));
   return;
 }
 
-args.forEach(function( arg, index) {
-  // Skip flags
-  if (/^--/.test(arg)) return;
+var previous;
+args.forEach(function(arg, index) {
+  if (/^--ignore-errors/.test(arg)) return verbose = false;
 
-  // Argument value
-  previous = args[index - 1];
+  // Argument flags
+  if (/^--/.test(arg)) return;
   switch (previous) {
     case '--name':
       testName = arg;
       return;
   }
+  previous = arg;
 
   // Snippet
   if (!fs.existsSync(arg)) {
@@ -44,60 +121,13 @@ args.forEach(function( arg, index) {
   return;
 });
 
-// Scaffold an it-test.
-function scaffoldIt(snippet, indent) {
-  var result = ''
-    , name = snippet.replace(/(\\|')/g, "\\$1")
-    , intro = "it('" + name + "', function() {\n"
-    , outro = "\n});"
-    , assertion;
+console.log(scaffoldFile());
 
-  switch (/-- FAIL\s*$/.test(snippet)) {
-    case true:
-      snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
-      try {
-        luaparse.parse(snippet);
-        // For some reason it didnt throw a error, output the regular assertion
-        // but comment on it in the source.
-        intro += indent + "// This fails in semantic analysis!\n";
-      } catch(error) {
-        assertion = scaffoldThrowAssertion(snippet, error, indent);
-        break;
-      }
-    case false:
-      result = JSON.stringify(luaparse.parse(snippet), null, indent)
-      assertion = scaffoldAssertion(snippet, result, indent);
-      break;
-  }
-
-  return (intro + assertion + outro).replace(/^(.)/gm, indent + "$1");
+if (verbose && notifications.length) {
+  console.log("\nNotices: \n-----------------------------");
+  notifications.forEach(function(notice) {
+    console.log(notice);
+  });
 }
-
-// Scaffold a deep equals assertion.
-function scaffoldAssertion(snippet, result, indent) {
-  result = result.split('\n');
-  var firstline = result.splice(0, 1);
-  result = result.join('\n');
-  return indent + "expect(parser.parse('" + snippet + "')).to.deep.equal(" +
-    firstline + "\n" +
-    result.replace(/^(.)/gm, indent + "$1") +
-    ");";
-}
-
-// Scaffold an expect throw assertion.
-function scaffoldThrowAssertion(snippet, error, indent) {
-  return indent + "expect(parser.parse('" + snippet + "')).to.throw('" + error + "');";
-}
-
-if (testName) output += "describe('" + testName + "', function() {\n";
-
-// Iterate over all snippets and generate their tests.
-snippets.forEach(function(snippet) {
-  output += scaffoldIt(snippet, indent) + "\n";
-});
-
-if (testName) output += "});\n";
-
-console.log(output);
 
 /* vim: set sw=2 ts=2 et tw=80 ft=javascript : */
