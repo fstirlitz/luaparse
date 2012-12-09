@@ -2,27 +2,78 @@
 
 var fs = require('fs')
   , luaparse = require('../')
-  , snippets = process.argv.splice(2)
-  , indent = '  ';
+  , args = [''].concat(process.argv.splice(2))
+  , indent = '  '
+  , snippets = []
+  , testName
+  , output = '';
 
-if (!snippets.length) {
+if (!args.length) {
   console.log("Usage:");
   console.log("\tmake-test [snippet|file]...");
   console.log("\tmake-test \"locale foo = \\\"bar\\\"\"");
   console.log("\tmake-test ./tests");
-  console.log("Note: files should delimit tests with ---");
+  return;
 }
 
-function scaffoldIt(snippet) {
-  var result = JSON.stringify(luaparse.parse(snippet), null, indent)
+args.forEach(function( arg, index) {
+  // Skip flags
+  if (/^--/.test(arg)) return;
+
+  // Argument value
+  previous = args[index - 1];
+  switch (previous) {
+    case '--name':
+      testName = arg;
+      return;
+  }
+
+  // Snippet
+  if (!fs.existsSync(arg)) {
+    snippets.push(arg);
+  }
+  // File
+  else {
+    fs.readFileSync(arg, 'utf-8')
+      .split("\n")
+      .forEach(function(snippet) {
+        if (!snippet.length) return;
+        snippets.push(snippet.replace(/\n$/, ''));
+      });
+  }
+  return;
+});
+
+// Scaffold an it-test.
+function scaffoldIt(snippet, indent) {
+  var result = ''
     , name = snippet.replace(/(\\|')/g, "\\$1")
     , intro = "it('" + name + "', function() {\n"
     , outro = "\n});"
-    , assertion = scaffoldAssertion(snippet, result, indent);
+    , assertion;
+
+  switch (/-- FAIL\s*$/.test(snippet)) {
+    case true:
+      snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
+      try {
+        luaparse.parse(snippet);
+        // For some reason it didnt throw a error, output the regular assertion
+        // but comment on it in the source.
+        intro += indent + "// This fails in semantic analysis!\n";
+      } catch(error) {
+        assertion = scaffoldThrowAssertion(snippet, error, indent);
+        break;
+      }
+    case false:
+      result = JSON.stringify(luaparse.parse(snippet), null, indent)
+      assertion = scaffoldAssertion(snippet, result, indent);
+      break;
+  }
 
   return (intro + assertion + outro).replace(/^(.)/gm, indent + "$1");
 }
 
+// Scaffold a deep equals assertion.
 function scaffoldAssertion(snippet, result, indent) {
   result = result.split('\n');
   var firstline = result.splice(0, 1);
@@ -33,17 +84,20 @@ function scaffoldAssertion(snippet, result, indent) {
     ");";
 }
 
+// Scaffold an expect throw assertion.
+function scaffoldThrowAssertion(snippet, error, indent) {
+  return indent + "expect(parser.parse('" + snippet + "')).to.throw('" + error + "');";
+}
+
+if (testName) output += "describe('" + testName + "', function() {\n";
+
+// Iterate over all snippets and generate their tests.
 snippets.forEach(function(snippet) {
-  if (fs.existsSync(snippet)) {
-    var content = fs.readFileSync(snippet, 'utf-8');
-    content = content.split("---");
-    content.forEach(function(snippet) {
-      snippet = snippet.replace(/\n$/, '');
-      console.log(scaffoldIt(snippet));
-    });
-  } else {
-    console.log(scaffoldIt(snippet));
-  }
+  output += scaffoldIt(snippet, indent) + "\n";
 });
+
+if (testName) output += "});\n";
+
+console.log(output);
 
 /* vim: set sw=2 ts=2 et tw=80 ft=javascript : */
