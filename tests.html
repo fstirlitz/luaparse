@@ -34,7 +34,7 @@
               <li><a href="index.html">Home</a></li>
               <li><a href="coverage.html">Coverage</a></li>
               <li><a href="test/index.html">Tests</a></li>
-              <li class="disabled"><a href="#"><del>Examples</del></a></li>
+              <li><a href="examples.html">Examples</a></li>
               <li class="disabled"><a href="#"><del>Benchmarks</del></a></li>
             </ul>
           </div>
@@ -165,181 +165,6 @@
             <dd><pre><code>expectTree(statement, obj, debug);</code></pre></dd>
           </dl>
         </section>
-        <section class="suite">
-          <h1>Whitespace</h1>
-          <dl>
-            <dt>1 + 1</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>(1 + 1)</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>(1+1)</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>(1+ 1)</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>(1 + 1)</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>( 1 + 1 )</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>  ( 1 + 1 )  </dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-          </dl>
-        </section>
-        <section class="suite">
-          <h1>Precedence</h1>
-          <dl>
-            <dt>1 + 1 * 2 &gt; 3</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>1 &lt; 2 and 2 &lt; 1</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>1 / 2 + 4 * 2 &gt; 8</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>2 &lt; 1 == true</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>2 &lt; 1 + 1 == true</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>not 1 + 1</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>not not 1 + 1</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>1 + #1</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>-x^2</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-          </dl>
-        </section>
-        <section class="suite">
-          <h1>Left vs Right associative</h1>
-          <dl>
-            <dt>2 ^ 2 ^ 3</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>2 ^ 2 ^ 3 ^ 4</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>2 ^ 2 ^ 3 ^ 4 + 1</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-            <dt>1 * 2 / 3</dt>
-            <dd><pre><code>var result = parser.parse('while ' + nongrouped + ' do end').body[0];
-var tree = parser.parse('while ' + grouped + ' do end').body[0];
-if (debug) {
-  logger(&quot;Result&quot;, result);
-  logger(&quot;expected&quot;, tree);
-}
-expect(result).to.deep.equal(tree);</code></pre></dd>
-          </dl>
-        </section>
       </dl>
     </section>
     <section class="suite">
@@ -391,6 +216,71 @@ expectObj(parse.end('break'), {
   , body: [{ type: 'BreakStatement' }]
   , comments: []
 });</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Precedence</h1>
+      <dl>
+        <dt>2^3^2 should equal 2^(3^2)</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>2^3*4 should equal (2^3)*4</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>2^2^3 should equal 2^(2^3)</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>2^2^3^4 should equal 2^(2^(3^4))</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>2^2^3^4+1 should equal 2^(2^(3^4))+1</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>1*2/3 should equal (1*2)/3</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>1 + 1 * 2 &gt; 3 should equal ( 1 + ( 1 * 2 ) ) &gt; 3</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>1 &lt; 2 and 2 &lt; 1 should equal (1 &lt; 2) and (2 &lt; 1)</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>1 / 2 + 4 * 2 &gt; 8 should equal ((1 / 2) + (4 * 2)) &gt; 8</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>2 &lt; 1 == true should equal (2 &lt; 1) == true</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>2 &lt; 1 + 1 == true should equal (2 &lt; (1 + 1)) == true</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>not 1 + 1 should equal (not 1) + 1</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>not not 1 + 1 should equal (not (not (1)) + 1)</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>1 + #1 should equal 1 + (#1)</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
+        <dt>-x^2 should equal -(x^2)</dt>
+        <dd><pre><code>var test = parser.parse('a = ' + test);
+var expected = parser.parse('a = ' + expected);
+expect(test).to.deep.equal(expected);</code></pre></dd>
       </dl>
     </section>
     <section class="suite">

@@ -159,35 +159,5 @@ describe('Expressions', function() {
       }]
     });
   });
-
-  describe('Whitespace', function() {
-    testPrecedence('1 + 1', '1 + 1');
-    testPrecedence('(1 + 1)', '(1 + 1)');
-    testPrecedence('(1+1)', '(1 + 1)');
-    testPrecedence('(1+ 1)', '(1 + 1)');
-    testPrecedence('(1 + 1)', '(1 + 1)');
-    testPrecedence('( 1 + 1 )', '(1 + 1)');
-    testPrecedence('  ( 1 + 1 )  ', '(1 + 1)');
-  });
-
-  describe('Precedence', function() {
-    testPrecedence('1 + 1 * 2 > 3', '( 1 + ( 1 * 2 ) ) > 3');
-    testPrecedence('1 < 2 and 2 < 1', '(1 < 2) and (2 < 1)');
-    testPrecedence('1 / 2 + 4 * 2 > 8', '((1 / 2) + (4 * 2)) > 8');
-    testPrecedence('2 < 1 == true', '(2 < 1) == true');
-    testPrecedence('2 < 1 + 1 == true', '(2 < (1 + 1)) == true');
-    testPrecedence('not 1 + 1', '(not 1) + 1');
-    testPrecedence('not not 1 + 1', '(not (not (1)) + 1)');
-    testPrecedence('1 + #1', '1 + (#1)');
-    testPrecedence('-x^2', '-(x^2)');
-
-  });
-
-  describe('Left vs Right associative', function() {
-    testPrecedence('2 ^ 2 ^ 3', '2 ^ (2 ^ 3)');
-    testPrecedence('2 ^ 2 ^ 3 ^ 4', '2 ^ (2 ^ (3 ^ 4))');
-    testPrecedence('2 ^ 2 ^ 3 ^ 4 + 1', '2 ^ (2 ^ (3 ^ 4)) + 1');
-    testPrecedence('1 * 2 / 3', '(1 * 2) / 3');
-  });
 });
 

@@ -1,0 +1,55 @@
+for                                     -- FAIL
+for do                                  -- FAIL
+for end                                 -- FAIL
+for 1                                   -- FAIL
+for a                                   -- FAIL
+for true                                -- FAIL
+for a, in                               -- FAIL
+for a in                                -- FAIL
+for a do                                -- FAIL
+for a in do                             -- FAIL
+for a in b do                           -- FAIL
+for a in b end                          -- FAIL
+for a in b, do                          -- FAIL
+for a in b do end
+for a in b do local a local b end
+for a in b do local a; local b; end
+for a in b do 1 end                     -- FAIL
+for a in b do "foo" end                 -- FAIL
+for a b in                              -- FAIL
+for a, b, c in p do end
+for a, b, c in p, q, r do end
+for a in 1 do end
+for a in true do end
+for a in "foo" do end
+for a in b do break end
+for a in b do break break end           -- FAIL
+for a in b do return end
+for a in b do return return end         -- FAIL
+for a in b do do end end
+for a in b do do break end end
+for a in b do do return end end
+for =                                   -- FAIL
+for a =                                 -- FAIL
+for a, b =                              -- FAIL
+for a = do                              -- FAIL
+for a = 1, do                           -- FAIL
+for a = p, q, do                        -- FAIL
+for a = p q do                          -- FAIL
+for a = b do end                        -- FAIL
+for a = 1, 2, 3, 4 do end               -- FAIL
+for a = p, q do end
+for a = 1, 2 do end
+for a = 1, 2 do local a local b end
+for a = 1, 2 do local a; local b; end
+for a = 1, 2 do 3 end                   -- FAIL
+for a = 1, 2 do "foo" end               -- FAIL
+for a = p, q, r do end
+for a = 1, 2, 3 do end
+for a = p, q do break end
+for a = p, q do break break end         -- FAIL
+for a = 1, 2 do return end
+for a = 1, 2 do return return end       -- FAIL
+for a = p, q do do end end
+for a = p, q do do break end end
+for a = p, q do do return end end

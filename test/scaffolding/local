@@ -1,0 +1,52 @@
+local                                   -- FAIL
+local;                                  -- FAIL
+local =                                 -- FAIL
+local end                               -- FAIL
+local a
+local a;
+local a, b, c
+local a; local b local c;
+local a = 1
+local a local b = a
+local a, b = 1, 2
+local a, b, c = 1, 2, 3
+local a, b, c = 1
+local a = 1, 2, 3
+local a, local                          -- FAIL
+local 1                                 -- FAIL
+local "foo"                             -- FAIL
+local a = local                         -- FAIL
+local a, b, =                           -- FAIL
+local a, b = 1, local                   -- FAIL
+local a, b = , local                    -- FAIL
+local function                          -- FAIL
+local function 1                        -- FAIL
+local function end                      -- FAIL
+local function a                        -- FAIL
+local function a end                    -- FAIL
+local function a( end                   -- FAIL
+local function a() end
+local function a(1                      -- FAIL
+local function a("foo"                  -- FAIL
+local function a(p                      -- FAIL
+local function a(p,)                    -- FAIL
+local function a(p q                    -- FAIL
+local function a(p) end
+local function a(p,q,) end              -- FAIL
+local function a(p,q,r) end
+local function a(p,q,1                  -- FAIL
+local function a(p) do                  -- FAIL
+local function a(p) 1 end               -- FAIL
+local function a(p) return end
+local function a(p) break end           -- FAIL
+local function a(p) return return end   -- FAIL
+local function a(p) do end end
+local function a.                       -- FAIL
+local function a:                       -- FAIL
+local function a(...) end
+local function a(...,                   -- FAIL
+local function a(p,...) end
+local function a(p,q,r,...) end
+local function a() local a local b end
+local function a() local a; local b; end
+local function a() end; local function a() end;

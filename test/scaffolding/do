@@ -1,0 +1,20 @@
+do                                      -- FAIL
+end                                     -- FAIL
+do end
+do ; end                                -- FAIL
+do 1 end                                -- FAIL
+do "foo" end                            -- FAIL
+do local a, b end
+do local a local b end
+do local a; local b; end
+do local a = 1 end
+do do end end
+do do end; end
+do do do end end end
+do do do end; end; end
+do do do return end end end
+do end do                               -- FAIL
+do end end                              -- FAIL
+do return end
+do return return end                    -- FAIL
+do break end                            -- FAIL

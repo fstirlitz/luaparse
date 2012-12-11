@@ -1,0 +1,21 @@
+repeat                                  -- FAIL
+repeat until                            -- FAIL
+repeat until 0
+repeat until false
+repeat until local                      -- FAIL
+repeat end                              -- FAIL
+repeat 1                                -- FAIL
+repeat =                                -- FAIL
+repeat local a until 1
+repeat local a local b until 0
+repeat local a; local b; until 0
+repeat ; until 1                        -- FAIL
+repeat 2 until 1                        -- FAIL
+repeat "foo" until 1                    -- FAIL
+repeat return until 0
+repeat return return until 0            -- FAIL
+repeat break until 0
+repeat break break until 0              -- FAIL
+repeat do end until 0
+repeat do return end until 0
+repeat do break end until 0

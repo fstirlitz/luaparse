@@ -1,0 +1,5 @@
+break
+::foo                                   -- FAIL
+::foo::
+goto                                    -- FAIL
+goto foo
