@@ -8,10 +8,11 @@ checkout: clean-old
 	@$(MAKE) -s -C luaparse install docs
 	@mv luaparse/docs/* .
 	@mv luaparse/examples .
+	@mv luaparse/lib .
 	@cp -rf luaparse/test .
 
 clean-old:
-	@rm -rf coverage examples
+	@rm -rf coverage examples lib
 
 clean:
 	@rm -f *.md
