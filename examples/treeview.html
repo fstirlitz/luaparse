@@ -62,14 +62,15 @@ end
         case 'boolean': return { type: 'Text', label: name + ': ' + node }
         case 'object':
           if (!node) return { type: 'Text', label: name +': null' };
-          var obj = { type: 'Text', label: '' + name, expanded: false, children: [] };
+          var obj = { type: 'Text', label: '' + name, expanded: true, children: [] };
           if (isArray(node)) {
             obj.label += ' [' + node.length + ']';
             for (var i = 0, l = node.length; i < l; i++) {
-              obj.children.push(convertAstToTree(i, node[i]));
+              var child = node[i];
+              var name = child.type ? '#' + i + ' ' + child.type : i;
+              obj.children.push(convertAstToTree(name, child));
             }
           } else {
-            obj.expanded = true;
             for (var key in node) if (hasOwn.call(node, key)) {
               obj.children.push(convertAstToTree(key, node[key]));
             }
