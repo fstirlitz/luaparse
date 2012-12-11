@@ -6,18 +6,23 @@ A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 
 ### Todo
 
+#### 0.1
+
 - <del>Implement grammar</del>
 - Test expression types
 - Exceptions
-- Error handling
 - Location tracking
 - Clean up
-- Figure out methods to make expose
+- Figure out what we reliably can expose
 - Optimize hot functions
 - Finish all @TODO in code.
-- Polish test helpers
 - Support testing in browsers
-- Switch over to istanbul coverage analysis
+- Implement yualiangs test suite and make it pass.
+- <del>Switch over to istanbul coverage analysis</del>
+
+#### 0.2
+
+- Tolerant error handling
 
 ## Getting started
 
