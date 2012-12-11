@@ -345,11 +345,6 @@ describe('Statements', function() {
       ]
     });
 
-    testTree('return end', { // @TODO this should probably throw error
-        type: 'ReturnStatement'
-      , 'arguments': []
-    });
-
   });
 
   describe('ForStatement', function() {
