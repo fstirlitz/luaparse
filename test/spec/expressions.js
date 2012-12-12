@@ -24,8 +24,8 @@ describe('Expressions', function() {
       , condition: {
           type: 'BinaryExpression'
         , operator: '>'
-        , left: { type: 'Literal', value: '1' }
-        , right: { type: 'Literal', value: '2' }
+        , left: { type: 'Literal', value: 1 }
+        , right: { type: 'Literal', value: 2 }
       }
       , body: []
     });
@@ -50,10 +50,10 @@ describe('Expressions', function() {
         , left: {
             type: 'BinaryExpression'
           , operator: '+'
-          , left: { type: 'Literal', value: '1' }
-          , right: { type: 'Literal', value: '1' }
+          , left: { type: 'Literal', value: 1 }
+          , right: { type: 'Literal', value: 1 }
         }
-        , right: { type: 'Literal', value: '2' }
+        , right: { type: 'Literal', value: 2 }
       }
       , body: []
     });
@@ -68,20 +68,20 @@ describe('Expressions', function() {
         , left: {
             type: 'BinaryExpression'
           , operator: '+'
-          , left: { type: 'Literal', value: '1' }
+          , left: { type: 'Literal', value: 1 }
           , right: {
               type: 'BinaryExpression'
             , operator: '/'
             , left: {
                 type: 'BinaryExpression'
               , operator: '*'
-              , left: { type: 'Literal', value: '1' }
-              , right: { type: 'Literal', value: '2' }
+              , left: { type: 'Literal', value: 1 }
+              , right: { type: 'Literal', value: 2 }
             }
-            , right: { type: 'Literal', value: '2' }
+            , right: { type: 'Literal', value: 2 }
           }
         }
-        , right: { type: 'Literal', value: '2' }
+        , right: { type: 'Literal', value: 2 }
       }
       , body: []
     });
@@ -94,20 +94,20 @@ describe('Expressions', function() {
         , left: {
             type: 'BinaryExpression'
           , operator: '+'
-          , left: { type: 'Literal', value: '1' }
+          , left: { type: 'Literal', value: 1 }
           , right: {
               type: 'BinaryExpression'
             , operator: '*'
-            , left: { type: 'Literal', value: '1' }
+            , left: { type: 'Literal', value: 1 }
             , right: {
                 type: 'BinaryExpression'
               , operator: '/'
-              , left: { type: 'Literal', value: '2' }
-              , right: { type: 'Literal', value: '2' }
+              , left: { type: 'Literal', value: 2 }
+              , right: { type: 'Literal', value: 2 }
             }
           }
         }
-        , right: { type: 'Literal', value: '2' }
+        , right: { type: 'Literal', value: 2 }
       }
       , body: []
     });

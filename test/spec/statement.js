@@ -86,9 +86,9 @@ describe('Statements', function() {
     expectTree("for i = 0, 3, 0.5 do end", {
         type: 'ForNumericStatement'
       , variable: { type: 'Identifier', name: 'i' }
-      , start: { type: 'Literal', value: '0' }
-      , end: { type: 'Literal', value: '3' }
-      , step: { type: 'Literal', value: '0.5' }
+      , start: { type: 'Literal', value: 0 }
+      , end: { type: 'Literal', value: 3 }
+      , step: { type: 'Literal', value: 0.5 }
       , body: []
     });
   });
@@ -110,7 +110,7 @@ describe('Statements', function() {
     expectTree("local var = 12", {
         type: 'LocalStatement'
       , variables: [{ type: 'Identifier', name: 'var' }]
-      , init: [{ type: 'Literal', value: '12' }]
+      , init: [{ type: 'Literal', value: 12 }]
     });
   });
 
@@ -145,8 +145,8 @@ describe('Statements', function() {
         , { type: 'Identifier', name: 'bar' }
       ]
       , init: [
-          { type: 'Literal', value: '12' }
-        , { type: 'Literal', value: '13' }
+          { type: 'Literal', value: 12 }
+        , { type: 'Literal', value: 13 }
       ]
     });
 
@@ -157,7 +157,7 @@ describe('Statements', function() {
         , { type: 'Identifier', name: 'bar' }
       ]
       , init: [
-          { type: 'Literal', value: '12' }
+          { type: 'Literal', value: 12 }
       ]
     });
   });
@@ -352,8 +352,8 @@ describe('Statements', function() {
     testTree("for i = 0, 3 do end", {
         type: 'ForNumericStatement'
       , variable: { type: 'Identifier', name: 'i' }
-      , start: { type: 'Literal', value: '0' }
-      , end: { type: 'Literal', value: '3' }
+      , start: { type: 'Literal', value: 0 }
+      , end: { type: 'Literal', value: 3 }
       , step: null
       , body: []
     });
