@@ -32,6 +32,9 @@ function scaffoldIt(snippet) {
     , assertion
     , success = true;
 
+  // Change manual \n strings into real \n chars.
+  snippet = snippet.replace(/\\n/g, '\n');
+
   switch (/-- FAIL\s*$/.test(snippet)) {
     case true:
       snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
