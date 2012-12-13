@@ -14,5 +14,6 @@
   "sub": true,
   "boss": true,
   "eqnull": true,
-  "laxcomma": true
+  "laxcomma": true,
+  "loopfunc": true
 }
