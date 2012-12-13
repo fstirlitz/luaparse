@@ -1,9 +1,4 @@
 a =                                     -- FAIL
-a = a
-a = nil
-a = false
-a = 1
-a = "foo"
 a = [[foo]]
 a = {}
 a = (a)
