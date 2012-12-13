@@ -15,6 +15,8 @@ function scaffoldFile() {
 
   // Iterate over all snippets and generate their tests.
   snippets.forEach(function(snippet) {
+    // Skip comment lines
+    if (/^\/\//.test(snippet)) return;
     output += scaffoldIt(snippet) + "\n";
   });
 
