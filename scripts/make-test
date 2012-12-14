@@ -28,7 +28,7 @@ function scaffoldFile() {
 // Scaffold an it-test.
 function scaffoldIt(snippet) {
   var result = ''
-    , name = snippet.replace(/(\\|')/g, "\\$1")
+    , name = snippet.replace(/([\\'])/g, "\\$1")
     , intro = "it('" + name + "', function() {\n"
     , outro = "\n});"
     , assertion
@@ -67,9 +67,15 @@ function scaffoldIt(snippet) {
 
 // Scaffold a deep equals assertion.
 function scaffoldAssertion(snippet, result) {
+  // Remove and store the first line from the result
+  var firstline;
   result = result.split('\n');
-  var firstline = result.splice(0, 1);
+  firstline = result.splice(0, 1);
   result = result.join('\n');
+
+  // Output \n instead of real newlines in the source passed to the paser.
+  snippet = snippet.replace(/\n/g, '\\n');
+
   return indent + "expect(parser.parse('" + snippet + "')).to.deep.equal(" +
     firstline + "\n" +
     result.replace(/^(.)/gm, indent + "$1") +
@@ -78,7 +84,9 @@ function scaffoldAssertion(snippet, result) {
 
 // Scaffold an expect throw assertion.
 function scaffoldThrowAssertion(snippet, error) {
-  return indent + "expect(parser.parse('" + snippet + "')).to.throw('" + error + "');";
+  error = error.message.replace(/([\\'])/g, "\\$1")
+  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end)\n"
+    + indent + indent + ".throws('" + error + "');";
 }
 
 // Main ---------------------------------------------------
