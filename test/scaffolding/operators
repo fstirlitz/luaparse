@@ -47,6 +47,8 @@ a = 1 > 2; a = 1 >= 2
 a = 1 < 2 < 3
 a = 1 >= 2 >= 3
 a = 1 ==                                -- FAIL
+a = `                                   -- FAIL
+a = ~                                   -- FAIL
 a = ~= 2                                -- FAIL
 a = "foo" == "bar"
 a = "foo" > "bar"
