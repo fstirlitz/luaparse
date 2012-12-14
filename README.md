@@ -8,21 +8,16 @@ A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 
 #### 0.1
 
-- <del>Implement grammar</del>
-- Test expression types
-- Exceptions
-- Location tracking
 - Clean up
 - Figure out what we reliably can expose
 - Optimize hot functions
 - Finish all @TODO in code.
-- Support testing in browsers
-- Implement yualiangs test suite and make it pass.
-- <del>Switch over to istanbul coverage analysis</del>
+- Manually check the new yueliang test suite.
 
 #### 0.2
 
 - Tolerant error handling
+- Location tracking
 
 ## Getting started
 
@@ -45,6 +40,10 @@ Report test coverage (more accurate than docs/coverage.html)
 Build a distribution file
 
     $ make build
+
+## Acknowledgements
+
+* Initial tests are scaffolded from [yueliang](http://yueliang.luaforge.net/).
 
 ## License
 
