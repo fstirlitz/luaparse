@@ -21,7 +21,7 @@ test: test-spec
 test-spec:
 	@./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
-		test/spec/*.js
+		test/spec/scaffolded
 
 test-all: test-spec
 
