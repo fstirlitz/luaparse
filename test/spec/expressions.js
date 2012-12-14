@@ -124,7 +124,7 @@ describe('Expressions', function() {
           type: 'TableConstructorExpression'
         , fields: [{
             type: 'TableKeyString'
-          , key: { type: 'Literal', value: 'bar' }
+          , key: { type: 'Identifier', name: 'bar' }
           , value: { type: 'Literal', value: 'baz' }
         }]
       }]
