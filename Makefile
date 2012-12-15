@@ -56,6 +56,21 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 
 docs: docco coverage docs-test docs-md
 
+# Scaffold all test files in the scaffolding dir.
+scaffold-tests:
+	@$(foreach file,\
+		$(notdir $(wildcard test/scaffolding/*)),\
+		$(MAKE) -s scaffold-test FILE=$(file);\
+	)
+
+hurr:
+	@echo $(FILE)
+
+scaffold-test:
+	@./scripts/make-test --name=$(FILE) \
+		test/scaffolding/$(FILE) \
+		> test/spec/$(FILE).js
+
 clean:
 	@rm -f docs/*.html docs/*.1
 	@rm -rf lib-cov coverage html-report docs/coverage/

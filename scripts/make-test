@@ -134,13 +134,10 @@ args.forEach(function(arg, index) {
   if (/^--ignore-errors/.test(arg)) return verbose = false;
 
   // Argument flags
-  if (/^--/.test(arg)) return;
-  switch (previous) {
-    case '--name':
-      testName = arg;
-      return;
+  if (/^--name=/.test(arg)) {
+    testName = arg.replace(/^--name=/, '');
+    return;
   }
-  previous = arg;
 
   // Snippet
   if (!fs.existsSync(arg)) {
