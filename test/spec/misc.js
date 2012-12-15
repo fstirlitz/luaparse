@@ -5,6 +5,12 @@ describe('API', function () {
     expect(parser.write).to.be.a('function');
     expect(parser.end).to.be.a('function');
   });
+  it('should ignore comments if told to', function() {
+    expect(parser.parse('--comment', { comments: false })).to.deep.equal({
+      "type": "Chunk",
+      "body": []
+    });
+  });
   it('should produce empty tree on empty input', function() {
     expect(parser.parse('')).to.deep.equal({
       "type": "Chunk",
