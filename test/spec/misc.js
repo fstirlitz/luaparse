@@ -6,19 +6,22 @@ describe('API', function () {
     expect(parser.end).to.be.a('function');
   });
   it('should produce empty tree on empty input', function() {
-    expectObj(parser.parse(''), {
-        type: 'Chunk'
-      , body: []
-      , comments: []
+    expect(parser.parse('')).to.deep.equal({
+      "type": "Chunk",
+      "body": [],
+      "comments": []
     });
   });
   it('should support waiting on input', function () {
     var parse = parser.parse({ wait: true });
-    expectObj(parse.end('break'), {
-        type: 'Chunk'
-      , body: [{ type: 'BreakStatement' }]
-      , comments: []
+    expect(parse.end('break')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": []
     });
   });
 });
-
