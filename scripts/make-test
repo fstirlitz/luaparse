@@ -20,7 +20,7 @@ function scaffoldFile() {
     output += scaffoldIt(snippet) + "\n";
   });
 
-  if (testName) output += "});\n";
+  if (testName) output += "});\n\n";
 
   return output;
 }
@@ -28,31 +28,48 @@ function scaffoldFile() {
 // Scaffold an it-test.
 function scaffoldIt(snippet) {
   var result = ''
+    // The name needs to be escaped as we want to display it.
     , name = snippet.replace(/([\\'])/g, "\\$1")
     , intro = "it('" + name + "', function() {\n"
     , outro = "\n});"
     , assertion
-    , success = true;
+    , success = true
+    , exec;
+
+  // The code that actually gets executed, newlines have to be real.
+  exec = snippet.replace(/\\n/g, '\n')
+    .replace(/\\t/g, '\t')
+    .replace(/\\r/g, '\r');
 
   // Change manual \n strings into real \n chars.
-  snippet = snippet.replace(/\\n/g, '\n');
+  snippet = snippet
+    .replace(/'/g, '\\\'') // escape ' as we use ' as our delimiter
+    .replace(/\\([\n\t\r])/, '\\$1');
+
+
+  // snippet = snippet.replace(/\n/g, '\\n') // escape real \n
+  //   .replace(/\t/, '\\t') // replace escaped \t with real
+  //   .replace(/\r/, '\\r');
 
   switch (/-- FAIL\s*$/.test(snippet)) {
+    // Failure case
     case true:
+      exec = exec.replace(/\s*-- FAIL\s*$/, '');
       snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
       try {
-        luaparse.parse(snippet);
+        luaparse.parse(exec);
         // For some reason it didnt throw a error, output the regular assertion
         // but comment on it in the source.
         intro += indent + "// This fails in semantic analysis!\n";
         notifications.push('\033[33mExpected failure: \033[0m' + name);
-      } catch(error) {
+      } catch (error) {
         assertion = scaffoldThrowAssertion(snippet, error);
         break;
       }
+    // Success case
     case false:
       try {
-        result = JSON.stringify(luaparse.parse(snippet), null, indent)
+        result = JSON.stringify(luaparse.parse(exec), null, indent)
         assertion = scaffoldAssertion(snippet, result);
       } catch (error) {
         notifications.push('\033[31m' + error + ':\033[0m ' + name);
@@ -60,6 +77,7 @@ function scaffoldIt(snippet) {
       }
       break;
   }
+
   if (verbose && !success) return '';
 
   return (intro + assertion + outro).replace(/^(.)/gm, indent + "$1");
@@ -67,6 +85,7 @@ function scaffoldIt(snippet) {
 
 // Scaffold a deep equals assertion.
 function scaffoldAssertion(snippet, result) {
+
   // Remove and store the first line from the result
   var firstline;
   result = result.split('\n');
@@ -74,19 +93,24 @@ function scaffoldAssertion(snippet, result) {
   result = result.join('\n');
 
   // Output \n instead of real newlines in the source passed to the paser.
-  snippet = snippet.replace(/\n/g, '\\n');
+  // result = result.replace(/\\\\([ntr])/g, '\\$1');
 
   return indent + "expect(parser.parse('" + snippet + "')).to.deep.equal(" +
-    firstline + "\n" +
+    firstline + "\n" + // {
     result.replace(/^(.)/gm, indent + "$1") +
     ");";
 }
 
 // Scaffold an expect throw assertion.
 function scaffoldThrowAssertion(snippet, error) {
-  error = error.message.replace(/([\\'])/g, "\\$1")
-  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end)\n"
-    + indent + indent + ".throws('" + error + "');";
+  // Sanitize the error message.
+  error = error.message
+    .replace(/([\\"])/g, "\\$1")
+    .replace(/\n/g, '\\n')
+    .replace(/\r/g, '\\r')
+    .replace(/\t/g, '\\t');
+
+  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end).throws(\"" + error + "\");";
 }
 
 // Main ---------------------------------------------------
