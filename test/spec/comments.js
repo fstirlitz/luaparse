@@ -139,6 +139,26 @@ describe('comments', function() {
       ]
     });
   });
+  it('--[==\\nbreak --]]--', function() {
+    expect(parser.parse('--[==\nbreak --]]--')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "[=="
+        },
+        {
+          "type": "Comment",
+          "value": "]]--"
+        }
+      ]
+    });
+  });
   it('if true -- comment\\nthen end', function() {
     expect(parser.parse('if true -- comment\nthen end')).to.deep.equal({
       "type": "Chunk",

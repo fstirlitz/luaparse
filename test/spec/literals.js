@@ -479,6 +479,9 @@ describe('literals', function() {
       "comments": []
     });
   });
+  it('a = [=aa           -- FAIL', function() {
+    expect(parser.parse('a = [=aa', {wait:true}).end).throws("[1:2] '[' expected near '='");
+  });
   it('a = "bar\\tbaz"', function() {
     expect(parser.parse('a = "bar\tbaz"')).to.deep.equal({
       "type": "Chunk",
