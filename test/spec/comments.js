@@ -1,94 +1,189 @@
-describe('Comments', function() {
+describe('comments', function() {
   it('-- comment', function() {
-    expectObj(parser.parse('-- comment'), {
-        type: 'Chunk'
-      , body: []
-      , comments: [
-          { type: 'Comment', value: ' comment' }
+    expect(parser.parse('-- comment')).to.deep.equal({
+      "type": "Chunk",
+      "body": [],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": " comment"
+        }
       ]
     });
   });
-  it('--comment', function() {
-    expectObj(parser.parse('--comment'), {
-        type: 'Chunk'
-      , body: []
-      , comments: [
-          { type: 'Comment', value: 'comment' }
+  it('--coment', function() {
+    expect(parser.parse('--coment')).to.deep.equal({
+      "type": "Chunk",
+      "body": [],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "coment"
+        }
       ]
     });
   });
   it('-- comment\\nbreak', function() {
-    expectObj(parser.parse('-- comment\nbreak'), {
-        type: 'Chunk'
-      , body: [{ type: 'BreakStatement' }]
-      , comments: [
-          { type: 'Comment', value: ' comment' }
+    expect(parser.parse('-- comment\nbreak')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": " comment"
+        }
       ]
     });
   });
   it('break--comment', function() {
-    expectObj(parser.parse('break--comment'), {
-        type: 'Chunk'
-      , body: [{ type: 'BreakStatement' }]
-      , comments: [
-          { type: 'Comment', value: 'comment' }
+    expect(parser.parse('break--comment')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment"
+        }
       ]
     });
   });
   it('--[[comment]]--', function() {
-    expectObj(parser.parse('--[[comment]]--'), {
-        type: 'Chunk'
-      , body: []
-      , comments: [
-          { type: 'Comment', value: 'comment' }
+    expect(parser.parse('--[[comment]]--')).to.deep.equal({
+      "type": "Chunk",
+      "body": [],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment"
+        }
       ]
     });
   });
   it('--[[comment]]--break', function() {
-    expectObj(parser.parse('--[[comment]]--break'), {
-        type: 'Chunk'
-      , body: [{ type: 'BreakStatement' }]
-      , comments: [
-          { type: 'Comment', value: 'comment' }
+    expect(parser.parse('--[[comment]]--break')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment"
+        }
       ]
     });
   });
   it('--[=[comment]=]--break', function() {
-    expectObj(parser.parse('--[=[comment]=]--break'), {
-        type: 'Chunk'
-      , body: [{ type: 'BreakStatement' }]
-      , comments: [
-          { type: 'Comment', value: 'comment' }
+    expect(parser.parse('--[=[comment]=]--break')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment"
+        }
       ]
     });
   });
-
-  it('--[===[comment\\n--[=[sub]=]--]===]--break', function() {
-    expectObj(parser.parse('--[===[comment\n--[=[sub]=]--]===]--break'), {
-        type: 'Chunk'
-      , body: [{ type: 'BreakStatement' }]
-      , comments: [
-          { type: 'Comment', value: 'comment\n--[=[sub]=]--' }
+  it('--[===[comment\\n--[=[sub]=]--\\n]===]--break', function() {
+    expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]--break')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment\n--[=[sub]=]--\n"
+        }
       ]
     });
   });
-
   it('--[[comment\\nline two]]--', function() {
-    expectObj(parser.parse('--[[comment\nline two]]--'), {
-        type: 'Chunk'
-      , body: []
-      , comments: [
-          { type: 'Comment', value: 'comment\nline two' }
+    expect(parser.parse('--[[comment\nline two]]--')).to.deep.equal({
+      "type": "Chunk",
+      "body": [],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment\nline two"
+        }
       ]
     });
   });
-  it('--[[\\ncomment\\nline two]]--', function() {
-    expectObj(parser.parse('--[[\ncomment\nline two]]--'), {
-        type: 'Chunk'
-      , body: []
-      , comments: [
-          { type: 'Comment', value: 'comment\nline two' }
+  it('--[[\\ncomment\\nline two\\n]]--', function() {
+    expect(parser.parse('--[[\ncomment\nline two\n]]--')).to.deep.equal({
+      "type": "Chunk",
+      "body": [],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment\nline two\n"
+        }
+      ]
+    });
+  });
+  it('--[==\\nbreak --]]--', function() {
+    expect(parser.parse('--[==\nbreak --]]--')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "BreakStatement"
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "[=="
+        },
+        {
+          "type": "Comment",
+          "value": "]]--"
+        }
+      ]
+    });
+  });
+  it('if true -- comment\\nthen end', function() {
+    expect(parser.parse('if true -- comment\nthen end')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "IfStatement",
+          "clauses": [
+            {
+              "condition": {
+                "type": "Literal",
+                "value": true
+              },
+              "body": []
+            }
+          ]
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": " comment"
+        }
       ]
     });
   });
 });
+
+
