@@ -577,6 +577,100 @@ describe('literals', function() {
       "comments": []
     });
   });
+  it('a = "bar\\\\80baz"', function() {
+    expect(parser.parse('a = "bar\\80baz"')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "bar\\80baz"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = "bar\\\\z   baz"', function() {
+    expect(parser.parse('a = "bar\\z   baz"')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "barbaz"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = "bar\\\\f\\\\v\\bbaz"', function() {
+    expect(parser.parse('a = "bar\\f\\v\\bbaz"')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "bar\f\u000b\bbaz" // @TODO a bit unsure about this
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+
+  it('a = "bar\\f\\v\\bbaz"', function() {
+    expect(parser.parse('a = "bar\f\v\bbaz"')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "bar\f\u000b\bbaz"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+
   it('a = nil', function() {
     expect(parser.parse('a = nil')).to.deep.equal({
       "type": "Chunk",
@@ -669,5 +763,3 @@ describe('literals', function() {
     });
   });
 });
-
-
