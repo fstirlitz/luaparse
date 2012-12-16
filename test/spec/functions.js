@@ -117,7 +117,7 @@ describe('functions', function() {
     expect(parser.parse('function a(p) do', {wait:true}).end).throws("[1:16] 'end' expected near '<eof>'");
   });
   it('function a(p) 1 end                     -- FAIL', function() {
-    expect(parser.parse('function a(p) 1 end', {wait:true}).end).throws("[1:14] Unexpected symbol '1' near '1'");
+    expect(parser.parse('function a(p) 1 end', {wait:true}).end).throws("[1:14] Unexpected number '1' near 'end'");
   });
   it('function a(p) return end', function() {
     expect(parser.parse('function a(p) return end')).to.deep.equal({
@@ -364,7 +364,7 @@ describe('functions', function() {
     });
   });
   it('function a(...,                         -- FAIL', function() {
-    expect(parser.parse('function a(...,', {wait:true}).end).throws("[1:14] <name> or '...' expected near ','");
+    expect(parser.parse('function a(...,', {wait:true}).end).throws("[1:14] ')' expected near ','");
   });
   it('function a(p,...) end', function() {
     expect(parser.parse('function a(p,...) end')).to.deep.equal({
@@ -389,6 +389,9 @@ describe('functions', function() {
       ],
       "comments": []
     });
+  });
+  it('function a(...,p) end                   -- FAIL', function() {
+    expect(parser.parse('function a(...,p) end', {wait:true}).end).throws("[1:14] ')' expected near ','");
   });
   it('function a(p,q,r,...) end', function() {
     expect(parser.parse('function a(p,q,r,...) end')).to.deep.equal({
@@ -533,5 +536,3 @@ describe('functions', function() {
     });
   });
 });
-
-

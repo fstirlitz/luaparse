@@ -46,9 +46,9 @@
       <h1>assignments</h1>
       <dl>
         <dt>a                                       -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).throws(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a,                                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a,', {wait:true}).end).throws(&quot;[1:2] '=' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a,', {wait:true}).end).throws(&quot;[1:2] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a,b,c                                   -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a,b,c', {wait:true}).end).throws(&quot;[1:5] '=' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a,b =                                   -- FAIL</dt>
@@ -380,16 +380,56 @@
   ],
   &quot;comments&quot;: []
 });</code></pre></dd>
+        <dt>a[b], a[c] = 1</dt>
+        <dd><pre><code>expect(parser.parse('a[b], a[c] = 1')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;IndexExpression&quot;,
+          &quot;base&quot;: {
+            &quot;type&quot;: &quot;Identifier&quot;,
+            &quot;name&quot;: &quot;a&quot;
+          },
+          &quot;index&quot;: {
+            &quot;type&quot;: &quot;Identifier&quot;,
+            &quot;name&quot;: &quot;b&quot;
+          }
+        },
+        {
+          &quot;type&quot;: &quot;IndexExpression&quot;,
+          &quot;base&quot;: {
+            &quot;type&quot;: &quot;Identifier&quot;,
+            &quot;name&quot;: &quot;a&quot;
+          },
+          &quot;index&quot;: {
+            &quot;type&quot;: &quot;Identifier&quot;,
+            &quot;name&quot;: &quot;c&quot;
+          }
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: 1
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
         <dt>0 =                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('0 =', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol '0' near '0'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('0 =', {wait:true}).end).throws(&quot;[1:0] Unexpected number '0' near '='&quot;);</code></pre></dd>
         <dt>&quot;foo&quot; =                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('&quot;foo&quot; =', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'foo' near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('&quot;foo&quot; =', {wait:true}).end).throws(&quot;[1:0] Unexpected string 'foo' near '='&quot;);</code></pre></dd>
         <dt>true =                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('true =', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'true' near 'true'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('true =', {wait:true}).end).throws(&quot;[1:0] Unexpected boolean 'true' near '='&quot;);</code></pre></dd>
         <dt>(a) =                                   -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('(a) =', {wait:true}).end).throws(&quot;[1:5] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>{} =                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('{} =', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol '{' near '{'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('{} =', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol '{' near '}'&quot;);</code></pre></dd>
         <dt>a:b() =                                 -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a:b() =', {wait:true}).end).throws(&quot;[1:7] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a() =                                   -- FAIL</dt>
@@ -399,11 +439,11 @@
         <dt>a[b]() =                                -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a[b]() =', {wait:true}).end).throws(&quot;[1:8] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = a b                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = a b', {wait:true}).end).throws(&quot;[1:6] Unexpected symbol 'b' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = a b', {wait:true}).end).throws(&quot;[1:6] Unexpected identifier 'b' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = 1 2                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 2', {wait:true}).end).throws(&quot;[1:6] Unexpected symbol '2' near '2'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 2', {wait:true}).end).throws(&quot;[1:6] Unexpected number '2' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = a = 1                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = a = 1', {wait:true}).end).throws(&quot;[1:6] Unexpected symbol '=' near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = a = 1', {wait:true}).end).throws(&quot;[1:6] Unexpected symbol '=' near '1'&quot;);</code></pre></dd>
       </dl>
     </section>
     <section class="suite">
@@ -590,11 +630,11 @@
         <dt>if                                      -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('if', {wait:true}).end).throws(&quot;[1:2] 'then' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>elseif                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('elseif', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'elseif' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('elseif', {wait:true}).end).throws(&quot;[1:0] Unexpected keyword 'elseif' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>else                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('else', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'else' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('else', {wait:true}).end).throws(&quot;[1:0] Unexpected keyword 'else' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>then                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('then', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'then' near 'then'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('then', {wait:true}).end).throws(&quot;[1:0] Unexpected keyword 'then' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>if then                                 -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('if then', {wait:true}).end).throws(&quot;[1:7] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>if 1                                    -- FAIL</dt>
@@ -1108,7 +1148,7 @@
         <dt>do                                      -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('do', {wait:true}).end).throws(&quot;[1:2] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>end                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('end', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'end' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('end', {wait:true}).end).throws(&quot;[1:0] Unexpected keyword 'end' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>do end</dt>
         <dd><pre><code>expect(parser.parse('do end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1121,9 +1161,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>do 1 end                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do 1 end', {wait:true}).end).throws(&quot;[1:3] Unexpected symbol '1' near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do 1 end', {wait:true}).end).throws(&quot;[1:3] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
         <dt>do &quot;foo&quot; end                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:3] Unexpected symbol 'foo' near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:3] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
         <dt>do local a, b end</dt>
         <dd><pre><code>expect(parser.parse('do local a, b end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1344,7 +1384,7 @@
         <dt>do end do                               -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('do end do', {wait:true}).end).throws(&quot;[1:9] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>do end end                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do end end', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol 'end' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do end end', {wait:true}).end).throws(&quot;[1:7] Unexpected keyword 'end' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>do return end</dt>
         <dd><pre><code>expect(parser.parse('do return end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1363,6 +1403,191 @@
 });</code></pre></dd>
         <dt>do return return end                    -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('do return return end', {wait:true}).end).throws(&quot;[1:10] 'end' expected near 'return'&quot;);</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>escape sequences</h1>
+      <dl>
+        <dt>a = &quot;bar\tbaz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\tbaz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\tbaz&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = &quot;bar\\tbaz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\\tbaz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\tbaz&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = &quot;bar\nbaz&quot;                                    -- FAIL</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\nbaz&quot;', {wait:true}).end).throws(&quot;[1:10] unfinished string near 'bar\n'&quot;);</code></pre></dd>
+        <dt>a = &quot;bar\\nbaz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\\nbaz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\nbaz&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = &quot;bar\rbaz&quot;                                    -- FAIL</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\rbaz&quot;', {wait:true}).end).throws(&quot;[1:10] unfinished string near 'bar\r'&quot;);</code></pre></dd>
+        <dt>a = &quot;bar\\rbaz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\\rbaz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\rbaz&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = &quot;bar\\80baz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\\80baz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\\80baz&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = &quot;bar\\z   baz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\\z   baz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;barbaz&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = &quot;bar\\f\\v\bbaz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\\f\\v\\bbaz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot; // @TODO a bit unsure about this
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = &quot;bar\f\v\bbaz&quot;</dt>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\f\v\bbaz&quot;')).to.deep.equal({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
       </dl>
     </section>
     <section class="suite">
@@ -1639,7 +1864,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = a:b                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = a:b', {wait:true}).end).throws(&quot;[1:7] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = a:b', {wait:true}).end).throws(&quot;[1:7] function arguments expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = a[b]</dt>
         <dd><pre><code>expect(parser.parse('a = a[b]')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2348,7 +2573,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = function(...,                       -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function(...,', {wait:true}).end).throws(&quot;[1:16] &lt;name&gt; or '...' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function(...,', {wait:true}).end).throws(&quot;[1:16] ')' expected near ','&quot;);</code></pre></dd>
         <dt>a = function(p,...) end</dt>
         <dd><pre><code>expect(parser.parse('a = function(p,...) end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2562,9 +2787,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>for a in b do 1 end                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b do 1 end', {wait:true}).end).throws(&quot;[1:14] Unexpected symbol '1' near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b do 1 end', {wait:true}).end).throws(&quot;[1:14] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
         <dt>for a in b do &quot;foo&quot; end                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:14] Unexpected symbol 'foo' near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:14] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
         <dt>for a b in                              -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('for a b in', {wait:true}).end).throws(&quot;[1:6] 'in' expected near 'b'&quot;);</code></pre></dd>
         <dt>for a, b, c in p do end</dt>
@@ -2859,15 +3084,15 @@
         <dt>for =                                   -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('for =', {wait:true}).end).throws(&quot;[1:4] &lt;name&gt; expected near '='&quot;);</code></pre></dd>
         <dt>for a =                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a =', {wait:true}).end).throws(&quot;[1:7] ',' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a =', {wait:true}).end).throws(&quot;[1:7] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>for a, b =                              -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('for a, b =', {wait:true}).end).throws(&quot;[1:9] 'in' expected near '='&quot;);</code></pre></dd>
         <dt>for a = do                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = do', {wait:true}).end).throws(&quot;[1:8] ',' expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = do', {wait:true}).end).throws(&quot;[1:8] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
         <dt>for a = 1, do                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, do', {wait:true}).end).throws(&quot;[1:13] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, do', {wait:true}).end).throws(&quot;[1:11] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
         <dt>for a = p, q, do                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = p, q, do', {wait:true}).end).throws(&quot;[1:16] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = p, q, do', {wait:true}).end).throws(&quot;[1:14] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
         <dt>for a = p q do                          -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('for a = p q do', {wait:true}).end).throws(&quot;[1:10] ',' expected near 'q'&quot;);</code></pre></dd>
         <dt>for a = b do end                        -- FAIL</dt>
@@ -3013,9 +3238,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>for a = 1, 2 do 3 end                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, 2 do 3 end', {wait:true}).end).throws(&quot;[1:16] Unexpected symbol '3' near '3'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, 2 do 3 end', {wait:true}).end).throws(&quot;[1:16] Unexpected number '3' near 'end'&quot;);</code></pre></dd>
         <dt>for a = 1, 2 do &quot;foo&quot; end               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, 2 do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:16] Unexpected symbol 'foo' near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, 2 do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:16] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
         <dt>for a = p, q, r do end</dt>
         <dd><pre><code>expect(parser.parse('for a = p, q, r do end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3292,8 +3517,14 @@
             &quot;type&quot;: &quot;Literal&quot;,
             &quot;value&quot;: 1
           },
-          null,
-          null
+          {
+            &quot;type&quot;: &quot;Literal&quot;,
+            &quot;value&quot;: 2
+          },
+          {
+            &quot;type&quot;: &quot;Literal&quot;,
+            &quot;value&quot;: 3
+          }
         ]
       }
     }
@@ -3301,7 +3532,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>1()                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('1()', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol '1' near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('1()', {wait:true}).end).throws(&quot;[1:0] Unexpected number '1' near '('&quot;);</code></pre></dd>
         <dt>a()()</dt>
         <dd><pre><code>expect(parser.parse('a()()')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3376,11 +3607,11 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a.1                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a.1', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'a' near '0.1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a.1', {wait:true}).end).throws(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a.b                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a.b', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a.b', {wait:true}).end).throws(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a[b]                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a[b]', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a[b]', {wait:true}).end).throws(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a.b.(                                   -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a.b.(', {wait:true}).end).throws(&quot;[1:4] &lt;name&gt; expected near '('&quot;);</code></pre></dd>
         <dt>a.b.c()</dt>
@@ -3542,7 +3773,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a:b                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a:b', {wait:true}).end).throws(&quot;[1:3] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a:b', {wait:true}).end).throws(&quot;[1:3] function arguments expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a:1                                     -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a:1', {wait:true}).end).throws(&quot;[1:2] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
         <dt>a.b:c()</dt>
@@ -3613,7 +3844,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a:b:                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a:b:', {wait:true}).end).throws(&quot;[1:3] &lt;expression&gt; expected near ':'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a:b:', {wait:true}).end).throws(&quot;[1:3] function arguments expected near ':'&quot;);</code></pre></dd>
         <dt>a:b():c()</dt>
         <dd><pre><code>expect(parser.parse('a:b():c()')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5139,7 +5370,7 @@
         <dt>function a(p) do                        -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('function a(p) do', {wait:true}).end).throws(&quot;[1:16] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>function a(p) 1 end                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p) 1 end', {wait:true}).end).throws(&quot;[1:14] Unexpected symbol '1' near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p) 1 end', {wait:true}).end).throws(&quot;[1:14] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
         <dt>function a(p) return end</dt>
         <dd><pre><code>expect(parser.parse('function a(p) return end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5369,7 +5600,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a(...,                         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(...,', {wait:true}).end).throws(&quot;[1:14] &lt;name&gt; or '...' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(...,', {wait:true}).end).throws(&quot;[1:14] ')' expected near ','&quot;);</code></pre></dd>
         <dt>function a(p,...) end</dt>
         <dd><pre><code>expect(parser.parse('function a(p,...) end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5393,6 +5624,8 @@
   ],
   &quot;comments&quot;: []
 });</code></pre></dd>
+        <dt>function a(...,p) end                   -- FAIL</dt>
+        <dd><pre><code>expect(parser.parse('function a(...,p) end', {wait:true}).end).throws(&quot;[1:14] ')' expected near ','&quot;);</code></pre></dd>
         <dt>function a(p,q,r,...) end</dt>
         <dd><pre><code>expect(parser.parse('function a(p,q,r,...) end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5537,7 +5770,7 @@
       <h1>literals</h1>
       <dl>
         <dt>a                                         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).throws(&quot;[1:0] Unexpected symbol 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).throws(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = 1</dt>
         <dd><pre><code>expect(parser.parse('a = 1')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5992,188 +6225,8 @@
   ],
   &quot;comments&quot;: []
 });</code></pre></dd>
-        <dt>a = [=aa           -- FAIL</dt>
+        <dt>a = [=aa                                  -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a = [=aa', {wait:true}).end).throws(&quot;[1:2] '[' expected near '='&quot;);</code></pre></dd>
-        <dt>a = &quot;bar\tbaz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\tbaz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;bar\tbaz&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
-        <dt>a = &quot;bar\\tbaz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\\tbaz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;bar\tbaz&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
-        <dt>a = &quot;bar\nbaz&quot;                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\nbaz&quot;', {wait:true}).end).throws(&quot;[1:10] unfinished string near 'bar\n'&quot;);</code></pre></dd>
-        <dt>a = &quot;bar\\nbaz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\\nbaz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;bar\nbaz&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
-        <dt>a = &quot;bar\rbaz&quot;                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\rbaz&quot;', {wait:true}).end).throws(&quot;[1:10] unfinished string near 'bar\r'&quot;);</code></pre></dd>
-        <dt>a = &quot;bar\\rbaz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\\rbaz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;bar\rbaz&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
-        <dt>a = &quot;bar\\80baz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\\80baz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;bar\\80baz&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
-        <dt>a = &quot;bar\\z   baz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\\z   baz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;barbaz&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
-        <dt>a = &quot;bar\\f\\v\bbaz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\\f\\v\\bbaz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot; // @TODO a bit unsure about this
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
-        <dt>a = &quot;bar\f\v\bbaz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\f\v\bbaz&quot;')).to.deep.equal({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;Literal&quot;,
-          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
         <dt>a = nil</dt>
         <dd><pre><code>expect(parser.parse('a = nil')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6667,7 +6720,7 @@
         <dt>local function a(p) do                  -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('local function a(p) do', {wait:true}).end).throws(&quot;[1:22] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>local function a(p) 1 end               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p) 1 end', {wait:true}).end).throws(&quot;[1:20] Unexpected symbol '1' near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p) 1 end', {wait:true}).end).throws(&quot;[1:20] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
         <dt>local function a(p) return end</dt>
         <dd><pre><code>expect(parser.parse('local function a(p) return end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6749,7 +6802,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local function a(...,                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(...,', {wait:true}).end).throws(&quot;[1:20] &lt;name&gt; or '...' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(...,', {wait:true}).end).throws(&quot;[1:20] ')' expected near ','&quot;);</code></pre></dd>
         <dt>local function a(p,...) end</dt>
         <dd><pre><code>expect(parser.parse('local function a(p,...) end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7918,7 +7971,7 @@ expect(parse.end('break')).to.deep.equal({
         <dt>a = ((1 + 2)                            -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a = ((1 + 2)', {wait:true}).end).throws(&quot;[1:12] ')' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = 1)                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1)', {wait:true}).end).throws(&quot;[1:5] Unexpected symbol ')' near ')'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1)', {wait:true}).end).throws(&quot;[1:5] Unexpected symbol ')' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = a + b - c</dt>
         <dd><pre><code>expect(parser.parse('a = a + b - c')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -8411,7 +8464,7 @@ expect(parse.end('break')).to.deep.equal({
         <dt>a = ~                                   -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a = ~', {wait:true}).end).throws(&quot;[1:5] '=' expected near '~'&quot;);</code></pre></dd>
         <dt>a = ~= 2                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = ~= 2', {wait:true}).end).throws(&quot;[1:8] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = ~= 2', {wait:true}).end).throws(&quot;[1:4] &lt;expression&gt; expected near '~='&quot;);</code></pre></dd>
         <dt>a = &quot;foo&quot; == &quot;bar&quot;</dt>
         <dd><pre><code>expect(parser.parse('a = &quot;foo&quot; == &quot;bar&quot;')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -8588,7 +8641,7 @@ expect(parse.end('break')).to.deep.equal({
         <dt>a = 1 and                               -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a = 1 and', {wait:true}).end).throws(&quot;[1:9] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = or 1                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = or 1', {wait:true}).end).throws(&quot;[1:8] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = or 1', {wait:true}).end).throws(&quot;[1:4] &lt;expression&gt; expected near 'or'&quot;);</code></pre></dd>
         <dt>a = 1 and 2 and 3</dt>
         <dd><pre><code>expect(parser.parse('a = 1 and 2 and 3')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -9820,9 +9873,9 @@ expect(test).to.deep.equal(expected);</code></pre></dd>
         <dt>repeat end                              -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('repeat end', {wait:true}).end).throws(&quot;[1:7] 'until' expected near 'end'&quot;);</code></pre></dd>
         <dt>repeat 1                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat 1', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol '1' near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat 1', {wait:true}).end).throws(&quot;[1:7] Unexpected number '1' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>repeat =                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat =', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol '=' near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat =', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol '=' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>repeat local a until 1</dt>
         <dd><pre><code>expect(parser.parse('repeat local a until 1')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -9922,9 +9975,9 @@ expect(test).to.deep.equal(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>repeat 2 until 1                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat 2 until 1', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol '2' near '2'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat 2 until 1', {wait:true}).end).throws(&quot;[1:7] Unexpected number '2' near 'until'&quot;);</code></pre></dd>
         <dt>repeat &quot;foo&quot; until 1                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat &quot;foo&quot; until 1', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol 'foo' near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat &quot;foo&quot; until 1', {wait:true}).end).throws(&quot;[1:7] Unexpected string 'foo' near 'until'&quot;);</code></pre></dd>
         <dt>repeat return until 0</dt>
         <dd><pre><code>expect(parser.parse('repeat return until 0')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10041,7 +10094,7 @@ expect(test).to.deep.equal(expected);</code></pre></dd>
       <h1>return</h1>
       <dl>
         <dt>return return                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('return return', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol 'return' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('return return', {wait:true}).end).throws(&quot;[1:7] Unexpected keyword 'return' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>return 1</dt>
         <dd><pre><code>expect(parser.parse('return 1')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10059,7 +10112,7 @@ expect(test).to.deep.equal(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>return local                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('return local', {wait:true}).end).throws(&quot;[1:7] Unexpected symbol 'local' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('return local', {wait:true}).end).throws(&quot;[1:7] Unexpected keyword 'local' near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>return &quot;foo&quot;</dt>
         <dd><pre><code>expect(parser.parse('return &quot;foo&quot;')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10850,7 +10903,7 @@ expect(test).to.deep.equal(expected);</code></pre></dd>
         <dt>a = { [1]                               -- FAIL</dt>
         <dd><pre><code>expect(parser.parse('a = { [1]', {wait:true}).end).throws(&quot;[1:9] '=' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = { [a]=                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { [a]=', {wait:true}).end).throws(&quot;[1:10] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { [a]=', {wait:true}).end).throws(&quot;[1:10] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
         <dt>a = { [&quot;foo&quot;]=&quot;bar&quot; }</dt>
         <dd><pre><code>expect(parser.parse('a = { [&quot;foo&quot;]=&quot;bar&quot; }')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -11109,9 +11162,9 @@ expect(test).to.deep.equal(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>while 1 do 2 end                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 do 2 end', {wait:true}).end).throws(&quot;[1:11] Unexpected symbol '2' near '2'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 do 2 end', {wait:true}).end).throws(&quot;[1:11] Unexpected number '2' near 'end'&quot;);</code></pre></dd>
         <dt>while 1 do &quot;foo&quot; end                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:11] Unexpected symbol 'foo' near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 do &quot;foo&quot; end', {wait:true}).end).throws(&quot;[1:11] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
         <dt>while true do end</dt>
         <dd><pre><code>expect(parser.parse('while true do end')).to.deep.equal({
   &quot;type&quot;: &quot;Chunk&quot;,

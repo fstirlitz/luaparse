@@ -65,8 +65,14 @@ describe('functioncalls', function() {
                 "type": "Literal",
                 "value": 1
               },
-              null,
-              null
+              {
+                "type": "Literal",
+                "value": 2
+              },
+              {
+                "type": "Literal",
+                "value": 3
+              }
             ]
           }
         }
@@ -75,7 +81,7 @@ describe('functioncalls', function() {
     });
   });
   it('1()                                     -- FAIL', function() {
-    expect(parser.parse('1()', {wait:true}).end).throws("[1:0] Unexpected symbol '1' near '1'");
+    expect(parser.parse('1()', {wait:true}).end).throws("[1:0] Unexpected number '1' near '('");
   });
   it('a()()', function() {
     expect(parser.parse('a()()')).to.deep.equal({
@@ -154,13 +160,13 @@ describe('functioncalls', function() {
     });
   });
   it('a.1                                     -- FAIL', function() {
-    expect(parser.parse('a.1', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '0.1'");
+    expect(parser.parse('a.1', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a.b                                     -- FAIL', function() {
-    expect(parser.parse('a.b', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '<eof>'");
+    expect(parser.parse('a.b', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a[b]                                    -- FAIL', function() {
-    expect(parser.parse('a[b]', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '<eof>'");
+    expect(parser.parse('a[b]', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a.b.(                                   -- FAIL', function() {
     expect(parser.parse('a.b.(', {wait:true}).end).throws("[1:4] <name> expected near '('");
@@ -329,7 +335,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b                                     -- FAIL', function() {
-    expect(parser.parse('a:b', {wait:true}).end).throws("[1:3] <expression> expected near '<eof>'");
+    expect(parser.parse('a:b', {wait:true}).end).throws("[1:3] function arguments expected near '<eof>'");
   });
   it('a:1                                     -- FAIL', function() {
     expect(parser.parse('a:1', {wait:true}).end).throws("[1:2] <name> expected near '1'");
@@ -404,7 +410,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b:                                    -- FAIL', function() {
-    expect(parser.parse('a:b:', {wait:true}).end).throws("[1:3] <expression> expected near ':'");
+    expect(parser.parse('a:b:', {wait:true}).end).throws("[1:3] function arguments expected near ':'");
   });
   it('a:b():c()', function() {
     expect(parser.parse('a:b():c()')).to.deep.equal({
@@ -1872,5 +1878,3 @@ describe('functioncalls', function() {
     });
   });
 });
-
-

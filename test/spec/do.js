@@ -3,7 +3,7 @@ describe('do', function() {
     expect(parser.parse('do', {wait:true}).end).throws("[1:2] 'end' expected near '<eof>'");
   });
   it('end                                     -- FAIL', function() {
-    expect(parser.parse('end', {wait:true}).end).throws("[1:0] Unexpected symbol 'end' near '<eof>'");
+    expect(parser.parse('end', {wait:true}).end).throws("[1:0] Unexpected keyword 'end' near '<eof>'");
   });
   it('do end', function() {
     expect(parser.parse('do end')).to.deep.equal({
@@ -18,10 +18,10 @@ describe('do', function() {
     });
   });
   it('do 1 end                                -- FAIL', function() {
-    expect(parser.parse('do 1 end', {wait:true}).end).throws("[1:3] Unexpected symbol '1' near '1'");
+    expect(parser.parse('do 1 end', {wait:true}).end).throws("[1:3] Unexpected number '1' near 'end'");
   });
   it('do "foo" end                            -- FAIL', function() {
-    expect(parser.parse('do "foo" end', {wait:true}).end).throws("[1:3] Unexpected symbol 'foo' near 'foo'");
+    expect(parser.parse('do "foo" end', {wait:true}).end).throws("[1:3] Unexpected string 'foo' near 'end'");
   });
   it('do local a, b end', function() {
     expect(parser.parse('do local a, b end')).to.deep.equal({
@@ -253,7 +253,7 @@ describe('do', function() {
     expect(parser.parse('do end do', {wait:true}).end).throws("[1:9] 'end' expected near '<eof>'");
   });
   it('do end end                              -- FAIL', function() {
-    expect(parser.parse('do end end', {wait:true}).end).throws("[1:7] Unexpected symbol 'end' near '<eof>'");
+    expect(parser.parse('do end end', {wait:true}).end).throws("[1:7] Unexpected keyword 'end' near '<eof>'");
   });
   it('do return end', function() {
     expect(parser.parse('do return end')).to.deep.equal({
@@ -276,5 +276,3 @@ describe('do', function() {
     expect(parser.parse('do return return end', {wait:true}).end).throws("[1:10] 'end' expected near 'return'");
   });
 });
-
-

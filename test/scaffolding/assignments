@@ -12,6 +12,7 @@ a[b] = 1
 a[b][c] = 1
 a.b[c] = 1
 a[b].c = 1
+a[b], a[c] = 1
 0 =                                     -- FAIL
 "foo" =                                 -- FAIL
 true =                                  -- FAIL

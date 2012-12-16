@@ -8,4 +8,5 @@ break--comment
 --[===[comment\n--[=[sub]=]--\n]===]--break
 --[[comment\nline two]]--
 --[[\ncomment\nline two\n]]--
+--[==\nbreak --]]--
 if true -- comment\nthen end

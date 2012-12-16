@@ -1,9 +1,9 @@
 describe('assignments', function() {
   it('a                                       -- FAIL', function() {
-    expect(parser.parse('a', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '<eof>'");
+    expect(parser.parse('a', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a,                                      -- FAIL', function() {
-    expect(parser.parse('a,', {wait:true}).end).throws("[1:2] '=' expected near '<eof>'");
+    expect(parser.parse('a,', {wait:true}).end).throws("[1:2] <expression> expected near '<eof>'");
   });
   it('a,b,c                                   -- FAIL', function() {
     expect(parser.parse('a,b,c', {wait:true}).end).throws("[1:5] '=' expected near '<eof>'");
@@ -348,20 +348,61 @@ describe('assignments', function() {
       "comments": []
     });
   });
+  it('a[b], a[c] = 1', function() {
+    expect(parser.parse('a[b], a[c] = 1')).to.deep.equal({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "IndexExpression",
+              "base": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "index": {
+                "type": "Identifier",
+                "name": "b"
+              }
+            },
+            {
+              "type": "IndexExpression",
+              "base": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "index": {
+                "type": "Identifier",
+                "name": "c"
+              }
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
   it('0 =                                     -- FAIL', function() {
-    expect(parser.parse('0 =', {wait:true}).end).throws("[1:0] Unexpected symbol '0' near '0'");
+    expect(parser.parse('0 =', {wait:true}).end).throws("[1:0] Unexpected number '0' near '='");
   });
   it('"foo" =                                 -- FAIL', function() {
-    expect(parser.parse('"foo" =', {wait:true}).end).throws("[1:0] Unexpected symbol 'foo' near 'foo'");
+    expect(parser.parse('"foo" =', {wait:true}).end).throws("[1:0] Unexpected string 'foo' near '='");
   });
   it('true =                                  -- FAIL', function() {
-    expect(parser.parse('true =', {wait:true}).end).throws("[1:0] Unexpected symbol 'true' near 'true'");
+    expect(parser.parse('true =', {wait:true}).end).throws("[1:0] Unexpected boolean 'true' near '='");
   });
   it('(a) =                                   -- FAIL', function() {
     expect(parser.parse('(a) =', {wait:true}).end).throws("[1:5] <expression> expected near '<eof>'");
   });
   it('{} =                                    -- FAIL', function() {
-    expect(parser.parse('{} =', {wait:true}).end).throws("[1:0] Unexpected symbol '{' near '{'");
+    expect(parser.parse('{} =', {wait:true}).end).throws("[1:0] Unexpected symbol '{' near '}'");
   });
   it('a:b() =                                 -- FAIL', function() {
     expect(parser.parse('a:b() =', {wait:true}).end).throws("[1:7] <expression> expected near '<eof>'");
@@ -376,14 +417,12 @@ describe('assignments', function() {
     expect(parser.parse('a[b]() =', {wait:true}).end).throws("[1:8] <expression> expected near '<eof>'");
   });
   it('a = a b                                 -- FAIL', function() {
-    expect(parser.parse('a = a b', {wait:true}).end).throws("[1:6] Unexpected symbol 'b' near '<eof>'");
+    expect(parser.parse('a = a b', {wait:true}).end).throws("[1:6] Unexpected identifier 'b' near '<eof>'");
   });
   it('a = 1 2                                 -- FAIL', function() {
-    expect(parser.parse('a = 1 2', {wait:true}).end).throws("[1:6] Unexpected symbol '2' near '2'");
+    expect(parser.parse('a = 1 2', {wait:true}).end).throws("[1:6] Unexpected number '2' near '<eof>'");
   });
   it('a = a = 1                               -- FAIL', function() {
-    expect(parser.parse('a = a = 1', {wait:true}).end).throws("[1:6] Unexpected symbol '=' near '='");
+    expect(parser.parse('a = a = 1', {wait:true}).end).throws("[1:6] Unexpected symbol '=' near '1'");
   });
 });
-
-

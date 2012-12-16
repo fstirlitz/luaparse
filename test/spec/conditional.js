@@ -3,13 +3,13 @@ describe('conditional', function() {
     expect(parser.parse('if', {wait:true}).end).throws("[1:2] 'then' expected near '<eof>'");
   });
   it('elseif                                  -- FAIL', function() {
-    expect(parser.parse('elseif', {wait:true}).end).throws("[1:0] Unexpected symbol 'elseif' near '<eof>'");
+    expect(parser.parse('elseif', {wait:true}).end).throws("[1:0] Unexpected keyword 'elseif' near '<eof>'");
   });
   it('else                                    -- FAIL', function() {
-    expect(parser.parse('else', {wait:true}).end).throws("[1:0] Unexpected symbol 'else' near '<eof>'");
+    expect(parser.parse('else', {wait:true}).end).throws("[1:0] Unexpected keyword 'else' near '<eof>'");
   });
   it('then                                    -- FAIL', function() {
-    expect(parser.parse('then', {wait:true}).end).throws("[1:0] Unexpected symbol 'then' near 'then'");
+    expect(parser.parse('then', {wait:true}).end).throws("[1:0] Unexpected keyword 'then' near '<eof>'");
   });
   it('if then                                 -- FAIL', function() {
     expect(parser.parse('if then', {wait:true}).end).throws("[1:7] 'end' expected near '<eof>'");
@@ -541,5 +541,3 @@ describe('conditional', function() {
     });
   });
 });
-
-

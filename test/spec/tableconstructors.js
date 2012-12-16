@@ -675,7 +675,7 @@ describe('tableconstructors', function() {
     expect(parser.parse('a = { [1]', {wait:true}).end).throws("[1:9] '=' expected near '<eof>'");
   });
   it('a = { [a]=                              -- FAIL', function() {
-    expect(parser.parse('a = { [a]=', {wait:true}).end).throws("[1:10] '}' expected near '<eof>'");
+    expect(parser.parse('a = { [a]=', {wait:true}).end).throws("[1:10] <expression> expected near '<eof>'");
   });
   it('a = { ["foo"]="bar" }', function() {
     expect(parser.parse('a = { ["foo"]="bar" }')).to.deep.equal({
@@ -812,5 +812,3 @@ describe('tableconstructors', function() {
     });
   });
 });
-
-

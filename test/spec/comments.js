@@ -185,5 +185,3 @@ describe('comments', function() {
     });
   });
 });
-
-

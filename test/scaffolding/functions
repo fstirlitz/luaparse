@@ -35,6 +35,7 @@ function a.b.c:d() end
 function a(...) end
 function a(...,                         -- FAIL
 function a(p,...) end
+function a(...,p) end                   -- FAIL
 function a(p,q,r,...) end
 function a() local a local b end
 function a() local a; local b; end
