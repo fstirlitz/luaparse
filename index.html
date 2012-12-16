@@ -42,30 +42,30 @@
       </div>
     </div>
     <div class="container">
-<h1>luaparse</h1>
+<h1>luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.png" alt="Build Status"></a></h1>
 <p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.
 
 </p>
 <p><em>Still in development</em>
 
 </p>
-<h3>Todo</h3>
-<h4>0.1</h4>
-<ul>
-<li>Clean up</li>
-<li>Figure out what we reliably can expose</li>
-<li>Optimize hot functions</li>
-<li>Finish all @TODO in code.</li>
-<li>Manually check the new yueliang test suite.</li>
-</ul>
-<h4>0.2</h4>
-<ul>
-<li>Tolerant error handling</li>
-<li>Location tracking</li>
-</ul>
 <h2>Getting started</h2>
-<h2>Features</h2>
-<h2>Makefile</h2>
+<p>CommonJS
+
+</p>
+<pre><code class="lang-javascript">var parser = require(&#39;luaparse&#39;);
+parser.parse(&#39;i = 0&#39;);</code></pre>
+<p>AMD
+
+</p>
+<pre><code class="lang-javascript">require([&#39;luaparse&#39;], function(parser) {
+  parser.parse(&#39;i = 0&#39;);
+});</code></pre>
+<p>Browser
+
+</p>
+<pre><code class="lang-javascript">luaparse.parse(&#39;i = 0&#39;);</code></pre>
+<h3>Makefile</h3>
 <p>Run the tests
 
 </p>
@@ -74,20 +74,47 @@
 
 </p>
 <pre><code>$ make docs</code></pre>
-<p>Report test coverage (more accurate than docs/coverage.html)
+<p>Report code coverage
 
 </p>
-<pre><code>$ make lcov</code></pre>
+<pre><code>$ make coverage</code></pre>
 <p>Build a distribution file
 
 </p>
 <pre><code>$ make build</code></pre>
+<p>Scaffold the test files
+
+</p>
+<pre><code>$ make scaffold-tests</code></pre>
+<p>Install necessary development packages
+
+</p>
+<pre><code>$ make install</code></pre>
+<p>Before contributing any code follow the code style and run the lint tool
+
+</p>
+<pre><code>$ make lint</code></pre>
+<h2>Todo</h2>
+<h4>0.1</h4>
+<ul>
+<li>Clean up</li>
+<li>Figure out what we reliably can expose</li>
+<li>Optimize hot functions</li>
+</ul>
+<h4>0.2</h4>
+<ul>
+<li>Tolerant error handling</li>
+<li>Location tracking</li>
+<li>Keep track of all raw values.</li>
+</ul>
 <h2>Acknowledgements</h2>
 <ul>
-<li>Initial tests are scaffolded from <a href="http://yueliang.luaforge.net/">yueliang</a>.</li>
+<li>Initial tests are scaffolded from <a href="http://yueliang.luaforge.net/">yueliang</a> and then manually checked for error.</li>
+<li>Much of the code is based on <a href="https://github.com/stravant/LuaMinify">LuaMinify</a>, the <a href="http://www.lua.org">Lua</a> source and <a href="http://esprima.org">Esprima</a>. All awesome projects.</li>
 </ul>
 <h2>License</h2>
 <p>MIT
+
 </p>
 
     </div>

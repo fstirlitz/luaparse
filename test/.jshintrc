@@ -16,9 +16,6 @@
   "eqnull": true,
   "laxcomma": true,
   "predef": [
-    "describe", "it", "before", "after",
-    "parser", "expect", "console", "util", "helpers", "require", "exports",
-    "expectStatement", "expectTree", "expectPrecedence", "logger",
-    "testPrecedence", "testExpression", "testTree", "debugTree", "expectObj"
+    "describe", "it", "before", "after", "expect", "parser"
   ]
 }
