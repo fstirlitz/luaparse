@@ -22,14 +22,7 @@ a = 1 .. "bar"
 a = "bar                                  -- FAIL
 a = 'bar'
 a = "bar"
-a = "bar\tbaz"
-a = "bar\\tbaz"
-a = "bar\nbaz"                                    -- FAIL
-a = "bar\\nbaz"
-a = "bar\rbaz"                                    -- FAIL
-a = "bar\\rbaz"
-//a = "bar\80baz" do these manually
-//a = "bar\\80baz"
+a = [=aa                                  -- FAIL
 a = nil
 a = true
 a = false
