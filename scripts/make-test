@@ -20,7 +20,7 @@ function scaffoldFile() {
     output += scaffoldIt(snippet) + "\n";
   });
 
-  if (testName) output += "});\n\n";
+  if (testName) output += "});";
 
   return output;
 }
