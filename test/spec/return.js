@@ -1,6 +1,6 @@
 describe('return', function() {
   it('return return                           -- FAIL', function() {
-    expect(parser.parse('return return', {wait:true}).end).throws("[1:7] Unexpected symbol 'return' near '<eof>'");
+    expect(parser.parse('return return', {wait:true}).end).throws("[1:7] Unexpected keyword 'return' near '<eof>'");
   });
   it('return 1', function() {
     expect(parser.parse('return 1')).to.deep.equal({
@@ -20,7 +20,7 @@ describe('return', function() {
     });
   });
   it('return local                            -- FAIL', function() {
-    expect(parser.parse('return local', {wait:true}).end).throws("[1:7] Unexpected symbol 'local' near '<eof>'");
+    expect(parser.parse('return local', {wait:true}).end).throws("[1:7] Unexpected keyword 'local' near '<eof>'");
   });
   it('return "foo"', function() {
     expect(parser.parse('return "foo"')).to.deep.equal({
@@ -118,5 +118,3 @@ describe('return', function() {
     });
   });
 });
-
-

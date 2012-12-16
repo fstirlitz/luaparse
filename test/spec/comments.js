@@ -127,7 +127,6 @@ describe('comments', function() {
       ]
     });
   });
-  // @TODO should the last \n be removed?
   it('--[[\\ncomment\\nline two\\n]]--', function() {
     expect(parser.parse('--[[\ncomment\nline two\n]]--')).to.deep.equal({
       "type": "Chunk",
@@ -186,5 +185,3 @@ describe('comments', function() {
     });
   });
 });
-
-

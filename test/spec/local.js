@@ -363,14 +363,12 @@ describe('local', function() {
   it('local function a("foo"                  -- FAIL', function() {
     expect(parser.parse('local function a("foo"', {wait:true}).end).throws("[1:17] <name> or '...' expected near 'foo'");
   });
-  // @TODO ) expected
   it('local function a(p                      -- FAIL', function() {
     expect(parser.parse('local function a(p', {wait:true}).end).throws("[1:18] <name> or '...' expected near '<eof>'");
   });
   it('local function a(p,)                    -- FAIL', function() {
     expect(parser.parse('local function a(p,)', {wait:true}).end).throws("[1:19] <name> expected near ')'");
   });
-  // @TODO ) expected
   it('local function a(p q                    -- FAIL', function() {
     expect(parser.parse('local function a(p q', {wait:true}).end).throws("[1:19] <name> or '...' expected near 'q'");
   });
@@ -440,7 +438,7 @@ describe('local', function() {
     expect(parser.parse('local function a(p) do', {wait:true}).end).throws("[1:22] 'end' expected near '<eof>'");
   });
   it('local function a(p) 1 end               -- FAIL', function() {
-    expect(parser.parse('local function a(p) 1 end', {wait:true}).end).throws("[1:20] Unexpected symbol '1' near '1'");
+    expect(parser.parse('local function a(p) 1 end', {wait:true}).end).throws("[1:20] Unexpected number '1' near 'end'");
   });
   it('local function a(p) return end', function() {
     expect(parser.parse('local function a(p) return end')).to.deep.equal({
@@ -528,9 +526,8 @@ describe('local', function() {
       "comments": []
     });
   });
-  // @TODO ) expected. add test for ... as not last.
   it('local function a(...,                   -- FAIL', function() {
-    expect(parser.parse('local function a(...,', {wait:true}).end).throws("[1:20] <name> or '...' expected near ','");
+    expect(parser.parse('local function a(...,', {wait:true}).end).throws("[1:20] ')' expected near ','");
   });
   it('local function a(p,...) end', function() {
     expect(parser.parse('local function a(p,...) end')).to.deep.equal({

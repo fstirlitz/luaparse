@@ -283,7 +283,7 @@ describe('expressions', function() {
     });
   });
   it('a = a:b                                 -- FAIL', function() {
-    expect(parser.parse('a = a:b', {wait:true}).end).throws("[1:7] <expression> expected near '<eof>'");
+    expect(parser.parse('a = a:b', {wait:true}).end).throws("[1:7] function arguments expected near '<eof>'");
   });
   it('a = a[b]', function() {
     expect(parser.parse('a = a[b]')).to.deep.equal({
@@ -886,7 +886,6 @@ describe('expressions', function() {
   it('a = function(                           -- FAIL', function() {
     expect(parser.parse('a = function(', {wait:true}).end).throws("[1:13] <name> or '...' expected near '<eof>'");
   });
-  // @TODO functionexpression?
   it('a = function() end', function() {
     expect(parser.parse('a = function() end')).to.deep.equal({
       "type": "Chunk",
@@ -1026,7 +1025,7 @@ describe('expressions', function() {
     });
   });
   it('a = function(...,                       -- FAIL', function() {
-    expect(parser.parse('a = function(...,', {wait:true}).end).throws("[1:16] <name> or '...' expected near ','");
+    expect(parser.parse('a = function(...,', {wait:true}).end).throws("[1:16] ')' expected near ','");
   });
   it('a = function(p,...) end', function() {
     expect(parser.parse('a = function(p,...) end')).to.deep.equal({
@@ -1101,5 +1100,3 @@ describe('expressions', function() {
     });
   });
 });
-
-

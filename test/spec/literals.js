@@ -1,6 +1,6 @@
 describe('literals', function() {
   it('a                                         -- FAIL', function() {
-    expect(parser.parse('a', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '<eof>'");
+    expect(parser.parse('a', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a = 1', function() {
     expect(parser.parse('a = 1')).to.deep.equal({
@@ -356,7 +356,6 @@ describe('literals', function() {
       "comments": []
     });
   });
-  // @TODO should this really be binary exp?
   it('a = 1 .. 3 .. -2', function() {
     expect(parser.parse('a = 1 .. 3 .. -2')).to.deep.equal({
       "type": "Chunk",
@@ -480,7 +479,7 @@ describe('literals', function() {
       "comments": []
     });
   });
-  it('a = [=aa           -- FAIL', function() {
+  it('a = [=aa                                  -- FAIL', function() {
     expect(parser.parse('a = [=aa', {wait:true}).end).throws("[1:2] '[' expected near '='");
   });
   it('a = nil', function() {

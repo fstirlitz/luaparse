@@ -44,10 +44,10 @@ describe('repeat', function() {
     expect(parser.parse('repeat end', {wait:true}).end).throws("[1:7] 'until' expected near 'end'");
   });
   it('repeat 1                                -- FAIL', function() {
-    expect(parser.parse('repeat 1', {wait:true}).end).throws("[1:7] Unexpected symbol '1' near '1'");
+    expect(parser.parse('repeat 1', {wait:true}).end).throws("[1:7] Unexpected number '1' near '<eof>'");
   });
   it('repeat =                                -- FAIL', function() {
-    expect(parser.parse('repeat =', {wait:true}).end).throws("[1:7] Unexpected symbol '=' near '='");
+    expect(parser.parse('repeat =', {wait:true}).end).throws("[1:7] Unexpected symbol '=' near '<eof>'");
   });
   it('repeat local a until 1', function() {
     expect(parser.parse('repeat local a until 1')).to.deep.equal({
@@ -151,10 +151,10 @@ describe('repeat', function() {
     });
   });
   it('repeat 2 until 1                        -- FAIL', function() {
-    expect(parser.parse('repeat 2 until 1', {wait:true}).end).throws("[1:7] Unexpected symbol '2' near '2'");
+    expect(parser.parse('repeat 2 until 1', {wait:true}).end).throws("[1:7] Unexpected number '2' near 'until'");
   });
   it('repeat "foo" until 1                    -- FAIL', function() {
-    expect(parser.parse('repeat "foo" until 1', {wait:true}).end).throws("[1:7] Unexpected symbol 'foo' near 'foo'");
+    expect(parser.parse('repeat "foo" until 1', {wait:true}).end).throws("[1:7] Unexpected string 'foo' near 'until'");
   });
   it('repeat return until 0', function() {
     expect(parser.parse('repeat return until 0')).to.deep.equal({

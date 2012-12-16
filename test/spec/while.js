@@ -129,10 +129,10 @@ describe('while', function() {
     });
   });
   it('while 1 do 2 end                        -- FAIL', function() {
-    expect(parser.parse('while 1 do 2 end', {wait:true}).end).throws("[1:11] Unexpected symbol '2' near '2'");
+    expect(parser.parse('while 1 do 2 end', {wait:true}).end).throws("[1:11] Unexpected number '2' near 'end'");
   });
   it('while 1 do "foo" end                    -- FAIL', function() {
-    expect(parser.parse('while 1 do "foo" end', {wait:true}).end).throws("[1:11] Unexpected symbol 'foo' near 'foo'");
+    expect(parser.parse('while 1 do "foo" end', {wait:true}).end).throws("[1:11] Unexpected string 'foo' near 'end'");
   });
   it('while true do end', function() {
     expect(parser.parse('while true do end')).to.deep.equal({
