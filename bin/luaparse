@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/*jshint node:true*/
+/*globals console:true */
+'use strict';
 
 var fs = require('fs')
   , luaparse = require('../')

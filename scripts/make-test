@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/*jshint node:true*/
+/*globals console:true */
+'use strict';
 
 var fs = require('fs')
   , luaparse = require('../')
@@ -61,18 +64,20 @@ function scaffoldIt(snippet) {
         // For some reason it didnt throw a error, output the regular assertion
         // but comment on it in the source.
         intro += indent + "// This fails in semantic analysis!\n";
-        notifications.push('\033[33mExpected failure: \033[0m' + name);
+        notifications.push('\x1B[33mExpected failure: \x1B[0m' + name);
+        /* falls through */
       } catch (error) {
         assertion = scaffoldThrowAssertion(snippet, error);
         break;
       }
-    // Success case
+      /* falls through */
     case false:
+      // Success case
       try {
-        result = JSON.stringify(luaparse.parse(exec), null, indent)
+        result = JSON.stringify(luaparse.parse(exec), null, indent);
         assertion = scaffoldAssertion(snippet, result);
       } catch (error) {
-        notifications.push('\033[31m' + error + ':\033[0m ' + name);
+        notifications.push('\x1B[31m' + error + ':\x1B[0m ' + name);
         success = false;
       }
       break;
@@ -80,7 +85,7 @@ function scaffoldIt(snippet) {
 
   if (verbose && !success) return '';
 
-  return (intro + assertion + outro).replace(/^(.)/gm, indent + "$1");
+  return (intro + assertion + outro).replace(/^([\s\S])/gm, indent + "$1");
 }
 
 // Scaffold a deep equals assertion.
@@ -97,7 +102,7 @@ function scaffoldAssertion(snippet, result) {
 
   return indent + "expect(parser.parse('" + snippet + "')).to.deep.equal(" +
     firstline + "\n" + // {
-    result.replace(/^(.)/gm, indent + "$1") +
+    result.replace(/^([\s\S])/gm, indent + "$1") +
     ");";
 }
 

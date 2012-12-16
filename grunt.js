@@ -44,6 +44,7 @@ module.exports = function (grunt) {
     // Linting
     lint: {
       dist: ['Gruntfile.js', 'lib/*.js'],
+      node: ['scripts/*', 'bin/*'],
       test: ['test/spec/**/*.js']
     },
     jshint: {
