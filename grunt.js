@@ -2,6 +2,15 @@
 module.exports = function (grunt) {
   'use strict';
 
+  function readOptionalJSON(filepath) {
+    var data = {};
+    try {
+      data = grunt.file.readJSON(filepath);
+      grunt.verbose.write('Reading ' + filepath + '...').ok();
+    } catch(e) {}
+    return data;
+  }
+
   grunt.initConfig({
     // Meta
     pkg: "<json:package.json>",
@@ -18,43 +27,31 @@ module.exports = function (grunt) {
     concat: {
       dist: {
         src: [
-          '<config:meta.banner>',
+          '<banner>',
           'lib/luaparse.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
+
     min: {
       dist: {
-        src: ['<config:meta.banner>', '<config:concat.dist.dest>'],
+        src: ['<banner>', '<config:concat.dist.dest>'],
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
 
-    // Tests
-    test: {
-      files: ['test/spec/*.js']
-    },
-    mocha: {
-      index: ['test/*.html']
-    },
-
     // Linting
     lint: {
-      dist: {
-        src: ['Gruntfile.js', 'lib/*.js'],
-        options: {
-          jshintrc: '.jshintrc'
-        }
-      },
-      test: {
-        src: ['test/spec/**/*.js'],
-        options: {
-          jshintrc: 'test/spec/.jshintrc'
-        }
-      }
+      dist: ['Gruntfile.js', 'lib/*.js'],
+      test: ['test/spec/**/*.js']
     },
-    watch: {}
+    jshint: {
+      options: readOptionalJSON('.jshintrc'),
+      test: {
+        options: readOptionalJSON('test/spec/.jshintrc')
+      }
+    }
   });
 
   grunt.registerTask('default', 'concat min lint');

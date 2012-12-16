@@ -23,7 +23,6 @@
   "devDependencies": {
     "mocha": "~1.7.2",
     "chai": "git://github.com/chaijs/chai.git#999ca70923186",
-    "difflet": "*",
     "mocha-istanbul": "*",
     "grunt": "*",
     "doccoh": "*",

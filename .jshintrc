@@ -15,5 +15,5 @@
   "boss": true,
   "eqnull": true,
   "laxcomma": true,
-  "loopfunc": true
+  "loopfunc": false
 }
