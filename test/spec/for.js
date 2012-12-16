@@ -152,9 +152,11 @@ describe('for', function() {
       "comments": []
     });
   });
+  // @TODO near
   it('for a in b do 1 end                     -- FAIL', function() {
     expect(parser.parse('for a in b do 1 end', {wait:true}).end).throws("[1:14] Unexpected symbol '1' near '1'");
   });
+  // @TODO near
   it('for a in b do "foo" end                 -- FAIL', function() {
     expect(parser.parse('for a in b do "foo" end', {wait:true}).end).throws("[1:14] Unexpected symbol 'foo' near 'foo'");
   });
@@ -464,18 +466,23 @@ describe('for', function() {
   it('for =                                   -- FAIL', function() {
     expect(parser.parse('for =', {wait:true}).end).throws("[1:4] <name> expected near '='");
   });
+  // @TODO <expression> expected
   it('for a =                                 -- FAIL', function() {
     expect(parser.parse('for a =', {wait:true}).end).throws("[1:7] ',' expected near '<eof>'");
   });
+  // @TODO <expression> expected
   it('for a, b =                              -- FAIL', function() {
     expect(parser.parse('for a, b =', {wait:true}).end).throws("[1:9] 'in' expected near '='");
   });
+  // @TODO <expression> expected
   it('for a = do                              -- FAIL', function() {
     expect(parser.parse('for a = do', {wait:true}).end).throws("[1:8] ',' expected near 'do'");
   });
+  // @TODO <expression> expected
   it('for a = 1, do                           -- FAIL', function() {
     expect(parser.parse('for a = 1, do', {wait:true}).end).throws("[1:13] 'end' expected near '<eof>'");
   });
+  // @TODO <expression> expected
   it('for a = p, q, do                        -- FAIL', function() {
     expect(parser.parse('for a = p, q, do', {wait:true}).end).throws("[1:16] 'end' expected near '<eof>'");
   });
@@ -630,9 +637,11 @@ describe('for', function() {
       "comments": []
     });
   });
+  // @TODO near
   it('for a = 1, 2 do 3 end                   -- FAIL', function() {
     expect(parser.parse('for a = 1, 2 do 3 end', {wait:true}).end).throws("[1:16] Unexpected symbol '3' near '3'");
   });
+  // @TODO near
   it('for a = 1, 2 do "foo" end               -- FAIL', function() {
     expect(parser.parse('for a = 1, 2 do "foo" end', {wait:true}).end).throws("[1:16] Unexpected symbol 'foo' near 'foo'");
   });
@@ -854,5 +863,3 @@ describe('for', function() {
     });
   });
 });
-
-

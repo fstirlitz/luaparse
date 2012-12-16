@@ -363,12 +363,14 @@ describe('local', function() {
   it('local function a("foo"                  -- FAIL', function() {
     expect(parser.parse('local function a("foo"', {wait:true}).end).throws("[1:17] <name> or '...' expected near 'foo'");
   });
+  // @TODO ) expected
   it('local function a(p                      -- FAIL', function() {
     expect(parser.parse('local function a(p', {wait:true}).end).throws("[1:18] <name> or '...' expected near '<eof>'");
   });
   it('local function a(p,)                    -- FAIL', function() {
     expect(parser.parse('local function a(p,)', {wait:true}).end).throws("[1:19] <name> expected near ')'");
   });
+  // @TODO ) expected
   it('local function a(p q                    -- FAIL', function() {
     expect(parser.parse('local function a(p q', {wait:true}).end).throws("[1:19] <name> or '...' expected near 'q'");
   });
@@ -526,6 +528,7 @@ describe('local', function() {
       "comments": []
     });
   });
+  // @TODO ) expected. add test for ... as not last.
   it('local function a(...,                   -- FAIL', function() {
     expect(parser.parse('local function a(...,', {wait:true}).end).throws("[1:20] <name> or '...' expected near ','");
   });
@@ -696,5 +699,3 @@ describe('local', function() {
     });
   });
 });
-
-

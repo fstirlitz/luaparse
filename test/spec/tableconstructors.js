@@ -674,6 +674,7 @@ describe('tableconstructors', function() {
   it('a = { [1]                               -- FAIL', function() {
     expect(parser.parse('a = { [1]', {wait:true}).end).throws("[1:9] '=' expected near '<eof>'");
   });
+  // @TODO expected expression.
   it('a = { [a]=                              -- FAIL', function() {
     expect(parser.parse('a = { [a]=', {wait:true}).end).throws("[1:10] '}' expected near '<eof>'");
   });
@@ -812,5 +813,3 @@ describe('tableconstructors', function() {
     });
   });
 });
-
-

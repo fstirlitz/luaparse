@@ -886,6 +886,7 @@ describe('expressions', function() {
   it('a = function(                           -- FAIL', function() {
     expect(parser.parse('a = function(', {wait:true}).end).throws("[1:13] <name> or '...' expected near '<eof>'");
   });
+  // @TODO functionexpression?
   it('a = function() end', function() {
     expect(parser.parse('a = function() end')).to.deep.equal({
       "type": "Chunk",

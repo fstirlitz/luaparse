@@ -65,8 +65,14 @@ describe('functioncalls', function() {
                 "type": "Literal",
                 "value": 1
               },
-              null,
-              null
+              {
+                "type": "Literal",
+                "value": 2
+              },
+              {
+                "type": "Literal",
+                "value": 3
+              }
             ]
           }
         }
@@ -74,6 +80,7 @@ describe('functioncalls', function() {
       "comments": []
     });
   });
+  // @TODO near
   it('1()                                     -- FAIL', function() {
     expect(parser.parse('1()', {wait:true}).end).throws("[1:0] Unexpected symbol '1' near '1'");
   });
@@ -153,12 +160,15 @@ describe('functioncalls', function() {
       "comments": []
     });
   });
+  // @TODO show raw value
   it('a.1                                     -- FAIL', function() {
     expect(parser.parse('a.1', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '0.1'");
   });
+  // @TODO error?
   it('a.b                                     -- FAIL', function() {
     expect(parser.parse('a.b', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '<eof>'");
   });
+  // @TODO error?
   it('a[b]                                    -- FAIL', function() {
     expect(parser.parse('a[b]', {wait:true}).end).throws("[1:0] Unexpected symbol 'a' near '<eof>'");
   });
@@ -328,6 +338,7 @@ describe('functioncalls', function() {
       "comments": []
     });
   });
+  // @TODO error?
   it('a:b                                     -- FAIL', function() {
     expect(parser.parse('a:b', {wait:true}).end).throws("[1:3] <expression> expected near '<eof>'");
   });
@@ -1137,6 +1148,7 @@ describe('functioncalls', function() {
       "comments": []
     });
   });
+  // @TODO hmm is this correct?
   it('a{}', function() {
     expect(parser.parse('a{}')).to.deep.equal({
       "type": "Chunk",
@@ -1872,5 +1884,3 @@ describe('functioncalls', function() {
     });
   });
 });
-
-

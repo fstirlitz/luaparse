@@ -276,5 +276,3 @@ describe('do', function() {
     expect(parser.parse('do return return end', {wait:true}).end).throws("[1:10] 'end' expected near 'return'");
   });
 });
-
-

@@ -356,6 +356,7 @@ describe('literals', function() {
       "comments": []
     });
   });
+  // @TODO should this really be binary exp?
   it('a = 1 .. 3 .. -2', function() {
     expect(parser.parse('a = 1 .. 3 .. -2')).to.deep.equal({
       "type": "Chunk",
