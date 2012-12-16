@@ -12,7 +12,6 @@ A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 - Figure out what we reliably can expose
 - Optimize hot functions
 - Finish all @TODO in code.
-- Manually check the new yueliang test suite.
 
 #### 0.2
 
