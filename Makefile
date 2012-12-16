@@ -63,9 +63,6 @@ scaffold-tests:
 		$(MAKE) -s scaffold-test FILE=$(file);\
 	)
 
-hurr:
-	@echo $(FILE)
-
 scaffold-test:
 	@./scripts/make-test --name=$(FILE) \
 		test/scaffolding/$(FILE) \

@@ -2,7 +2,7 @@
   "name": "luaparse",
   "description": "A Lua Parser in JS",
   "version": "0.0.1",
-  "homepage": "https://github.com/oxyc/luaparse",
+  "homepage": "http://oxyc.github.com/luaparse/",
   "author": {
     "name": "Oskar Schöldström",
     "email": "public@oxy.fi"
@@ -20,7 +20,6 @@
   "scripts": {
     "test" : "make test"
   },
-  "dependencies": {},
   "devDependencies": {
     "mocha": "~1.7.2",
     "chai": "git://github.com/chaijs/chai.git#999ca70923186",
