@@ -68,6 +68,12 @@ scaffold-test:
 		test/scaffolding/$(FILE) \
 		> test/spec/$(FILE).js
 
+install-test:
+	@cp ./node_modules/mocha/mocha.js test/lib/mocha/
+	@cp ./node_modules/mocha/mocha.css test/lib/mocha/
+	@cp ./node_modules/expect.js/expect.js test/lib/
+
+
 clean:
 	@rm -f docs/*.html docs/*.1
 	@rm -rf lib-cov coverage html-report docs/coverage/
