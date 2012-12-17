@@ -1,9 +1,9 @@
 describe('functioncalls', function() {
   it('a(                                      -- FAIL', function() {
-    expect(parser.parse('a(', {wait:true}).end).throws("[1:2] ')' expected near '<eof>'");
+    expect(parser.parse('a(', {wait:true}).end).to.throwError("[1:2] ')' expected near '<eof>'");
   });
   it('a()', function() {
-    expect(parser.parse('a()')).to.deep.equal({
+    expect(parser.parse('a()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -22,7 +22,7 @@ describe('functioncalls', function() {
     });
   });
   it('a(1)', function() {
-    expect(parser.parse('a(1)')).to.deep.equal({
+    expect(parser.parse('a(1)')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -46,10 +46,10 @@ describe('functioncalls', function() {
     });
   });
   it('a(1,)                                   -- FAIL', function() {
-    expect(parser.parse('a(1,)', {wait:true}).end).throws("[1:4] <expression> expected near ')'");
+    expect(parser.parse('a(1,)', {wait:true}).end).to.throwError("[1:4] <expression> expected near ')'");
   });
   it('a(1,2,3)', function() {
-    expect(parser.parse('a(1,2,3)')).to.deep.equal({
+    expect(parser.parse('a(1,2,3)')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -81,10 +81,10 @@ describe('functioncalls', function() {
     });
   });
   it('1()                                     -- FAIL', function() {
-    expect(parser.parse('1()', {wait:true}).end).throws("[1:0] Unexpected number '1' near '('");
+    expect(parser.parse('1()', {wait:true}).end).to.throwError("[1:0] Unexpected number '1' near '('");
   });
   it('a()()', function() {
-    expect(parser.parse('a()()')).to.deep.equal({
+    expect(parser.parse('a()()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -107,7 +107,7 @@ describe('functioncalls', function() {
     });
   });
   it('a.b()', function() {
-    expect(parser.parse('a.b()')).to.deep.equal({
+    expect(parser.parse('a.b()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -134,7 +134,7 @@ describe('functioncalls', function() {
     });
   });
   it('a[b]()', function() {
-    expect(parser.parse('a[b]()')).to.deep.equal({
+    expect(parser.parse('a[b]()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -160,19 +160,19 @@ describe('functioncalls', function() {
     });
   });
   it('a.1                                     -- FAIL', function() {
-    expect(parser.parse('a.1', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a.1', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a.b                                     -- FAIL', function() {
-    expect(parser.parse('a.b', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a.b', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a[b]                                    -- FAIL', function() {
-    expect(parser.parse('a[b]', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a[b]', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a.b.(                                   -- FAIL', function() {
-    expect(parser.parse('a.b.(', {wait:true}).end).throws("[1:4] <name> expected near '('");
+    expect(parser.parse('a.b.(', {wait:true}).end).to.throwError("[1:4] <name> expected near '('");
   });
   it('a.b.c()', function() {
-    expect(parser.parse('a.b.c()')).to.deep.equal({
+    expect(parser.parse('a.b.c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -207,7 +207,7 @@ describe('functioncalls', function() {
     });
   });
   it('a[b][c]()', function() {
-    expect(parser.parse('a[b][c]()')).to.deep.equal({
+    expect(parser.parse('a[b][c]()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -240,7 +240,7 @@ describe('functioncalls', function() {
     });
   });
   it('a[b].c()', function() {
-    expect(parser.parse('a[b].c()')).to.deep.equal({
+    expect(parser.parse('a[b].c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -274,7 +274,7 @@ describe('functioncalls', function() {
     });
   });
   it('a.b[c]()', function() {
-    expect(parser.parse('a.b[c]()')).to.deep.equal({
+    expect(parser.parse('a.b[c]()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -308,7 +308,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b()', function() {
-    expect(parser.parse('a:b()')).to.deep.equal({
+    expect(parser.parse('a:b()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -335,13 +335,13 @@ describe('functioncalls', function() {
     });
   });
   it('a:b                                     -- FAIL', function() {
-    expect(parser.parse('a:b', {wait:true}).end).throws("[1:3] function arguments expected near '<eof>'");
+    expect(parser.parse('a:b', {wait:true}).end).to.throwError("[1:3] function arguments expected near '<eof>'");
   });
   it('a:1                                     -- FAIL', function() {
-    expect(parser.parse('a:1', {wait:true}).end).throws("[1:2] <name> expected near '1'");
+    expect(parser.parse('a:1', {wait:true}).end).to.throwError("[1:2] <name> expected near '1'");
   });
   it('a.b:c()', function() {
-    expect(parser.parse('a.b:c()')).to.deep.equal({
+    expect(parser.parse('a.b:c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -376,7 +376,7 @@ describe('functioncalls', function() {
     });
   });
   it('a[b]:c()', function() {
-    expect(parser.parse('a[b]:c()')).to.deep.equal({
+    expect(parser.parse('a[b]:c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -410,10 +410,10 @@ describe('functioncalls', function() {
     });
   });
   it('a:b:                                    -- FAIL', function() {
-    expect(parser.parse('a:b:', {wait:true}).end).throws("[1:3] function arguments expected near ':'");
+    expect(parser.parse('a:b:', {wait:true}).end).to.throwError("[1:3] function arguments expected near ':'");
   });
   it('a:b():c()', function() {
-    expect(parser.parse('a:b():c()')).to.deep.equal({
+    expect(parser.parse('a:b():c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -452,7 +452,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b().c[d]:e()', function() {
-    expect(parser.parse('a:b().c[d]:e()')).to.deep.equal({
+    expect(parser.parse('a:b().c[d]:e()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -506,7 +506,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b()[c].d:e()', function() {
-    expect(parser.parse('a:b()[c].d:e()')).to.deep.equal({
+    expect(parser.parse('a:b()[c].d:e()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -560,7 +560,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a)()', function() {
-    expect(parser.parse('(a)()')).to.deep.equal({
+    expect(parser.parse('(a)()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -579,10 +579,10 @@ describe('functioncalls', function() {
     });
   });
   it('()()                                    -- FAIL', function() {
-    expect(parser.parse('()()', {wait:true}).end).throws("[1:2] <expression> expected near '('");
+    expect(parser.parse('()()', {wait:true}).end).to.throwError("[1:2] <expression> expected near '('");
   });
   it('(1)()', function() {
-    expect(parser.parse('(1)()')).to.deep.equal({
+    expect(parser.parse('(1)()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -601,7 +601,7 @@ describe('functioncalls', function() {
     });
   });
   it('("foo")()', function() {
-    expect(parser.parse('("foo")()')).to.deep.equal({
+    expect(parser.parse('("foo")()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -620,7 +620,7 @@ describe('functioncalls', function() {
     });
   });
   it('(true)()', function() {
-    expect(parser.parse('(true)()')).to.deep.equal({
+    expect(parser.parse('(true)()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -639,7 +639,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a)()()', function() {
-    expect(parser.parse('(a)()()')).to.deep.equal({
+    expect(parser.parse('(a)()()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -662,7 +662,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a.b)()', function() {
-    expect(parser.parse('(a.b)()')).to.deep.equal({
+    expect(parser.parse('(a.b)()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -689,7 +689,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a[b])()', function() {
-    expect(parser.parse('(a[b])()')).to.deep.equal({
+    expect(parser.parse('(a[b])()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -715,7 +715,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a).b()', function() {
-    expect(parser.parse('(a).b()')).to.deep.equal({
+    expect(parser.parse('(a).b()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -742,7 +742,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a)[b]()', function() {
-    expect(parser.parse('(a)[b]()')).to.deep.equal({
+    expect(parser.parse('(a)[b]()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -768,7 +768,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b()', function() {
-    expect(parser.parse('(a):b()')).to.deep.equal({
+    expect(parser.parse('(a):b()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -795,7 +795,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a).b[c]:d()', function() {
-    expect(parser.parse('(a).b[c]:d()')).to.deep.equal({
+    expect(parser.parse('(a).b[c]:d()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -837,7 +837,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a)[b].c:d()', function() {
-    expect(parser.parse('(a)[b].c:d()')).to.deep.equal({
+    expect(parser.parse('(a)[b].c:d()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -879,7 +879,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b():c()', function() {
-    expect(parser.parse('(a):b():c()')).to.deep.equal({
+    expect(parser.parse('(a):b():c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -918,7 +918,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b().c[d]:e()', function() {
-    expect(parser.parse('(a):b().c[d]:e()')).to.deep.equal({
+    expect(parser.parse('(a):b().c[d]:e()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -972,7 +972,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b()[c].d:e()', function() {
-    expect(parser.parse('(a):b()[c].d:e()')).to.deep.equal({
+    expect(parser.parse('(a):b()[c].d:e()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1026,7 +1026,7 @@ describe('functioncalls', function() {
     });
   });
   it('a"foo"', function() {
-    expect(parser.parse('a"foo"')).to.deep.equal({
+    expect(parser.parse('a"foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1045,7 +1045,7 @@ describe('functioncalls', function() {
     });
   });
   it('a[[foo]]', function() {
-    expect(parser.parse('a[[foo]]')).to.deep.equal({
+    expect(parser.parse('a[[foo]]')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1064,7 +1064,7 @@ describe('functioncalls', function() {
     });
   });
   it('a.b"foo"', function() {
-    expect(parser.parse('a.b"foo"')).to.deep.equal({
+    expect(parser.parse('a.b"foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1091,7 +1091,7 @@ describe('functioncalls', function() {
     });
   });
   it('a[b]"foo"', function() {
-    expect(parser.parse('a[b]"foo"')).to.deep.equal({
+    expect(parser.parse('a[b]"foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1117,7 +1117,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b"foo"', function() {
-    expect(parser.parse('a:b"foo"')).to.deep.equal({
+    expect(parser.parse('a:b"foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1144,7 +1144,7 @@ describe('functioncalls', function() {
     });
   });
   it('a{}', function() {
-    expect(parser.parse('a{}')).to.deep.equal({
+    expect(parser.parse('a{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1166,7 +1166,7 @@ describe('functioncalls', function() {
     });
   });
   it('a.b{}', function() {
-    expect(parser.parse('a.b{}')).to.deep.equal({
+    expect(parser.parse('a.b{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1196,7 +1196,7 @@ describe('functioncalls', function() {
     });
   });
   it('a[b]{}', function() {
-    expect(parser.parse('a[b]{}')).to.deep.equal({
+    expect(parser.parse('a[b]{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1225,7 +1225,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b{}', function() {
-    expect(parser.parse('a:b{}')).to.deep.equal({
+    expect(parser.parse('a:b{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1255,7 +1255,7 @@ describe('functioncalls', function() {
     });
   });
   it('a()"foo"', function() {
-    expect(parser.parse('a()"foo"')).to.deep.equal({
+    expect(parser.parse('a()"foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1278,7 +1278,7 @@ describe('functioncalls', function() {
     });
   });
   it('a"foo"()', function() {
-    expect(parser.parse('a"foo"()')).to.deep.equal({
+    expect(parser.parse('a"foo"()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1301,7 +1301,7 @@ describe('functioncalls', function() {
     });
   });
   it('a"foo".b()', function() {
-    expect(parser.parse('a"foo".b()')).to.deep.equal({
+    expect(parser.parse('a"foo".b()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1332,7 +1332,7 @@ describe('functioncalls', function() {
     });
   });
   it('a"foo"[b]()', function() {
-    expect(parser.parse('a"foo"[b]()')).to.deep.equal({
+    expect(parser.parse('a"foo"[b]()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1362,7 +1362,7 @@ describe('functioncalls', function() {
     });
   });
   it('a"foo":c()', function() {
-    expect(parser.parse('a"foo":c()')).to.deep.equal({
+    expect(parser.parse('a"foo":c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1393,7 +1393,7 @@ describe('functioncalls', function() {
     });
   });
   it('a"foo""bar"', function() {
-    expect(parser.parse('a"foo""bar"')).to.deep.equal({
+    expect(parser.parse('a"foo""bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1416,7 +1416,7 @@ describe('functioncalls', function() {
     });
   });
   it('a"foo"{}', function() {
-    expect(parser.parse('a"foo"{}')).to.deep.equal({
+    expect(parser.parse('a"foo"{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1442,7 +1442,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b"foo".c[d]:e"bar"', function() {
-    expect(parser.parse('(a):b"foo".c[d]:e"bar"')).to.deep.equal({
+    expect(parser.parse('(a):b"foo".c[d]:e"bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1496,7 +1496,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b"foo"[c].d:e"bar"', function() {
-    expect(parser.parse('(a):b"foo"[c].d:e"bar"')).to.deep.equal({
+    expect(parser.parse('(a):b"foo"[c].d:e"bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1550,7 +1550,7 @@ describe('functioncalls', function() {
     });
   });
   it('a(){}', function() {
-    expect(parser.parse('a(){}')).to.deep.equal({
+    expect(parser.parse('a(){}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1576,7 +1576,7 @@ describe('functioncalls', function() {
     });
   });
   it('a{}()', function() {
-    expect(parser.parse('a{}()')).to.deep.equal({
+    expect(parser.parse('a{}()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1602,7 +1602,7 @@ describe('functioncalls', function() {
     });
   });
   it('a{}.b()', function() {
-    expect(parser.parse('a{}.b()')).to.deep.equal({
+    expect(parser.parse('a{}.b()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1636,7 +1636,7 @@ describe('functioncalls', function() {
     });
   });
   it('a{}[b]()', function() {
-    expect(parser.parse('a{}[b]()')).to.deep.equal({
+    expect(parser.parse('a{}[b]()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1669,7 +1669,7 @@ describe('functioncalls', function() {
     });
   });
   it('a{}:c()', function() {
-    expect(parser.parse('a{}:c()')).to.deep.equal({
+    expect(parser.parse('a{}:c()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1703,7 +1703,7 @@ describe('functioncalls', function() {
     });
   });
   it('a{}"foo"', function() {
-    expect(parser.parse('a{}"foo"')).to.deep.equal({
+    expect(parser.parse('a{}"foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1729,7 +1729,7 @@ describe('functioncalls', function() {
     });
   });
   it('a{}{}', function() {
-    expect(parser.parse('a{}{}')).to.deep.equal({
+    expect(parser.parse('a{}{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1758,7 +1758,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b{}.c[d]:e{}', function() {
-    expect(parser.parse('(a):b{}.c[d]:e{}')).to.deep.equal({
+    expect(parser.parse('(a):b{}.c[d]:e{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1818,7 +1818,7 @@ describe('functioncalls', function() {
     });
   });
   it('(a):b{}[c].d:e{}', function() {
-    expect(parser.parse('(a):b{}[c].d:e{}')).to.deep.equal({
+    expect(parser.parse('(a):b{}[c].d:e{}')).to.eql({
       "type": "Chunk",
       "body": [
         {

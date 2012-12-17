@@ -1,6 +1,6 @@
 describe('statements', function() {
   it('break', function() {
-    expect(parser.parse('break')).to.deep.equal({
+    expect(parser.parse('break')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -11,10 +11,10 @@ describe('statements', function() {
     });
   });
   it('::foo                                   -- FAIL', function() {
-    expect(parser.parse('::foo', {wait:true}).end).throws("[1:5] '::' expected near '<eof>'");
+    expect(parser.parse('::foo', {wait:true}).end).to.throwError("[1:5] '::' expected near '<eof>'");
   });
   it('::foo::', function() {
-    expect(parser.parse('::foo::')).to.deep.equal({
+    expect(parser.parse('::foo::')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -29,10 +29,10 @@ describe('statements', function() {
     });
   });
   it('goto                                    -- FAIL', function() {
-    expect(parser.parse('goto', {wait:true}).end).throws("[1:4] <name> expected near '<eof>'");
+    expect(parser.parse('goto', {wait:true}).end).to.throwError("[1:4] <name> expected near '<eof>'");
   });
   it('goto foo', function() {
-    expect(parser.parse('goto foo')).to.deep.equal({
+    expect(parser.parse('goto foo')).to.eql({
       "type": "Chunk",
       "body": [
         {

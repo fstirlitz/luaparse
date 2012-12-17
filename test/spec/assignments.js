@@ -1,18 +1,18 @@
 describe('assignments', function() {
   it('a                                       -- FAIL', function() {
-    expect(parser.parse('a', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a,                                      -- FAIL', function() {
-    expect(parser.parse('a,', {wait:true}).end).throws("[1:2] <expression> expected near '<eof>'");
+    expect(parser.parse('a,', {wait:true}).end).to.throwError("[1:2] <expression> expected near '<eof>'");
   });
   it('a,b,c                                   -- FAIL', function() {
-    expect(parser.parse('a,b,c', {wait:true}).end).throws("[1:5] '=' expected near '<eof>'");
+    expect(parser.parse('a,b,c', {wait:true}).end).to.throwError("[1:5] '=' expected near '<eof>'");
   });
   it('a,b =                                   -- FAIL', function() {
-    expect(parser.parse('a,b =', {wait:true}).end).throws("[1:5] <expression> expected near '<eof>'");
+    expect(parser.parse('a,b =', {wait:true}).end).to.throwError("[1:5] <expression> expected near '<eof>'");
   });
   it('a = 1', function() {
-    expect(parser.parse('a = 1')).to.deep.equal({
+    expect(parser.parse('a = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -35,7 +35,7 @@ describe('assignments', function() {
     });
   });
   it('a = 1,2,3', function() {
-    expect(parser.parse('a = 1,2,3')).to.deep.equal({
+    expect(parser.parse('a = 1,2,3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -66,7 +66,7 @@ describe('assignments', function() {
     });
   });
   it('a,b,c = 1', function() {
-    expect(parser.parse('a,b,c = 1')).to.deep.equal({
+    expect(parser.parse('a,b,c = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -97,7 +97,7 @@ describe('assignments', function() {
     });
   });
   it('a,b,c = 1,2,3', function() {
-    expect(parser.parse('a,b,c = 1,2,3')).to.deep.equal({
+    expect(parser.parse('a,b,c = 1,2,3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -136,7 +136,7 @@ describe('assignments', function() {
     });
   });
   it('a.b = 1', function() {
-    expect(parser.parse('a.b = 1')).to.deep.equal({
+    expect(parser.parse('a.b = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -167,7 +167,7 @@ describe('assignments', function() {
     });
   });
   it('a.b.c = 1', function() {
-    expect(parser.parse('a.b.c = 1')).to.deep.equal({
+    expect(parser.parse('a.b.c = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -206,7 +206,7 @@ describe('assignments', function() {
     });
   });
   it('a[b] = 1', function() {
-    expect(parser.parse('a[b] = 1')).to.deep.equal({
+    expect(parser.parse('a[b] = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -236,7 +236,7 @@ describe('assignments', function() {
     });
   });
   it('a[b][c] = 1', function() {
-    expect(parser.parse('a[b][c] = 1')).to.deep.equal({
+    expect(parser.parse('a[b][c] = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -273,7 +273,7 @@ describe('assignments', function() {
     });
   });
   it('a.b[c] = 1', function() {
-    expect(parser.parse('a.b[c] = 1')).to.deep.equal({
+    expect(parser.parse('a.b[c] = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -311,7 +311,7 @@ describe('assignments', function() {
     });
   });
   it('a[b].c = 1', function() {
-    expect(parser.parse('a[b].c = 1')).to.deep.equal({
+    expect(parser.parse('a[b].c = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -349,7 +349,7 @@ describe('assignments', function() {
     });
   });
   it('a[b], a[c] = 1', function() {
-    expect(parser.parse('a[b], a[c] = 1')).to.deep.equal({
+    expect(parser.parse('a[b], a[c] = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -390,39 +390,39 @@ describe('assignments', function() {
     });
   });
   it('0 =                                     -- FAIL', function() {
-    expect(parser.parse('0 =', {wait:true}).end).throws("[1:0] Unexpected number '0' near '='");
+    expect(parser.parse('0 =', {wait:true}).end).to.throwError("[1:0] Unexpected number '0' near '='");
   });
   it('"foo" =                                 -- FAIL', function() {
-    expect(parser.parse('"foo" =', {wait:true}).end).throws("[1:0] Unexpected string 'foo' near '='");
+    expect(parser.parse('"foo" =', {wait:true}).end).to.throwError("[1:0] Unexpected string 'foo' near '='");
   });
   it('true =                                  -- FAIL', function() {
-    expect(parser.parse('true =', {wait:true}).end).throws("[1:0] Unexpected boolean 'true' near '='");
+    expect(parser.parse('true =', {wait:true}).end).to.throwError("[1:0] Unexpected boolean 'true' near '='");
   });
   it('(a) =                                   -- FAIL', function() {
-    expect(parser.parse('(a) =', {wait:true}).end).throws("[1:5] <expression> expected near '<eof>'");
+    expect(parser.parse('(a) =', {wait:true}).end).to.throwError("[1:5] <expression> expected near '<eof>'");
   });
   it('{} =                                    -- FAIL', function() {
-    expect(parser.parse('{} =', {wait:true}).end).throws("[1:0] Unexpected symbol '{' near '}'");
+    expect(parser.parse('{} =', {wait:true}).end).to.throwError("[1:0] Unexpected symbol '{' near '}'");
   });
   it('a:b() =                                 -- FAIL', function() {
-    expect(parser.parse('a:b() =', {wait:true}).end).throws("[1:7] <expression> expected near '<eof>'");
+    expect(parser.parse('a:b() =', {wait:true}).end).to.throwError("[1:7] <expression> expected near '<eof>'");
   });
   it('a() =                                   -- FAIL', function() {
-    expect(parser.parse('a() =', {wait:true}).end).throws("[1:5] <expression> expected near '<eof>'");
+    expect(parser.parse('a() =', {wait:true}).end).to.throwError("[1:5] <expression> expected near '<eof>'");
   });
   it('a.b:c() =                               -- FAIL', function() {
-    expect(parser.parse('a.b:c() =', {wait:true}).end).throws("[1:9] <expression> expected near '<eof>'");
+    expect(parser.parse('a.b:c() =', {wait:true}).end).to.throwError("[1:9] <expression> expected near '<eof>'");
   });
   it('a[b]() =                                -- FAIL', function() {
-    expect(parser.parse('a[b]() =', {wait:true}).end).throws("[1:8] <expression> expected near '<eof>'");
+    expect(parser.parse('a[b]() =', {wait:true}).end).to.throwError("[1:8] <expression> expected near '<eof>'");
   });
   it('a = a b                                 -- FAIL', function() {
-    expect(parser.parse('a = a b', {wait:true}).end).throws("[1:6] Unexpected identifier 'b' near '<eof>'");
+    expect(parser.parse('a = a b', {wait:true}).end).to.throwError("[1:6] Unexpected identifier 'b' near '<eof>'");
   });
   it('a = 1 2                                 -- FAIL', function() {
-    expect(parser.parse('a = 1 2', {wait:true}).end).throws("[1:6] Unexpected number '2' near '<eof>'");
+    expect(parser.parse('a = 1 2', {wait:true}).end).to.throwError("[1:6] Unexpected number '2' near '<eof>'");
   });
   it('a = a = 1                               -- FAIL', function() {
-    expect(parser.parse('a = a = 1', {wait:true}).end).throws("[1:6] Unexpected symbol '=' near '1'");
+    expect(parser.parse('a = a = 1', {wait:true}).end).to.throwError("[1:6] Unexpected symbol '=' near '1'");
   });
 });

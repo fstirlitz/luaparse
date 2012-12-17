@@ -100,7 +100,7 @@ function scaffoldAssertion(snippet, result) {
   // Output \n instead of real newlines in the source passed to the paser.
   // result = result.replace(/\\\\([ntr])/g, '\\$1');
 
-  return indent + "expect(parser.parse('" + snippet + "')).to.deep.equal(" +
+  return indent + "expect(parser.parse('" + snippet + "')).to.eql(" +
     firstline + "\n" + // {
     result.replace(/^([\s\S])/gm, indent + "$1") +
     ");";
@@ -115,7 +115,7 @@ function scaffoldThrowAssertion(snippet, error) {
     .replace(/\r/g, '\\r')
     .replace(/\t/g, '\\t');
 
-  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end).throws(\"" + error + "\");";
+  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end).to.throwError(\"" + error + "\");";
 }
 
 // Main ---------------------------------------------------

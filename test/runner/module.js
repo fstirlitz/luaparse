@@ -1,2 +1,3 @@
-expect = require('chai').expect;
+/*global require:true */
+expect = require('expect.js');
 parser = require('../../');
