@@ -1,9 +1,9 @@
 describe('tableconstructors', function() {
   it('a = {                                   -- FAIL', function() {
-    expect(parser.parse('a = {', {wait:true}).end).throws("[1:5] '}' expected near '<eof>'");
+    expect(parser.parse('a = {', {wait:true}).end).to.throwError("[1:5] '}' expected near '<eof>'");
   });
   it('a = {}', function() {
-    expect(parser.parse('a = {}')).to.deep.equal({
+    expect(parser.parse('a = {}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -26,22 +26,22 @@ describe('tableconstructors', function() {
     });
   });
   it('a = {,}                                 -- FAIL', function() {
-    expect(parser.parse('a = {,}', {wait:true}).end).throws("[1:5] '}' expected near ','");
+    expect(parser.parse('a = {,}', {wait:true}).end).to.throwError("[1:5] '}' expected near ','");
   });
   it('a = {;}                                 -- FAIL', function() {
-    expect(parser.parse('a = {;}', {wait:true}).end).throws("[1:5] '}' expected near ';'");
+    expect(parser.parse('a = {;}', {wait:true}).end).to.throwError("[1:5] '}' expected near ';'");
   });
   it('a = {,,}                                -- FAIL', function() {
-    expect(parser.parse('a = {,,}', {wait:true}).end).throws("[1:5] '}' expected near ','");
+    expect(parser.parse('a = {,,}', {wait:true}).end).to.throwError("[1:5] '}' expected near ','");
   });
   it('a = {;;}                                -- FAIL', function() {
-    expect(parser.parse('a = {;;}', {wait:true}).end).throws("[1:5] '}' expected near ';'");
+    expect(parser.parse('a = {;;}', {wait:true}).end).to.throwError("[1:5] '}' expected near ';'");
   });
   it('a = {{                                  -- FAIL', function() {
-    expect(parser.parse('a = {{', {wait:true}).end).throws("[1:6] '}' expected near '<eof>'");
+    expect(parser.parse('a = {{', {wait:true}).end).to.throwError("[1:6] '}' expected near '<eof>'");
   });
   it('a = {{{}}}', function() {
-    expect(parser.parse('a = {{{}}}')).to.deep.equal({
+    expect(parser.parse('a = {{{}}}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -80,7 +80,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = {{},{},{{}},}', function() {
-    expect(parser.parse('a = {{},{},{{}},}')).to.deep.equal({
+    expect(parser.parse('a = {{},{},{{}},}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -133,7 +133,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { 1 }', function() {
-    expect(parser.parse('a = { 1 }')).to.deep.equal({
+    expect(parser.parse('a = { 1 }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -164,7 +164,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { 1, }', function() {
-    expect(parser.parse('a = { 1, }')).to.deep.equal({
+    expect(parser.parse('a = { 1, }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -195,7 +195,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { 1; }', function() {
-    expect(parser.parse('a = { 1; }')).to.deep.equal({
+    expect(parser.parse('a = { 1; }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -226,7 +226,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { 1, 2 }', function() {
-    expect(parser.parse('a = { 1, 2 }')).to.deep.equal({
+    expect(parser.parse('a = { 1, 2 }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -264,7 +264,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { a, b, c, }', function() {
-    expect(parser.parse('a = { a, b, c, }')).to.deep.equal({
+    expect(parser.parse('a = { a, b, c, }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -309,7 +309,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { true; false, nil; }', function() {
-    expect(parser.parse('a = { true; false, nil; }')).to.deep.equal({
+    expect(parser.parse('a = { true; false, nil; }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -354,7 +354,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { a.b, a[b]; a:c(), }', function() {
-    expect(parser.parse('a = { a.b, a[b]; a:c(), }')).to.deep.equal({
+    expect(parser.parse('a = { a.b, a[b]; a:c(), }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -426,7 +426,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { 1 + 2, a > b, "a" or "b" }', function() {
-    expect(parser.parse('a = { 1 + 2, a > b, "a" or "b" }')).to.deep.equal({
+    expect(parser.parse('a = { 1 + 2, a > b, "a" or "b" }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -495,7 +495,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { a=1, }', function() {
-    expect(parser.parse('a = { a=1, }')).to.deep.equal({
+    expect(parser.parse('a = { a=1, }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -530,7 +530,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { a=1, b="foo", c=nil }', function() {
-    expect(parser.parse('a = { a=1, b="foo", c=nil }')).to.deep.equal({
+    expect(parser.parse('a = { a=1, b="foo", c=nil }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -587,22 +587,22 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { a                                 -- FAIL', function() {
-    expect(parser.parse('a = { a', {wait:true}).end).throws("[1:7] '}' expected near '<eof>'");
+    expect(parser.parse('a = { a', {wait:true}).end).to.throwError("[1:7] '}' expected near '<eof>'");
   });
   it('a = { a=                                -- FAIL', function() {
-    expect(parser.parse('a = { a=', {wait:true}).end).throws("[1:8] '}' expected near '<eof>'");
+    expect(parser.parse('a = { a=', {wait:true}).end).to.throwError("[1:8] '}' expected near '<eof>'");
   });
   it('a = { a=,                               -- FAIL', function() {
-    expect(parser.parse('a = { a=,', {wait:true}).end).throws("[1:9] '}' expected near '<eof>'");
+    expect(parser.parse('a = { a=,', {wait:true}).end).to.throwError("[1:9] '}' expected near '<eof>'");
   });
   it('a = { a=;                               -- FAIL', function() {
-    expect(parser.parse('a = { a=;', {wait:true}).end).throws("[1:9] '}' expected near '<eof>'");
+    expect(parser.parse('a = { a=;', {wait:true}).end).to.throwError("[1:9] '}' expected near '<eof>'");
   });
   it('a = { 1, a="foo"                        -- FAIL', function() {
-    expect(parser.parse('a = { 1, a="foo"', {wait:true}).end).throws("[1:16] '}' expected near '<eof>'");
+    expect(parser.parse('a = { 1, a="foo"', {wait:true}).end).to.throwError("[1:16] '}' expected near '<eof>'");
   });
   it('a = { 1, a="foo"; b={}, d=true; }', function() {
-    expect(parser.parse('a = { 1, a="foo"; b={}, d=true; }')).to.deep.equal({
+    expect(parser.parse('a = { 1, a="foo"; b={}, d=true; }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -666,19 +666,19 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { [                                 -- FAIL', function() {
-    expect(parser.parse('a = { [', {wait:true}).end).throws("[1:7] ']' expected near '<eof>'");
+    expect(parser.parse('a = { [', {wait:true}).end).to.throwError("[1:7] ']' expected near '<eof>'");
   });
   it('a = { [1                                -- FAIL', function() {
-    expect(parser.parse('a = { [1', {wait:true}).end).throws("[1:8] ']' expected near '<eof>'");
+    expect(parser.parse('a = { [1', {wait:true}).end).to.throwError("[1:8] ']' expected near '<eof>'");
   });
   it('a = { [1]                               -- FAIL', function() {
-    expect(parser.parse('a = { [1]', {wait:true}).end).throws("[1:9] '=' expected near '<eof>'");
+    expect(parser.parse('a = { [1]', {wait:true}).end).to.throwError("[1:9] '=' expected near '<eof>'");
   });
   it('a = { [a]=                              -- FAIL', function() {
-    expect(parser.parse('a = { [a]=', {wait:true}).end).throws("[1:10] <expression> expected near '<eof>'");
+    expect(parser.parse('a = { [a]=', {wait:true}).end).to.throwError("[1:10] <expression> expected near '<eof>'");
   });
   it('a = { ["foo"]="bar" }', function() {
-    expect(parser.parse('a = { ["foo"]="bar" }')).to.deep.equal({
+    expect(parser.parse('a = { ["foo"]="bar" }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -713,7 +713,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { [1]=a, [2]=b, }', function() {
-    expect(parser.parse('a = { [1]=a, [2]=b, }')).to.deep.equal({
+    expect(parser.parse('a = { [1]=a, [2]=b, }')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -759,7 +759,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { true, a=1; ["foo"]="bar", }', function() {
-    expect(parser.parse('a = { true, a=1; ["foo"]="bar", }')).to.deep.equal({
+    expect(parser.parse('a = { true, a=1; ["foo"]="bar", }')).to.eql({
       "type": "Chunk",
       "body": [
         {

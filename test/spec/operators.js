@@ -1,6 +1,6 @@
 describe('operators', function() {
   it('a = -10', function() {
-    expect(parser.parse('a = -10')).to.deep.equal({
+    expect(parser.parse('a = -10')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -27,7 +27,7 @@ describe('operators', function() {
     });
   });
   it('a = -"foo"', function() {
-    expect(parser.parse('a = -"foo"')).to.deep.equal({
+    expect(parser.parse('a = -"foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -54,7 +54,7 @@ describe('operators', function() {
     });
   });
   it('a = -a', function() {
-    expect(parser.parse('a = -a')).to.deep.equal({
+    expect(parser.parse('a = -a')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -81,7 +81,7 @@ describe('operators', function() {
     });
   });
   it('a = -nil', function() {
-    expect(parser.parse('a = -nil')).to.deep.equal({
+    expect(parser.parse('a = -nil')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -108,7 +108,7 @@ describe('operators', function() {
     });
   });
   it('a = -true', function() {
-    expect(parser.parse('a = -true')).to.deep.equal({
+    expect(parser.parse('a = -true')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -135,7 +135,7 @@ describe('operators', function() {
     });
   });
   it('a = -{}', function() {
-    expect(parser.parse('a = -{}')).to.deep.equal({
+    expect(parser.parse('a = -{}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -162,7 +162,7 @@ describe('operators', function() {
     });
   });
   it('a = -function() end', function() {
-    expect(parser.parse('a = -function() end')).to.deep.equal({
+    expect(parser.parse('a = -function() end')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -193,7 +193,7 @@ describe('operators', function() {
     });
   });
   it('a = -a()', function() {
-    expect(parser.parse('a = -a()')).to.deep.equal({
+    expect(parser.parse('a = -a()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -224,7 +224,7 @@ describe('operators', function() {
     });
   });
   it('a = -(a)', function() {
-    expect(parser.parse('a = -(a)')).to.deep.equal({
+    expect(parser.parse('a = -(a)')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -251,10 +251,10 @@ describe('operators', function() {
     });
   });
   it('a = -                                   -- FAIL', function() {
-    expect(parser.parse('a = -', {wait:true}).end).throws("[1:5] <expression> expected near '<eof>'");
+    expect(parser.parse('a = -', {wait:true}).end).to.throwError("[1:5] <expression> expected near '<eof>'");
   });
   it('a = not 10', function() {
-    expect(parser.parse('a = not 10')).to.deep.equal({
+    expect(parser.parse('a = not 10')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -281,7 +281,7 @@ describe('operators', function() {
     });
   });
   it('a = not "foo"', function() {
-    expect(parser.parse('a = not "foo"')).to.deep.equal({
+    expect(parser.parse('a = not "foo"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -308,7 +308,7 @@ describe('operators', function() {
     });
   });
   it('a = not a', function() {
-    expect(parser.parse('a = not a')).to.deep.equal({
+    expect(parser.parse('a = not a')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -335,7 +335,7 @@ describe('operators', function() {
     });
   });
   it('a = not nil', function() {
-    expect(parser.parse('a = not nil')).to.deep.equal({
+    expect(parser.parse('a = not nil')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -362,7 +362,7 @@ describe('operators', function() {
     });
   });
   it('a = not true', function() {
-    expect(parser.parse('a = not true')).to.deep.equal({
+    expect(parser.parse('a = not true')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -389,7 +389,7 @@ describe('operators', function() {
     });
   });
   it('a = not {}', function() {
-    expect(parser.parse('a = not {}')).to.deep.equal({
+    expect(parser.parse('a = not {}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -416,7 +416,7 @@ describe('operators', function() {
     });
   });
   it('a = not function() end', function() {
-    expect(parser.parse('a = not function() end')).to.deep.equal({
+    expect(parser.parse('a = not function() end')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -447,7 +447,7 @@ describe('operators', function() {
     });
   });
   it('a = not a()', function() {
-    expect(parser.parse('a = not a()')).to.deep.equal({
+    expect(parser.parse('a = not a()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -478,7 +478,7 @@ describe('operators', function() {
     });
   });
   it('a = not (a)', function() {
-    expect(parser.parse('a = not (a)')).to.deep.equal({
+    expect(parser.parse('a = not (a)')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -505,10 +505,10 @@ describe('operators', function() {
     });
   });
   it('a = not                                 -- FAIL', function() {
-    expect(parser.parse('a = not', {wait:true}).end).throws("[1:7] <expression> expected near '<eof>'");
+    expect(parser.parse('a = not', {wait:true}).end).to.throwError("[1:7] <expression> expected near '<eof>'");
   });
   it('a = 1 + 2; a = 1 - 2', function() {
-    expect(parser.parse('a = 1 + 2; a = 1 - 2')).to.deep.equal({
+    expect(parser.parse('a = 1 + 2; a = 1 - 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -562,7 +562,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 * 2; a = 1 / 2', function() {
-    expect(parser.parse('a = 1 * 2; a = 1 / 2')).to.deep.equal({
+    expect(parser.parse('a = 1 * 2; a = 1 / 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -616,7 +616,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 ^ 2; a = 1 .. 2', function() {
-    expect(parser.parse('a = 1 ^ 2; a = 1 .. 2')).to.deep.equal({
+    expect(parser.parse('a = 1 ^ 2; a = 1 .. 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -670,16 +670,16 @@ describe('operators', function() {
     });
   });
   it('a = 1 +                                 -- FAIL', function() {
-    expect(parser.parse('a = 1 +', {wait:true}).end).throws("[1:7] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 +', {wait:true}).end).to.throwError("[1:7] <expression> expected near '<eof>'");
   });
   it('a = 1 ..                                -- FAIL', function() {
-    expect(parser.parse('a = 1 ..', {wait:true}).end).throws("[1:8] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 ..', {wait:true}).end).to.throwError("[1:8] <expression> expected near '<eof>'");
   });
   it('a = 1 * /                               -- FAIL', function() {
-    expect(parser.parse('a = 1 * /', {wait:true}).end).throws("[1:8] <expression> expected near '/'");
+    expect(parser.parse('a = 1 * /', {wait:true}).end).to.throwError("[1:8] <expression> expected near '/'");
   });
   it('a = 1 + -2; a = 1 - -2', function() {
-    expect(parser.parse('a = 1 + -2; a = 1 - -2')).to.deep.equal({
+    expect(parser.parse('a = 1 + -2; a = 1 - -2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -741,10 +741,10 @@ describe('operators', function() {
     });
   });
   it('a = 1 * -                               -- FAIL', function() {
-    expect(parser.parse('a = 1 * -', {wait:true}).end).throws("[1:9] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 * -', {wait:true}).end).to.throwError("[1:9] <expression> expected near '<eof>'");
   });
   it('a = 1 * not 2; a = 1 / not 2', function() {
-    expect(parser.parse('a = 1 * not 2; a = 1 / not 2')).to.deep.equal({
+    expect(parser.parse('a = 1 * not 2; a = 1 / not 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -806,10 +806,10 @@ describe('operators', function() {
     });
   });
   it('a = 1 / not                             -- FAIL', function() {
-    expect(parser.parse('a = 1 / not', {wait:true}).end).throws("[1:11] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 / not', {wait:true}).end).to.throwError("[1:11] <expression> expected near '<eof>'");
   });
   it('a = 1 + 2 - 3 * 4 / 5 ^ 6', function() {
-    expect(parser.parse('a = 1 + 2 - 3 * 4 / 5 ^ 6')).to.deep.equal({
+    expect(parser.parse('a = 1 + 2 - 3 * 4 / 5 ^ 6')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -872,7 +872,7 @@ describe('operators', function() {
     });
   });
   it('a = ((1 + 2) - 3) * (4 / (5 ^ 6))', function() {
-    expect(parser.parse('a = ((1 + 2) - 3) * (4 / (5 ^ 6))')).to.deep.equal({
+    expect(parser.parse('a = ((1 + 2) - 3) * (4 / (5 ^ 6))')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -935,7 +935,7 @@ describe('operators', function() {
     });
   });
   it('a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))', function() {
-    expect(parser.parse('a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))')).to.deep.equal({
+    expect(parser.parse('a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -998,16 +998,16 @@ describe('operators', function() {
     });
   });
   it('a = ((1                                 -- FAIL', function() {
-    expect(parser.parse('a = ((1', {wait:true}).end).throws("[1:7] ')' expected near '<eof>'");
+    expect(parser.parse('a = ((1', {wait:true}).end).to.throwError("[1:7] ')' expected near '<eof>'");
   });
   it('a = ((1 + 2)                            -- FAIL', function() {
-    expect(parser.parse('a = ((1 + 2)', {wait:true}).end).throws("[1:12] ')' expected near '<eof>'");
+    expect(parser.parse('a = ((1 + 2)', {wait:true}).end).to.throwError("[1:12] ')' expected near '<eof>'");
   });
   it('a = 1)                                  -- FAIL', function() {
-    expect(parser.parse('a = 1)', {wait:true}).end).throws("[1:5] Unexpected symbol ')' near '<eof>'");
+    expect(parser.parse('a = 1)', {wait:true}).end).to.throwError("[1:5] Unexpected symbol ')' near '<eof>'");
   });
   it('a = a + b - c', function() {
-    expect(parser.parse('a = a + b - c')).to.deep.equal({
+    expect(parser.parse('a = a + b - c')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1046,7 +1046,7 @@ describe('operators', function() {
     });
   });
   it('a = "foo" + "bar"', function() {
-    expect(parser.parse('a = "foo" + "bar"')).to.deep.equal({
+    expect(parser.parse('a = "foo" + "bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1077,7 +1077,7 @@ describe('operators', function() {
     });
   });
   it('a = "foo".."bar".."baz"', function() {
-    expect(parser.parse('a = "foo".."bar".."baz"')).to.deep.equal({
+    expect(parser.parse('a = "foo".."bar".."baz"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1116,7 +1116,7 @@ describe('operators', function() {
     });
   });
   it('a = true + false - nil', function() {
-    expect(parser.parse('a = true + false - nil')).to.deep.equal({
+    expect(parser.parse('a = true + false - nil')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1155,7 +1155,7 @@ describe('operators', function() {
     });
   });
   it('a = {} * {}', function() {
-    expect(parser.parse('a = {} * {}')).to.deep.equal({
+    expect(parser.parse('a = {} * {}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1186,7 +1186,7 @@ describe('operators', function() {
     });
   });
   it('a = function() end / function() end', function() {
-    expect(parser.parse('a = function() end / function() end')).to.deep.equal({
+    expect(parser.parse('a = function() end / function() end')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1225,7 +1225,7 @@ describe('operators', function() {
     });
   });
   it('a = a() ^ b()', function() {
-    expect(parser.parse('a = a() ^ b()')).to.deep.equal({
+    expect(parser.parse('a = a() ^ b()')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1264,7 +1264,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 == 2; a = 1 ~= 2', function() {
-    expect(parser.parse('a = 1 == 2; a = 1 ~= 2')).to.deep.equal({
+    expect(parser.parse('a = 1 == 2; a = 1 ~= 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1318,7 +1318,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 < 2; a = 1 <= 2', function() {
-    expect(parser.parse('a = 1 < 2; a = 1 <= 2')).to.deep.equal({
+    expect(parser.parse('a = 1 < 2; a = 1 <= 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1372,7 +1372,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 > 2; a = 1 >= 2', function() {
-    expect(parser.parse('a = 1 > 2; a = 1 >= 2')).to.deep.equal({
+    expect(parser.parse('a = 1 > 2; a = 1 >= 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1426,7 +1426,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 < 2 < 3', function() {
-    expect(parser.parse('a = 1 < 2 < 3')).to.deep.equal({
+    expect(parser.parse('a = 1 < 2 < 3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1465,7 +1465,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 >= 2 >= 3', function() {
-    expect(parser.parse('a = 1 >= 2 >= 3')).to.deep.equal({
+    expect(parser.parse('a = 1 >= 2 >= 3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1504,19 +1504,19 @@ describe('operators', function() {
     });
   });
   it('a = 1 ==                                -- FAIL', function() {
-    expect(parser.parse('a = 1 ==', {wait:true}).end).throws("[1:8] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 ==', {wait:true}).end).to.throwError("[1:8] <expression> expected near '<eof>'");
   });
   it('a = `                                   -- FAIL', function() {
-    expect(parser.parse('a = `', {wait:true}).end).throws("[1:5] Unexpected symbol '`' near '='");
+    expect(parser.parse('a = `', {wait:true}).end).to.throwError("[1:5] Unexpected symbol '`' near '='");
   });
   it('a = ~                                   -- FAIL', function() {
-    expect(parser.parse('a = ~', {wait:true}).end).throws("[1:5] '=' expected near '~'");
+    expect(parser.parse('a = ~', {wait:true}).end).to.throwError("[1:5] '=' expected near '~'");
   });
   it('a = ~= 2                                -- FAIL', function() {
-    expect(parser.parse('a = ~= 2', {wait:true}).end).throws("[1:4] <expression> expected near '~='");
+    expect(parser.parse('a = ~= 2', {wait:true}).end).to.throwError("[1:4] <expression> expected near '~='");
   });
   it('a = "foo" == "bar"', function() {
-    expect(parser.parse('a = "foo" == "bar"')).to.deep.equal({
+    expect(parser.parse('a = "foo" == "bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1547,7 +1547,7 @@ describe('operators', function() {
     });
   });
   it('a = "foo" > "bar"', function() {
-    expect(parser.parse('a = "foo" > "bar"')).to.deep.equal({
+    expect(parser.parse('a = "foo" > "bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1578,7 +1578,7 @@ describe('operators', function() {
     });
   });
   it('a = a ~= b', function() {
-    expect(parser.parse('a = a ~= b')).to.deep.equal({
+    expect(parser.parse('a = a ~= b')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1609,7 +1609,7 @@ describe('operators', function() {
     });
   });
   it('a = true == false', function() {
-    expect(parser.parse('a = true == false')).to.deep.equal({
+    expect(parser.parse('a = true == false')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1640,7 +1640,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 and 2; a = 1 or 2', function() {
-    expect(parser.parse('a = 1 and 2; a = 1 or 2')).to.deep.equal({
+    expect(parser.parse('a = 1 and 2; a = 1 or 2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1694,13 +1694,13 @@ describe('operators', function() {
     });
   });
   it('a = 1 and                               -- FAIL', function() {
-    expect(parser.parse('a = 1 and', {wait:true}).end).throws("[1:9] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 and', {wait:true}).end).to.throwError("[1:9] <expression> expected near '<eof>'");
   });
   it('a = or 1                                -- FAIL', function() {
-    expect(parser.parse('a = or 1', {wait:true}).end).throws("[1:4] <expression> expected near 'or'");
+    expect(parser.parse('a = or 1', {wait:true}).end).to.throwError("[1:4] <expression> expected near 'or'");
   });
   it('a = 1 and 2 and 3', function() {
-    expect(parser.parse('a = 1 and 2 and 3')).to.deep.equal({
+    expect(parser.parse('a = 1 and 2 and 3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1739,7 +1739,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 or 2 or 3', function() {
-    expect(parser.parse('a = 1 or 2 or 3')).to.deep.equal({
+    expect(parser.parse('a = 1 or 2 or 3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1778,7 +1778,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 and 2 or 3', function() {
-    expect(parser.parse('a = 1 and 2 or 3')).to.deep.equal({
+    expect(parser.parse('a = 1 and 2 or 3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1817,7 +1817,7 @@ describe('operators', function() {
     });
   });
   it('a = a and b or c', function() {
-    expect(parser.parse('a = a and b or c')).to.deep.equal({
+    expect(parser.parse('a = a and b or c')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1856,7 +1856,7 @@ describe('operators', function() {
     });
   });
   it('a = a() and (b)() or c.d', function() {
-    expect(parser.parse('a = a() and (b)() or c.d')).to.deep.equal({
+    expect(parser.parse('a = a() and (b)() or c.d')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1911,7 +1911,7 @@ describe('operators', function() {
     });
   });
   it('a = "foo" and "bar"', function() {
-    expect(parser.parse('a = "foo" and "bar"')).to.deep.equal({
+    expect(parser.parse('a = "foo" and "bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1942,7 +1942,7 @@ describe('operators', function() {
     });
   });
   it('a = true or false', function() {
-    expect(parser.parse('a = true or false')).to.deep.equal({
+    expect(parser.parse('a = true or false')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1973,7 +1973,7 @@ describe('operators', function() {
     });
   });
   it('a = {} and {} or {}', function() {
-    expect(parser.parse('a = {} and {} or {}')).to.deep.equal({
+    expect(parser.parse('a = {} and {} or {}')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2012,7 +2012,7 @@ describe('operators', function() {
     });
   });
   it('a = (1) and ("foo") or (nil)', function() {
-    expect(parser.parse('a = (1) and ("foo") or (nil)')).to.deep.equal({
+    expect(parser.parse('a = (1) and ("foo") or (nil)')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2051,7 +2051,7 @@ describe('operators', function() {
     });
   });
   it('a = function() end == function() end', function() {
-    expect(parser.parse('a = function() end == function() end')).to.deep.equal({
+    expect(parser.parse('a = function() end == function() end')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2090,7 +2090,7 @@ describe('operators', function() {
     });
   });
   it('a = function() end or function() end', function() {
-    expect(parser.parse('a = function() end or function() end')).to.deep.equal({
+    expect(parser.parse('a = function() end or function() end')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2129,7 +2129,7 @@ describe('operators', function() {
     });
   });
   it('a = (((1 or false) and true) or false) == true', function() {
-    expect(parser.parse('a = (((1 or false) and true) or false) == true')).to.deep.equal({
+    expect(parser.parse('a = (((1 or false) and true) or false) == true')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2184,7 +2184,7 @@ describe('operators', function() {
     });
   });
   it('a = (((nil and true) or false) and true) == false', function() {
-    expect(parser.parse('a = (((nil and true) or false) and true) == false')).to.deep.equal({
+    expect(parser.parse('a = (((nil and true) or false) and true) == false')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2239,7 +2239,7 @@ describe('operators', function() {
     });
   });
   it('a = not ((true or false) and nil)', function() {
-    expect(parser.parse('a = not ((true or false) and nil)')).to.deep.equal({
+    expect(parser.parse('a = not ((true or false) and nil)')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2282,7 +2282,7 @@ describe('operators', function() {
     });
   });
   it('a = true or false  and nil', function() {
-    expect(parser.parse('a = true or false  and nil')).to.deep.equal({
+    expect(parser.parse('a = true or false  and nil')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2321,7 +2321,7 @@ describe('operators', function() {
     });
   });
   it('a = 2^-2 == 1/4 and -2^- -2 == - - -4', function() {
-    expect(parser.parse('a = 2^-2 == 1/4 and -2^- -2 == - - -4')).to.deep.equal({
+    expect(parser.parse('a = 2^-2 == 1/4 and -2^- -2 == - - -4')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2420,7 +2420,7 @@ describe('operators', function() {
     });
   });
   it('a = -3-1-5 == 0+0-9', function() {
-    expect(parser.parse('a = -3-1-5 == 0+0-9')).to.deep.equal({
+    expect(parser.parse('a = -3-1-5 == 0+0-9')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2487,7 +2487,7 @@ describe('operators', function() {
     });
   });
   it('a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0', function() {
-    expect(parser.parse('a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0')).to.deep.equal({
+    expect(parser.parse('a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2602,7 +2602,7 @@ describe('operators', function() {
     });
   });
   it('a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"', function() {
-    expect(parser.parse('a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"')).to.deep.equal({
+    expect(parser.parse('a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2697,7 +2697,7 @@ describe('operators', function() {
     });
   });
   it('a = not nil and 2 and not(2>3 or 3<2)', function() {
-    expect(parser.parse('a = not nil and 2 and not(2>3 or 3<2)')).to.deep.equal({
+    expect(parser.parse('a = not nil and 2 and not(2>3 or 3<2)')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2768,7 +2768,7 @@ describe('operators', function() {
     });
   });
   it('a = not(2+1 > 3*1) and "a".."b" > "a"', function() {
-    expect(parser.parse('a = not(2+1 > 3*1) and "a".."b" > "a"')).to.deep.equal({
+    expect(parser.parse('a = not(2+1 > 3*1) and "a".."b" > "a"')).to.eql({
       "type": "Chunk",
       "body": [
         {

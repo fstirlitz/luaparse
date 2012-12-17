@@ -6,13 +6,13 @@ describe('API', function () {
     expect(parser.end).to.be.a('function');
   });
   it('should ignore comments if told to', function() {
-    expect(parser.parse('--comment', { comments: false })).to.deep.equal({
+    expect(parser.parse('--comment', { comments: false })).to.eql({
       "type": "Chunk",
       "body": []
     });
   });
   it('should produce empty tree on empty input', function() {
-    expect(parser.parse('')).to.deep.equal({
+    expect(parser.parse('')).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": []
@@ -20,7 +20,7 @@ describe('API', function () {
   });
   it('should support waiting on input', function () {
     var parse = parser.parse({ wait: true });
-    expect(parse.end('break')).to.deep.equal({
+    expect(parse.end('break')).to.eql({
       "type": "Chunk",
       "body": [
         {

@@ -1,6 +1,6 @@
 describe('comments', function() {
   it('-- comment', function() {
-    expect(parser.parse('-- comment')).to.deep.equal({
+    expect(parser.parse('-- comment')).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -12,7 +12,7 @@ describe('comments', function() {
     });
   });
   it('--coment', function() {
-    expect(parser.parse('--coment')).to.deep.equal({
+    expect(parser.parse('--coment')).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -24,7 +24,7 @@ describe('comments', function() {
     });
   });
   it('-- comment\\nbreak', function() {
-    expect(parser.parse('-- comment\nbreak')).to.deep.equal({
+    expect(parser.parse('-- comment\nbreak')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -40,7 +40,7 @@ describe('comments', function() {
     });
   });
   it('break--comment', function() {
-    expect(parser.parse('break--comment')).to.deep.equal({
+    expect(parser.parse('break--comment')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -56,7 +56,7 @@ describe('comments', function() {
     });
   });
   it('--[[comment]]--', function() {
-    expect(parser.parse('--[[comment]]--')).to.deep.equal({
+    expect(parser.parse('--[[comment]]--')).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -68,7 +68,7 @@ describe('comments', function() {
     });
   });
   it('--[[comment]]--break', function() {
-    expect(parser.parse('--[[comment]]--break')).to.deep.equal({
+    expect(parser.parse('--[[comment]]--break')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -84,7 +84,7 @@ describe('comments', function() {
     });
   });
   it('--[=[comment]=]--break', function() {
-    expect(parser.parse('--[=[comment]=]--break')).to.deep.equal({
+    expect(parser.parse('--[=[comment]=]--break')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -100,7 +100,7 @@ describe('comments', function() {
     });
   });
   it('--[===[comment\\n--[=[sub]=]--\\n]===]--break', function() {
-    expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]--break')).to.deep.equal({
+    expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]--break')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -116,7 +116,7 @@ describe('comments', function() {
     });
   });
   it('--[[comment\\nline two]]--', function() {
-    expect(parser.parse('--[[comment\nline two]]--')).to.deep.equal({
+    expect(parser.parse('--[[comment\nline two]]--')).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -128,7 +128,7 @@ describe('comments', function() {
     });
   });
   it('--[[\\ncomment\\nline two\\n]]--', function() {
-    expect(parser.parse('--[[\ncomment\nline two\n]]--')).to.deep.equal({
+    expect(parser.parse('--[[\ncomment\nline two\n]]--')).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -140,7 +140,7 @@ describe('comments', function() {
     });
   });
   it('--[==\\nbreak --]]--', function() {
-    expect(parser.parse('--[==\nbreak --]]--')).to.deep.equal({
+    expect(parser.parse('--[==\nbreak --]]--')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -160,7 +160,7 @@ describe('comments', function() {
     });
   });
   it('if true -- comment\\nthen end', function() {
-    expect(parser.parse('if true -- comment\nthen end')).to.deep.equal({
+    expect(parser.parse('if true -- comment\nthen end')).to.eql({
       "type": "Chunk",
       "body": [
         {

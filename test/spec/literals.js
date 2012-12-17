@@ -1,9 +1,9 @@
 describe('literals', function() {
   it('a                                         -- FAIL', function() {
-    expect(parser.parse('a', {wait:true}).end).throws("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
   });
   it('a = 1', function() {
-    expect(parser.parse('a = 1')).to.deep.equal({
+    expect(parser.parse('a = 1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -26,7 +26,7 @@ describe('literals', function() {
     });
   });
   it('a = .1', function() {
-    expect(parser.parse('a = .1')).to.deep.equal({
+    expect(parser.parse('a = .1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -49,7 +49,7 @@ describe('literals', function() {
     });
   });
   it('a = 1.1', function() {
-    expect(parser.parse('a = 1.1')).to.deep.equal({
+    expect(parser.parse('a = 1.1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -72,7 +72,7 @@ describe('literals', function() {
     });
   });
   it('a = 10.1', function() {
-    expect(parser.parse('a = 10.1')).to.deep.equal({
+    expect(parser.parse('a = 10.1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -95,10 +95,10 @@ describe('literals', function() {
     });
   });
   it('a = 1e                                    -- FAIL', function() {
-    expect(parser.parse('a = 1e', {wait:true}).end).throws("[1:7] malformed number near '1e'");
+    expect(parser.parse('a = 1e', {wait:true}).end).to.throwError("[1:7] malformed number near '1e'");
   });
   it('a = 1e1', function() {
-    expect(parser.parse('a = 1e1')).to.deep.equal({
+    expect(parser.parse('a = 1e1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -121,7 +121,7 @@ describe('literals', function() {
     });
   });
   it('a = 1E1', function() {
-    expect(parser.parse('a = 1E1')).to.deep.equal({
+    expect(parser.parse('a = 1E1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -144,7 +144,7 @@ describe('literals', function() {
     });
   });
   it('a = 1e+9', function() {
-    expect(parser.parse('a = 1e+9')).to.deep.equal({
+    expect(parser.parse('a = 1e+9')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -167,7 +167,7 @@ describe('literals', function() {
     });
   });
   it('a = 1e-1', function() {
-    expect(parser.parse('a = 1e-1')).to.deep.equal({
+    expect(parser.parse('a = 1e-1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -190,10 +190,10 @@ describe('literals', function() {
     });
   });
   it('a = 0x                                    -- FAIL', function() {
-    expect(parser.parse('a = 0x', {wait:true}).end).throws("[1:7] malformed number near '0x'");
+    expect(parser.parse('a = 0x', {wait:true}).end).to.throwError("[1:7] malformed number near '0x'");
   });
   it('a = 0xf', function() {
-    expect(parser.parse('a = 0xf')).to.deep.equal({
+    expect(parser.parse('a = 0xf')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -216,7 +216,7 @@ describe('literals', function() {
     });
   });
   it('a = 0xf.', function() {
-    expect(parser.parse('a = 0xf.')).to.deep.equal({
+    expect(parser.parse('a = 0xf.')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -239,7 +239,7 @@ describe('literals', function() {
     });
   });
   it('a = 0xf.3', function() {
-    expect(parser.parse('a = 0xf.3')).to.deep.equal({
+    expect(parser.parse('a = 0xf.3')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -262,10 +262,10 @@ describe('literals', function() {
     });
   });
   it('a = 0xfp                                  -- FAIL', function() {
-    expect(parser.parse('a = 0xfp', {wait:true}).end).throws("[1:9] malformed number near '0xfp'");
+    expect(parser.parse('a = 0xfp', {wait:true}).end).to.throwError("[1:9] malformed number near '0xfp'");
   });
   it('a = 0xfp1', function() {
-    expect(parser.parse('a = 0xfp1')).to.deep.equal({
+    expect(parser.parse('a = 0xfp1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -288,7 +288,7 @@ describe('literals', function() {
     });
   });
   it('a = 0xfp+1', function() {
-    expect(parser.parse('a = 0xfp+1')).to.deep.equal({
+    expect(parser.parse('a = 0xfp+1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -311,7 +311,7 @@ describe('literals', function() {
     });
   });
   it('a = 0xfp-1', function() {
-    expect(parser.parse('a = 0xfp-1')).to.deep.equal({
+    expect(parser.parse('a = 0xfp-1')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -334,7 +334,7 @@ describe('literals', function() {
     });
   });
   it('a = 0xFP+9', function() {
-    expect(parser.parse('a = 0xFP+9')).to.deep.equal({
+    expect(parser.parse('a = 0xFP+9')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -357,7 +357,7 @@ describe('literals', function() {
     });
   });
   it('a = 1 .. 3 .. -2', function() {
-    expect(parser.parse('a = 1 .. 3 .. -2')).to.deep.equal({
+    expect(parser.parse('a = 1 .. 3 .. -2')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -400,7 +400,7 @@ describe('literals', function() {
     });
   });
   it('a = 1 .. "bar"', function() {
-    expect(parser.parse('a = 1 .. "bar"')).to.deep.equal({
+    expect(parser.parse('a = 1 .. "bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -431,10 +431,10 @@ describe('literals', function() {
     });
   });
   it('a = "bar                                  -- FAIL', function() {
-    expect(parser.parse('a = "bar', {wait:true}).end).throws("[1:9] unfinished string near 'bar'");
+    expect(parser.parse('a = "bar', {wait:true}).end).to.throwError("[1:9] unfinished string near 'bar'");
   });
   it('a = \'bar\'', function() {
-    expect(parser.parse('a = \'bar\'')).to.deep.equal({
+    expect(parser.parse('a = \'bar\'')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -457,7 +457,7 @@ describe('literals', function() {
     });
   });
   it('a = "bar"', function() {
-    expect(parser.parse('a = "bar"')).to.deep.equal({
+    expect(parser.parse('a = "bar"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -480,10 +480,10 @@ describe('literals', function() {
     });
   });
   it('a = [=aa                                  -- FAIL', function() {
-    expect(parser.parse('a = [=aa', {wait:true}).end).throws("[1:2] '[' expected near '='");
+    expect(parser.parse('a = [=aa', {wait:true}).end).to.throwError("[1:2] '[' expected near '='");
   });
   it('a = nil', function() {
-    expect(parser.parse('a = nil')).to.deep.equal({
+    expect(parser.parse('a = nil')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -506,7 +506,7 @@ describe('literals', function() {
     });
   });
   it('a = true', function() {
-    expect(parser.parse('a = true')).to.deep.equal({
+    expect(parser.parse('a = true')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -529,7 +529,7 @@ describe('literals', function() {
     });
   });
   it('a = false', function() {
-    expect(parser.parse('a = false')).to.deep.equal({
+    expect(parser.parse('a = false')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -552,7 +552,7 @@ describe('literals', function() {
     });
   });
   it('a = ...', function() {
-    expect(parser.parse('a = ...')).to.deep.equal({
+    expect(parser.parse('a = ...')).to.eql({
       "type": "Chunk",
       "body": [
         {

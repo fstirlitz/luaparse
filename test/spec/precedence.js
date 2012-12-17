@@ -4,7 +4,7 @@ describe('Precedence', function() {
     it(test + ' should equal ' + expected, function() {
       var test = parser.parse('a = ' + test);
       var expected = parser.parse('a = ' + expected);
-      expect(test).to.deep.equal(expected);
+      expect(test).to.eql(expected);
     });
   }
 
