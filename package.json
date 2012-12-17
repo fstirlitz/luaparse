@@ -21,7 +21,7 @@
     "test" : "make test"
   },
   "devDependencies": {
-    "mocha": "~1.7.2",
+    "mocha": "~1.7.4",
     "chai": "git://github.com/chaijs/chai.git#999ca70923186",
     "mocha-istanbul": "*",
     "grunt": "*",
