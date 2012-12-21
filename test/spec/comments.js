@@ -11,6 +11,22 @@ describe('comments', function() {
       ]
     });
   });
+  it('-- comment\\n-- comment', function() {
+    expect(parser.parse('-- comment\n-- comment')).to.eql({
+      "type": "Chunk",
+      "body": [],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": " comment"
+        },
+        {
+          "type": "Comment",
+          "value": " comment"
+        }
+      ]
+    });
+  });
   it('--coment', function() {
     expect(parser.parse('--coment')).to.eql({
       "type": "Chunk",
