@@ -1099,4 +1099,101 @@ describe('expressions', function() {
       "comments": []
     });
   });
+  it('a = {\'-\'}', function() {
+    expect(parser.parse('a = {\'-\'}')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "Literal",
+                    "value": "-"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = {\'not\'}', function() {
+    expect(parser.parse('a = {\'not\'}')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "Literal",
+                    "value": "not"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = {not true}', function() {
+    expect(parser.parse('a = {not true}')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "UnaryExpression",
+                    "operator": "not",
+                    "argument": {
+                      "type": "Literal",
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
 });
