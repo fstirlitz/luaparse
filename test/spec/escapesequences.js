@@ -97,7 +97,7 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
-  it('a = "bar\\\\80baz"', function() {
+  it('a = "bar\\80baz"', function() {
     expect(parser.parse('a = "bar\\80baz"')).to.eql({
       "type": "Chunk",
       "body": [
@@ -120,8 +120,8 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
-  it('a = "bar\\\\z   baz"', function() {
-    expect(parser.parse('a = "bar\\z   baz"')).to.eql({
+  it('a = "bar\\800\\0baz"', function() {
+    expect(parser.parse('a = "bar\\800\\0baz"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -132,6 +132,28 @@ describe('escape sequences', function() {
               "name": "a"
             }
           ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "bar\\800\\0baz"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = "bar\\\\z   baz"', function() {
+    expect(parser.parse('a = "bar\\z   baz"')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            } ],
           "init": [
             {
               "type": "Literal",
@@ -183,6 +205,30 @@ describe('escape sequences', function() {
             {
               "type": "Literal",
               "value": "bar\f\u000b\bbaz"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+
+  it("c = '\\'", function() {
+    expect(parser.parse("c = '\\''")).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "c"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "'"
             }
           ]
         }
