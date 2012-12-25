@@ -1,5 +1,5 @@
 /*globals exports:true window:true */
-(function() {
+(function(exports) {
   var hasOwn = Object.prototype.hasOwnProperty
     , isArray = Array.isArray || function (arr) {
         return Object.prototype.toString.call(arr) === '[object Array]';
@@ -14,11 +14,12 @@
       for (var i = 0, l = keys.length; i < l; i++) fn.call(keys, keys[i], i, keys);
     };
 
-  exports = function walk(node, fn) {
+  exports.walker = function walk(node, fn) {
     if (typeof node !== 'object') return false;
     if (fn(node) === false) return;
 
-    forEach(objectKeys(node), function(child) {
+    forEach(objectKeys(node), function(key) {
+      var child = node[key];
       if (child == null || typeof child !== 'object') return;
       if (typeof child.type === 'string') return walk(child, fn);
       if (isArray(child)) {
@@ -28,4 +29,4 @@
       }
     });
   };
-}).call(typeof exports !== 'undefined' ? exports : (window.walker = {}));
+}(typeof exports !== 'undefined' ? exports : window));
