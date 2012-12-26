@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+/*jshint node:true*/
+/*globals console:true */
+'use strict';
+
+var Benchmark = require('benchmark')
+  , luaparse = require('../')
+  , fs = require('fs')
+  , path = require('path')
+  , files = process.argv.slice(2)
+  , suites = {}
+  , suite = new Benchmark.Suite()
+  , results = []
+  , verbose = false;
+
+if (!files.length) {
+  console.log("Usage:\n\tbenchmark [snippet|file]...");
+  console.log("Flags:\n\t-v|--verbose");
+  process.exit(1);
+}
+
+files.forEach(function(file) {
+  if (/^-v|--verbose/.test(file)) return verbose = true;
+
+  if (!fs.existsSync(file)) suites[path.basename(file)] = file;
+  else suites[file] = fs.readFileSync(file, 'utf-8');
+});
+
+suite.on('cycle', function(event) {
+  var ms = event.target.times.period * 1000
+  if (verbose) console.log(String(event.target) + ' (' + ms.toFixed(4) + 'ms)');
+  else console.log(ms.toFixed(4));
+});
+
+Object.keys(suites).forEach(function(file) {
+  suite.add(file, function() {
+    luaparse.parse(suites[file]);
+  });
+});
+suite.run();
+
+/* vim: set sw=2 ts=2 et tw=80 ft=javascript : */

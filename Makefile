@@ -73,6 +73,8 @@ install-test:
 	@cp ./node_modules/mocha/mocha.css test/lib/mocha/
 	@cp ./node_modules/expect.js/expect.js test/lib/
 
+benchmark:
+	@./scripts/benchmark -v benchmarks/lib/ParseLua.lua
 
 clean:
 	@rm -f docs/*.html docs/*.1
