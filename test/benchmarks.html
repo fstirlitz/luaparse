@@ -17,6 +17,7 @@
     window.key = 'agt1YS1wcm9maWxlcnINCxIEVGVzdBiS6aETDA';
     window.commit = '33e3a';
     window._bTestResults = {};
+    window.resultPath = 'http://www.browserscope.org/user/tests/table/' + window.key + '?v=top-d';
 
     requirejs.config({
         paths: {
@@ -36,6 +37,7 @@
       var suite = new Benchmark.Suite();
 
       $('#run')
+        .removeClass('hidden')
         .on('click', function() {
           $(this).addClass('hidden');
           suite.run();
@@ -60,10 +62,9 @@
         window._bTestResults[window.commit] = ms.toFixed(4);
       }
 
-      $.get('http://www.browserscope.org/user/tests/table/' + window.key, function() {
-        $('#run').removeClass('hidden')
-        console.log(arguments);
-      });
+
+      $('<iframe src="' + window.resultPath + '" style="border:0; width: 100%; min-height: 100%;"></iframe>')
+        .appendTo($('body'));
     });
   </script>
 </body>
