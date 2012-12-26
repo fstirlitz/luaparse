@@ -188,7 +188,6 @@ describe('conditional', function() {
             },
             {
               "type": "ElseClause",
-              "condition": null,
               "body": []
             }
           ]
@@ -226,7 +225,6 @@ describe('conditional', function() {
             },
             {
               "type": "ElseClause",
-              "condition": null,
               "body": [
                 {
                   "type": "LocalStatement",
@@ -275,7 +273,6 @@ describe('conditional', function() {
             },
             {
               "type": "ElseClause",
-              "condition": null,
               "body": [
                 {
                   "type": "LocalStatement",
@@ -465,7 +462,6 @@ describe('conditional', function() {
             },
             {
               "type": "ElseClause",
-              "condition": null,
               "body": []
             }
           ]
@@ -492,7 +488,6 @@ describe('conditional', function() {
             },
             {
               "type": "ElseClause",
-              "condition": null,
               "body": [
                 {
                   "type": "IfStatement",
