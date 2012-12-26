@@ -17,7 +17,8 @@
     window.key = 'agt1YS1wcm9maWxlcnINCxIEVGVzdBiS6aETDA';
     window.commit = '33e3a';
     window._bTestResults = {};
-    window.resultPath = 'http://www.browserscope.org/user/tests/table/' + window.key + '?v=top-d';
+    window.resultPath = 'http://www.browserscope.org/user/tests/table/' + window.key + '?v=3';
+    window.beaconPath = 'http://www.browserscope.org/user/beacon/' + window.key;
 
     requirejs.config({
         paths: {
@@ -48,22 +49,21 @@
       });
 
       suite.on('cycle', function(e) {
-        setResult(e);
+        setResult(window.commit, e.target.hz);
       });
 
-      suite.on('complete', function() {
-        $.get('http://www.browserscope.org/user/beacon/' + window.key, function() {
-          console.log(arguments);
-        });
+      suite.on('complete', function(e) {
+        $('<script src="' + window.beaconPath + '" />')
+          .appendTo($('body'));
+
+        $('#run').replaceWith('<p>' + e.target.toString() + '</p>');
       });
 
-      function setResult(e) {
-        var ms = e.target.times.period * 1000;
-        window._bTestResults[window.commit] = ms.toFixed(4);
+      function setResult(name, hz) {
+        window._bTestResults[name] = Math.round(hz);
       }
 
-
-      $('<iframe src="' + window.resultPath + '" style="border:0; width: 100%; min-height: 100%;"></iframe>')
+      $('<iframe src="' + window.resultPath + '" style="border:0; width: 100%; height: 500px;" />')
         .appendTo($('body'));
     });
   </script>
