@@ -134,7 +134,8 @@ describe('do', function() {
               "init": [
                 {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 }
               ]
             }

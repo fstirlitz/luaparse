@@ -47,3 +47,6 @@ a = function(...) end
 a = function(...,                       -- FAIL
 a = function(p,...) end
 a = function(p,q,r,...) end
+a = {'-'}
+a = {'not'}
+a = {not true}

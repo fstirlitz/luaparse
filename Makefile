@@ -9,6 +9,7 @@ checkout: clean-old
 	@mv luaparse/docs/* .
 	@mv luaparse/examples .
 	@mv luaparse/lib .
+	@mv luaparse/benchmarks .
 	@cp -rf luaparse/test .
 
 clean-old:

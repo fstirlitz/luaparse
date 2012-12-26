@@ -17,7 +17,8 @@ describe('operators', function() {
               "operator": "-",
               "argument": {
                 "type": "Literal",
-                "value": 10
+                "value": 10,
+                "raw": "10"
               }
             }
           ]
@@ -44,7 +45,8 @@ describe('operators', function() {
               "operator": "-",
               "argument": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               }
             }
           ]
@@ -98,7 +100,8 @@ describe('operators', function() {
               "operator": "-",
               "argument": {
                 "type": "Literal",
-                "value": null
+                "value": null,
+                "raw": "nil"
               }
             }
           ]
@@ -125,7 +128,8 @@ describe('operators', function() {
               "operator": "-",
               "argument": {
                 "type": "Literal",
-                "value": true
+                "value": true,
+                "raw": "true"
               }
             }
           ]
@@ -271,7 +275,8 @@ describe('operators', function() {
               "operator": "not",
               "argument": {
                 "type": "Literal",
-                "value": 10
+                "value": 10,
+                "raw": "10"
               }
             }
           ]
@@ -298,7 +303,8 @@ describe('operators', function() {
               "operator": "not",
               "argument": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               }
             }
           ]
@@ -352,7 +358,8 @@ describe('operators', function() {
               "operator": "not",
               "argument": {
                 "type": "Literal",
-                "value": null
+                "value": null,
+                "raw": "nil"
               }
             }
           ]
@@ -379,7 +386,8 @@ describe('operators', function() {
               "operator": "not",
               "argument": {
                 "type": "Literal",
-                "value": true
+                "value": true,
+                "raw": "true"
               }
             }
           ]
@@ -525,11 +533,13 @@ describe('operators', function() {
               "operator": "+",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -548,11 +558,13 @@ describe('operators', function() {
               "operator": "-",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -579,11 +591,13 @@ describe('operators', function() {
               "operator": "*",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -602,11 +616,13 @@ describe('operators', function() {
               "operator": "/",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -633,11 +649,13 @@ describe('operators', function() {
               "operator": "^",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -656,11 +674,13 @@ describe('operators', function() {
               "operator": "..",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -696,14 +716,16 @@ describe('operators', function() {
               "operator": "+",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "UnaryExpression",
                 "operator": "-",
                 "argument": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               }
             }
@@ -723,14 +745,16 @@ describe('operators', function() {
               "operator": "-",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "UnaryExpression",
                 "operator": "-",
                 "argument": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               }
             }
@@ -761,14 +785,16 @@ describe('operators', function() {
               "operator": "*",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "UnaryExpression",
                 "operator": "not",
                 "argument": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               }
             }
@@ -788,14 +814,16 @@ describe('operators', function() {
               "operator": "/",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "UnaryExpression",
                 "operator": "not",
                 "argument": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               }
             }
@@ -829,11 +857,13 @@ describe('operators', function() {
                 "operator": "+",
                 "left": {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               },
               "right": {
@@ -844,11 +874,13 @@ describe('operators', function() {
                   "operator": "*",
                   "left": {
                     "type": "Literal",
-                    "value": 3
+                    "value": 3,
+                    "raw": "3"
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 4
+                    "value": 4,
+                    "raw": "4"
                   }
                 },
                 "right": {
@@ -856,11 +888,13 @@ describe('operators', function() {
                   "operator": "^",
                   "left": {
                     "type": "Literal",
-                    "value": 5
+                    "value": 5,
+                    "raw": "5"
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 6
+                    "value": 6,
+                    "raw": "6"
                   }
                 }
               }
@@ -895,16 +929,19 @@ describe('operators', function() {
                   "operator": "+",
                   "left": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 2
+                    "value": 2,
+                    "raw": "2"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 3
+                  "value": 3,
+                  "raw": "3"
                 }
               },
               "right": {
@@ -912,18 +949,21 @@ describe('operators', function() {
                 "operator": "/",
                 "left": {
                   "type": "Literal",
-                  "value": 4
+                  "value": 4,
+                  "raw": "4"
                 },
                 "right": {
                   "type": "BinaryExpression",
                   "operator": "^",
                   "left": {
                     "type": "Literal",
-                    "value": 5
+                    "value": 5,
+                    "raw": "5"
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 6
+                    "value": 6,
+                    "raw": "6"
                   }
                 }
               }
@@ -952,39 +992,45 @@ describe('operators', function() {
               "operator": "+",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "BinaryExpression",
                 "operator": "-",
                 "left": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 },
                 "right": {
                   "type": "BinaryExpression",
                   "operator": "*",
                   "left": {
                     "type": "Literal",
-                    "value": 3
+                    "value": 3,
+                    "raw": "3"
                   },
                   "right": {
                     "type": "BinaryExpression",
                     "operator": "/",
                     "left": {
                       "type": "Literal",
-                      "value": 4
+                      "value": 4,
+                      "raw": "4"
                     },
                     "right": {
                       "type": "BinaryExpression",
                       "operator": "^",
                       "left": {
                         "type": "Literal",
-                        "value": 5
+                        "value": 5,
+                        "raw": "5"
                       },
                       "right": {
                         "type": "Literal",
-                        "value": 6
+                        "value": 6,
+                        "raw": "6"
                       }
                     }
                   }
@@ -1063,11 +1109,13 @@ describe('operators', function() {
               "operator": "+",
               "left": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               },
               "right": {
                 "type": "Literal",
-                "value": "bar"
+                "value": "bar",
+                "raw": "\"bar\""
               }
             }
           ]
@@ -1094,18 +1142,21 @@ describe('operators', function() {
               "operator": "..",
               "left": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               },
               "right": {
                 "type": "BinaryExpression",
                 "operator": "..",
                 "left": {
                   "type": "Literal",
-                  "value": "bar"
+                  "value": "bar",
+                  "raw": "\"bar\""
                 },
                 "right": {
                   "type": "Literal",
-                  "value": "baz"
+                  "value": "baz",
+                  "raw": "\"baz\""
                 }
               }
             }
@@ -1136,16 +1187,19 @@ describe('operators', function() {
                 "operator": "+",
                 "left": {
                   "type": "Literal",
-                  "value": true
+                  "value": true,
+                  "raw": "true"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": false
+                  "value": false,
+                  "raw": "false"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": null
+                "value": null,
+                "raw": "nil"
               }
             }
           ]
@@ -1281,11 +1335,13 @@ describe('operators', function() {
               "operator": "==",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1304,11 +1360,13 @@ describe('operators', function() {
               "operator": "~=",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1335,11 +1393,13 @@ describe('operators', function() {
               "operator": "<",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1358,11 +1418,13 @@ describe('operators', function() {
               "operator": "<=",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1389,11 +1451,13 @@ describe('operators', function() {
               "operator": ">",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1412,11 +1476,13 @@ describe('operators', function() {
               "operator": ">=",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1446,16 +1512,19 @@ describe('operators', function() {
                 "operator": "<",
                 "left": {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": 3
+                "value": 3,
+                "raw": "3"
               }
             }
           ]
@@ -1485,16 +1554,19 @@ describe('operators', function() {
                 "operator": ">=",
                 "left": {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": 3
+                "value": 3,
+                "raw": "3"
               }
             }
           ]
@@ -1533,11 +1605,13 @@ describe('operators', function() {
               "operator": "==",
               "left": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               },
               "right": {
                 "type": "Literal",
-                "value": "bar"
+                "value": "bar",
+                "raw": "\"bar\""
               }
             }
           ]
@@ -1564,11 +1638,13 @@ describe('operators', function() {
               "operator": ">",
               "left": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               },
               "right": {
                 "type": "Literal",
-                "value": "bar"
+                "value": "bar",
+                "raw": "\"bar\""
               }
             }
           ]
@@ -1626,11 +1702,13 @@ describe('operators', function() {
               "operator": "==",
               "left": {
                 "type": "Literal",
-                "value": true
+                "value": true,
+                "raw": "true"
               },
               "right": {
                 "type": "Literal",
-                "value": false
+                "value": false,
+                "raw": "false"
               }
             }
           ]
@@ -1657,11 +1735,13 @@ describe('operators', function() {
               "operator": "and",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1680,11 +1760,13 @@ describe('operators', function() {
               "operator": "or",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               }
             }
           ]
@@ -1720,16 +1802,19 @@ describe('operators', function() {
                 "operator": "and",
                 "left": {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": 3
+                "value": 3,
+                "raw": "3"
               }
             }
           ]
@@ -1759,16 +1844,19 @@ describe('operators', function() {
                 "operator": "or",
                 "left": {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": 3
+                "value": 3,
+                "raw": "3"
               }
             }
           ]
@@ -1798,16 +1886,19 @@ describe('operators', function() {
                 "operator": "and",
                 "left": {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": 3
+                "value": 3,
+                "raw": "3"
               }
             }
           ]
@@ -1928,11 +2019,13 @@ describe('operators', function() {
               "operator": "and",
               "left": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               },
               "right": {
                 "type": "Literal",
-                "value": "bar"
+                "value": "bar",
+                "raw": "\"bar\""
               }
             }
           ]
@@ -1959,11 +2052,13 @@ describe('operators', function() {
               "operator": "or",
               "left": {
                 "type": "Literal",
-                "value": true
+                "value": true,
+                "raw": "true"
               },
               "right": {
                 "type": "Literal",
-                "value": false
+                "value": false,
+                "raw": "false"
               }
             }
           ]
@@ -2032,16 +2127,19 @@ describe('operators', function() {
                 "operator": "and",
                 "left": {
                   "type": "Literal",
-                  "value": 1
+                  "value": 1,
+                  "raw": "1"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": "foo"
+                  "value": "foo",
+                  "raw": "\"foo\""
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": null
+                "value": null,
+                "raw": "nil"
               }
             }
           ]
@@ -2155,26 +2253,31 @@ describe('operators', function() {
                     "operator": "or",
                     "left": {
                       "type": "Literal",
-                      "value": 1
+                      "value": 1,
+                      "raw": "1"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": false
+                      "value": false,
+                      "raw": "false"
                     }
                   },
                   "right": {
                     "type": "Literal",
-                    "value": true
+                    "value": true,
+                    "raw": "true"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": false
+                  "value": false,
+                  "raw": "false"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": true
+                "value": true,
+                "raw": "true"
               }
             }
           ]
@@ -2210,26 +2313,31 @@ describe('operators', function() {
                     "operator": "and",
                     "left": {
                       "type": "Literal",
-                      "value": null
+                      "value": null,
+                      "raw": "nil"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": true
+                      "value": true,
+                      "raw": "true"
                     }
                   },
                   "right": {
                     "type": "Literal",
-                    "value": false
+                    "value": false,
+                    "raw": "false"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": true
+                  "value": true,
+                  "raw": "true"
                 }
               },
               "right": {
                 "type": "Literal",
-                "value": false
+                "value": false,
+                "raw": "false"
               }
             }
           ]
@@ -2262,16 +2370,19 @@ describe('operators', function() {
                   "operator": "or",
                   "left": {
                     "type": "Literal",
-                    "value": true
+                    "value": true,
+                    "raw": "true"
                   },
                   "right": {
                     "type": "Literal",
-                    "value": false
+                    "value": false,
+                    "raw": "false"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": null
+                  "value": null,
+                  "raw": "nil"
                 }
               }
             }
@@ -2299,18 +2410,21 @@ describe('operators', function() {
               "operator": "or",
               "left": {
                 "type": "Literal",
-                "value": true
+                "value": true,
+                "raw": "true"
               },
               "right": {
                 "type": "LogicalExpression",
                 "operator": "and",
                 "left": {
                   "type": "Literal",
-                  "value": false
+                  "value": false,
+                  "raw": "false"
                 },
                 "right": {
                   "type": "Literal",
-                  "value": null
+                  "value": null,
+                  "raw": "nil"
                 }
               }
             }
@@ -2344,14 +2458,16 @@ describe('operators', function() {
                   "operator": "^",
                   "left": {
                     "type": "Literal",
-                    "value": 2
+                    "value": 2,
+                    "raw": "2"
                   },
                   "right": {
                     "type": "UnaryExpression",
                     "operator": "-",
                     "argument": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     }
                   }
                 },
@@ -2360,11 +2476,13 @@ describe('operators', function() {
                   "operator": "/",
                   "left": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 4
+                    "value": 4,
+                    "raw": "4"
                   }
                 }
               },
@@ -2379,7 +2497,8 @@ describe('operators', function() {
                     "operator": "^",
                     "left": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     },
                     "right": {
                       "type": "UnaryExpression",
@@ -2389,7 +2508,8 @@ describe('operators', function() {
                         "operator": "-",
                         "argument": {
                           "type": "Literal",
-                          "value": 2
+                          "value": 2,
+                          "raw": "2"
                         }
                       }
                     }
@@ -2406,7 +2526,8 @@ describe('operators', function() {
                       "operator": "-",
                       "argument": {
                         "type": "Literal",
-                        "value": 4
+                        "value": 4,
+                        "raw": "4"
                       }
                     }
                   }
@@ -2446,17 +2567,20 @@ describe('operators', function() {
                     "operator": "-",
                     "argument": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     }
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 5
+                  "value": 5,
+                  "raw": "5"
                 }
               },
               "right": {
@@ -2467,16 +2591,19 @@ describe('operators', function() {
                   "operator": "+",
                   "left": {
                     "type": "Literal",
-                    "value": 0
+                    "value": 0,
+                    "raw": "0"
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 0
+                    "value": 0,
+                    "raw": "0"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 9
+                  "value": 9,
+                  "raw": "9"
                 }
               }
             }
@@ -2516,11 +2643,13 @@ describe('operators', function() {
                       "operator": "^",
                       "left": {
                         "type": "Literal",
-                        "value": 2
+                        "value": 2,
+                        "raw": "2"
                       },
                       "right": {
                         "type": "Literal",
-                        "value": 2
+                        "value": 2,
+                        "raw": "2"
                       }
                     }
                   },
@@ -2529,7 +2658,8 @@ describe('operators', function() {
                     "operator": "-",
                     "argument": {
                       "type": "Literal",
-                      "value": 4
+                      "value": 4,
+                      "raw": "4"
                     }
                   }
                 },
@@ -2544,17 +2674,20 @@ describe('operators', function() {
                       "operator": "-",
                       "argument": {
                         "type": "Literal",
-                        "value": 2
+                        "value": 2,
+                        "raw": "2"
                       }
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     }
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 4
+                    "value": 4,
+                    "raw": "4"
                   }
                 }
               },
@@ -2572,26 +2705,31 @@ describe('operators', function() {
                       "operator": "*",
                       "left": {
                         "type": "Literal",
-                        "value": 2
+                        "value": 2,
+                        "raw": "2"
                       },
                       "right": {
                         "type": "Literal",
-                        "value": 2
+                        "value": 2,
+                        "raw": "2"
                       }
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     }
                   },
                   "right": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 0
+                  "value": 0,
+                  "raw": "0"
                 }
               }
             }
@@ -2628,11 +2766,13 @@ describe('operators', function() {
                     "operator": "*",
                     "left": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 1
+                      "value": 1,
+                      "raw": "1"
                     }
                   },
                   "right": {
@@ -2640,17 +2780,20 @@ describe('operators', function() {
                     "operator": "/",
                     "left": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     }
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 3
+                  "value": 3,
+                  "raw": "3"
                 }
               },
               "right": {
@@ -2664,11 +2807,13 @@ describe('operators', function() {
                     "operator": "+",
                     "left": {
                       "type": "Literal",
-                      "value": 1
+                      "value": 1,
+                      "raw": "1"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     }
                   },
                   "right": {
@@ -2676,17 +2821,20 @@ describe('operators', function() {
                     "operator": "*",
                     "left": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 1
+                      "value": 1,
+                      "raw": "1"
                     }
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": "33"
+                  "value": "33",
+                  "raw": "\"33\""
                 }
               }
             }
@@ -2720,12 +2868,14 @@ describe('operators', function() {
                   "operator": "not",
                   "argument": {
                     "type": "Literal",
-                    "value": null
+                    "value": null,
+                    "raw": "nil"
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": 2
+                  "value": 2,
+                  "raw": "2"
                 }
               },
               "right": {
@@ -2739,11 +2889,13 @@ describe('operators', function() {
                     "operator": ">",
                     "left": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     }
                   },
                   "right": {
@@ -2751,11 +2903,13 @@ describe('operators', function() {
                     "operator": "<",
                     "left": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     }
                   }
                 }
@@ -2794,11 +2948,13 @@ describe('operators', function() {
                     "operator": "+",
                     "left": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 1
+                      "value": 1,
+                      "raw": "1"
                     }
                   },
                   "right": {
@@ -2806,11 +2962,13 @@ describe('operators', function() {
                     "operator": "*",
                     "left": {
                       "type": "Literal",
-                      "value": 3
+                      "value": 3,
+                      "raw": "3"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 1
+                      "value": 1,
+                      "raw": "1"
                     }
                   }
                 }
@@ -2823,16 +2981,19 @@ describe('operators', function() {
                   "operator": "..",
                   "left": {
                     "type": "Literal",
-                    "value": "a"
+                    "value": "a",
+                    "raw": "\"a\""
                   },
                   "right": {
                     "type": "Literal",
-                    "value": "b"
+                    "value": "b",
+                    "raw": "\"b\""
                   }
                 },
                 "right": {
                   "type": "Literal",
-                  "value": "a"
+                  "value": "a",
+                  "raw": "\"a\""
                 }
               }
             }

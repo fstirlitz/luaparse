@@ -17,7 +17,8 @@ describe('expressions', function() {
           "init": [
             {
               "type": "Literal",
-              "value": "foo"
+              "value": "foo",
+              "raw": "[[foo]]"
             }
           ]
         }
@@ -86,7 +87,8 @@ describe('expressions', function() {
           "init": [
             {
               "type": "Literal",
-              "value": null
+              "value": null,
+              "raw": "nil"
             }
           ]
         }
@@ -109,7 +111,8 @@ describe('expressions', function() {
           "init": [
             {
               "type": "Literal",
-              "value": true
+              "value": true,
+              "raw": "true"
             }
           ]
         }
@@ -132,7 +135,8 @@ describe('expressions', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 1
+              "value": 1,
+              "raw": "1"
             }
           ]
         }
@@ -155,7 +159,8 @@ describe('expressions', function() {
           "init": [
             {
               "type": "Literal",
-              "value": "foo"
+              "value": "foo",
+              "raw": "\"foo\""
             }
           ]
         }
@@ -178,7 +183,8 @@ describe('expressions', function() {
           "init": [
             {
               "type": "Literal",
-              "value": "foo"
+              "value": "foo",
+              "raw": "[[foo]]"
             }
           ]
         }
@@ -336,7 +342,8 @@ describe('expressions', function() {
               },
               "index": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               }
             }
           ]
@@ -366,7 +373,8 @@ describe('expressions', function() {
               },
               "index": {
                 "type": "Literal",
-                "value": "foo"
+                "value": "foo",
+                "raw": "\"foo\""
               }
             }
           ]
@@ -860,7 +868,7 @@ describe('expressions', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": {
+              "arguments": {
                 "type": "TableConstructorExpression",
                 "fields": []
               }
@@ -1092,6 +1100,106 @@ describe('expressions', function() {
                 }
               ],
               "body": []
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = {\'-\'}', function() {
+    expect(parser.parse('a = {\'-\'}')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "Literal",
+                    "value": "-",
+                    "raw": "'-'"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = {\'not\'}', function() {
+    expect(parser.parse('a = {\'not\'}')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "Literal",
+                    "value": "not",
+                    "raw": "'not'"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = {not true}', function() {
+    expect(parser.parse('a = {not true}')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "UnaryExpression",
+                    "operator": "not",
+                    "argument": {
+                      "type": "Literal",
+                      "value": true,
+                      "raw": "true"
+                    }
+                  }
+                }
+              ]
             }
           ]
         }

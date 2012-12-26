@@ -19,7 +19,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": []
         }
@@ -35,7 +36,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -62,7 +64,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -99,7 +102,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -142,7 +146,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": true
+            "value": true,
+            "raw": "true"
           },
           "body": []
         }
@@ -170,7 +175,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -194,7 +200,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -215,7 +222,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -241,7 +249,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -261,7 +270,8 @@ describe('while', function() {
           "type": "WhileStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {

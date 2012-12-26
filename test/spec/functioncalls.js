@@ -36,7 +36,8 @@ describe('functioncalls', function() {
             "arguments": [
               {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               }
             ]
           }
@@ -63,15 +64,18 @@ describe('functioncalls', function() {
             "arguments": [
               {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               },
               {
                 "type": "Literal",
-                "value": 3
+                "value": 3,
+                "raw": "3"
               }
             ]
           }
@@ -591,7 +595,8 @@ describe('functioncalls', function() {
             "type": "CallExpression",
             "base": {
               "type": "Literal",
-              "value": 1
+              "value": 1,
+              "raw": "1"
             },
             "arguments": []
           }
@@ -610,7 +615,8 @@ describe('functioncalls', function() {
             "type": "CallExpression",
             "base": {
               "type": "Literal",
-              "value": "foo"
+              "value": "foo",
+              "raw": "\"foo\""
             },
             "arguments": []
           }
@@ -629,7 +635,8 @@ describe('functioncalls', function() {
             "type": "CallExpression",
             "base": {
               "type": "Literal",
-              "value": true
+              "value": true,
+              "raw": "true"
             },
             "arguments": []
           }
@@ -1155,7 +1162,7 @@ describe('functioncalls', function() {
               "type": "Identifier",
               "name": "a"
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1185,7 +1192,7 @@ describe('functioncalls', function() {
                 "name": "a"
               }
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1214,7 +1221,7 @@ describe('functioncalls', function() {
                 "name": "b"
               }
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1244,7 +1251,7 @@ describe('functioncalls', function() {
                 "name": "a"
               }
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1431,7 +1438,7 @@ describe('functioncalls', function() {
               },
               "argument": "foo"
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1565,7 +1572,7 @@ describe('functioncalls', function() {
               },
               "arguments": []
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1589,7 +1596,7 @@ describe('functioncalls', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": {
+              "arguments": {
                 "type": "TableConstructorExpression",
                 "fields": []
               }
@@ -1622,7 +1629,7 @@ describe('functioncalls', function() {
                   "type": "Identifier",
                   "name": "a"
                 },
-                "argument": {
+                "arguments": {
                   "type": "TableConstructorExpression",
                   "fields": []
                 }
@@ -1651,7 +1658,7 @@ describe('functioncalls', function() {
                   "type": "Identifier",
                   "name": "a"
                 },
-                "argument": {
+                "arguments": {
                   "type": "TableConstructorExpression",
                   "fields": []
                 }
@@ -1689,7 +1696,7 @@ describe('functioncalls', function() {
                   "type": "Identifier",
                   "name": "a"
                 },
-                "argument": {
+                "arguments": {
                   "type": "TableConstructorExpression",
                   "fields": []
                 }
@@ -1716,7 +1723,7 @@ describe('functioncalls', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": {
+              "arguments": {
                 "type": "TableConstructorExpression",
                 "fields": []
               }
@@ -1742,12 +1749,12 @@ describe('functioncalls', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": {
+              "arguments": {
                 "type": "TableConstructorExpression",
                 "fields": []
               }
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1795,7 +1802,7 @@ describe('functioncalls', function() {
                         "name": "a"
                       }
                     },
-                    "argument": {
+                    "arguments": {
                       "type": "TableConstructorExpression",
                       "fields": []
                     }
@@ -1807,7 +1814,7 @@ describe('functioncalls', function() {
                 }
               }
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
@@ -1855,7 +1862,7 @@ describe('functioncalls', function() {
                         "name": "a"
                       }
                     },
-                    "argument": {
+                    "arguments": {
                       "type": "TableConstructorExpression",
                       "fields": []
                     }
@@ -1867,7 +1874,7 @@ describe('functioncalls', function() {
                 }
               }
             },
-            "argument": {
+            "arguments": {
               "type": "TableConstructorExpression",
               "fields": []
             }
