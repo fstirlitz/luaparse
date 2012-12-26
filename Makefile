@@ -74,7 +74,7 @@ install-test:
 	@cp ./node_modules/expect.js/expect.js test/lib/
 
 benchmark:
-	@./scripts/benchmark -v benchmarks/lib/ParseLua.lua
+	@./scripts/benchmark -v --samples=1000 benchmarks/lib/ParseLua.lua
 
 clean:
 	@rm -f docs/*.html docs/*.1

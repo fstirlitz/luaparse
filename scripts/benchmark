@@ -11,7 +11,8 @@ var Benchmark = require('benchmark')
   , suites = {}
   , suite = new Benchmark.Suite()
   , results = []
-  , verbose = false;
+  , verbose = false
+  , minSamples = 100
 
 if (!files.length) {
   console.log("Usage:\n\tbenchmark [snippet|file]...");
@@ -21,6 +22,10 @@ if (!files.length) {
 
 files.forEach(function(file) {
   if (/^-v|--verbose/.test(file)) return verbose = true;
+  if (/^--samples=/.test(file)) {
+    minSamples = file.replace(/^--samples=/, '');
+    return;
+  }
 
   if (!fs.existsSync(file)) suites[path.basename(file)] = file;
   else suites[file] = fs.readFileSync(file, 'utf-8');
@@ -35,7 +40,7 @@ suite.on('cycle', function(event) {
 Object.keys(suites).forEach(function(file) {
   suite.add(file, function() {
     luaparse.parse(suites[file]);
-  });
+  }, { minSamples: minSamples });
 });
 suite.run();
 
