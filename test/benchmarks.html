@@ -51,10 +51,11 @@
         setResult(e);
       });
 
-      suite.on('complete', function() {
-        $.get('http://www.browserscope.org/user/beacon/' + window.key, function() {
-          console.log(arguments);
-        });
+      suite.on('complete', function(e) {
+        $('<script src="http://www.browserscope.org/user/beacon/' + window.key + '" />')
+          .appendTo($('body'));
+
+        $('#run').replaceWith('<p>' + e.target.toString() + '</p>');
       });
 
       function setResult(e) {
@@ -63,7 +64,7 @@
       }
 
 
-      $('<iframe src="' + window.resultPath + '" style="border:0; width: 100%; min-height: 100%;"></iframe>')
+      $('<iframe src="' + window.resultPath + '" style="border:0; width: 100%; min-height: 100%;" />')
         .appendTo($('body'));
     });
   </script>
