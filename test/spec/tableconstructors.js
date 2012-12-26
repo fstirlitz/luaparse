@@ -152,7 +152,8 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 }
               ]
@@ -183,7 +184,8 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 }
               ]
@@ -214,7 +216,8 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 }
               ]
@@ -245,14 +248,16 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 },
                 {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": 2
+                    "value": 2,
+                    "raw": "2"
                   }
                 }
               ]
@@ -328,21 +333,24 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": true
+                    "value": true,
+                    "raw": "true"
                   }
                 },
                 {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": false
+                    "value": false,
+                    "raw": "false"
                   }
                 },
                 {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": null
+                    "value": null,
+                    "raw": "nil"
                   }
                 }
               ]
@@ -448,11 +456,13 @@ describe('tableconstructors', function() {
                     "operator": "+",
                     "left": {
                       "type": "Literal",
-                      "value": 1
+                      "value": 1,
+                      "raw": "1"
                     },
                     "right": {
                       "type": "Literal",
-                      "value": 2
+                      "value": 2,
+                      "raw": "2"
                     }
                   }
                 },
@@ -478,11 +488,13 @@ describe('tableconstructors', function() {
                     "operator": "or",
                     "left": {
                       "type": "Literal",
-                      "value": "a"
+                      "value": "a",
+                      "raw": "\"a\""
                     },
                     "right": {
                       "type": "Literal",
-                      "value": "b"
+                      "value": "b",
+                      "raw": "\"b\""
                     }
                   }
                 }
@@ -518,7 +530,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 }
               ]
@@ -553,7 +566,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 },
                 {
@@ -564,7 +578,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Literal",
-                    "value": "foo"
+                    "value": "foo",
+                    "raw": "\"foo\""
                   }
                 },
                 {
@@ -575,7 +590,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Literal",
-                    "value": null
+                    "value": null,
+                    "raw": "nil"
                   }
                 }
               ]
@@ -621,7 +637,8 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 },
                 {
@@ -632,7 +649,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Literal",
-                    "value": "foo"
+                    "value": "foo",
+                    "raw": "\"foo\""
                   }
                 },
                 {
@@ -654,7 +672,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Literal",
-                    "value": true
+                    "value": true,
+                    "raw": "true"
                   }
                 }
               ]
@@ -697,11 +716,13 @@ describe('tableconstructors', function() {
                   "type": "TableKey",
                   "key": {
                     "type": "Literal",
-                    "value": "foo"
+                    "value": "foo",
+                    "raw": "\"foo\""
                   },
                   "value": {
                     "type": "Literal",
-                    "value": "bar"
+                    "value": "bar",
+                    "raw": "\"bar\""
                   }
                 }
               ]
@@ -732,7 +753,8 @@ describe('tableconstructors', function() {
                   "type": "TableKey",
                   "key": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   },
                   "value": {
                     "type": "Identifier",
@@ -743,7 +765,8 @@ describe('tableconstructors', function() {
                   "type": "TableKey",
                   "key": {
                     "type": "Literal",
-                    "value": 2
+                    "value": 2,
+                    "raw": "2"
                   },
                   "value": {
                     "type": "Identifier",
@@ -778,7 +801,8 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Literal",
-                    "value": true
+                    "value": true,
+                    "raw": "true"
                   }
                 },
                 {
@@ -789,18 +813,21 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Literal",
-                    "value": 1
+                    "value": 1,
+                    "raw": "1"
                   }
                 },
                 {
                   "type": "TableKey",
                   "key": {
                     "type": "Literal",
-                    "value": "foo"
+                    "value": "foo",
+                    "raw": "\"foo\""
                   },
                   "value": {
                     "type": "Literal",
-                    "value": "bar"
+                    "value": "bar",
+                    "raw": "\"bar\""
                   }
                 }
               ]

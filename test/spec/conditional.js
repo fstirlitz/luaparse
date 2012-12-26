@@ -40,7 +40,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": []
             }
@@ -61,7 +62,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -93,7 +95,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -135,7 +138,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -177,7 +181,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": []
             },
@@ -203,7 +208,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -251,7 +257,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -305,7 +312,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": []
             },
@@ -313,7 +321,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               },
               "body": []
             }
@@ -334,7 +343,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -353,7 +363,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               },
               "body": [
                 {
@@ -385,7 +396,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -404,7 +416,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               },
               "body": [
                 {
@@ -436,7 +449,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": []
             },
@@ -444,7 +458,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 2
+                "value": 2,
+                "raw": "2"
               },
               "body": []
             },
@@ -470,7 +485,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": []
             },
@@ -485,7 +501,8 @@ describe('conditional', function() {
                       "type": "ElseifClause",
                       "condition": {
                         "type": "Literal",
-                        "value": 2
+                        "value": 2,
+                        "raw": "2"
                       },
                       "body": []
                     }
@@ -513,7 +530,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": [
                 {
@@ -542,7 +560,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": []
             }
@@ -555,7 +574,8 @@ describe('conditional', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "body": []
             }

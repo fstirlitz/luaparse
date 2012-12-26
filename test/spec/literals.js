@@ -17,7 +17,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 1
+              "value": 1,
+              "raw": "1"
             }
           ]
         }
@@ -40,7 +41,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 0.1
+              "value": 0.1,
+              "raw": ".1"
             }
           ]
         }
@@ -63,7 +65,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 1.1
+              "value": 1.1,
+              "raw": "1.1"
             }
           ]
         }
@@ -86,7 +89,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 10.1
+              "value": 10.1,
+              "raw": "10.1"
             }
           ]
         }
@@ -112,7 +116,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 10
+              "value": 10,
+              "raw": "1e1"
             }
           ]
         }
@@ -135,7 +140,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 10
+              "value": 10,
+              "raw": "1E1"
             }
           ]
         }
@@ -158,7 +164,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 1000000000
+              "value": 1000000000,
+              "raw": "1e+9"
             }
           ]
         }
@@ -181,7 +188,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 0.1
+              "value": 0.1,
+              "raw": "1e-1"
             }
           ]
         }
@@ -207,7 +215,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 15
+              "value": 15,
+              "raw": "0xf"
             }
           ]
         }
@@ -230,7 +239,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 15
+              "value": 15,
+              "raw": "0xf."
             }
           ]
         }
@@ -253,7 +263,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 15.1875
+              "value": 15.1875,
+              "raw": "0xf.3"
             }
           ]
         }
@@ -279,7 +290,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 30
+              "value": 30,
+              "raw": "0xfp1"
             }
           ]
         }
@@ -302,7 +314,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 30
+              "value": 30,
+              "raw": "0xfp+1"
             }
           ]
         }
@@ -325,7 +338,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 7.5
+              "value": 7.5,
+              "raw": "0xfp-1"
             }
           ]
         }
@@ -348,7 +362,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": 7680
+              "value": 7680,
+              "raw": "0xFP+9"
             }
           ]
         }
@@ -374,21 +389,24 @@ describe('literals', function() {
               "operator": "..",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "BinaryExpression",
                 "operator": "..",
                 "left": {
                   "type": "Literal",
-                  "value": 3
+                  "value": 3,
+                  "raw": "3"
                 },
                 "right": {
                   "type": "UnaryExpression",
                   "operator": "-",
                   "argument": {
                     "type": "Literal",
-                    "value": 2
+                    "value": 2,
+                    "raw": "2"
                   }
                 }
               }
@@ -417,11 +435,13 @@ describe('literals', function() {
               "operator": "..",
               "left": {
                 "type": "Literal",
-                "value": 1
+                "value": 1,
+                "raw": "1"
               },
               "right": {
                 "type": "Literal",
-                "value": "bar"
+                "value": "bar",
+                "raw": "\"bar\""
               }
             }
           ]
@@ -448,7 +468,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": "bar"
+              "value": "bar",
+              "raw": "'bar'"
             }
           ]
         }
@@ -471,7 +492,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": "bar"
+              "value": "bar",
+              "raw": "\"bar\""
             }
           ]
         }
@@ -497,7 +519,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": null
+              "value": null,
+              "raw": "nil"
             }
           ]
         }
@@ -520,7 +543,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": true
+              "value": true,
+              "raw": "true"
             }
           ]
         }
@@ -543,7 +567,8 @@ describe('literals', function() {
           "init": [
             {
               "type": "Literal",
-              "value": false
+              "value": false,
+              "raw": "false"
             }
           ]
         }

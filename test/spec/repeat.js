@@ -13,7 +13,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": []
         }
@@ -29,7 +30,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": false
+            "value": false,
+            "raw": "false"
           },
           "body": []
         }
@@ -57,7 +59,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 1
+            "value": 1,
+            "raw": "1"
           },
           "body": [
             {
@@ -84,7 +87,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": [
             {
@@ -121,7 +125,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": [
             {
@@ -164,7 +169,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": [
             {
@@ -188,7 +194,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": [
             {
@@ -208,7 +215,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": [
             {
@@ -229,7 +237,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": [
             {
@@ -255,7 +264,8 @@ describe('repeat', function() {
           "type": "RepeatStatement",
           "condition": {
             "type": "Literal",
-            "value": 0
+            "value": 0,
+            "raw": "0"
           },
           "body": [
             {

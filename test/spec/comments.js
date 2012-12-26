@@ -6,7 +6,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": " comment"
+          "value": " comment",
+          "raw": "-- comment"
         }
       ]
     });
@@ -18,11 +19,13 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": " comment"
+          "value": " comment",
+          "raw": "-- comment"
         },
         {
           "type": "Comment",
-          "value": " comment"
+          "value": " comment",
+          "raw": "-- comment"
         }
       ]
     });
@@ -34,7 +37,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "coment"
+          "value": "coment",
+          "raw": "--coment"
         }
       ]
     });
@@ -50,7 +54,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": " comment"
+          "value": " comment",
+          "raw": "-- comment"
         }
       ]
     });
@@ -66,7 +71,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "comment"
+          "value": "comment",
+          "raw": "--comment"
         }
       ]
     });
@@ -78,7 +84,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "comment"
+          "value": "comment",
+          "raw": "--[[comment]]--"
         }
       ]
     });
@@ -94,7 +101,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "comment"
+          "value": "comment",
+          "raw": "--[[comment]]--"
         }
       ]
     });
@@ -110,7 +118,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "comment"
+          "value": "comment",
+          "raw": "--[=[comment]=]--"
         }
       ]
     });
@@ -126,7 +135,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "comment\n--[=[sub]=]--\n"
+          "value": "comment\n--[=[sub]=]--\n",
+          "raw": "--[===[comment\n--[=[sub]=]--\n]===]--"
         }
       ]
     });
@@ -138,7 +148,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "comment\nline two"
+          "value": "comment\nline two",
+          "raw": "--[[comment\nline two]]--"
         }
       ]
     });
@@ -150,7 +161,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "comment\nline two\n"
+          "value": "comment\nline two\n",
+          "raw": "--[[\ncomment\nline two\n]]--"
         }
       ]
     });
@@ -166,11 +178,13 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": "[=="
+          "value": "[==",
+          "raw": "--[=="
         },
         {
           "type": "Comment",
-          "value": "]]--"
+          "value": "]]--",
+          "raw": "--]]--"
         }
       ]
     });
@@ -186,7 +200,8 @@ describe('comments', function() {
               "type": "ElseifClause",
               "condition": {
                 "type": "Literal",
-                "value": true
+                "value": true,
+                "raw": "true"
               },
               "body": []
             }
@@ -196,7 +211,8 @@ describe('comments', function() {
       "comments": [
         {
           "type": "Comment",
-          "value": " comment"
+          "value": " comment",
+          "raw": "-- comment"
         }
       ]
     });

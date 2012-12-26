@@ -11,7 +11,8 @@ describe('return', function() {
           "arguments": [
             {
               "type": "Literal",
-              "value": 1
+              "value": 1,
+              "raw": "1"
             }
           ]
         }
@@ -31,7 +32,8 @@ describe('return', function() {
           "arguments": [
             {
               "type": "Literal",
-              "value": "foo"
+              "value": "foo",
+              "raw": "\"foo\""
             }
           ]
         }
@@ -51,15 +53,18 @@ describe('return', function() {
           "arguments": [
             {
               "type": "Literal",
-              "value": 1
+              "value": 1,
+              "raw": "1"
             },
             {
               "type": "Literal",
-              "value": 2
+              "value": 2,
+              "raw": "2"
             },
             {
               "type": "Literal",
-              "value": 3
+              "value": 3,
+              "raw": "3"
             }
           ]
         }
@@ -105,11 +110,13 @@ describe('return', function() {
           "arguments": [
             {
               "type": "Literal",
-              "value": 1
+              "value": 1,
+              "raw": "1"
             },
             {
               "type": "Literal",
-              "value": 2
+              "value": 2,
+              "raw": "2"
             }
           ]
         }
