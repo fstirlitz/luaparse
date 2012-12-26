@@ -1,6 +1,7 @@
 REPORTER?=spec
 DOCS=docs/*.md
 HTMLDOCS=$(DOCS:.md=.html)
+HASH=$(shell git --git-dir=luaparse/.git rev-parse HEAD | cut -c1-5)
 
 all: build
 
@@ -10,7 +11,7 @@ install:
 	@echo "Istanbul is required to generate coverage report"
 	@echo "> npm install -g istanbul"
 
-build:
+build: update-browserscope
 	@./node_modules/.bin/grunt build
 
 lint:
@@ -76,6 +77,9 @@ install-test:
 
 benchmark:
 	@./scripts/benchmark -v --samples=1000 benchmarks/lib/ParseLua.lua
+
+update-browserscope:
+	@sed -i "s/\(window\.commit = '\)[^']*\(';\)/\1$(HASH)\2/" test/benchmarks.html
 
 clean:
 	@rm -f docs/*.html docs/*.1

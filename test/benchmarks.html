@@ -5,12 +5,19 @@
   <title>Luaparse benchmarks</title>
   <link rel="stylesheet" href="lib/mocha/mocha.css">
   <style>
+    body { font-size: 14px; }
     .hidden { display: none; }
   </style>
 </head>
 <body>
 
-  <button id="run" class="hidden">Run</button>
+  <div id="loading">Loading...</div>
+  <button id="run" class="hidden">Run benchmark</button>
+
+  <p>The following table contains a column for each meaningful commit hash benchmarked. The value displayed is runs per second (hz).</p>
+  <p><strong>Note, as you're only running the current version the chart is far from comparable.</strong></p>
+
+  <iframe id="result" style="border:0; width: 100%; height: 500px;"></iframe>
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.1/require.min.js"></script>
   <script>
@@ -35,36 +42,50 @@
       , 'luaparse'
       , 'text!../benchmarks/lib/ParseLua.lua'
     ], function($, Benchmark, parser, luaminify) {
-      var suite = new Benchmark.Suite();
+      var suite = new Benchmark.Suite()
+        , $run = $('#run')
+        , $loading = $('#loading')
+        , $result = $('#result');
 
-      $('#run')
-        .removeClass('hidden')
-        .on('click', function() {
-          $(this).addClass('hidden');
-          suite.run();
-        });
+      $run.on('click', function() {
+        $loading.removeClass('hidden');
+        $loading.text('Loading, we\'re running 1000 samples so sit back and relax...');
+        $run.addClass('hidden');
+        setTimeout(function() { suite.run(); }, 100);
+      });
 
       suite.add(window.commit, function() {
         parser.parse(luaminify);
-      });
+      }, { minSamples: 1000 });
 
       suite.on('cycle', function(e) {
         setResult(window.commit, e.target.hz);
+        console.log(e.target);
       });
 
       suite.on('complete', function(e) {
         $('<script src="' + window.beaconPath + '" />')
           .appendTo($('body'));
 
-        $('#run').replaceWith('<p>' + e.target.toString() + '</p>');
+        setTimeout(function()  {
+          $run.replaceWith('<p>' + e.target.toString() + ' (' + e.target.hz + ' hz)</p>');
+          $loading.addClass('hidden');
+          updateIframe();
+        }, 3000);
       });
 
       function setResult(name, hz) {
         window._bTestResults[name] = Math.round(hz);
       }
 
-      $('<iframe src="' + window.resultPath + '" style="border:0; width: 100%; height: 500px;" />')
-        .appendTo($('body'));
+      function updateIframe() {
+        $result[0].src = window.resultPath;
+        $result[0].onload = function() {
+          $('#run').removeClass('hidden');
+          $('#loading').addClass('hidden');
+        };
+      }
+      updateIframe();
     });
   </script>
 </body>
