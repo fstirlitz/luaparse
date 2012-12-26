@@ -49,7 +49,7 @@
       });
 
       suite.on('cycle', function(e) {
-        setResult(this);
+        setResult(window.commit, e.target.hz);
       });
 
       suite.on('complete', function(e) {
@@ -59,8 +59,8 @@
         $('#run').replaceWith('<p>' + e.target.toString() + '</p>');
       });
 
-      function setResult(bench) {
-        window._bTestResults[window.commit] = Math.round(bench.hz);
+      function setResult(name, hz) {
+        window._bTestResults[name] = Math.round(hz);
       }
 
       $('<iframe src="' + window.resultPath + '" style="border:0; width: 100%; min-height: 100%;" />')
