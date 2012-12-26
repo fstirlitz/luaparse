@@ -868,7 +868,7 @@ describe('expressions', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": {
+              "arguments": {
                 "type": "TableConstructorExpression",
                 "fields": []
               }
