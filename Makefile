@@ -72,6 +72,7 @@ install-test:
 	@cp ./node_modules/mocha/mocha.js test/lib/mocha/
 	@cp ./node_modules/mocha/mocha.css test/lib/mocha/
 	@cp ./node_modules/expect.js/expect.js test/lib/
+	@cp ./node_modules/benchmark/benchmark.js test/lib/
 
 benchmark:
 	@./scripts/benchmark -v --samples=1000 benchmarks/lib/ParseLua.lua
