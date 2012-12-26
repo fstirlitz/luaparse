@@ -13,7 +13,7 @@ checkout: clean-old
 	@cp -rf luaparse/test .
 
 clean-old:
-	@rm -rf coverage examples lib
+	@rm -rf coverage examples lib benchmarks
 
 clean:
 	@rm -f *.md
