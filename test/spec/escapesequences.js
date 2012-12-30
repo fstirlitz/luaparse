@@ -221,9 +221,57 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
+  it('a = [[bar\\f\\v\\bbaz]]', function() {
+    expect(parser.parse('a = [[bar\\f\\v\\bbaz]]')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "bar\f\u000b\bbaz",
+              "raw": "[[bar\\f\\v\\bbaz]]"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
 
-  it("c = '\\'", function() {
-    expect(parser.parse("c = '\\''")).to.eql({
+  it("c = '\\\\'", function() {
+    expect(parser.parse("c = '\\\\'")).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "c"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "\\",
+              "raw": "'\\\\'"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it("c = '\\\''", function() {
+    expect(parser.parse("c = '\\\''")).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -239,6 +287,78 @@ describe('escape sequences', function() {
               "type": "Literal",
               "value": "'",
               "raw": "'\\''"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it("c = '\\123", function() {
+    expect(parser.parse("c = '\\123'")).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "c"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "\\123",
+              "raw": "'\\123'"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it("c = '\\x23", function() {
+    expect(parser.parse("c = '\\x23'")).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "c"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "\\x23",
+              "raw": "'\\x23'"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it("c = '\\xx", function() {
+    expect(parser.parse("c = '\\xx'")).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "c"
+            }
+          ],
+          "init": [
+            {
+              "type": "Literal",
+              "value": "\\xx",
+              "raw": "'\\xx'"
             }
           ]
         }
