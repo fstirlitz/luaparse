@@ -54,16 +54,23 @@ module.exports = function (grunt) {
         'scripts/pre-commit',
         'bin/*'
       ],
-      test: ['test/spec/**/*.js']
+      test: ['test/spec/**/*.js'],
+      html: ['examples/**/*.html', 'docs/**/*.html']
     },
     jshint: {
       options: readOptionalJSON('.jshintrc'),
       test: {
         options: readOptionalJSON('test/spec/.jshintrc')
+      },
+      html: {
+        options: { browser: true, laxcomma: true }
       }
     }
   });
 
+  grunt.loadNpmTasks('grunt-lint-inline');
+  grunt.renameTask('lint', 'grunt-lint');
+  grunt.renameTask('lint-inline', 'lint');
   grunt.registerTask('default', 'concat min lint');
 
   // Override what yeoman provides
