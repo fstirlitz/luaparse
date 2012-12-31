@@ -32,6 +32,9 @@ install-test:
 update-browserscope:
 	@sed -i "s/\(window\.commit = '\)[^']*\(';\)/\1$(HASH)\2/" test/benchmarks.html
 
+version-bump:
+	@sed -i 's/\("version": "\)[^"]*\("\)/\1$(VERSION)\2/' package.json component.json
+
 # Tests
 # -----
 
