@@ -1,4 +1,4 @@
-
+-- LuaMinify (Mark Langen) https://github.com/stravant/LuaMinify
 --
 -- ParseLua.lua
 --

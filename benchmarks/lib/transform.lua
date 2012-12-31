@@ -1,3 +1,6 @@
+-- MoonScript http://moonscript.org
+-- https://github.com/leafo/moonscript
+
 local types = require("moonscript.types")
 local util = require("moonscript.util")
 local data = require("moonscript.data")
