@@ -1706,8 +1706,54 @@
   ],
   &quot;comments&quot;: []
 });</code></pre></dd>
-        <dt>c = '\'</dt>
-        <dd><pre><code>expect(parser.parse(&quot;c = '\\''&quot;)).to.eql({
+        <dt>a = [[bar\f\v\bbaz]]</dt>
+        <dd><pre><code>expect(parser.parse('a = [[bar\\f\\v\\bbaz]]')).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot;,
+          &quot;raw&quot;: &quot;[[bar\\f\\v\\bbaz]]&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>c = '\\'</dt>
+        <dd><pre><code>expect(parser.parse(&quot;c = '\\\\'&quot;)).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;c&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;\\&quot;,
+          &quot;raw&quot;: &quot;'\\\\'&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>c = '\''</dt>
+        <dd><pre><code>expect(parser.parse(&quot;c = '\\\''&quot;)).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [
     {
@@ -1723,6 +1769,75 @@
           &quot;type&quot;: &quot;Literal&quot;,
           &quot;value&quot;: &quot;'&quot;,
           &quot;raw&quot;: &quot;'\\''&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>c = '\123</dt>
+        <dd><pre><code>expect(parser.parse(&quot;c = '\\123'&quot;)).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;c&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;\\123&quot;,
+          &quot;raw&quot;: &quot;'\\123'&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>c = '\x23</dt>
+        <dd><pre><code>expect(parser.parse(&quot;c = '\\x23'&quot;)).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;c&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;\\x23&quot;,
+          &quot;raw&quot;: &quot;'\\x23'&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>c = '\xx</dt>
+        <dd><pre><code>expect(parser.parse(&quot;c = '\\xx'&quot;)).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;c&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;Literal&quot;,
+          &quot;value&quot;: &quot;\\xx&quot;,
+          &quot;raw&quot;: &quot;'\\xx'&quot;
         }
       ]
     }
@@ -10730,6 +10845,8 @@ expect(test).to.eql(expected);</code></pre></dd>
   ],
   &quot;comments&quot;: []
 });</code></pre></dd>
+        <dt>nil                                     -- FAIL</dt>
+        <dd><pre><code>expect(parser.parse('nil', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected symbol 'nil' near '&lt;eof&gt;'&quot;);</code></pre></dd>
       </dl>
     </section>
     <section class="suite">

@@ -46,4 +46,7 @@ describe('statements', function() {
       "comments": []
     });
   });
+  it('nil                                     -- FAIL', function() {
+    expect(parser.parse('nil', {wait:true}).end).to.throwError("[1:0] Unexpected symbol 'nil' near '<eof>'");
+  });
 });

@@ -27,7 +27,7 @@
 bitwise operations.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="keyword">var</span> EOF = <span class="number">1</span>, StringLiteral = <span class="number">2</span>, Keyword = <span class="number">4</span>, Identifier = <span class="number">8</span>
     , NumericLiteral = <span class="number">16</span>, Punctuator = <span class="number">32</span>, BooleanLiteral = <span class="number">64</span>
-    , NilLiteral = <span class="number">128</span>, DotsLiteral = <span class="number">256</span>;
+    , NilLiteral = <span class="number">128</span>;
 
 </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>As this parser is a bit different from luas own, the error messages
 will be different in some situations.</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -406,8 +406,8 @@ unexpected(token);
         <span class="keyword">case</span> NumericLiteral:  type = <span class="string">'number'</span>;      <span class="keyword">break</span>;
         <span class="keyword">case</span> Punctuator:      type = <span class="string">'symbol'</span>;      <span class="keyword">break</span>;
         <span class="keyword">case</span> BooleanLiteral:  type = <span class="string">'boolean'</span>;     <span class="keyword">break</span>;
-        <span class="keyword">case</span> NilLiteral:      type = <span class="string">'nil'</span>;         <span class="keyword">break</span>;
-        <span class="keyword">case</span> DotsLiteral:     type = <span class="string">'\'...\''</span>;     <span class="keyword">break</span>;
+        <span class="keyword">case</span> NilLiteral:
+          <span class="keyword">return</span> raise(tokenFound, errors.unexpected, <span class="string">'symbol'</span>, <span class="string">'nil'</span>, near);
       }
       <span class="keyword">return</span> raise(tokenFound, errors.unexpected, type, tokenFound.value, near);
     }
@@ -462,7 +462,7 @@ index of the token.</p>
 
     <span class="keyword">switch</span> (char) {
       <span class="keyword">case</span> <span class="number">39</span>: <span class="keyword">case</span> <span class="number">34</span>: <span class="comment">// '"</span>
-        <span class="keyword">return</span> scanStringLiteral(<span class="literal">false</span>);
+        <span class="keyword">return</span> scanStringLiteral();
 
 </pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>0-9</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">case</span> <span class="number">48</span>: <span class="keyword">case</span> <span class="number">49</span>: <span class="keyword">case</span> <span class="number">50</span>: <span class="keyword">case</span> <span class="number">51</span>: <span class="keyword">case</span> <span class="number">52</span>: <span class="keyword">case</span> <span class="number">53</span>:
       <span class="keyword">case</span> <span class="number">54</span>: <span class="keyword">case</span> <span class="number">55</span>: <span class="keyword">case</span> <span class="number">56</span>: <span class="keyword">case</span> <span class="number">57</span>:
@@ -497,7 +497,7 @@ index of the token.</p>
         <span class="keyword">return</span> scanPunctuator(<span class="string">':'</span>);
 
       <span class="keyword">case</span> <span class="number">91</span>: <span class="comment">// [</span>
-</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Check for a multiline string, they begin with [= or [[</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (<span class="number">91</span> === next || <span class="number">61</span> === next) <span class="keyword">return</span> scanStringLiteral(<span class="literal">true</span>);
+</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Check for a multiline string, they begin with [= or [[</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (<span class="number">91</span> === next || <span class="number">61</span> === next) <span class="keyword">return</span> scanLongStringLiteral();
         <span class="keyword">return</span> scanPunctuator(<span class="string">'['</span>);
 
 </pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <ul>
@@ -583,65 +583,35 @@ validated so we simply return it as is.</p>             </td>             <td cl
     <span class="keyword">return</span> finishToken(Punctuator, value);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Find the string literal by matching the delimiter marks used.
-If we're looking for a multiline string it has to be mentioned
-in the functioncall with a boolean parameter.</p>
-
-<p>Characters such as \t \n can be escaped with a backslash. If encountered
-the following character in the stream will be read without validation.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">scanStringLiteral</span><span class="params">(isLong)</span> {</span>
+</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Find the string literal by matching the delimiter marks used.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">scanStringLiteral</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> delimiter = input.charAt(index++)
       , string = <span class="string">''</span>
       , char;
 
-    <span class="keyword">if</span> (isLong) {
-      string = readLongString();
-</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Fail if it's not a multiline literal.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="literal">false</span> === string) raise(token, errors.expected, <span class="string">'['</span>, token.value);
+    <span class="keyword">while</span> (index &lt; length) {
+      char = input.charAt(index++);
+      <span class="keyword">if</span> (delimiter === char) <span class="keyword">break</span>;
+      <span class="keyword">if</span> (<span class="string">'\\'</span> === char) string += readEscapeSequence();
+</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>EOF or <code>\n</code> terminates a string literal. If we haven't found the
+ending delimiter by now, raise an exception.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">else</span> <span class="keyword">if</span> (index &gt;= length || isLineTerminator(char.charCodeAt(<span class="number">0</span>)))
+        raise({}, errors.unfinishedString, string + char);
+      <span class="keyword">else</span>
+        string += char;
     }
-    <span class="keyword">else</span> {
-      <span class="keyword">while</span> (index &lt; length) {
-        char = input.charAt(index++);
-        <span class="keyword">if</span> (delimiter === char) <span class="keyword">break</span>;
-        <span class="keyword">if</span> (<span class="string">'\\'</span> === char) {
-          <span class="keyword">switch</span> (input.charAt(index)) {
-</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Lua allow the following escape sequences.
-We don't escape the bell sequence.</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="keyword">case</span> <span class="string">'n'</span>: string += <span class="string">'\n'</span>; index++; <span class="keyword">break</span>;
-            <span class="keyword">case</span> <span class="string">'r'</span>: string += <span class="string">'\r'</span>; index++; <span class="keyword">break</span>;
-            <span class="keyword">case</span> <span class="string">'t'</span>: string += <span class="string">'\t'</span>; index++; <span class="keyword">break</span>;
-            <span class="keyword">case</span> <span class="string">'v'</span>: string += <span class="string">'\v'</span>; index++; <span class="keyword">break</span>;
-            <span class="keyword">case</span> <span class="string">'b'</span>: string += <span class="string">'\b'</span>; index++; <span class="keyword">break</span>;
-            <span class="keyword">case</span> <span class="string">'f'</span>: string += <span class="string">'\f'</span>; index++; <span class="keyword">break</span>;
-</pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>Skips the following span of white-space.</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="keyword">case</span> <span class="string">'z'</span>: index++; skipWhiteSpace(); <span class="keyword">break</span>;
-</pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>Byte representation should for now be returned as is.</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="keyword">case</span> <span class="string">'x'</span>:
-</pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>\xXX, where XX is a sequence of exactly two hexadecimal digits</p>             </td>             <td class="code">               <div class="highlight"><pre>              <span class="keyword">if</span> (isHexDigit(input.charCodeAt(index + <span class="number">1</span>)) &amp;&amp;
-                  isHexDigit(input.charCodeAt(index + <span class="number">2</span>))) {
-                string += <span class="string">'\\x'</span> + input.charAt(index + <span class="number">1</span>) + input.charAt(index + <span class="number">2</span>);
-                index += <span class="number">3</span>;
-                <span class="keyword">break</span>;
-              }
-              <span class="comment">/* falls through */</span>
-            <span class="keyword">default</span>:
-</pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>\ddd, where ddd is a sequence of up to three decimal digits.</p>             </td>             <td class="code">               <div class="highlight"><pre>              <span class="keyword">if</span> (isDecDigit(input.charCodeAt(index))) {
-                <span class="keyword">var</span> start = index;
-                <span class="keyword">while</span> (isDecDigit(input.charCodeAt(++index)));
-                string += <span class="string">'\\'</span> + input.slice(start, index);
-                <span class="keyword">break</span>;
-              }
-</pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Simply remove the \ as it's escaping something.</p>             </td>             <td class="code">               <div class="highlight"><pre>              string += input.charAt(index++);
-          }
-        }
-</pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>EOF or <code>\n</code> terminates a string literal. If we haven't found the
-ending delimiter by now, raise an exception.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">else</span> <span class="keyword">if</span> (index &gt;= length || isLineTerminator(char.charCodeAt(<span class="number">0</span>)))
-          raise({}, errors.unfinishedString, string + char);
-        <span class="keyword">else</span>
-          string += char;
-      }
-    }
-
     <span class="keyword">return</span> finishToken(StringLiteral, string);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>Numeric literals will be returned as floating-point numbers instead of
+</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Expect a multiline string literal and return it as a regular string
+literal, if it doesn't validate into a valid multiline string, throw an
+exception.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">scanLongStringLiteral</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> string = readLongString();
+</pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>Fail if it's not a multiline literal.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="literal">false</span> === string) raise(token, errors.expected, <span class="string">'['</span>, token.value);
+    <span class="keyword">return</span> finishToken(StringLiteral, string);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>Numeric literals will be returned as floating-point numbers instead of
 strings. The raw value will still be attached to the token in a separate
 property.</p>
 
@@ -657,7 +627,37 @@ property.</p>
     <span class="keyword">return</span> finishToken(NumericLiteral, value);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <p>Lua hexadecimals have an optional fraction part and an optional binary
+</pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Translate escape sequences to the actual characters.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="function"><span class="keyword">function</span> <span class="title">readEscapeSequence</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> start;
+    <span class="keyword">switch</span> (input.charAt(index)) {
+</pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>Lua allow the following escape sequences.
+We don't escape the bell sequence.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">case</span> <span class="string">'n'</span>: index++; <span class="keyword">return</span> <span class="string">'\n'</span>;
+      <span class="keyword">case</span> <span class="string">'r'</span>: index++; <span class="keyword">return</span> <span class="string">'\r'</span>;
+      <span class="keyword">case</span> <span class="string">'t'</span>: index++; <span class="keyword">return</span> <span class="string">'\t'</span>;
+      <span class="keyword">case</span> <span class="string">'v'</span>: index++; <span class="keyword">return</span> <span class="string">'\v'</span>;
+      <span class="keyword">case</span> <span class="string">'b'</span>: index++; <span class="keyword">return</span> <span class="string">'\b'</span>;
+      <span class="keyword">case</span> <span class="string">'f'</span>: index++; <span class="keyword">return</span> <span class="string">'\f'</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Skips the following span of white-space.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">case</span> <span class="string">'z'</span>: index++; skipWhiteSpace(); <span class="keyword">return</span> <span class="string">''</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>Byte representation should for now be returned as is.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">case</span> <span class="string">'x'</span>:
+</pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>\xXX, where XX is a sequence of exactly two hexadecimal digits</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (isHexDigit(input.charCodeAt(index + <span class="number">1</span>)) &amp;&amp;
+            isHexDigit(input.charCodeAt(index + <span class="number">2</span>))) {
+          start = index;
+          index += <span class="number">3</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <p>Return it as is, without translating the byte.</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="keyword">return</span> <span class="string">'\\'</span> + input.slice(start, index);
+        }
+        <span class="keyword">return</span> <span class="string">'\\'</span> + input.charAt(index++);
+      <span class="keyword">default</span>:
+</pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>\ddd, where ddd is a sequence of up to three decimal digits.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (isDecDigit(input.charCodeAt(index))) {
+          start = index;
+          <span class="keyword">while</span> (isDecDigit(input.charCodeAt(++index)));
+          <span class="keyword">return</span> <span class="string">'\\'</span> + input.slice(start, index);
+        }
+</pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Simply return the \ as is, it's not escaping any sequence.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">return</span> input.charAt(index++);
+    }
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>Lua hexadecimals have an optional fraction part and an optional binary
 exoponent part. These are not included in JavaScript so we will compute all
 three parts separately and then sum them up at the end of the function.</p>
 
@@ -674,58 +674,58 @@ Number := ( Digit + Fraction ) * BinaryExp
 
     index += <span class="number">2</span>; <span class="comment">// Skip 0x part</span>
 
-</pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>A minimum of one hex digit is required.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (!isHexDigit(input.charCodeAt(index)))
+</pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>A minimum of one hex digit is required.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (!isHexDigit(input.charCodeAt(index)))
       raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
     <span class="keyword">while</span> (isHexDigit(input.charCodeAt(index)))
       digit += input.charAt(index++);
 
-</pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Convert the hexadecimal digit to base 10.</p>             </td>             <td class="code">               <div class="highlight"><pre>    digit = parseInt(digit, <span class="number">16</span>);
+</pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>Convert the hexadecimal digit to base 10.</p>             </td>             <td class="code">               <div class="highlight"><pre>    digit = parseInt(digit, <span class="number">16</span>);
 
-</pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>Fraction part i optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'.'</span> === input.charAt(index)) {
+</pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <p>Fraction part i optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'.'</span> === input.charAt(index)) {
       fraction = <span class="string">''</span>;
       index++;
 
       <span class="keyword">while</span> (isHexDigit(input.charCodeAt(index)))
         fraction += input.charAt(index++);
 
-</pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>Empty fraction parts should default to 0.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">''</span> === fraction) fraction = <span class="number">0</span>;
-</pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>Convert the fraction part into 0.x so we can use summation.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">else</span> fraction = parseInt(fraction, <span class="number">16</span>) / Math.pow(<span class="number">16</span>, fraction.length);
+</pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>Empty fraction parts should default to 0.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">''</span> === fraction) fraction = <span class="number">0</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>Convert the fraction part into 0.x so we can use summation.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">else</span> fraction = parseInt(fraction, <span class="number">16</span>) / Math.pow(<span class="number">16</span>, fraction.length);
     }
 
-</pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <p>Binary exponents are optional</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (~<span class="string">'pP'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
+</pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Binary exponents are optional</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (~<span class="string">'pP'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
       binaryExponent = <span class="string">''</span>;
       index++;
 
-</pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>Sign part is optional and defaults to 1 (positive).</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
+</pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <p>Sign part is optional and defaults to 1 (positive).</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
         binarySign = (<span class="string">'+'</span> === input.charAt(index++)) ? <span class="number">1</span> : -<span class="number">1</span>;
       }
 
-</pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>The binary exponent sign requires a decimal digit.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
+</pre></div>             </td>           </tr>                               <tr id="section-50">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-50">&#182;</a>               </div>               <p>The binary exponent sign requires a decimal digit.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
       <span class="keyword">while</span> (isDecDigit(input.charCodeAt(index)))
         binaryExponent += input.charAt(index++);
 
-</pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Calculate the binary exponent of the number.</p>             </td>             <td class="code">               <div class="highlight"><pre>      binaryExponent = Math.pow(<span class="number">2</span>, binaryExponent * binarySign);
+</pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>Calculate the binary exponent of the number.</p>             </td>             <td class="code">               <div class="highlight"><pre>      binaryExponent = Math.pow(<span class="number">2</span>, binaryExponent * binarySign);
     }
 
     <span class="keyword">return</span> (digit + fraction) * binaryExponent;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <p>Decimal numbers are exactly the same in Lua and in JavaScript, because of
+</pre></div>             </td>           </tr>                               <tr id="section-52">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-52">&#182;</a>               </div>               <p>Decimal numbers are exactly the same in Lua and in JavaScript, because of
 this we check where the token ends and then parse it with native
 functions.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">readDecLiteral</span><span class="params">()</span> {</span>
     <span class="keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
-</pre></div>             </td>           </tr>                               <tr id="section-50">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-50">&#182;</a>               </div>               <p>Fraction part is optional</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'.'</span> === input.charAt(index)) {
+</pre></div>             </td>           </tr>                               <tr id="section-53">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-53">&#182;</a>               </div>               <p>Fraction part is optional</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'.'</span> === input.charAt(index)) {
       index++;
-</pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>Fraction part defaults to 0</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
+</pre></div>             </td>           </tr>                               <tr id="section-54">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-54">&#182;</a>               </div>               <p>Fraction part defaults to 0</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
     }
-</pre></div>             </td>           </tr>                               <tr id="section-52">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-52">&#182;</a>               </div>               <p>Exponent part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (~<span class="string">'eE'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
+</pre></div>             </td>           </tr>                               <tr id="section-55">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-55">&#182;</a>               </div>               <p>Exponent part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (~<span class="string">'eE'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
       index++;
-</pre></div>             </td>           </tr>                               <tr id="section-53">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-53">&#182;</a>               </div>               <p>Sign part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) index++;
-</pre></div>             </td>           </tr>                               <tr id="section-54">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-54">&#182;</a>               </div>               <p>An exponent is required to contain at least one decimal digit.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
+</pre></div>             </td>           </tr>                               <tr id="section-56">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-56">&#182;</a>               </div>               <p>Sign part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) index++;
+</pre></div>             </td>           </tr>                               <tr id="section-57">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-57">&#182;</a>               </div>               <p>An exponent is required to contain at least one decimal digit.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
       <span class="keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
@@ -734,7 +734,7 @@ functions.</p>             </td>             <td class="code">               <di
     <span class="keyword">return</span> parseFloat(input.slice(tokenStart, index));
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-55">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-55">&#182;</a>               </div>               <p>Comments begin with -- after which it will be decided if they are multiline
+</pre></div>             </td>           </tr>                               <tr id="section-58">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-58">&#182;</a>               </div>               <p>Comments begin with -- after which it will be decided if they are multiline
 comments or not.</p>
 
 <p>The multiline functionality works the exact same way as with string
@@ -748,15 +748,14 @@ literals so we reuse the functionality.</p>             </td>             <td cl
       , isLong = <span class="literal">false</span>;
 
     <span class="keyword">if</span> (<span class="string">'['</span> === char) {
-      index++;
       content = readLongString();
-</pre></div>             </td>           </tr>                               <tr id="section-56">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-56">&#182;</a>               </div>               <p>This wasn't a multiline comment after all.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="literal">false</span> === content) content = char;
+</pre></div>             </td>           </tr>                               <tr id="section-59">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-59">&#182;</a>               </div>               <p>This wasn't a multiline comment after all.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="literal">false</span> === content) content = char;
       <span class="keyword">else</span> {
         isLong = <span class="literal">true</span>;
         index += <span class="number">2</span>; <span class="comment">// --</span>
       }
     }
-</pre></div>             </td>           </tr>                               <tr id="section-57">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-57">&#182;</a>               </div>               <p>Scan until next line as long as it's not a multiline comment.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">while</span> (!isLong &amp;&amp; index &lt; length) {
+</pre></div>             </td>           </tr>                               <tr id="section-60">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-60">&#182;</a>               </div>               <p>Scan until next line as long as it's not a multiline comment.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">while</span> (!isLong &amp;&amp; index &lt; length) {
       <span class="keyword">if</span> (isLineTerminator(input.charCodeAt(index))) <span class="keyword">break</span>;
       content += input.charAt(index++);
     }
@@ -770,20 +769,22 @@ literals so we reuse the functionality.</p>             </td>             <td cl
     }
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-58">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-58">&#182;</a>               </div>               <p>Read a multiline string by calculating the depth of <code>=</code> characters and
+</pre></div>             </td>           </tr>                               <tr id="section-61">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-61">&#182;</a>               </div>               <p>Read a multiline string by calculating the depth of <code>=</code> characters and
 then appending until an equal depth is found.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">readLongString</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> level = <span class="number">0</span>
       , content = <span class="string">''</span>
       , char
-      , commentTerminator = <span class="literal">false</span>;
+      , terminator = <span class="literal">false</span>;
 
-</pre></div>             </td>           </tr>                               <tr id="section-59">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-59">&#182;</a>               </div>               <p>Calculate the depth of the comment.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">while</span> (<span class="string">'='</span> === input.charAt(index + level)) level++;
-</pre></div>             </td>           </tr>                               <tr id="section-60">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-60">&#182;</a>               </div>               <p>Exit, this is not a long string afterall.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'['</span> !== input.charAt(index + level)) <span class="keyword">return</span> <span class="literal">false</span>;
+    index++; <span class="comment">// [</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-62">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-62">&#182;</a>               </div>               <p>Calculate the depth of the comment.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">while</span> (<span class="string">'='</span> === input.charAt(index + level)) level++;
+</pre></div>             </td>           </tr>                               <tr id="section-63">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-63">&#182;</a>               </div>               <p>Exit, this is not a long string afterall.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'['</span> !== input.charAt(index + level)) <span class="keyword">return</span> <span class="literal">false</span>;
 
     index += level + <span class="number">1</span>;
 
-</pre></div>             </td>           </tr>                               <tr id="section-61">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-61">&#182;</a>               </div>               <p>If the first character is a newline, ignore it and begin on next line.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isLineTerminator(input.charCodeAt(index))) {
+</pre></div>             </td>           </tr>                               <tr id="section-64">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-64">&#182;</a>               </div>               <p>If the first character is a newline, ignore it and begin on next line.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isLineTerminator(input.charCodeAt(index))) {
       line++;
       lineStart = index++;
     }
@@ -791,32 +792,34 @@ then appending until an equal depth is found.</p>             </td>             
     <span class="keyword">while</span> (index &lt; length) {
       char = input.charAt(index++);
 
-</pre></div>             </td>           </tr>                               <tr id="section-62">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-62">&#182;</a>               </div>               <p>We have to keep track of newlines as <code>skipWhiteSpace()</code> does not get to
-scan this part.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (isLineTerminator(char)) {
+</pre></div>             </td>           </tr>                               <tr id="section-65">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-65">&#182;</a>               </div>               <p>We have to keep track of newlines as <code>skipWhiteSpace()</code> does not get to
+scan this part.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (isLineTerminator(char.charCodeAt(<span class="number">0</span>))) {
         line++;
         lineStart = index;
       }
 
-</pre></div>             </td>           </tr>                               <tr id="section-63">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-63">&#182;</a>               </div>               <p>Once the delimiter is found, iterate through the depth count and see if
+</pre></div>             </td>           </tr>                               <tr id="section-66">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-66">&#182;</a>               </div>               <p>Once the delimiter is found, iterate through the depth count and see if
 it matches.</p>             </td>             <td class="code">               <div class="highlight"><pre>
       <span class="keyword">if</span> (<span class="string">']'</span> === char) {
-        commentTerminator = <span class="literal">true</span>;
+        terminator = <span class="literal">true</span>;
         <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; level; i++) {
-          <span class="keyword">if</span> (<span class="string">'='</span> !== input.charAt(index + i)) commentTerminator = <span class="literal">false</span>;
+          <span class="keyword">if</span> (<span class="string">'='</span> !== input.charAt(index + i)) terminator = <span class="literal">false</span>;
         }
-        <span class="keyword">if</span> (<span class="string">']'</span> !== input.charAt(index + level)) commentTerminator = <span class="literal">false</span>;
+        <span class="keyword">if</span> (<span class="string">']'</span> !== input.charAt(index + level)) terminator = <span class="literal">false</span>;
       }
 
-</pre></div>             </td>           </tr>                               <tr id="section-64">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-64">&#182;</a>               </div>               <p>We reached the end of the multiline string. Get out now.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (commentTerminator) <span class="keyword">break</span>;
-      content += char;
+</pre></div>             </td>           </tr>                               <tr id="section-67">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-67">&#182;</a>               </div>               <p>We reached the end of the multiline string. Get out now.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (terminator) <span class="keyword">break</span>;
+
+      <span class="keyword">if</span> (<span class="string">'\\'</span> === char) content += readEscapeSequence();
+      <span class="keyword">else</span> content += char;
     }
     index += level + <span class="number">1</span>;
 
     <span class="keyword">return</span> content;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-65">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-65">&#182;</a>               </div>               <h2>Lex functions and helpers.</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-66">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-66">&#182;</a>               </div>               <p>Read the next token.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-68">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-68">&#182;</a>               </div>               <h2>Lex functions and helpers.</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-69">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-69">&#182;</a>               </div>               <p>Read the next token.</p>
 
 <p>This is actually done by setting the current token to the lookahead and
 reading in a new lookahead token.</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -825,7 +828,7 @@ reading in a new lookahead token.</p>             </td>             <td class="c
     lookahead = readToken();
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-67">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-67">&#182;</a>               </div>               <p>Consume a token if its value matches. Once consumed or not, return the
+</pre></div>             </td>           </tr>                               <tr id="section-70">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-70">&#182;</a>               </div>               <p>Consume a token if its value matches. Once consumed or not, return the
 success of the operation.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">consume</span><span class="params">(value)</span> {</span>
     <span class="keyword">if</span> (value === token.value) {
@@ -835,7 +838,7 @@ success of the operation.</p>             </td>             <td class="code">   
     <span class="keyword">return</span> <span class="literal">false</span>;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-68">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-68">&#182;</a>               </div>               <p>Check if the given expression exists and raise an exception if not.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-71">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-71">&#182;</a>               </div>               <p>Check if the given expression exists and raise an exception if not.</p>
 
 <p>As expressions can return null due to the design of the parser, we often
 need this strict expression check as well.</p>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -844,13 +847,13 @@ need this strict expression check as well.</p>             </td>             <td
     <span class="keyword">else</span> <span class="keyword">return</span> expression;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-69">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-69">&#182;</a>               </div>               <p>Expect the next token value to match. If not, throw an exception.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-72">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-72">&#182;</a>               </div>               <p>Expect the next token value to match. If not, throw an exception.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">expect</span><span class="params">(value)</span> {</span>
     <span class="keyword">if</span> (value === token.value) next();
     <span class="keyword">else</span> raise(token, errors.expected, value, token.value);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-70">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-70">&#182;</a>               </div>               <h3>Validation functions</h3>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-73">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-73">&#182;</a>               </div>               <h3>Validation functions</h3>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">isWhiteSpace</span><span class="params">(char)</span> {</span>
     <span class="keyword">return</span> <span class="number">9</span> === char || <span class="number">32</span> === char || <span class="number">0xB</span> === char || <span class="number">0xC</span> === char;
   }
@@ -867,7 +870,7 @@ need this strict expression check as well.</p>             </td>             <td
     <span class="keyword">return</span> (char &gt;= <span class="number">48</span> &amp;&amp; char &lt;= <span class="number">57</span>) || (char &gt;= <span class="number">97</span> &amp;&amp; char &lt;= <span class="number">102</span>) || (char &gt;= <span class="number">65</span> &amp;&amp; char &lt;= <span class="number">70</span>);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-71">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-71">&#182;</a>               </div>               <p>From <a href="http://www.lua.org/manual/5.2/manual.html#8.1">Lua 5.2</a> onwards
+</pre></div>             </td>           </tr>                               <tr id="section-74">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-74">&#182;</a>               </div>               <p>From <a href="http://www.lua.org/manual/5.2/manual.html#8.1">Lua 5.2</a> onwards
 identifiers cannot use locale-dependet letters.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">isIdentifierStart</span><span class="params">(char)</span> {</span>
     <span class="keyword">return</span> (char &gt;= <span class="number">65</span> &amp;&amp; char &lt;= <span class="number">90</span>) || (char &gt;= <span class="number">97</span> &amp;&amp; char &lt;= <span class="number">122</span>) || <span class="number">95</span> === char;
@@ -877,7 +880,7 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
     <span class="keyword">return</span> (char &gt;= <span class="number">65</span> &amp;&amp; char &lt;= <span class="number">90</span>) || (char &gt;= <span class="number">97</span> &amp;&amp; char &lt;= <span class="number">122</span>) || <span class="number">95</span> === char || (char &gt;= <span class="number">48</span> &amp;&amp; char &lt;= <span class="number">57</span>);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-72">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-72">&#182;</a>               </div>               <p><a href="http://www.lua.org/manual/5.2/manual.html#3.1">3.1 Lexical Conventions</a></p>
+</pre></div>             </td>           </tr>                               <tr id="section-75">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-75">&#182;</a>               </div>               <p><a href="http://www.lua.org/manual/5.2/manual.html#3.1">3.1 Lexical Conventions</a></p>
 
 <p><code>true</code>, <code>false</code> and <code>nil</code> will not be considered keywords but literals.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">isKeyword</span><span class="params">(id)</span> {</span>
@@ -904,7 +907,7 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
     <span class="keyword">return</span> <span class="literal">false</span>;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-73">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-73">&#182;</a>               </div>               <p>@TODO this needs to be rethought.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">isCallExpression</span><span class="params">(expression)</span> {</span>
+</pre></div>             </td>           </tr>                               <tr id="section-76">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-76">&#182;</a>               </div>               <p>@TODO this needs to be rethought.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">isCallExpression</span><span class="params">(expression)</span> {</span>
     <span class="keyword">switch</span> (expression.type) {
       <span class="keyword">case</span> <span class="string">'CallExpression'</span>:
       <span class="keyword">case</span> <span class="string">'TableCallExpression'</span>:
@@ -914,7 +917,7 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
     <span class="keyword">return</span> <span class="literal">false</span>;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-74">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-74">&#182;</a>               </div>               <p>Check if the token syntactically closes a block.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-77">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-77">&#182;</a>               </div>               <p>Check if the token syntactically closes a block.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">isBlockFollow</span><span class="params">(token)</span> {</span>
     <span class="keyword">if</span> (EOF === token.type) <span class="keyword">return</span> <span class="literal">true</span>;
     <span class="keyword">if</span> (Keyword !== token.type) <span class="keyword">return</span> <span class="literal">false</span>;
@@ -927,8 +930,8 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
     }
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-75">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-75">&#182;</a>               </div>               <h2>Parse functions</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-76">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-76">&#182;</a>               </div>               <p>Chunk is the main program object. Syntactically it's the same as a block.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-78">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-78">&#182;</a>               </div>               <h2>Parse functions</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-79">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-79">&#182;</a>               </div>               <p>Chunk is the main program object. Syntactically it's the same as a block.</p>
 
 <pre><code>chunk ::= block
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -939,7 +942,7 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
     <span class="keyword">return</span> ast.chunk(body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-77">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-77">&#182;</a>               </div>               <p>A block contains a list of statements with an optional return statement
+</pre></div>             </td>           </tr>                               <tr id="section-80">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-80">&#182;</a>               </div>               <p>A block contains a list of statements with an optional return statement
 as its last statement.</p>
 
 <pre><code>block ::= {stat} [retstat]
@@ -949,17 +952,17 @@ as its last statement.</p>
       , statement;
 
     <span class="keyword">while</span> (!isBlockFollow(token)) {
-</pre></div>             </td>           </tr>                               <tr id="section-78">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-78">&#182;</a>               </div>               <p>Return has to be the last statement in a block.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'return'</span> === token.value) {
+</pre></div>             </td>           </tr>                               <tr id="section-81">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-81">&#182;</a>               </div>               <p>Return has to be the last statement in a block.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'return'</span> === token.value) {
         block.push(parseStatement());
         <span class="keyword">break</span>;
       }
       statement = parseStatement();
-</pre></div>             </td>           </tr>                               <tr id="section-79">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-79">&#182;</a>               </div>               <p>Statements are only added if they are returned, this allows us to
+</pre></div>             </td>           </tr>                               <tr id="section-82">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-82">&#182;</a>               </div>               <p>Statements are only added if they are returned, this allows us to
 ignore some statements, such as EmptyStatement.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (statement) block.push(statement);
     }
-</pre></div>             </td>           </tr>                               <tr id="section-80">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-80">&#182;</a>               </div>               <p>Doesn't really need an ast node</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">return</span> block;
+</pre></div>             </td>           </tr>                               <tr id="section-83">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-83">&#182;</a>               </div>               <p>Doesn't really need an ast node</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">return</span> block;
   }
-</pre></div>             </td>           </tr>                               <tr id="section-81">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-81">&#182;</a>               </div>               <p>There are two types of statements, simple and compound.
+</pre></div>             </td>           </tr>                               <tr id="section-84">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-84">&#182;</a>               </div>               <p>There are two types of statements, simple and compound.
 Statements are executed solely for their side effects.</p>
 
 <pre><code>statement ::= break | goto | do | while | repeat | return
@@ -988,14 +991,14 @@ Statements are executed solely for their side effects.</p>
       <span class="keyword">if</span> (consume(<span class="string">'::'</span>)) <span class="keyword">return</span> parseLabelStatement();
     }
 
-</pre></div>             </td>           </tr>                               <tr id="section-82">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-82">&#182;</a>               </div>               <p>Keep a reference to the previous token for better error messages in case
+</pre></div>             </td>           </tr>                               <tr id="section-85">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-85">&#182;</a>               </div>               <p>Keep a reference to the previous token for better error messages in case
 of invalid statement
 @TODO this could use some clean up.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> previous = token;
     <span class="keyword">var</span> expression = parsePrefixExpression();
 
     <span class="keyword">if</span> (expression) {
       <span class="keyword">var</span> exp;
-</pre></div>             </td>           </tr>                               <tr id="section-83">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-83">&#182;</a>               </div>               <p>AssignmentStatement</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">',='</span>.indexOf(token.value)) {
+</pre></div>             </td>           </tr>                               <tr id="section-86">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-86">&#182;</a>               </div>               <p>AssignmentStatement</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">',='</span>.indexOf(token.value)) {
         <span class="keyword">var</span> variables = [expression];
         <span class="keyword">var</span> init = [];
         <span class="keyword">while</span> (consume(<span class="string">','</span>)) {
@@ -1010,23 +1013,23 @@ of invalid statement
         <span class="keyword">return</span> ast.assignmentStatement(variables, init);
       }
 
-</pre></div>             </td>           </tr>                               <tr id="section-84">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-84">&#182;</a>               </div>               <p>CallStatement</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (isCallExpression(expression)) {
+</pre></div>             </td>           </tr>                               <tr id="section-87">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-87">&#182;</a>               </div>               <p>CallStatement</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (isCallExpression(expression)) {
         <span class="keyword">return</span> ast.callStatement(expression);
       }
 
-</pre></div>             </td>           </tr>                               <tr id="section-85">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-85">&#182;</a>               </div>               <p>The prefix expression was neither part of an assignment or a
+</pre></div>             </td>           </tr>                               <tr id="section-88">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-88">&#182;</a>               </div>               <p>The prefix expression was neither part of an assignment or a
 callstatement, however as it was valid it's been consumed, so raise the
 exception on the previous token to provide a helpful message.</p>             </td>             <td class="code">               <div class="highlight"><pre>      unexpected(previous);
     }
 
-</pre></div>             </td>           </tr>                               <tr id="section-86">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-86">&#182;</a>               </div>               <p>When a <code>;</code> is encounted, simply eat it and return nothing.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (consume(<span class="string">';'</span>)) <span class="keyword">return</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-89">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-89">&#182;</a>               </div>               <p>When a <code>;</code> is encounted, simply eat it and return nothing.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (consume(<span class="string">';'</span>)) <span class="keyword">return</span>;
 
     unexpected(token);
   }
 
 
-</pre></div>             </td>           </tr>                               <tr id="section-87">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-87">&#182;</a>               </div>               <h2>Statements</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-88">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-88">&#182;</a>               </div>               <pre><code>label ::= '::' Name '::'
+</pre></div>             </td>           </tr>                               <tr id="section-90">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-90">&#182;</a>               </div>               <h2>Statements</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-91">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-91">&#182;</a>               </div>               <pre><code>label ::= '::' Name '::'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseLabelStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> label = parseIdentifier();
@@ -1034,20 +1037,20 @@ exception on the previous token to provide a helpful message.</p>             </
     <span class="keyword">return</span> ast.labelStatement(label);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-89">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-89">&#182;</a>               </div>               <pre><code>break ::= 'break'
+</pre></div>             </td>           </tr>                               <tr id="section-92">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-92">&#182;</a>               </div>               <pre><code>break ::= 'break'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseBreakStatement</span><span class="params">()</span> {</span>
     <span class="keyword">return</span> ast.breakStatement();
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-90">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-90">&#182;</a>               </div>               <pre><code>goto ::= 'goto' Name
+</pre></div>             </td>           </tr>                               <tr id="section-93">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-93">&#182;</a>               </div>               <pre><code>goto ::= 'goto' Name
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseGotoStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> label = parseIdentifier();
     <span class="keyword">return</span> ast.gotoStatement(label);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-91">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-91">&#182;</a>               </div>               <pre><code>do ::= 'do' block 'end'
+</pre></div>             </td>           </tr>                               <tr id="section-94">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-94">&#182;</a>               </div>               <pre><code>do ::= 'do' block 'end'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseDoStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> body = parseBlock();
@@ -1055,7 +1058,7 @@ exception on the previous token to provide a helpful message.</p>             </
     <span class="keyword">return</span> ast.doStatement(body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-92">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-92">&#182;</a>               </div>               <pre><code>while ::= 'while' exp 'do' block 'end'
+</pre></div>             </td>           </tr>                               <tr id="section-95">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-95">&#182;</a>               </div>               <pre><code>while ::= 'while' exp 'do' block 'end'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseWhileStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> condition = parseExpression();
@@ -1065,7 +1068,7 @@ exception on the previous token to provide a helpful message.</p>             </
     <span class="keyword">return</span> ast.whileStatement(condition, body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-93">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-93">&#182;</a>               </div>               <pre><code>repeat ::= 'repeat' block 'until' exp
+</pre></div>             </td>           </tr>                               <tr id="section-96">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-96">&#182;</a>               </div>               <pre><code>repeat ::= 'repeat' block 'until' exp
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseRepeatStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> body = parseBlock();
@@ -1074,7 +1077,7 @@ exception on the previous token to provide a helpful message.</p>             </
     <span class="keyword">return</span> ast.repeatStatement(condition, body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-94">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-94">&#182;</a>               </div>               <pre><code>retstat ::= 'return' [exp {',' exp}] [';']
+</pre></div>             </td>           </tr>                               <tr id="section-97">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-97">&#182;</a>               </div>               <pre><code>retstat ::= 'return' [exp {',' exp}] [';']
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseReturnStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> expressions = [];
@@ -1091,7 +1094,7 @@ exception on the previous token to provide a helpful message.</p>             </
     <span class="keyword">return</span> ast.returnStatement(expressions);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-95">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-95">&#182;</a>               </div>               <pre><code>if ::= 'if' exp 'then' block {elif} ['else' block] 'end'
+</pre></div>             </td>           </tr>                               <tr id="section-98">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-98">&#182;</a>               </div>               <pre><code>if ::= 'if' exp 'then' block {elif} ['else' block] 'end'
 elif ::= 'elseif' exp 'then' block
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseIfStatement</span><span class="params">()</span> {</span>
@@ -1115,7 +1118,7 @@ elif ::= 'elseif' exp 'then' block
     <span class="keyword">return</span> ast.ifStatement(clauses);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-96">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-96">&#182;</a>               </div>               <p>There are two types of for statements, generic and numeric.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-99">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-99">&#182;</a>               </div>               <p>There are two types of for statements, generic and numeric.</p>
 
 <pre><code>for ::= Name '=' exp ',' exp [',' exp] 'do' block 'end'
 for ::= namelist 'in' explist 'do' block 'end'
@@ -1127,10 +1130,10 @@ explist ::= exp {',' exp}
       , body;
 
     <span class="keyword">if</span> (consume(<span class="string">'='</span>)) {
-</pre></div>             </td>           </tr>                               <tr id="section-97">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-97">&#182;</a>               </div>               <p>Start expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> start = expectExpression(parseExpression());
+</pre></div>             </td>           </tr>                               <tr id="section-100">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-100">&#182;</a>               </div>               <p>Start expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> start = expectExpression(parseExpression());
       expect(<span class="string">','</span>);
-</pre></div>             </td>           </tr>                               <tr id="section-98">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-98">&#182;</a>               </div>               <p>End expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> end = expectExpression(parseExpression());
-</pre></div>             </td>           </tr>                               <tr id="section-99">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-99">&#182;</a>               </div>               <p>Optional step expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> step = consume(<span class="string">','</span>) ? expectExpression(parseExpression()) : <span class="literal">null</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-101">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-101">&#182;</a>               </div>               <p>End expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> end = expectExpression(parseExpression());
+</pre></div>             </td>           </tr>                               <tr id="section-102">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-102">&#182;</a>               </div>               <p>Optional step expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> step = consume(<span class="string">','</span>) ? expectExpression(parseExpression()) : <span class="literal">null</span>;
 
       expect(<span class="string">'do'</span>);
       body = parseBlock();
@@ -1138,14 +1141,14 @@ explist ::= exp {',' exp}
 
       <span class="keyword">return</span> ast.forNumericStatement(variable, start, end, step, body);
 
-</pre></div>             </td>           </tr>                               <tr id="section-100">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-100">&#182;</a>               </div>               <p>If the first expression is not followed by a <code>=</code> punctuator, this is a
+</pre></div>             </td>           </tr>                               <tr id="section-103">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-103">&#182;</a>               </div>               <p>If the first expression is not followed by a <code>=</code> punctuator, this is a
 Generic For Statement.</p>             </td>             <td class="code">               <div class="highlight"><pre>    } <span class="keyword">else</span> {
-</pre></div>             </td>           </tr>                               <tr id="section-101">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-101">&#182;</a>               </div>               <p>The namelist can contain one or more identifiers.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> variables = [variable];
+</pre></div>             </td>           </tr>                               <tr id="section-104">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-104">&#182;</a>               </div>               <p>The namelist can contain one or more identifiers.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> variables = [variable];
       <span class="keyword">while</span> (consume(<span class="string">','</span>)) variables.push(parseIdentifier());
       expect(<span class="string">'in'</span>);
       <span class="keyword">var</span> iterators = [];
 
-</pre></div>             </td>           </tr>                               <tr id="section-102">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-102">&#182;</a>               </div>               <p>One or more expressions in the explist.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">do</span> {
+</pre></div>             </td>           </tr>                               <tr id="section-105">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-105">&#182;</a>               </div>               <p>One or more expressions in the explist.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">do</span> {
         <span class="keyword">var</span> expression = expectExpression(parseExpression());
         iterators.push(expression);
       } <span class="keyword">while</span> (consume(<span class="string">','</span>));
@@ -1158,7 +1161,7 @@ Generic For Statement.</p>             </td>             <td class="code">      
     }
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-103">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-103">&#182;</a>               </div>               <p>Local statements can either be variable assignments or function
+</pre></div>             </td>           </tr>                               <tr id="section-106">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-106">&#182;</a>               </div>               <p>Local statements can either be variable assignments or function
 definitions. If a function definition is found, it will be delegated to
 <code>parseFunctionDeclaration()</code> with the isLocal boolean.</p>
 
@@ -1187,7 +1190,7 @@ child.</p>
       <span class="keyword">return</span> ast.localStatement(variables, init);
     }
     <span class="keyword">if</span> (consume(<span class="string">'function'</span>)) {
-</pre></div>             </td>           </tr>                               <tr id="section-104">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-104">&#182;</a>               </div>               <p>MemberExpressions are not allowed in local function statements.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> name = parseIdentifier();
+</pre></div>             </td>           </tr>                               <tr id="section-107">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-107">&#182;</a>               </div>               <p>MemberExpressions are not allowed in local function statements.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> name = parseIdentifier();
       <span class="keyword">return</span> parseFunctionDeclaration(name, <span class="literal">true</span>);
     } <span class="keyword">else</span> {
       raiseUnexpectedToken(<span class="string">'&lt;name&gt;'</span>, token);
@@ -1195,8 +1198,8 @@ child.</p>
   }
 
 
-</pre></div>             </td>           </tr>                               <tr id="section-105">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-105">&#182;</a>               </div>               <h3>Non-statements</h3>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-106">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-106">&#182;</a>               </div>               <pre><code>Identifier ::= Name
+</pre></div>             </td>           </tr>                               <tr id="section-108">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-108">&#182;</a>               </div>               <h3>Non-statements</h3>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-109">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-109">&#182;</a>               </div>               <pre><code>Identifier ::= Name
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseIdentifier</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> identifier = token.value;
@@ -1206,7 +1209,7 @@ child.</p>
   }
 
 
-</pre></div>             </td>           </tr>                               <tr id="section-107">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-107">&#182;</a>               </div>               <p>Parse the functions parameters and body block. The name should already
+</pre></div>             </td>           </tr>                               <tr id="section-110">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-110">&#182;</a>               </div>               <p>Parse the functions parameters and body block. The name should already
 have been parsed and passed to this declaration function. By separating
 this we allow for anonymous functions in expression.</p>
 
@@ -1241,7 +1244,7 @@ parlist ::= Name {',' Name} | [',' '...'] | '...'
     <span class="keyword">return</span> ast.functionStatement(name, parameters, isVararg, isLocal, body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-108">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-108">&#182;</a>               </div>               <p>Parse the function name as identifiers and member expressions.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-111">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-111">&#182;</a>               </div>               <p>Parse the function name as identifiers and member expressions.</p>
 
 <pre><code>Name {'.' Name} [':' Name]
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -1259,7 +1262,7 @@ parlist ::= Name {',' Name} | [',' '...'] | '...'
     <span class="keyword">return</span> base;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-109">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-109">&#182;</a>               </div>               <pre><code>tableconstructor ::= '{' [fieldlist] '}'
+</pre></div>             </td>           </tr>                               <tr id="section-112">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-112">&#182;</a>               </div>               <pre><code>tableconstructor ::= '{' [fieldlist] '}'
 fieldlist ::= field {fieldsep field} fieldsep
 field ::= '[' exp ']' '=' exp | Name = 'exp' | exp
 
@@ -1299,7 +1302,7 @@ fieldsep ::= ',' | ';'
     <span class="keyword">return</span> ast.tableConstructorExpression(fields);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-110">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-110">&#182;</a>               </div>               <h2>Expression parser</h2>
+</pre></div>             </td>           </tr>                               <tr id="section-113">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-113">&#182;</a>               </div>               <h2>Expression parser</h2>
 
 <p>Expressions are evaluated and always return a value. Sometimes with side
 effects depending on the language.</p>
@@ -1317,7 +1320,7 @@ prefixexp ::= (Name | '(' exp ')' ) { '[' exp ']'
     <span class="keyword">return</span> expression;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-111">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-111">&#182;</a>               </div>               <p>Return the precedence priority of the operator.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-114">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-114">&#182;</a>               </div>               <p>Return the precedence priority of the operator.</p>
 
 <p>As unary <code>-</code> can't be distinguished from binary <code>-</code>, unary precedence isn't
 described in this table but in <code>parseSubExpression()</code> itself.</p>
@@ -1325,16 +1328,17 @@ described in this table but in <code>parseSubExpression()</code> itself.</p>
 <p>As this function gets hit on every expression it's been optimized due to
 the expensive CompareICStub which took ~8% of the parse time.</p>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">binaryPrecedence</span><span class="params">(operator)</span> {</span>
-    <span class="keyword">var</span> char = operator.charCodeAt(<span class="number">0</span>);
-    <span class="keyword">if</span> (<span class="number">1</span> === operator.length) {
+    <span class="keyword">var</span> char = operator.charCodeAt(<span class="number">0</span>)
+      , length = operator.length;
+
+    <span class="keyword">if</span> (<span class="number">1</span> === length) {
       <span class="keyword">switch</span> (char) {
         <span class="keyword">case</span> <span class="number">94</span>: <span class="keyword">return</span> <span class="number">10</span>; <span class="comment">// ^</span>
         <span class="keyword">case</span> <span class="number">42</span>: <span class="keyword">case</span> <span class="number">47</span>: <span class="keyword">case</span> <span class="number">37</span>: <span class="keyword">return</span> <span class="number">7</span>; <span class="comment">// * / %</span>
         <span class="keyword">case</span> <span class="number">43</span>: <span class="keyword">case</span> <span class="number">45</span>: <span class="keyword">return</span> <span class="number">6</span>; <span class="comment">// + -</span>
         <span class="keyword">case</span> <span class="number">60</span>: <span class="keyword">case</span> <span class="number">62</span>: <span class="keyword">return</span> <span class="number">3</span>; <span class="comment">// &lt; &gt;</span>
-        <span class="keyword">default</span>: <span class="keyword">return</span> <span class="number">0</span>;
       }
-    } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">2</span> === operator.length) {
+    } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">2</span> === length) {
       <span class="keyword">switch</span> (char) {
         <span class="keyword">case</span> <span class="number">46</span>: <span class="comment">// ..</span>
           <span class="keyword">if</span> (<span class="number">46</span> === operator.charCodeAt(<span class="number">1</span>)) <span class="keyword">return</span> <span class="number">5</span>;
@@ -1345,13 +1349,12 @@ the expensive CompareICStub which took ~8% of the parse time.</p>             </
         <span class="keyword">case</span> <span class="number">111</span>: <span class="comment">// or</span>
           <span class="keyword">if</span> (<span class="number">114</span> === operator.charCodeAt(<span class="number">1</span>)) <span class="keyword">return</span> <span class="number">1</span>;
           <span class="keyword">break</span>;
-        <span class="keyword">default</span>: <span class="keyword">return</span> <span class="number">0</span>;
       }
     } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">97</span> === char &amp;&amp; <span class="string">'and'</span> === operator) <span class="keyword">return</span> <span class="number">2</span>;
     <span class="keyword">return</span> <span class="number">0</span>;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-112">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-112">&#182;</a>               </div>               <p>Implement an operator-precedence parser to handle binary operator
+</pre></div>             </td>           </tr>                               <tr id="section-115">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-115">&#182;</a>               </div>               <p>Implement an operator-precedence parser to handle binary operator
 precedence.</p>
 
 <p>We use this algorithm because it's compact, it's fast and Lua core uses the
@@ -1362,27 +1365,33 @@ without too many tests.</p>
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseSubExpression</span><span class="params">(minPrecedence)</span> {</span>
     <span class="keyword">var</span> operator = token.value;
-</pre></div>             </td>           </tr>                               <tr id="section-113">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-113">&#182;</a>               </div>               <p>The left-hand side in binary operations.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression;
+</pre></div>             </td>           </tr>                               <tr id="section-116">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-116">&#182;</a>               </div>               <p>The left-hand side in binary operations.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression;
 
-</pre></div>             </td>           </tr>                               <tr id="section-114">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-114">&#182;</a>               </div>               <p>UnaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isUnary(token)) {
+</pre></div>             </td>           </tr>                               <tr id="section-117">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-117">&#182;</a>               </div>               <p>UnaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isUnary(token)) {
       next();
       <span class="keyword">var</span> argument = expectExpression(parseSubExpression(<span class="number">8</span>));
       expression = ast.unaryExpression(operator, argument);
     }
     <span class="keyword">if</span> (!expression) {
-</pre></div>             </td>           </tr>                               <tr id="section-115">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-115">&#182;</a>               </div>               <p>PrimaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      expression = parsePrimaryExpression();
+</pre></div>             </td>           </tr>                               <tr id="section-118">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-118">&#182;</a>               </div>               <p>PrimaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      expression = parsePrimaryExpression();
 
-</pre></div>             </td>           </tr>                               <tr id="section-116">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-116">&#182;</a>               </div>               <p>PrefixExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!expression) {
+</pre></div>             </td>           </tr>                               <tr id="section-119">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-119">&#182;</a>               </div>               <p>PrefixExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!expression) {
         expression = parsePrefixExpression();
       }
     }
-</pre></div>             </td>           </tr>                               <tr id="section-117">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-117">&#182;</a>               </div>               <p>This is not a valid left hand expression.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (!expression) <span class="keyword">return</span> <span class="literal">null</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-120">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-120">&#182;</a>               </div>               <p>This is not a valid left hand expression.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (!expression) <span class="keyword">return</span> <span class="literal">null</span>;
 
+    <span class="keyword">var</span> precedence;
     <span class="keyword">while</span> (<span class="literal">true</span>) {
       operator = token.value;
-      <span class="keyword">var</span> precedence = binaryPrecedence(operator);
+
+      <span class="keyword">if</span> (Punctuator === token.type || Keyword === token.type)
+        precedence = binaryPrecedence(operator);
+      <span class="keyword">else</span>
+        precedence = <span class="number">0</span>;
+
       <span class="keyword">if</span> (precedence === <span class="number">0</span> || precedence &lt;= minPrecedence) <span class="keyword">break</span>;
-</pre></div>             </td>           </tr>                               <tr id="section-118">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-118">&#182;</a>               </div>               <p>Right-hand precedence operators</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'^'</span> === operator || <span class="string">'..'</span> === operator) precedence--;
+</pre></div>             </td>           </tr>                               <tr id="section-121">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-121">&#182;</a>               </div>               <p>Right-hand precedence operators</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'^'</span> === operator || <span class="string">'..'</span> === operator) precedence--;
       next();
       <span class="keyword">var</span> right = expectExpression(parseSubExpression(precedence));
       expression = ast.binaryExpression(operator, expression, right);
@@ -1390,7 +1399,7 @@ without too many tests.</p>
     <span class="keyword">return</span> expression;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-119">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-119">&#182;</a>               </div>               <pre><code>prefixexp ::= prefix {suffix}
+</pre></div>             </td>           </tr>                               <tr id="section-122">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-122">&#182;</a>               </div>               <pre><code>prefixexp ::= prefix {suffix}
 prefix ::= Name | '(' exp ')'
 suffix ::= '[' exp ']' | '.' Name | ':' Name args | args
 
@@ -1399,7 +1408,7 @@ args ::= '(' [explist] ')' | tableconstructor | String
   <span class="function"><span class="keyword">function</span> <span class="title">parsePrefixExpression</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> base;
 
-</pre></div>             </td>           </tr>                               <tr id="section-120">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-120">&#182;</a>               </div>               <p>The prefix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (Identifier === token.type) {
+</pre></div>             </td>           </tr>                               <tr id="section-123">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-123">&#182;</a>               </div>               <p>The prefix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (Identifier === token.type) {
       base = parseIdentifier();
     } <span class="keyword">else</span> <span class="keyword">if</span> (consume(<span class="string">'('</span>)) {
       base = parseExpression();
@@ -1408,7 +1417,7 @@ args ::= '(' [explist] ')' | tableconstructor | String
       <span class="keyword">return</span> <span class="literal">null</span>;
     }
 
-</pre></div>             </td>           </tr>                               <tr id="section-121">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-121">&#182;</a>               </div>               <p>The suffix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression, identifier;
+</pre></div>             </td>           </tr>                               <tr id="section-124">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-124">&#182;</a>               </div>               <p>The suffix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression, identifier;
     <span class="keyword">while</span> (<span class="literal">true</span>) {
       expectExpression(base);
       <span class="keyword">if</span> (Punctuator === token.type) {
@@ -1428,7 +1437,7 @@ args ::= '(' [explist] ')' | tableconstructor | String
             next();
             identifier = parseIdentifier();
             base = ast.memberExpression(base, <span class="string">':'</span>, identifier);
-</pre></div>             </td>           </tr>                               <tr id="section-122">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-122">&#182;</a>               </div>               <p>Once a : is found, this has to be a callexpression, otherwise
+</pre></div>             </td>           </tr>                               <tr id="section-125">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-125">&#182;</a>               </div>               <p>Once a : is found, this has to be a callexpression, otherwise
 throw an error.</p>             </td>             <td class="code">               <div class="highlight"><pre>            base = parseCallExpression(base);
             <span class="keyword">break</span>;
           <span class="keyword">case</span> <span class="string">'('</span>: <span class="keyword">case</span> <span class="string">'{'</span>: <span class="comment">// args</span>
@@ -1447,7 +1456,7 @@ throw an error.</p>             </td>             <td class="code">             
     <span class="keyword">return</span> base;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-123">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-123">&#182;</a>               </div>               <pre><code>args ::= '(' [explist] ')' | tableconstructor | String
+</pre></div>             </td>           </tr>                               <tr id="section-126">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-126">&#182;</a>               </div>               <pre><code>args ::= '(' [explist] ')' | tableconstructor | String
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseCallExpression</span><span class="params">(base)</span> {</span>
     <span class="keyword">if</span> (Punctuator === token.type) {
@@ -1455,7 +1464,7 @@ throw an error.</p>             </td>             <td class="code">             
         <span class="keyword">case</span> <span class="string">'('</span>:
           next();
 
-</pre></div>             </td>           </tr>                               <tr id="section-124">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-124">&#182;</a>               </div>               <p>List of expressions</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="keyword">var</span> expressions = [];
+</pre></div>             </td>           </tr>                               <tr id="section-127">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-127">&#182;</a>               </div>               <p>List of expressions</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="keyword">var</span> expressions = [];
           <span class="keyword">var</span> expression = parseExpression();
           <span class="keyword">if</span> (expression) expressions.push(expression);
           <span class="keyword">while</span> (consume(<span class="string">','</span>)) {
@@ -1481,7 +1490,7 @@ throw an error.</p>             </td>             <td class="code">             
     raiseUnexpectedToken(<span class="string">'function arguments'</span>, token);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-125">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-125">&#182;</a>               </div>               <pre><code>primary ::= String | Numeric | nil | true | false
+</pre></div>             </td>           </tr>                               <tr id="section-128">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-128">&#182;</a>               </div>               <pre><code>primary ::= String | Numeric | nil | true | false
      | functiondef | tableconstructor | '...'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parsePrimaryExpression</span><span class="params">()</span> {</span>
@@ -1496,13 +1505,13 @@ throw an error.</p>             </td>             <td class="code">             
       next();
       <span class="keyword">return</span> parseFunctionDeclaration(<span class="literal">null</span>);
     } <span class="keyword">else</span> <span class="keyword">if</span> (Punctuator === token.type) {
-</pre></div>             </td>           </tr>                               <tr id="section-126">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-126">&#182;</a>               </div>               <p>Semantically dotsliteral can only exist within a vararg functions.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (consume(<span class="string">'...'</span>)) <span class="keyword">return</span> ast.varargLiteral(value);
+</pre></div>             </td>           </tr>                               <tr id="section-129">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-129">&#182;</a>               </div>               <p>Semantically dotsliteral can only exist within a vararg functions.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (consume(<span class="string">'...'</span>)) <span class="keyword">return</span> ast.varargLiteral(value);
       <span class="keyword">if</span> (consume(<span class="string">'{'</span>)) <span class="keyword">return</span> parseTableConstructor();
     }
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-127">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-127">&#182;</a>               </div>               <h2>Parser</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-128">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-128">&#182;</a>               </div>               <p>Export the main parser.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-130">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-130">&#182;</a>               </div>               <h2>Parser</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-131">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-131">&#182;</a>               </div>               <p>Export the main parser.</p>
 
 <ul>
 <li><code>wait</code> Hold parsing until end() is called. Defaults to false</li>
@@ -1531,14 +1540,14 @@ parser.parse('i = 0');
     <span class="keyword">return</span> exports;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-129">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-129">&#182;</a>               </div>               <p>Write to the source code buffer without beginning the parse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.write = write;
+</pre></div>             </td>           </tr>                               <tr id="section-132">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-132">&#182;</a>               </div>               <p>Write to the source code buffer without beginning the parse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.write = write;
 
   <span class="function"><span class="keyword">function</span> <span class="title">write</span><span class="params">(_input)</span> {</span>
     input += String(_input);
     <span class="keyword">return</span> exports;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-130">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-130">&#182;</a>               </div>               <p>Send an EOF and begin parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.end = end;
+</pre></div>             </td>           </tr>                               <tr id="section-133">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-133">&#182;</a>               </div>               <p>Send an EOF and begin parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.end = end;
 
   <span class="function"><span class="keyword">function</span> <span class="title">end</span><span class="params">(_input)</span> {</span>
     <span class="keyword">if</span> (<span class="string">'undefined'</span> !== <span class="keyword">typeof</span> _input) write(_input);
@@ -1548,7 +1557,7 @@ parser.parse('i = 0');
     line = <span class="number">1</span>;
     lineStart = <span class="number">0</span>;
 
-</pre></div>             </td>           </tr>                               <tr id="section-131">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-131">&#182;</a>               </div>               <p>Initialize with a lookahead token.</p>             </td>             <td class="code">               <div class="highlight"><pre>    lookahead = readToken();
+</pre></div>             </td>           </tr>                               <tr id="section-134">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-134">&#182;</a>               </div>               <p>Initialize with a lookahead token.</p>             </td>             <td class="code">               <div class="highlight"><pre>    lookahead = readToken();
 
     <span class="keyword">var</span> chunk = parseChunk();
     <span class="keyword">if</span> (options.comments) chunk.comments = comments;

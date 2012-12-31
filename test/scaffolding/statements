@@ -3,3 +3,4 @@ break
 ::foo::
 goto                                    -- FAIL
 goto foo
+nil                                     -- FAIL
