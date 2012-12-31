@@ -61,15 +61,12 @@ Before contributing any code follow the code style and run the lint tool
 
 #### 0.1
 
-- Clean up
-- Figure out what we reliably can expose
 - Optimize hot functions
 
 #### 0.2
 
 - Tolerant error handling
 - Location tracking
-- Keep track of all raw values.
 
 ## Acknowledgements
 
