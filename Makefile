@@ -96,6 +96,12 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 benchmark:
 	@./scripts/benchmark -v --samples=1000 benchmarks/lib/ParseLua.lua
 
+profile:
+	@./benchmarks/run.sh -v --d8 $(HASH)
+
+benchmark-full:
+	@./benchmarks/run.sh -v --js --lua $(HASH)
+
 # Cleanup
 # -------
 
