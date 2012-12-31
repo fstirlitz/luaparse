@@ -1,9 +1,21 @@
 REPORTER?=spec
 DOCS=docs/*.md
 HTMLDOCS=$(DOCS:.md=.html)
-HASH=$(shell git --git-dir=luaparse/.git rev-parse HEAD | cut -c1-5)
+HASH=$(shell git rev-parse HEAD | cut -c1-5)
 
 all: build
+
+# Main tasks
+# ----------
+
+build:
+	@./node_modules/.bin/grunt build
+
+lint:
+	@./node_modules/.bin/grunt lint
+
+# Install and internal updates
+# ----------------------------
 
 install:
 	@npm install
@@ -11,11 +23,17 @@ install:
 	@echo "Istanbul is required to generate coverage report"
 	@echo "> npm install -g istanbul"
 
-build: update-browserscope
-	@./node_modules/.bin/grunt build
+install-test:
+	@cp ./node_modules/mocha/mocha.js test/lib/mocha/
+	@cp ./node_modules/mocha/mocha.css test/lib/mocha/
+	@cp ./node_modules/expect.js/expect.js test/lib/
+	@cp ./node_modules/benchmark/benchmark.js test/lib/
 
-lint:
-	@./node_modules/.bin/grunt lint
+update-browserscope:
+	@sed -i "s/\(window\.commit = '\)[^']*\(';\)/\1$(HASH)\2/" test/benchmarks.html
+
+# Tests
+# -----
 
 test: test-spec
 
@@ -25,6 +43,23 @@ test-spec:
 		test/spec/*
 
 test-all: test-spec
+
+# Scaffold all test files in the scaffolding dir.
+scaffold-tests:
+	@$(foreach file,\
+		$(notdir $(wildcard test/scaffolding/*)),\
+		$(MAKE) -s scaffold-test FILE=$(file);\
+	)
+
+scaffold-test:
+	@./scripts/make-test --name=$(FILE) \
+		test/scaffolding/$(FILE) \
+		> test/spec/$(FILE).js
+
+# Documentation
+# -------------
+
+docs: docco coverage docs-test docs-md
 
 coverage:
 	@rm -rf lib-cov docs/coverage
@@ -55,31 +90,14 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> $@
 
-docs: docco coverage docs-test docs-md
-
-# Scaffold all test files in the scaffolding dir.
-scaffold-tests:
-	@$(foreach file,\
-		$(notdir $(wildcard test/scaffolding/*)),\
-		$(MAKE) -s scaffold-test FILE=$(file);\
-	)
-
-scaffold-test:
-	@./scripts/make-test --name=$(FILE) \
-		test/scaffolding/$(FILE) \
-		> test/spec/$(FILE).js
-
-install-test:
-	@cp ./node_modules/mocha/mocha.js test/lib/mocha/
-	@cp ./node_modules/mocha/mocha.css test/lib/mocha/
-	@cp ./node_modules/expect.js/expect.js test/lib/
-	@cp ./node_modules/benchmark/benchmark.js test/lib/
+# Benchmark
+# ---------
 
 benchmark:
 	@./scripts/benchmark -v --samples=1000 benchmarks/lib/ParseLua.lua
 
-update-browserscope:
-	@sed -i "s/\(window\.commit = '\)[^']*\(';\)/\1$(HASH)\2/" test/benchmarks.html
+# Cleanup
+# -------
 
 clean:
 	@rm -f docs/*.html docs/*.1
