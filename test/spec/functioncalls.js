@@ -1,6 +1,6 @@
 describe('functioncalls', function() {
   it('a(                                      -- FAIL', function() {
-    expect(parser.parse('a(', {wait:true}).end).to.throwError("[1:2] ')' expected near '<eof>'");
+    expect(parser.parse('a(', {wait:true}).end).to.throwError(/^\[1:2\] '\)' expected near '<eof>'$/);
   });
   it('a()', function() {
     expect(parser.parse('a()')).to.eql({
@@ -47,7 +47,7 @@ describe('functioncalls', function() {
     });
   });
   it('a(1,)                                   -- FAIL', function() {
-    expect(parser.parse('a(1,)', {wait:true}).end).to.throwError("[1:4] <expression> expected near ')'");
+    expect(parser.parse('a(1,)', {wait:true}).end).to.throwError(/^\[1:4\] <expression> expected near '\)'$/);
   });
   it('a(1,2,3)', function() {
     expect(parser.parse('a(1,2,3)')).to.eql({
@@ -85,7 +85,7 @@ describe('functioncalls', function() {
     });
   });
   it('1()                                     -- FAIL', function() {
-    expect(parser.parse('1()', {wait:true}).end).to.throwError("[1:0] Unexpected number '1' near '('");
+    expect(parser.parse('1()', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected number '1' near '\('$/);
   });
   it('a()()', function() {
     expect(parser.parse('a()()')).to.eql({
@@ -164,16 +164,16 @@ describe('functioncalls', function() {
     });
   });
   it('a.1                                     -- FAIL', function() {
-    expect(parser.parse('a.1', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a.1', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '<eof>'$/);
   });
   it('a.b                                     -- FAIL', function() {
-    expect(parser.parse('a.b', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a.b', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '<eof>'$/);
   });
   it('a[b]                                    -- FAIL', function() {
-    expect(parser.parse('a[b]', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a[b]', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '<eof>'$/);
   });
   it('a.b.(                                   -- FAIL', function() {
-    expect(parser.parse('a.b.(', {wait:true}).end).to.throwError("[1:4] <name> expected near '('");
+    expect(parser.parse('a.b.(', {wait:true}).end).to.throwError(/^\[1:4\] <name> expected near '\('$/);
   });
   it('a.b.c()', function() {
     expect(parser.parse('a.b.c()')).to.eql({
@@ -339,10 +339,10 @@ describe('functioncalls', function() {
     });
   });
   it('a:b                                     -- FAIL', function() {
-    expect(parser.parse('a:b', {wait:true}).end).to.throwError("[1:3] function arguments expected near '<eof>'");
+    expect(parser.parse('a:b', {wait:true}).end).to.throwError(/^\[1:3\] function arguments expected near '<eof>'$/);
   });
   it('a:1                                     -- FAIL', function() {
-    expect(parser.parse('a:1', {wait:true}).end).to.throwError("[1:2] <name> expected near '1'");
+    expect(parser.parse('a:1', {wait:true}).end).to.throwError(/^\[1:2\] <name> expected near '1'$/);
   });
   it('a.b:c()', function() {
     expect(parser.parse('a.b:c()')).to.eql({
@@ -414,7 +414,7 @@ describe('functioncalls', function() {
     });
   });
   it('a:b:                                    -- FAIL', function() {
-    expect(parser.parse('a:b:', {wait:true}).end).to.throwError("[1:3] function arguments expected near ':'");
+    expect(parser.parse('a:b:', {wait:true}).end).to.throwError(/^\[1:3\] function arguments expected near ':'$/);
   });
   it('a:b():c()', function() {
     expect(parser.parse('a:b():c()')).to.eql({
@@ -583,7 +583,7 @@ describe('functioncalls', function() {
     });
   });
   it('()()                                    -- FAIL', function() {
-    expect(parser.parse('()()', {wait:true}).end).to.throwError("[1:2] <expression> expected near '('");
+    expect(parser.parse('()()', {wait:true}).end).to.throwError(/^\[1:2\] <expression> expected near '\('$/);
   });
   it('(1)()', function() {
     expect(parser.parse('(1)()')).to.eql({

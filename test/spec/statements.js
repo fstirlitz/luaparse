@@ -11,7 +11,7 @@ describe('statements', function() {
     });
   });
   it('::foo                                   -- FAIL', function() {
-    expect(parser.parse('::foo', {wait:true}).end).to.throwError("[1:5] '::' expected near '<eof>'");
+    expect(parser.parse('::foo', {wait:true}).end).to.throwError(/^\[1:5\] '::' expected near '<eof>'$/);
   });
   it('::foo::', function() {
     expect(parser.parse('::foo::')).to.eql({
@@ -29,7 +29,7 @@ describe('statements', function() {
     });
   });
   it('goto                                    -- FAIL', function() {
-    expect(parser.parse('goto', {wait:true}).end).to.throwError("[1:4] <name> expected near '<eof>'");
+    expect(parser.parse('goto', {wait:true}).end).to.throwError(/^\[1:4\] <name> expected near '<eof>'$/);
   });
   it('goto foo', function() {
     expect(parser.parse('goto foo')).to.eql({
@@ -47,6 +47,6 @@ describe('statements', function() {
     });
   });
   it('nil                                     -- FAIL', function() {
-    expect(parser.parse('nil', {wait:true}).end).to.throwError("[1:0] Unexpected symbol 'nil' near '<eof>'");
+    expect(parser.parse('nil', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected symbol 'nil' near '<eof>'$/);
   });
 });

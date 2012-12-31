@@ -113,9 +113,10 @@ function scaffoldThrowAssertion(snippet, error) {
     .replace(/([\\"])/g, "\\$1")
     .replace(/\n/g, '\\n')
     .replace(/\r/g, '\\r')
-    .replace(/\t/g, '\\t');
+    .replace(/\t/g, '\\t')
+    .replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 
-  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end).to.throwError(\"" + error + "\");";
+  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end).to.throwError(/^"+ error + "$/);";
 }
 
 // Main ---------------------------------------------------

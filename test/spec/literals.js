@@ -1,6 +1,6 @@
 describe('literals', function() {
   it('a                                         -- FAIL', function() {
-    expect(parser.parse('a', {wait:true}).end).to.throwError("[1:0] Unexpected identifier 'a' near '<eof>'");
+    expect(parser.parse('a', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '<eof>'$/);
   });
   it('a = 1', function() {
     expect(parser.parse('a = 1')).to.eql({
@@ -99,7 +99,7 @@ describe('literals', function() {
     });
   });
   it('a = 1e                                    -- FAIL', function() {
-    expect(parser.parse('a = 1e', {wait:true}).end).to.throwError("[1:7] malformed number near '1e'");
+    expect(parser.parse('a = 1e', {wait:true}).end).to.throwError(/^\[1:7\] malformed number near '1e'$/);
   });
   it('a = 1e1', function() {
     expect(parser.parse('a = 1e1')).to.eql({
@@ -198,7 +198,7 @@ describe('literals', function() {
     });
   });
   it('a = 0x                                    -- FAIL', function() {
-    expect(parser.parse('a = 0x', {wait:true}).end).to.throwError("[1:7] malformed number near '0x'");
+    expect(parser.parse('a = 0x', {wait:true}).end).to.throwError(/^\[1:7\] malformed number near '0x'$/);
   });
   it('a = 0xf', function() {
     expect(parser.parse('a = 0xf')).to.eql({
@@ -273,7 +273,7 @@ describe('literals', function() {
     });
   });
   it('a = 0xfp                                  -- FAIL', function() {
-    expect(parser.parse('a = 0xfp', {wait:true}).end).to.throwError("[1:9] malformed number near '0xfp'");
+    expect(parser.parse('a = 0xfp', {wait:true}).end).to.throwError(/^\[1:9\] malformed number near '0xfp'$/);
   });
   it('a = 0xfp1', function() {
     expect(parser.parse('a = 0xfp1')).to.eql({
@@ -451,7 +451,7 @@ describe('literals', function() {
     });
   });
   it('a = "bar                                  -- FAIL', function() {
-    expect(parser.parse('a = "bar', {wait:true}).end).to.throwError("[1:9] unfinished string near 'bar'");
+    expect(parser.parse('a = "bar', {wait:true}).end).to.throwError(/^\[1:9\] unfinished string near 'bar'$/);
   });
   it('a = \'bar\'', function() {
     expect(parser.parse('a = \'bar\'')).to.eql({
@@ -502,7 +502,7 @@ describe('literals', function() {
     });
   });
   it('a = [=aa                                  -- FAIL', function() {
-    expect(parser.parse('a = [=aa', {wait:true}).end).to.throwError("[1:2] '[' expected near '='");
+    expect(parser.parse('a = [=aa', {wait:true}).end).to.throwError(/^\[1:2\] '\[' expected near '='$/);
   });
   it('a = nil', function() {
     expect(parser.parse('a = nil')).to.eql({

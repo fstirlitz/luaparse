@@ -255,7 +255,7 @@ describe('operators', function() {
     });
   });
   it('a = -                                   -- FAIL', function() {
-    expect(parser.parse('a = -', {wait:true}).end).to.throwError("[1:5] <expression> expected near '<eof>'");
+    expect(parser.parse('a = -', {wait:true}).end).to.throwError(/^\[1:5\] <expression> expected near '<eof>'$/);
   });
   it('a = not 10', function() {
     expect(parser.parse('a = not 10')).to.eql({
@@ -513,7 +513,7 @@ describe('operators', function() {
     });
   });
   it('a = not                                 -- FAIL', function() {
-    expect(parser.parse('a = not', {wait:true}).end).to.throwError("[1:7] <expression> expected near '<eof>'");
+    expect(parser.parse('a = not', {wait:true}).end).to.throwError(/^\[1:7\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 + 2; a = 1 - 2', function() {
     expect(parser.parse('a = 1 + 2; a = 1 - 2')).to.eql({
@@ -690,13 +690,13 @@ describe('operators', function() {
     });
   });
   it('a = 1 +                                 -- FAIL', function() {
-    expect(parser.parse('a = 1 +', {wait:true}).end).to.throwError("[1:7] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 +', {wait:true}).end).to.throwError(/^\[1:7\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 ..                                -- FAIL', function() {
-    expect(parser.parse('a = 1 ..', {wait:true}).end).to.throwError("[1:8] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 ..', {wait:true}).end).to.throwError(/^\[1:8\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 * /                               -- FAIL', function() {
-    expect(parser.parse('a = 1 * /', {wait:true}).end).to.throwError("[1:8] <expression> expected near '/'");
+    expect(parser.parse('a = 1 * /', {wait:true}).end).to.throwError(/^\[1:8\] <expression> expected near '\/'$/);
   });
   it('a = 1 + -2; a = 1 - -2', function() {
     expect(parser.parse('a = 1 + -2; a = 1 - -2')).to.eql({
@@ -765,7 +765,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 * -                               -- FAIL', function() {
-    expect(parser.parse('a = 1 * -', {wait:true}).end).to.throwError("[1:9] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 * -', {wait:true}).end).to.throwError(/^\[1:9\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 * not 2; a = 1 / not 2', function() {
     expect(parser.parse('a = 1 * not 2; a = 1 / not 2')).to.eql({
@@ -834,7 +834,7 @@ describe('operators', function() {
     });
   });
   it('a = 1 / not                             -- FAIL', function() {
-    expect(parser.parse('a = 1 / not', {wait:true}).end).to.throwError("[1:11] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 / not', {wait:true}).end).to.throwError(/^\[1:11\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 + 2 - 3 * 4 / 5 ^ 6', function() {
     expect(parser.parse('a = 1 + 2 - 3 * 4 / 5 ^ 6')).to.eql({
@@ -1044,13 +1044,13 @@ describe('operators', function() {
     });
   });
   it('a = ((1                                 -- FAIL', function() {
-    expect(parser.parse('a = ((1', {wait:true}).end).to.throwError("[1:7] ')' expected near '<eof>'");
+    expect(parser.parse('a = ((1', {wait:true}).end).to.throwError(/^\[1:7\] '\)' expected near '<eof>'$/);
   });
   it('a = ((1 + 2)                            -- FAIL', function() {
-    expect(parser.parse('a = ((1 + 2)', {wait:true}).end).to.throwError("[1:12] ')' expected near '<eof>'");
+    expect(parser.parse('a = ((1 + 2)', {wait:true}).end).to.throwError(/^\[1:12\] '\)' expected near '<eof>'$/);
   });
   it('a = 1)                                  -- FAIL', function() {
-    expect(parser.parse('a = 1)', {wait:true}).end).to.throwError("[1:5] Unexpected symbol ')' near '<eof>'");
+    expect(parser.parse('a = 1)', {wait:true}).end).to.throwError(/^\[1:5\] Unexpected symbol '\)' near '<eof>'$/);
   });
   it('a = a + b - c', function() {
     expect(parser.parse('a = a + b - c')).to.eql({
@@ -1576,16 +1576,16 @@ describe('operators', function() {
     });
   });
   it('a = 1 ==                                -- FAIL', function() {
-    expect(parser.parse('a = 1 ==', {wait:true}).end).to.throwError("[1:8] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 ==', {wait:true}).end).to.throwError(/^\[1:8\] <expression> expected near '<eof>'$/);
   });
   it('a = `                                   -- FAIL', function() {
-    expect(parser.parse('a = `', {wait:true}).end).to.throwError("[1:5] Unexpected symbol '`' near '='");
+    expect(parser.parse('a = `', {wait:true}).end).to.throwError(/^\[1:5\] Unexpected symbol '`' near '='$/);
   });
   it('a = ~                                   -- FAIL', function() {
-    expect(parser.parse('a = ~', {wait:true}).end).to.throwError("[1:5] '=' expected near '~'");
+    expect(parser.parse('a = ~', {wait:true}).end).to.throwError(/^\[1:5\] '=' expected near '~'$/);
   });
   it('a = ~= 2                                -- FAIL', function() {
-    expect(parser.parse('a = ~= 2', {wait:true}).end).to.throwError("[1:4] <expression> expected near '~='");
+    expect(parser.parse('a = ~= 2', {wait:true}).end).to.throwError(/^\[1:4\] <expression> expected near '~='$/);
   });
   it('a = "foo" == "bar"', function() {
     expect(parser.parse('a = "foo" == "bar"')).to.eql({
@@ -1776,10 +1776,10 @@ describe('operators', function() {
     });
   });
   it('a = 1 and                               -- FAIL', function() {
-    expect(parser.parse('a = 1 and', {wait:true}).end).to.throwError("[1:9] <expression> expected near '<eof>'");
+    expect(parser.parse('a = 1 and', {wait:true}).end).to.throwError(/^\[1:9\] <expression> expected near '<eof>'$/);
   });
   it('a = or 1                                -- FAIL', function() {
-    expect(parser.parse('a = or 1', {wait:true}).end).to.throwError("[1:4] <expression> expected near 'or'");
+    expect(parser.parse('a = or 1', {wait:true}).end).to.throwError(/^\[1:4\] <expression> expected near 'or'$/);
   });
   it('a = 1 and 2 and 3', function() {
     expect(parser.parse('a = 1 and 2 and 3')).to.eql({
