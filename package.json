@@ -1,33 +1,44 @@
 {
   "name": "luaparse",
-  "description": "A Lua Parser in JS",
+  "description": "A Lua parser in JavaScript",
   "version": "0.0.1",
   "homepage": "http://oxyc.github.com/luaparse/",
+  "bugs": "https://github.com/oxyc/luaparse/issues",
   "author": {
     "name": "Oskar Schöldström",
     "email": "public@oxy.fi"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/oxyc/luaparse.git"
+    "url": "git://github.com/oxyc/luaparse.git"
   },
   "licenses": [{
-      "type": "MIT",
-      "url": "https://github.com/oxyc/luaparse/blob/master/LICENSE"
+    "type": "MIT",
+    "url": "https://github.com/oxyc/luaparse/blob/master/LICENSE"
   }],
   "main" : "./index",
-  "bin": { "luaparse" : "./bin/luaparse" },
+  "bin": {
+    "luaparse" : "./bin/luaparse"
+  },
   "scripts": {
     "test" : "make test"
   },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "keywords": [
+    "lua",
+    "parser",
+    "parsing"
+  ],
   "devDependencies": {
     "mocha": "~1.7.4",
     "expect.js": "git://github.com/oxyc/expect.js.git#showDiff",
-    "mocha-istanbul": "*",
-    "grunt": "*",
-    "doccoh": "*",
-    "marked": "*",
+    "mocha-istanbul": "~0.1.0",
+    "grunt": "~0.3.17",
+    "doccoh": "~0.4.1*",
+    "marked": "~0.2.6",
     "benchmark": "~1.0.0",
-    "grunt-lint-inline": "git://github.com/oxyc/grunt-lint-inline.git"
+    "grunt-lint-inline": "~0.0.1"
   }
 }

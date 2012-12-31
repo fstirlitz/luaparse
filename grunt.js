@@ -45,6 +45,7 @@ module.exports = function (grunt) {
     lint: {
       dist: [
         'grunt.js',
+        'package.json',
         'lib/*.js',
         'examples/**/*.js',
         'benchmarks/**/*.js'
