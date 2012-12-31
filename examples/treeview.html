@@ -44,10 +44,10 @@ end
 <script src="//yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/treeview/treeview-min.js"></script>
 <script src="//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"></script>
 <script>
-  (function() {
+  (function(ace, YAHOO) {
     var editor = ace.edit('editor');
     editor.setTheme('ace/theme/solarized_light');
-    editor.getSession().setMode('ace/mode/javascript')
+    editor.getSession().setMode('ace/mode/javascript');
     editor.getSession().on('change', parse);
 
     var hasOwn = Object.prototype.hasOwnProperty;
@@ -59,7 +59,7 @@ end
       switch (typeof node) {
         case 'number':
         case 'string':
-        case 'boolean': return { type: 'Text', label: name + ': ' + node }
+        case 'boolean': return { type: 'Text', label: name + ': ' + node };
         case 'object':
           if (!node) return { type: 'Text', label: name +': null' };
           var obj = { type: 'Text', label: '' + name, expanded: true, children: [] };
@@ -67,7 +67,7 @@ end
             obj.label += ' [' + node.length + ']';
             for (var i = 0, l = node.length; i < l; i++) {
               var child = node[i];
-              var name = child.type ? '#' + i + ' ' + child.type : i;
+              name = child.type ? '#' + i + ' ' + child.type : i;
               obj.children.push(convertAstToTree(name, child));
             }
           } else {
@@ -110,7 +110,7 @@ end
       }, 500);
     }
     window.onload = parse;
-  }());
+  }(window.ace, window.YAHOO));
 </script>
 </body>
 </html>
