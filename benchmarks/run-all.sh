@@ -87,3 +87,8 @@ bench "67a1d05" "commoncase"
 # https://github.com/oxyc/luaparse/commit/67a1d0
 # https://github.com/oxyc/luaparse/commit/71be22
 bench "71be22" "inlining"
+
+# Revert createToken
+# https://github.com/oxyc/luaparse/commit/88af0c
+# https://github.com/oxyc/luaparse/commit/a8455b
+bench "a8455b" "revert-createtoken"
