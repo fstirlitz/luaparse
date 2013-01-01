@@ -1,7 +1,7 @@
 DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 REMOTE="https://github.com/oxyc/luaparse.git"
-DEST="$DIR/luaparse"
-GIT_FLAGS="--git-dir=$DEST/.git"
+DEST="$DIR/bench-luaparse"
+GIT_FLAGS="--git-dir=$DEST/.git --work-tree=$DEST/"
 
 [[ -t 1 ]] && piped=0 || piped=1
 processor="/usr/local/src/v8/tools/linux-tick-processor"
@@ -32,6 +32,7 @@ Options:
 out() { printf '%b\n' "$@"; }
 err() { out "\033[1;31m✖\033[0m  $@"; } >&2
 success() { (($verbose)) && out " \033[1;32m✔\033[0m  $@"; }
+log() { (($verbose)) && out "$@"; }
 die() { err "$@"; exit 1; } >&2
 confirm() {
   read -p "$1 [Y/n] " -n 1;
@@ -39,7 +40,10 @@ confirm() {
   [[ $REPLY =~ ^[Yy]$ ]];
 }
 
-g() { git $GIT_FLAGS "$@" > /dev/null 2>&1; }
+g() {
+  log "Running git $GIT_FLAGS $@"
+  git $GIT_FLAGS "$@" > /dev/null 2>&1
+}
 
 printNodeScript() {
   local file=$1
@@ -96,12 +100,12 @@ benchLuaminify() {
 
 runD8() {
   local commit=$1
-  local output="logs/$(date +"%Y%m%d_%H%M")-$commit"
+  local output="logs/$commit"
   local script="$(printNodeScript "$DEST/index" "1")"
 
   [[ ! -f $processor ]] && die "tick-processor not found at $processor"
 
-  mkdir $output
+  mkdir -p $output
   success "Created log directory: $output"
 
   node --prof -e "$script" > /dev/null
@@ -150,7 +154,7 @@ main() {
   for commit in "$@"; do
     benchmark "$commit"
   done
-  rm -irf $DEST
+  rm -rf $DEST
 }
 
 # Iterate over options breaking -ab into -a -b when needed and --foo=bar into
