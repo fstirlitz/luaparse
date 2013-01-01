@@ -123,7 +123,7 @@ runD8() {
     success "Created $output/$fn ($(wc -c < $output/$fn) bytes)"
   done
 
-  node -e "$(printNodeScript "$DEST/index" "1000")" > $output/benchmark
+  node -e "$(printNodeScript "$DEST/index" "$samples")" > $output/benchmark
   success "Created $output/benchmark ($(wc -c < $output/benchmark) bytes)"
 }
 
