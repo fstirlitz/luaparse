@@ -92,3 +92,6 @@ bench "71be22" "inlining"
 # https://github.com/oxyc/luaparse/commit/88af0c
 # https://github.com/oxyc/luaparse/commit/a8455b
 bench "a8455b" "revert-createtoken"
+
+# Latest
+bench "master" "master"

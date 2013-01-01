@@ -4,7 +4,7 @@ DEST="$DIR/bench-luaparse"
 GIT_FLAGS="--git-dir=$DEST/.git --work-tree=$DEST/"
 
 [[ -t 1 ]] && piped=0 || piped=1
-processor="/usr/local/src/v8/tools/linux-tick-processor"
+processor="$DIR/../node_modules/.bin/node-tick-processor"
 samples=1000
 js=0
 lua=0
@@ -110,11 +110,13 @@ runD8() {
   success "Created log directory: $output"
 
   node --prof -e "$script" > /dev/null
+
+  # node-tick-processor doesn't take path argument
+  $processor > $output/ticks
+  success "Created $output/ticks ($(wc -c < $output/ticks) bytes)"
+
   mv v8.log $output/v8.log
   success "Created $output/v8.log ($(wc -c < $output/v8.log) bytes)"
-
-  $processor $output/v8.log > $output/ticks
-  success "Created $output/ticks ($(wc -c < $output/ticks) bytes)"
 
   for fn in inlining bailout deopt opt; do
     node --trace_$fn --code_comments -e "$script" > $output/$fn
