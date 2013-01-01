@@ -105,6 +105,7 @@ runD8() {
 
   [[ ! -f $processor ]] && die "tick-processor not found at $processor"
 
+  [[ -d "$output" ]] && rm -rf $output && success "Deleted old: $output"
   mkdir -p $output
   success "Created log directory: $output"
 

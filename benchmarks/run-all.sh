@@ -11,6 +11,8 @@ bench() {
 
   $DIR/run.sh -v --d8 $pre $post
 
+  [[ -d "$preDir" ]] && rm -rf $preDir
+  [[ -d "$postDir" ]] && rm -rf $postDir
   mv $LOGS/$pre $preDir
   mv $LOGS/$post $postDir
 
