@@ -123,10 +123,6 @@ runD8() {
     success "Created $output/$fn ($(wc -c < $output/$fn) bytes)"
   done
 
-  node --trace_hydrogen -e "$script" > /dev/null
-  mv hydrogen.cfg $output/hydrogen.cfg
-  success "Created $output/hydrogen.cfg ($(wc -c < $output/hydrogen.cfg) bytes)"
-
   node -e "$(printNodeScript "$DEST/index" "1000")" > $output/benchmark
   success "Created $output/benchmark ($(wc -c < $output/benchmark) bytes)"
 }
