@@ -60,8 +60,18 @@ printNodeScript() {
     }, { minSamples: $samples });
 
     suite.on('cycle', function(e) {
-      var ms = e.target.times.period * 1000;
-      console.log('luaparse\t' + ms.toFixed(4));
+      var target = e.target;
+      var stats = [
+          (target.times.period * 1000).toFixed(4),
+        , target.stats.deviation
+        , target.stats.mean
+        , target.stats.moe
+        , target.stats.rme
+        , target.stats.sem
+        , target.stats.variance
+        , target.times.elapsed
+      ];
+      console.log('luaparse\t' + stats.join('\t'));
     });
     suite.run();
   "
@@ -123,7 +133,8 @@ runD8() {
     success "Created $output/$fn ($(wc -c < $output/$fn) bytes)"
   done
 
-  node -e "$(printNodeScript "$DEST/index" "$samples")" > $output/benchmark
+  echo -e "script\tms\tdeviation\tmean\tmoe\trme\tsem\tvariance\telapsed" > $output/benchmark
+  node -e "$(printNodeScript "$DEST/index" "$samples")" >> $output/benchmark
   success "Created $output/benchmark ($(wc -c < $output/benchmark) bytes)"
 }
 
