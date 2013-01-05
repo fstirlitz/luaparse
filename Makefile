@@ -19,9 +19,6 @@ lint:
 
 install:
 	@npm install
-	@echo
-	@echo "Istanbul is required to generate coverage report"
-	@echo "> npm install -g istanbul"
 
 install-test:
 	@cp ./node_modules/mocha/mocha.js test/lib/mocha/
@@ -64,14 +61,6 @@ scaffold-test:
 
 docs: docco coverage docs-test docs-md
 
-coverage:
-	@rm -rf lib-cov docs/coverage
-	@istanbul instrument \
-		--output lib-cov --no-compact --variable global.__coverage__ \
-		lib
-	@COVERAGE=1 $(MAKE) -s test REPORTER=mocha-istanbul
-	@mv html-report docs/coverage
-
 docco:
 	@./node_modules/.bin/doccoh lib/*.js
 
@@ -93,6 +82,25 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> $@
 
+# Coverage
+# --------
+
+coverage: coverage-instrument
+	@rm -rf html-report docs/coverage
+	@ISTANBUL_REPORTERS=html,text-summary COVERAGE=1 \
+		$(MAKE) -s test REPORTER=mocha-istanbul
+	@mv html-report docs/coverage
+
+coverage-cover:
+	@ISTANBUL_REPORTERS=text-summary,json COVERAGE=1 \
+		$(MAKE) -s test REPORTER=mocha-istanbul
+
+coverage-instrument:
+	@rm -rf lib-cov
+	@istanbul instrument \
+		--output lib-cov --no-compact --variable global.__coverage__ \
+		lib
+
 # Benchmark
 # ---------
 
@@ -105,8 +113,25 @@ profile:
 benchmark-full:
 	@bash benchmarks/run.sh -v --js --lua $(HASH)
 
-# Cleanup
-# -------
+# Quality Assurance
+# -----------------
+
+complexity-analysis:
+	@echo "===================== Complexity analysis ============================"
+	@./scripts/complexity 10
+	@node ./node_modules/complexity-report/src/cli.js \
+		-lws --maxcc 15 \
+		lib/luaparse.js
+
+coverage-analysis: coverage-instrument coverage-cover
+	@node ./node_modules/istanbul/lib/cli.js check-coverage \
+		--statements -8 --branches -12 --functions 100 \
+		coverage.json
+	@rm -f coverage.json
+
+qa:
+	@$(MAKE) -s test-spec REPORTER=dot
+	@$(MAKE) -s lint complexity-analysis coverage-analysis
 
 clean:
 	@rm -f docs/*.html docs/*.1

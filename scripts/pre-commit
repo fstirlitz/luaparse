@@ -4,7 +4,7 @@
 
 var spawn = require('child_process').spawn;
 
-run('npm test').on('next', run.bind({}, 'make lint'));
+run('npm run-script quality-assurance');
 
 function run(args) {
   args = args.split(' ');

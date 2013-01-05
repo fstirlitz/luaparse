@@ -21,7 +21,8 @@
     "luaparse" : "./bin/luaparse"
   },
   "scripts": {
-    "test" : "make test"
+    "test" : "make test",
+    "quality-assurance" : "make qa"
   },
   "engines": {
     "node": ">=0.8.0"
@@ -34,13 +35,14 @@
   "devDependencies": {
     "mocha": "~1.7.4",
     "expect.js": "git://github.com/oxyc/expect.js.git#showDiff",
-    "mocha-istanbul": "~0.1.0",
+    "mocha-istanbul": "git://github.com/oxyc/mocha-istanbul.git#json",
     "grunt": "~0.3.17",
     "doccoh": "~0.4.1*",
     "marked": "~0.2.6",
     "benchmark": "~1.0.0",
     "grunt-lint-inline": "~0.0.1",
     "tick": "~0.0.1",
-    "complexity-report": "~0.6.1"
+    "complexity-report": "~0.6.1",
+    "istanbul": "~0.1.27"
   }
 }
