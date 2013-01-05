@@ -97,7 +97,7 @@ coverage-cover:
 
 coverage-instrument:
 	@rm -rf lib-cov
-	@istanbul instrument \
+	@./node_modules/.bin/istanbul instrument \
 		--output lib-cov --no-compact --variable global.__coverage__ \
 		lib
 
