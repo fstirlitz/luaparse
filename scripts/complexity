@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+var cr = require('complexity-report')
+  , fs = require('fs')
+  , script = fs.readFileSync(__dirname + '/../lib/luaparse.js', 'utf-8')
+  , args = process.argv.slice(2)
+  , threshold = 10
+  , options = { logicalor: false, switchcase: false };
+
+args.forEach(function(arg) {
+  if (/-l/.test(arg)) return options.logicalor = true;
+  if (/-w/.test(arg)) return options.switchcase = true;
+  if (/-i/.test(arg)) return options.forin = true;
+  if (/-c/.test(arg)) return options.trycatch = true;
+  if (arg >= 0) threshold = arg;
+});
+
+cr.run(script, options).functions
+  .map(function(fn) { return { name: fn.name, value: fn.complexity.cyclomatic }; })
+  .sort(function(a, b) { return b.value - a.value; })
+  .forEach(function(fn) {
+    if (fn.value >= threshold) console.log(fn.name + ': ' + fn.value);
+  });
+
