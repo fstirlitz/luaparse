@@ -40,6 +40,7 @@
     "marked": "~0.2.6",
     "benchmark": "~1.0.0",
     "grunt-lint-inline": "~0.0.1",
-    "tick": "~0.0.1"
+    "tick": "~0.0.1",
+    "complexity-report": "~0.6.1"
   }
 }
