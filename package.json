@@ -43,6 +43,7 @@
     "grunt-lint-inline": "~0.0.1",
     "tick": "~0.0.1",
     "complexity-report": "~0.6.1",
-    "istanbul": "~0.1.27"
+    "istanbul": "~0.1.27",
+    "esprima": "~1.1.0",
   }
 }

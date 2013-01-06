@@ -48,7 +48,7 @@ module.exports = function (grunt) {
         'package.json',
         'lib/*.js',
         'examples/**/*.js',
-        'benchmarks/**/*.js'
+        'benchmarks/*.js'
       ],
       node: [
         'scripts/make-test',
