@@ -19,7 +19,7 @@ var Benchmark = require('benchmark')
 
 if (!files.length) {
   console.log("Usage:\n\tbenchmark [snippet|file]...");
-  console.log("Flags:\n\t-v|--verbose\n\t--samples=\n\t--minTime=");
+  console.log("Flags:\n\t-v|--verbose\n\t--samples=\n\t--minTime=\n\t--heap");
   process.exit(1);
 }
 

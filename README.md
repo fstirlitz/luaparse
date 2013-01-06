@@ -29,44 +29,91 @@ luaparse.parse('i = 0');
 
 ### Makefile
 
-Run the tests
+    # Run the tests
+    make test
 
-    $ make test
+    # Create the documentation
+    make docs
 
-Create the documentation
+    # Build a distribution file
+    make build
 
-    $ make docs
+#### Development
 
-Report code coverage
-
-    $ make coverage
-
-Build a distribution file
-
-    $ make build
-
-Scaffold the test files
-
-    $ make scaffold-tests
-
-Install necessary development packages
-
+    # Install necessary development packages
     $ make install
 
-Before contributing any code follow the code style and run the lint tool
+    # Scaffold the test files
+    make scaffold-tests
 
-    $ make lint
+    # Before contributing any code check quality assurance.
+    make qa
+
+    # Check complexity
+    make complexity-analysis
+
+    # Check coverage
+    make coverage-analysis
+
+    # Lint code
+    make lint
+
+#### Benchmark
+
+    # Run simple benchmark
+    make benchmark
+
+    # Profile v8 internals
+    make profile
+
+    # Run full benchmark
+    make benchmark-full
+
+### Scripts
+
+Benchmark a code snippet or a script file
+
+    ./scripts/benchmark [snippet|file]...
+
+    Flags:
+      -v|--verbose
+      --samples=5
+      --minTime=0
+      --heap
+
+    Example:
+      ./scripts/benchmark -v --samples=100 --minTime=10 'local i = 1' 'i = 1'
+      ./scripts/benchmark --heap benchmarks/lib/ParseLua.lua
+
+List function complexity with an optional threshold defaulting to 10.
+
+    ./scripts/complexity [threshold]
+
+    Example:
+      ./scripts/complexity 5
+
+Create a test from a snippet or a file of snippets separated by a newline.
+If a snippet ends with "-- FAIL" it will generate a failing test.
+
+    ./scripts/make-test [snippet|file]...
+
+    Flags:
+      --ignore-errors
+      --name=
+
+    Example:
+      ./scripts/make-test 'local i = 1' 'local 1 = 1 -- FAIL'
 
 ## Todo
-
-#### 0.1
-
-- Optimize hot functions
 
 #### 0.2
 
 - Tolerant error handling
 - Location tracking
+
+## Support
+
+Has been tested in IE6+, Firefox 3+, Safari 4+, Chrome 10+, Node
 
 ## Acknowledgements
 
