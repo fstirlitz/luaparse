@@ -27,7 +27,9 @@ Browser
 luaparse.parse('i = 0');
 ```
 
-### Makefile
+## Makefile
+
+### Common
 
     # Run the tests
     make test
@@ -38,10 +40,10 @@ luaparse.parse('i = 0');
     # Build a distribution file
     make build
 
-#### Development
+### Development
 
     # Install necessary development packages
-    $ make install
+    make install
 
     # Scaffold the test files
     make scaffold-tests
@@ -58,7 +60,7 @@ luaparse.parse('i = 0');
     # Lint code
     make lint
 
-#### Benchmark
+### Benchmark
 
     # Run simple benchmark
     make benchmark
@@ -69,7 +71,7 @@ luaparse.parse('i = 0');
     # Run full benchmark
     make benchmark-full
 
-### Scripts
+## Scripts
 
 Benchmark a code snippet or a script file
 
