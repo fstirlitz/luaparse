@@ -42,7 +42,7 @@ module.exports = function (grunt) {
     },
 
     // Linting
-    lint: {
+    jslint: {
       dist: [
         'grunt.js',
         'package.json',
@@ -66,12 +66,17 @@ module.exports = function (grunt) {
       html: {
         options: { browser: true, laxcomma: true }
       }
+    },
+    bashlint: {
+      src: ['**/*.sh']
     }
   });
 
   grunt.loadNpmTasks('grunt-lint-inline');
+  grunt.loadNpmTasks('grunt-lint-bash');
   grunt.renameTask('lint', 'grunt-lint');
-  grunt.renameTask('lint-inline', 'lint');
+  grunt.renameTask('lint-inline', 'jslint');
+  grunt.registerTask('lint', 'jslint bashlint');
   grunt.registerTask('default', 'concat min lint');
 
   // Override what yeoman provides
