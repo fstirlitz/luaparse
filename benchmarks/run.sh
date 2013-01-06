@@ -68,12 +68,13 @@ printNodeScript() {
         luaparse.parse(script);
       }
       , onComplete: function(e) {
-        var target = e.target;
-        var stats = [
-            target.stats.mean * 1000
-          , target.stats.deviation * 1000
-          , target.stats.variance * 1000
-        ];
+        var target = e.target
+          , variance = target.stats.variance * 1000 * 1000
+          , stats = [
+              target.stats.mean * 1000
+            , Math.sqrt(variance)
+            , variance
+          ];
         console.log('luaparse\t' + stats.join('\t'));
       }
       , minTime: $minTime
@@ -110,12 +111,13 @@ benchEsprima() {
         esprima.parse(script, { comments: true, loc: false });
       }
       , onComplete: function(e) {
-        var target = e.target;
-        var stats = [
-            target.stats.mean
-          , target.stats.deviation
-          , target.stats.variance
-        ];
+        var target = e.target
+          , variance = target.stats.variance * 1000 * 1000
+          , stats = [
+              target.stats.mean * 1000
+            , Math.sqrt(variance)
+            , variance
+          ];
         console.log('esprima\t' + stats.join('\t'));
       }
       , minTime: $minTime
@@ -166,13 +168,13 @@ benchLuaminify() {
       for i=0,$samples do
         local start = socket.gettime()
         ParseLua(text)
-        local time = (( socket.gettime() - start ))
+        local time = (( socket.gettime() - start )) * 1000
         results[i] = time
       end
       local mean = getMean(results)
       local variance = getVariance(results, mean)
       local sd = getDeviation(variance)
-      print ((mean * 1000)..'\t'..(sd * 1000)..'\t'..(variance * 1000))
+      print (mean..'\t'..sd..'\t'..variance)
     end
   ")
   echo -e "luaminify $lua\t $time"

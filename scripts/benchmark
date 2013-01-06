@@ -64,7 +64,7 @@ if (!heap) {
   suite.on('cycle', function(event) {
     var stats = event.target.stats
       , mean = (stats.mean * 1000).toFixed(4)
-      , variance = (stats.variance * 1000).toFixed(4);
+      , variance = (stats.variance * 1000 * 1000).toFixed(4);
     if (verbose) console.log(String(event.target) + ' (' + mean + 'ms)');
     else console.log(mean + '\t' + variance);
   });
