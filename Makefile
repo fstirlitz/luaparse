@@ -105,13 +105,13 @@ coverage-instrument:
 # ---------
 
 benchmark:
-	@./scripts/benchmark -v --samples=1000 benchmarks/lib/ParseLua.lua
+	@./scripts/benchmark -v benchmarks/lib/ParseLua.lua
 
 profile:
-	@bash benchmarks/run.sh -v --d8 $(HASH)
+	@bash benchmarks/run.sh -v --d8 HEAD
 
 benchmark-full:
-	@bash benchmarks/run.sh -v --js --lua $(HASH)
+	@bash benchmarks/run.sh -v --js --lua --esprima HEAD
 
 # Quality Assurance
 # -----------------

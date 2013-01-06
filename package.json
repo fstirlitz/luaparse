@@ -40,10 +40,11 @@
     "doccoh": "~0.4.1*",
     "marked": "~0.2.6",
     "benchmark": "~1.0.0",
+    "memwatch": "~0.2.0",
     "grunt-lint-inline": "~0.0.1",
     "tick": "~0.0.1",
     "complexity-report": "~0.6.1",
     "istanbul": "~0.1.27",
-    "esprima": "~1.1.0",
+    "esprima": "~1.1.0"
   }
 }
