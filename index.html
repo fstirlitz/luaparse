@@ -65,48 +65,87 @@ parser.parse(&#39;i = 0&#39;);</code></pre>
 
 </p>
 <pre><code class="lang-javascript">luaparse.parse(&#39;i = 0&#39;);</code></pre>
-<h3>Makefile</h3>
-<p>Run the tests
+<h2>Makefile</h2>
+<h3>Common</h3>
+<pre><code># Run the tests
+make test
+
+# Create the documentation
+make docs
+
+# Build a distribution file
+make build</code></pre>
+<h3>Development</h3>
+<pre><code># Install necessary development packages
+make install
+
+# Scaffold the test files
+make scaffold-tests
+
+# Before contributing any code check quality assurance.
+make qa
+
+# Check complexity
+make complexity-analysis
+
+# Check coverage
+make coverage-analysis
+
+# Lint code
+make lint</code></pre>
+<h3>Benchmark</h3>
+<pre><code># Run simple benchmark
+make benchmark
+
+# Profile v8 internals
+make profile
+
+# Run full benchmark
+make benchmark-full</code></pre>
+<h2>Scripts</h2>
+<p>Benchmark a code snippet or a script file
 
 </p>
-<pre><code>$ make test</code></pre>
-<p>Create the documentation
+<pre><code>./scripts/benchmark [snippet|file]...
+
+Flags:
+  -v|--verbose
+  --samples=5
+  --minTime=0
+  --heap
+
+Example:
+  ./scripts/benchmark -v --samples=100 --minTime=10 &#39;local i = 1&#39; &#39;i = 1&#39;
+  ./scripts/benchmark --heap benchmarks/lib/ParseLua.lua</code></pre>
+<p>List function complexity with an optional threshold defaulting to 10.
 
 </p>
-<pre><code>$ make docs</code></pre>
-<p>Report code coverage
+<pre><code>./scripts/complexity [threshold]
+
+Example:
+  ./scripts/complexity 5</code></pre>
+<p>Create a test from a snippet or a file of snippets separated by a newline.
+If a snippet ends with &quot;-- FAIL&quot; it will generate a failing test.
 
 </p>
-<pre><code>$ make coverage</code></pre>
-<p>Build a distribution file
+<pre><code>./scripts/make-test [snippet|file]...
 
-</p>
-<pre><code>$ make build</code></pre>
-<p>Scaffold the test files
+Flags:
+  --ignore-errors
+  --name=
 
-</p>
-<pre><code>$ make scaffold-tests</code></pre>
-<p>Install necessary development packages
-
-</p>
-<pre><code>$ make install</code></pre>
-<p>Before contributing any code follow the code style and run the lint tool
-
-</p>
-<pre><code>$ make lint</code></pre>
+Example:
+  ./scripts/make-test &#39;local i = 1&#39; &#39;local 1 = 1 -- FAIL&#39;</code></pre>
 <h2>Todo</h2>
-<h4>0.1</h4>
-<ul>
-<li>Clean up</li>
-<li>Figure out what we reliably can expose</li>
-<li>Optimize hot functions</li>
-</ul>
 <h4>0.2</h4>
 <ul>
 <li>Tolerant error handling</li>
 <li>Location tracking</li>
-<li>Keep track of all raw values.</li>
 </ul>
+<h2>Support</h2>
+<p>Has been tested in IE6+, Firefox 3+, Safari 4+, Chrome 10+, Node
+
+</p>
 <h2>Acknowledgements</h2>
 <ul>
 <li>Initial tests are scaffolded from <a href="http://yueliang.luaforge.net/">yueliang</a> and then manually checked for error.</li>

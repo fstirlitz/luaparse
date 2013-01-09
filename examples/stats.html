@@ -40,7 +40,7 @@
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script>
   (function() {
-    var path = location.href.replace(/([^/]+)\/([^/]+)$/, '')
+    var path = location.href.replace(/([^\/]+)\/([^\/]+)$/, '')
       , script = path + 'benchmarks/lib/ParseLua.lua'
       , ast
       , source;
@@ -50,7 +50,7 @@
       for (var key in stats) if (stats.hasOwnProperty(key)) {
         sortable.push({ type: key, count: stats[key] });
       }
-      sortable.sort(function(a, b) { return b.count - a.count });
+      sortable.sort(function(a, b) { return b.count - a.count; });
       return sortable;
     }
 
@@ -92,7 +92,7 @@
       function increment(stats, type) {
         if (!stats[type]) stats[type] = 1;
         else stats[type]++;
-      };
+      }
 
       walker(ast, function(node) {
         increment(nodes, node.type);
@@ -104,10 +104,10 @@
             increment(expressions, node.operator);
             break;
           case 'Literal':
-            var name = typeof node.value !== 'object'
-              ? typeof node.value : 'nil';
+            var name = typeof node.value !== 'object' ? typeof node.value
+              : 'nil';
             increment(literals, name);
-            break
+            break;
         }
       });
 

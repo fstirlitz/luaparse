@@ -46,13 +46,13 @@
       <h1>assignments</h1>
       <dl>
         <dt>a                                       -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a,                                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a,', {wait:true}).end).to.throwError(&quot;[1:2] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a,', {wait:true}).end).to.throwError(/^\[1:2\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a,b,c                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a,b,c', {wait:true}).end).to.throwError(&quot;[1:5] '=' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a,b,c', {wait:true}).end).to.throwError(/^\[1:5\] '=' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a,b =                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a,b =', {wait:true}).end).to.throwError(&quot;[1:5] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a,b =', {wait:true}).end).to.throwError(/^\[1:5\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1</dt>
         <dd><pre><code>expect(parser.parse('a = 1')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -436,29 +436,29 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>0 =                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('0 =', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected number '0' near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('0 =', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected number '0' near '='$/);</code></pre></dd>
         <dt>&quot;foo&quot; =                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('&quot;foo&quot; =', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected string 'foo' near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('&quot;foo&quot; =', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected string 'foo' near '='$/);</code></pre></dd>
         <dt>true =                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('true =', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected boolean 'true' near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('true =', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected boolean 'true' near '='$/);</code></pre></dd>
         <dt>(a) =                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('(a) =', {wait:true}).end).to.throwError(&quot;[1:5] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('(a) =', {wait:true}).end).to.throwError(/^\[1:5\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>{} =                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('{} =', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected symbol '{' near '}'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('{} =', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected symbol '\{' near '\}'$/);</code></pre></dd>
         <dt>a:b() =                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a:b() =', {wait:true}).end).to.throwError(&quot;[1:7] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a:b() =', {wait:true}).end).to.throwError(/^\[1:7\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a() =                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a() =', {wait:true}).end).to.throwError(&quot;[1:5] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a() =', {wait:true}).end).to.throwError(/^\[1:5\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a.b:c() =                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a.b:c() =', {wait:true}).end).to.throwError(&quot;[1:9] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a.b:c() =', {wait:true}).end).to.throwError(/^\[1:9\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a[b]() =                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a[b]() =', {wait:true}).end).to.throwError(&quot;[1:8] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a[b]() =', {wait:true}).end).to.throwError(/^\[1:8\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = a b                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = a b', {wait:true}).end).to.throwError(&quot;[1:6] Unexpected identifier 'b' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = a b', {wait:true}).end).to.throwError(/^\[1:6\] Unexpected identifier 'b' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1 2                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 2', {wait:true}).end).to.throwError(&quot;[1:6] Unexpected number '2' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 2', {wait:true}).end).to.throwError(/^\[1:6\] Unexpected number '2' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = a = 1                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = a = 1', {wait:true}).end).to.throwError(&quot;[1:6] Unexpected symbol '=' near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = a = 1', {wait:true}).end).to.throwError(/^\[1:6\] Unexpected symbol '=' near '1'$/);</code></pre></dd>
       </dl>
     </section>
     <section class="suite">
@@ -675,25 +675,25 @@
       <h1>conditional</h1>
       <dl>
         <dt>if                                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if', {wait:true}).end).to.throwError(&quot;[1:2] 'then' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if', {wait:true}).end).to.throwError(/^\[1:2\] 'then' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>elseif                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('elseif', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected keyword 'elseif' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('elseif', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected keyword 'elseif' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>else                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('else', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected keyword 'else' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('else', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected keyword 'else' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>then                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('then', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected keyword 'then' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('then', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected keyword 'then' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if then                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if then', {wait:true}).end).to.throwError(&quot;[1:7] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if then', {wait:true}).end).to.throwError(/^\[1:7\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1', {wait:true}).end).to.throwError(&quot;[1:4] 'then' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1', {wait:true}).end).to.throwError(/^\[1:4\] 'then' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1 then                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 then', {wait:true}).end).to.throwError(&quot;[1:9] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 then', {wait:true}).end).to.throwError(/^\[1:9\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1 else                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 else', {wait:true}).end).to.throwError(&quot;[1:5] 'then' expected near 'else'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 else', {wait:true}).end).to.throwError(/^\[1:5\] 'then' expected near 'else'$/);</code></pre></dd>
         <dt>if 1 then else                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 then else', {wait:true}).end).to.throwError(&quot;[1:14] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 then else', {wait:true}).end).to.throwError(/^\[1:14\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1 then elseif                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 then elseif', {wait:true}).end).to.throwError(&quot;[1:16] 'then' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 then elseif', {wait:true}).end).to.throwError(/^\[1:16\] 'then' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1 then end</dt>
         <dd><pre><code>expect(parser.parse('if 1 then end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -951,9 +951,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>if 1 then elseif 2                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 then elseif 2', {wait:true}).end).to.throwError(&quot;[1:18] 'then' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 then elseif 2', {wait:true}).end).to.throwError(/^\[1:18\] 'then' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1 then elseif 2 then                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 then elseif 2 then', {wait:true}).end).to.throwError(&quot;[1:23] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 then elseif 2 then', {wait:true}).end).to.throwError(/^\[1:23\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1 then elseif 2 then end</dt>
         <dd><pre><code>expect(parser.parse('if 1 then elseif 2 then end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1163,7 +1163,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>if 1 then else if 2 then end            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 then else if 2 then end', {wait:true}).end).to.throwError(&quot;[1:28] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 then else if 2 then end', {wait:true}).end).to.throwError(/^\[1:28\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>if 1 then return end</dt>
         <dd><pre><code>expect(parser.parse('if 1 then return end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1191,7 +1191,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>if 1 then return return end             -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('if 1 then return return end', {wait:true}).end).to.throwError(&quot;[1:17] 'end' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('if 1 then return return end', {wait:true}).end).to.throwError(/^\[1:17\] 'end' expected near 'return'$/);</code></pre></dd>
         <dt>if 1 then end; if 1 then end;</dt>
         <dd><pre><code>expect(parser.parse('if 1 then end; if 1 then end;')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1233,9 +1233,9 @@
       <h1>do</h1>
       <dl>
         <dt>do                                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do', {wait:true}).end).to.throwError(&quot;[1:2] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do', {wait:true}).end).to.throwError(/^\[1:2\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>end                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('end', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected keyword 'end' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('end', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected keyword 'end' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>do end</dt>
         <dd><pre><code>expect(parser.parse('do end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1248,9 +1248,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>do 1 end                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do 1 end', {wait:true}).end).to.throwError(&quot;[1:3] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do 1 end', {wait:true}).end).to.throwError(/^\[1:3\] Unexpected number '1' near 'end'$/);</code></pre></dd>
         <dt>do &quot;foo&quot; end                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do &quot;foo&quot; end', {wait:true}).end).to.throwError(&quot;[1:3] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do &quot;foo&quot; end', {wait:true}).end).to.throwError(/^\[1:3\] Unexpected string 'foo' near 'end'$/);</code></pre></dd>
         <dt>do local a, b end</dt>
         <dd><pre><code>expect(parser.parse('do local a, b end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1470,9 +1470,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>do end do                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do end do', {wait:true}).end).to.throwError(&quot;[1:9] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do end do', {wait:true}).end).to.throwError(/^\[1:9\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>do end end                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do end end', {wait:true}).end).to.throwError(&quot;[1:7] Unexpected keyword 'end' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do end end', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected keyword 'end' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>do return end</dt>
         <dd><pre><code>expect(parser.parse('do return end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -1490,7 +1490,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>do return return end                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('do return return end', {wait:true}).end).to.throwError(&quot;[1:10] 'end' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('do return return end', {wait:true}).end).to.throwError(/^\[1:10\] 'end' expected near 'return'$/);</code></pre></dd>
       </dl>
     </section>
     <section class="suite">
@@ -1850,7 +1850,7 @@
       <h1>expressions</h1>
       <dl>
         <dt>a =                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a =', {wait:true}).end).to.throwError(&quot;[1:3] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a =', {wait:true}).end).to.throwError(/^\[1:3\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = [[foo]]</dt>
         <dd><pre><code>expect(parser.parse('a = [[foo]]')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2086,7 +2086,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = a.b.                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = a.b.', {wait:true}).end).to.throwError(&quot;[1:8] &lt;name&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = a.b.', {wait:true}).end).to.throwError(/^\[1:8\] &lt;name&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = a.b.c</dt>
         <dd><pre><code>expect(parser.parse('a = a.b.c')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2126,7 +2126,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = a:b                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = a:b', {wait:true}).end).to.throwError(&quot;[1:7] function arguments expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = a:b', {wait:true}).end).to.throwError(/^\[1:7\] function arguments expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = a[b]</dt>
         <dd><pre><code>expect(parser.parse('a = a[b]')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2386,7 +2386,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = ()                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = ()', {wait:true}).end).to.throwError(&quot;[1:6] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = ()', {wait:true}).end).to.throwError(/^\[1:6\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = a()</dt>
         <dd><pre><code>expect(parser.parse('a = a()')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2697,15 +2697,15 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = function                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function', {wait:true}).end).to.throwError(&quot;[1:12] '(' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function', {wait:true}).end).to.throwError(/^\[1:12\] '\(' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = function 1                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function 1', {wait:true}).end).to.throwError(&quot;[1:13] '(' expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function 1', {wait:true}).end).to.throwError(/^\[1:13\] '\(' expected near '1'$/);</code></pre></dd>
         <dt>a = function a                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function a', {wait:true}).end).to.throwError(&quot;[1:13] '(' expected near 'a'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function a', {wait:true}).end).to.throwError(/^\[1:13\] '\(' expected near 'a'$/);</code></pre></dd>
         <dt>a = function end                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function end', {wait:true}).end).to.throwError(&quot;[1:13] '(' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function end', {wait:true}).end).to.throwError(/^\[1:13\] '\(' expected near 'end'$/);</code></pre></dd>
         <dt>a = function(                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function(', {wait:true}).end).to.throwError(&quot;[1:13] &lt;name&gt; or '...' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function(', {wait:true}).end).to.throwError(/^\[1:13\] &lt;name&gt; or '\.\.\.' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = function() end</dt>
         <dd><pre><code>expect(parser.parse('a = function() end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2733,7 +2733,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = function(1                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function(1', {wait:true}).end).to.throwError(&quot;[1:13] &lt;name&gt; or '...' expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function(1', {wait:true}).end).to.throwError(/^\[1:13\] &lt;name&gt; or '\.\.\.' expected near '1'$/);</code></pre></dd>
         <dt>a = function(p) end</dt>
         <dd><pre><code>expect(parser.parse('a = function(p) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2766,9 +2766,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = function(p,)                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function(p,)', {wait:true}).end).to.throwError(&quot;[1:15] &lt;name&gt; expected near ')'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function(p,)', {wait:true}).end).to.throwError(/^\[1:15\] &lt;name&gt; expected near '\)'$/);</code></pre></dd>
         <dt>a = function(p q                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function(p q', {wait:true}).end).to.throwError(&quot;[1:15] &lt;name&gt; or '...' expected near 'q'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function(p q', {wait:true}).end).to.throwError(/^\[1:15\] &lt;name&gt; or '\.\.\.' expected near 'q'$/);</code></pre></dd>
         <dt>a = function(p,q,r) end</dt>
         <dd><pre><code>expect(parser.parse('a = function(p,q,r) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2809,7 +2809,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = function(p,q,1                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function(p,q,1', {wait:true}).end).to.throwError(&quot;[1:17] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function(p,q,1', {wait:true}).end).to.throwError(/^\[1:17\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>a = function(...) end</dt>
         <dd><pre><code>expect(parser.parse('a = function(...) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2837,7 +2837,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = function(...,                       -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = function(...,', {wait:true}).end).to.throwError(&quot;[1:16] ')' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = function(...,', {wait:true}).end).to.throwError(/^\[1:16\] '\)' expected near ','$/);</code></pre></dd>
         <dt>a = function(p,...) end</dt>
         <dd><pre><code>expect(parser.parse('a = function(p,...) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3011,31 +3011,31 @@
       <h1>for</h1>
       <dl>
         <dt>for                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for', {wait:true}).end).to.throwError(&quot;[1:3] &lt;name&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for', {wait:true}).end).to.throwError(/^\[1:3\] &lt;name&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>for do                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for do', {wait:true}).end).to.throwError(&quot;[1:4] &lt;name&gt; expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for do', {wait:true}).end).to.throwError(/^\[1:4\] &lt;name&gt; expected near 'do'$/);</code></pre></dd>
         <dt>for end                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for end', {wait:true}).end).to.throwError(&quot;[1:4] &lt;name&gt; expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for end', {wait:true}).end).to.throwError(/^\[1:4\] &lt;name&gt; expected near 'end'$/);</code></pre></dd>
         <dt>for 1                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for 1', {wait:true}).end).to.throwError(&quot;[1:4] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for 1', {wait:true}).end).to.throwError(/^\[1:4\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>for a                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a', {wait:true}).end).to.throwError(&quot;[1:5] 'in' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a', {wait:true}).end).to.throwError(/^\[1:5\] 'in' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>for true                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for true', {wait:true}).end).to.throwError(&quot;[1:4] &lt;name&gt; expected near 'true'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for true', {wait:true}).end).to.throwError(/^\[1:4\] &lt;name&gt; expected near 'true'$/);</code></pre></dd>
         <dt>for a, in                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a, in', {wait:true}).end).to.throwError(&quot;[1:7] &lt;name&gt; expected near 'in'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a, in', {wait:true}).end).to.throwError(/^\[1:7\] &lt;name&gt; expected near 'in'$/);</code></pre></dd>
         <dt>for a in                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in', {wait:true}).end).to.throwError(&quot;[1:8] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in', {wait:true}).end).to.throwError(/^\[1:8\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>for a do                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a do', {wait:true}).end).to.throwError(&quot;[1:6] 'in' expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a do', {wait:true}).end).to.throwError(/^\[1:6\] 'in' expected near 'do'$/);</code></pre></dd>
         <dt>for a in do                             -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in do', {wait:true}).end).to.throwError(&quot;[1:9] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in do', {wait:true}).end).to.throwError(/^\[1:9\] &lt;expression&gt; expected near 'do'$/);</code></pre></dd>
         <dt>for a in b do                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b do', {wait:true}).end).to.throwError(&quot;[1:13] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b do', {wait:true}).end).to.throwError(/^\[1:13\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>for a in b end                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b end', {wait:true}).end).to.throwError(&quot;[1:11] 'do' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b end', {wait:true}).end).to.throwError(/^\[1:11\] 'do' expected near 'end'$/);</code></pre></dd>
         <dt>for a in b, do                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b, do', {wait:true}).end).to.throwError(&quot;[1:12] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b, do', {wait:true}).end).to.throwError(/^\[1:12\] &lt;expression&gt; expected near 'do'$/);</code></pre></dd>
         <dt>for a in b do end</dt>
         <dd><pre><code>expect(parser.parse('for a in b do end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3148,11 +3148,11 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>for a in b do 1 end                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b do 1 end', {wait:true}).end).to.throwError(&quot;[1:14] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b do 1 end', {wait:true}).end).to.throwError(/^\[1:14\] Unexpected number '1' near 'end'$/);</code></pre></dd>
         <dt>for a in b do &quot;foo&quot; end                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b do &quot;foo&quot; end', {wait:true}).end).to.throwError(&quot;[1:14] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b do &quot;foo&quot; end', {wait:true}).end).to.throwError(/^\[1:14\] Unexpected string 'foo' near 'end'$/);</code></pre></dd>
         <dt>for a b in                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a b in', {wait:true}).end).to.throwError(&quot;[1:6] 'in' expected near 'b'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a b in', {wait:true}).end).to.throwError(/^\[1:6\] 'in' expected near 'b'$/);</code></pre></dd>
         <dt>for a, b, c in p do end</dt>
         <dd><pre><code>expect(parser.parse('for a, b, c in p do end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3351,7 +3351,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>for a in b do return return end         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a in b do return return end', {wait:true}).end).to.throwError(&quot;[1:21] 'end' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a in b do return return end', {wait:true}).end).to.throwError(/^\[1:21\] 'end' expected near 'return'$/);</code></pre></dd>
         <dt>for a in b do do end end</dt>
         <dd><pre><code>expect(parser.parse('for a in b do do end end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3446,23 +3446,23 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>for =                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for =', {wait:true}).end).to.throwError(&quot;[1:4] &lt;name&gt; expected near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for =', {wait:true}).end).to.throwError(/^\[1:4\] &lt;name&gt; expected near '='$/);</code></pre></dd>
         <dt>for a =                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a =', {wait:true}).end).to.throwError(&quot;[1:7] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a =', {wait:true}).end).to.throwError(/^\[1:7\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>for a, b =                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a, b =', {wait:true}).end).to.throwError(&quot;[1:9] 'in' expected near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a, b =', {wait:true}).end).to.throwError(/^\[1:9\] 'in' expected near '='$/);</code></pre></dd>
         <dt>for a = do                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = do', {wait:true}).end).to.throwError(&quot;[1:8] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = do', {wait:true}).end).to.throwError(/^\[1:8\] &lt;expression&gt; expected near 'do'$/);</code></pre></dd>
         <dt>for a = 1, do                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, do', {wait:true}).end).to.throwError(&quot;[1:11] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, do', {wait:true}).end).to.throwError(/^\[1:11\] &lt;expression&gt; expected near 'do'$/);</code></pre></dd>
         <dt>for a = p, q, do                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = p, q, do', {wait:true}).end).to.throwError(&quot;[1:14] &lt;expression&gt; expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = p, q, do', {wait:true}).end).to.throwError(/^\[1:14\] &lt;expression&gt; expected near 'do'$/);</code></pre></dd>
         <dt>for a = p q do                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = p q do', {wait:true}).end).to.throwError(&quot;[1:10] ',' expected near 'q'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = p q do', {wait:true}).end).to.throwError(/^\[1:10\] ',' expected near 'q'$/);</code></pre></dd>
         <dt>for a = b do end                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = b do end', {wait:true}).end).to.throwError(&quot;[1:10] ',' expected near 'do'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = b do end', {wait:true}).end).to.throwError(/^\[1:10\] ',' expected near 'do'$/);</code></pre></dd>
         <dt>for a = 1, 2, 3, 4 do end               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, 2, 3, 4 do end', {wait:true}).end).to.throwError(&quot;[1:15] 'do' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, 2, 3, 4 do end', {wait:true}).end).to.throwError(/^\[1:15\] 'do' expected near ','$/);</code></pre></dd>
         <dt>for a = p, q do end</dt>
         <dd><pre><code>expect(parser.parse('for a = p, q do end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3608,9 +3608,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>for a = 1, 2 do 3 end                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, 2 do 3 end', {wait:true}).end).to.throwError(&quot;[1:16] Unexpected number '3' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, 2 do 3 end', {wait:true}).end).to.throwError(/^\[1:16\] Unexpected number '3' near 'end'$/);</code></pre></dd>
         <dt>for a = 1, 2 do &quot;foo&quot; end               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, 2 do &quot;foo&quot; end', {wait:true}).end).to.throwError(&quot;[1:16] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, 2 do &quot;foo&quot; end', {wait:true}).end).to.throwError(/^\[1:16\] Unexpected string 'foo' near 'end'$/);</code></pre></dd>
         <dt>for a = p, q, r do end</dt>
         <dd><pre><code>expect(parser.parse('for a = p, q, r do end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3728,7 +3728,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>for a = 1, 2 do return return end       -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('for a = 1, 2 do return return end', {wait:true}).end).to.throwError(&quot;[1:23] 'end' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('for a = 1, 2 do return return end', {wait:true}).end).to.throwError(/^\[1:23\] 'end' expected near 'return'$/);</code></pre></dd>
         <dt>for a = p, q do do end end</dt>
         <dd><pre><code>expect(parser.parse('for a = p, q do do end end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3831,7 +3831,7 @@
       <h1>functioncalls</h1>
       <dl>
         <dt>a(                                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a(', {wait:true}).end).to.throwError(&quot;[1:2] ')' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a(', {wait:true}).end).to.throwError(/^\[1:2\] '\)' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a()</dt>
         <dd><pre><code>expect(parser.parse('a()')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3875,7 +3875,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a(1,)                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a(1,)', {wait:true}).end).to.throwError(&quot;[1:4] &lt;expression&gt; expected near ')'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a(1,)', {wait:true}).end).to.throwError(/^\[1:4\] &lt;expression&gt; expected near '\)'$/);</code></pre></dd>
         <dt>a(1,2,3)</dt>
         <dd><pre><code>expect(parser.parse('a(1,2,3)')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3911,7 +3911,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>1()                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('1()', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected number '1' near '('&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('1()', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected number '1' near '\('$/);</code></pre></dd>
         <dt>a()()</dt>
         <dd><pre><code>expect(parser.parse('a()()')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -3986,13 +3986,13 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a.1                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a.1', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a.1', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a.b                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a.b', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a.b', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a[b]                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a[b]', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a[b]', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a.b.(                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a.b.(', {wait:true}).end).to.throwError(&quot;[1:4] &lt;name&gt; expected near '('&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a.b.(', {wait:true}).end).to.throwError(/^\[1:4\] &lt;name&gt; expected near '\('$/);</code></pre></dd>
         <dt>a.b.c()</dt>
         <dd><pre><code>expect(parser.parse('a.b.c()')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -4152,9 +4152,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a:b                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a:b', {wait:true}).end).to.throwError(&quot;[1:3] function arguments expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a:b', {wait:true}).end).to.throwError(/^\[1:3\] function arguments expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a:1                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a:1', {wait:true}).end).to.throwError(&quot;[1:2] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a:1', {wait:true}).end).to.throwError(/^\[1:2\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>a.b:c()</dt>
         <dd><pre><code>expect(parser.parse('a.b:c()')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -4223,7 +4223,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a:b:                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a:b:', {wait:true}).end).to.throwError(&quot;[1:3] function arguments expected near ':'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a:b:', {wait:true}).end).to.throwError(/^\[1:3\] function arguments expected near ':'$/);</code></pre></dd>
         <dt>a:b():c()</dt>
         <dd><pre><code>expect(parser.parse('a:b():c()')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -4387,7 +4387,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>()()                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('()()', {wait:true}).end).to.throwError(&quot;[1:2] &lt;expression&gt; expected near '('&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('()()', {wait:true}).end).to.throwError(/^\[1:2\] &lt;expression&gt; expected near '\('$/);</code></pre></dd>
         <dt>(1)()</dt>
         <dd><pre><code>expect(parser.parse('(1)()')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5652,17 +5652,17 @@
       <h1>functions</h1>
       <dl>
         <dt>function                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function', {wait:true}).end).to.throwError(&quot;[1:8] &lt;name&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function', {wait:true}).end).to.throwError(/^\[1:8\] &lt;name&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>function 1                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function 1', {wait:true}).end).to.throwError(&quot;[1:9] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function 1', {wait:true}).end).to.throwError(/^\[1:9\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>function end                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function end', {wait:true}).end).to.throwError(&quot;[1:9] &lt;name&gt; expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function end', {wait:true}).end).to.throwError(/^\[1:9\] &lt;name&gt; expected near 'end'$/);</code></pre></dd>
         <dt>function a                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a', {wait:true}).end).to.throwError(&quot;[1:10] '(' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a', {wait:true}).end).to.throwError(/^\[1:10\] '\(' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>function a end                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a end', {wait:true}).end).to.throwError(&quot;[1:11] '(' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a end', {wait:true}).end).to.throwError(/^\[1:11\] '\(' expected near 'end'$/);</code></pre></dd>
         <dt>function a( end                         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a( end', {wait:true}).end).to.throwError(&quot;[1:12] &lt;name&gt; or '...' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a( end', {wait:true}).end).to.throwError(/^\[1:12\] &lt;name&gt; or '\.\.\.' expected near 'end'$/);</code></pre></dd>
         <dt>function a() end</dt>
         <dd><pre><code>expect(parser.parse('function a() end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5682,15 +5682,15 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a(1                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(1', {wait:true}).end).to.throwError(&quot;[1:11] &lt;name&gt; or '...' expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(1', {wait:true}).end).to.throwError(/^\[1:11\] &lt;name&gt; or '\.\.\.' expected near '1'$/);</code></pre></dd>
         <dt>function a(&quot;foo&quot;                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(&quot;foo&quot;', {wait:true}).end).to.throwError(&quot;[1:11] &lt;name&gt; or '...' expected near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(&quot;foo&quot;', {wait:true}).end).to.throwError(/^\[1:11\] &lt;name&gt; or '\.\.\.' expected near 'foo'$/);</code></pre></dd>
         <dt>function a(p                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p', {wait:true}).end).to.throwError(&quot;[1:12] &lt;name&gt; or '...' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p', {wait:true}).end).to.throwError(/^\[1:12\] &lt;name&gt; or '\.\.\.' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>function a(p,)                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p,)', {wait:true}).end).to.throwError(&quot;[1:13] &lt;name&gt; expected near ')'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p,)', {wait:true}).end).to.throwError(/^\[1:13\] &lt;name&gt; expected near '\)'$/);</code></pre></dd>
         <dt>function a(p q                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p q', {wait:true}).end).to.throwError(&quot;[1:13] &lt;name&gt; or '...' expected near 'q'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p q', {wait:true}).end).to.throwError(/^\[1:13\] &lt;name&gt; or '\.\.\.' expected near 'q'$/);</code></pre></dd>
         <dt>function a(p) end</dt>
         <dd><pre><code>expect(parser.parse('function a(p) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5715,7 +5715,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a(p,q,) end                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p,q,) end', {wait:true}).end).to.throwError(&quot;[1:15] &lt;name&gt; expected near ')'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:15\] &lt;name&gt; expected near '\)'$/);</code></pre></dd>
         <dt>function a(p,q,r) end</dt>
         <dd><pre><code>expect(parser.parse('function a(p,q,r) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5748,11 +5748,11 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a(p,q,1                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p,q,1', {wait:true}).end).to.throwError(&quot;[1:15] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p,q,1', {wait:true}).end).to.throwError(/^\[1:15\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>function a(p) do                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p) do', {wait:true}).end).to.throwError(&quot;[1:16] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p) do', {wait:true}).end).to.throwError(/^\[1:16\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>function a(p) 1 end                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p) 1 end', {wait:true}).end).to.throwError(&quot;[1:14] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p) 1 end', {wait:true}).end).to.throwError(/^\[1:14\] Unexpected number '1' near 'end'$/);</code></pre></dd>
         <dt>function a(p) return end</dt>
         <dd><pre><code>expect(parser.parse('function a(p) return end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5782,7 +5782,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a(p) return return end         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(p) return return end', {wait:true}).end).to.throwError(&quot;[1:21] 'end' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(p) return return end', {wait:true}).end).to.throwError(/^\[1:21\] 'end' expected near 'return'$/);</code></pre></dd>
         <dt>function a(p) do end end</dt>
         <dd><pre><code>expect(parser.parse('function a(p) do end end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5812,9 +5812,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a.(                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a.(', {wait:true}).end).to.throwError(&quot;[1:11] &lt;name&gt; expected near '('&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a.(', {wait:true}).end).to.throwError(/^\[1:11\] &lt;name&gt; expected near '\('$/);</code></pre></dd>
         <dt>function a.1                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a.1', {wait:true}).end).to.throwError(&quot;[1:10] '(' expected near '0.1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a.1', {wait:true}).end).to.throwError(/^\[1:10\] '\(' expected near '0\.1'$/);</code></pre></dd>
         <dt>function a.b() end</dt>
         <dd><pre><code>expect(parser.parse('function a.b() end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5842,9 +5842,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a.b,                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a.b,', {wait:true}).end).to.throwError(&quot;[1:12] '(' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a.b,', {wait:true}).end).to.throwError(/^\[1:12\] '\(' expected near ','$/);</code></pre></dd>
         <dt>function a.b.(                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a.b.(', {wait:true}).end).to.throwError(&quot;[1:13] &lt;name&gt; expected near '('&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a.b.(', {wait:true}).end).to.throwError(/^\[1:13\] &lt;name&gt; expected near '\('$/);</code></pre></dd>
         <dt>function a.b.c.d() end</dt>
         <dd><pre><code>expect(parser.parse('function a.b.c.d() end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5888,9 +5888,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a:                             -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a:', {wait:true}).end).to.throwError(&quot;[1:11] &lt;name&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a:', {wait:true}).end).to.throwError(/^\[1:11\] &lt;name&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>function a:1                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a:1', {wait:true}).end).to.throwError(&quot;[1:11] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a:1', {wait:true}).end).to.throwError(/^\[1:11\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>function a:b() end</dt>
         <dd><pre><code>expect(parser.parse('function a:b() end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5918,9 +5918,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a:b:                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a:b:', {wait:true}).end).to.throwError(&quot;[1:12] '(' expected near ':'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a:b:', {wait:true}).end).to.throwError(/^\[1:12\] '\(' expected near ':'$/);</code></pre></dd>
         <dt>function a:b.                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a:b.', {wait:true}).end).to.throwError(&quot;[1:12] '(' expected near '.'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a:b.', {wait:true}).end).to.throwError(/^\[1:12\] '\(' expected near '\.'$/);</code></pre></dd>
         <dt>function a.b.c:d() end</dt>
         <dd><pre><code>expect(parser.parse('function a.b.c:d() end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -5982,7 +5982,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a(...,                         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(...,', {wait:true}).end).to.throwError(&quot;[1:14] ')' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(...,', {wait:true}).end).to.throwError(/^\[1:14\] '\)' expected near ','$/);</code></pre></dd>
         <dt>function a(p,...) end</dt>
         <dd><pre><code>expect(parser.parse('function a(p,...) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6007,7 +6007,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>function a(...,p) end                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('function a(...,p) end', {wait:true}).end).to.throwError(&quot;[1:14] ')' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('function a(...,p) end', {wait:true}).end).to.throwError(/^\[1:14\] '\)' expected near ','$/);</code></pre></dd>
         <dt>function a(p,q,r,...) end</dt>
         <dd><pre><code>expect(parser.parse('function a(p,q,r,...) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6152,7 +6152,7 @@
       <h1>literals</h1>
       <dl>
         <dt>a                                         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected identifier 'a' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected identifier 'a' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1</dt>
         <dd><pre><code>expect(parser.parse('a = 1')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6246,7 +6246,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 1e                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1e', {wait:true}).end).to.throwError(&quot;[1:7] malformed number near '1e'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1e', {wait:true}).end).to.throwError(/^\[1:7\] malformed number near '1e'$/);</code></pre></dd>
         <dt>a = 1e1</dt>
         <dd><pre><code>expect(parser.parse('a = 1e1')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6340,7 +6340,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 0x                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 0x', {wait:true}).end).to.throwError(&quot;[1:7] malformed number near '0x'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 0x', {wait:true}).end).to.throwError(/^\[1:7\] malformed number near '0x'$/);</code></pre></dd>
         <dt>a = 0xf</dt>
         <dd><pre><code>expect(parser.parse('a = 0xf')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6411,7 +6411,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 0xfp                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 0xfp', {wait:true}).end).to.throwError(&quot;[1:9] malformed number near '0xfp'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 0xfp', {wait:true}).end).to.throwError(/^\[1:9\] malformed number near '0xfp'$/);</code></pre></dd>
         <dt>a = 0xfp1</dt>
         <dd><pre><code>expect(parser.parse('a = 0xfp1')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6582,7 +6582,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = &quot;bar                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar', {wait:true}).end).to.throwError(&quot;[1:9] unfinished string near 'bar'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = &quot;bar', {wait:true}).end).to.throwError(/^\[1:9\] unfinished string near 'bar'$/);</code></pre></dd>
         <dt>a = 'bar'</dt>
         <dd><pre><code>expect(parser.parse('a = \'bar\'')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6630,7 +6630,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = [=aa                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = [=aa', {wait:true}).end).to.throwError(&quot;[1:2] '[' expected near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = [=aa', {wait:true}).end).to.throwError(/^\[1:2\] '\[' expected near '='$/);</code></pre></dd>
         <dt>a = nil</dt>
         <dd><pre><code>expect(parser.parse('a = nil')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -6727,13 +6727,13 @@
       <h1>local</h1>
       <dl>
         <dt>local                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local', {wait:true}).end).to.throwError(&quot;[1:5] &lt;name&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local', {wait:true}).end).to.throwError(/^\[1:5\] &lt;name&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>local;                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local;', {wait:true}).end).to.throwError(&quot;[1:5] &lt;name&gt; expected near ';'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local;', {wait:true}).end).to.throwError(/^\[1:5\] &lt;name&gt; expected near ';'$/);</code></pre></dd>
         <dt>local =                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local =', {wait:true}).end).to.throwError(&quot;[1:6] &lt;name&gt; expected near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local =', {wait:true}).end).to.throwError(/^\[1:6\] &lt;name&gt; expected near '='$/);</code></pre></dd>
         <dt>local end                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local end', {wait:true}).end).to.throwError(&quot;[1:6] &lt;name&gt; expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local end', {wait:true}).end).to.throwError(/^\[1:6\] &lt;name&gt; expected near 'end'$/);</code></pre></dd>
         <dt>local a</dt>
         <dd><pre><code>expect(parser.parse('local a')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7023,31 +7023,31 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local a, local                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local a, local', {wait:true}).end).to.throwError(&quot;[1:9] &lt;name&gt; expected near 'local'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local a, local', {wait:true}).end).to.throwError(/^\[1:9\] &lt;name&gt; expected near 'local'$/);</code></pre></dd>
         <dt>local 1                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local 1', {wait:true}).end).to.throwError(&quot;[1:6] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local 1', {wait:true}).end).to.throwError(/^\[1:6\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>local &quot;foo&quot;                             -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local &quot;foo&quot;', {wait:true}).end).to.throwError(&quot;[1:6] &lt;name&gt; expected near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local &quot;foo&quot;', {wait:true}).end).to.throwError(/^\[1:6\] &lt;name&gt; expected near 'foo'$/);</code></pre></dd>
         <dt>local a = local                         -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local a = local', {wait:true}).end).to.throwError(&quot;[1:10] &lt;expression&gt; expected near 'local'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local a = local', {wait:true}).end).to.throwError(/^\[1:10\] &lt;expression&gt; expected near 'local'$/);</code></pre></dd>
         <dt>local a, b, =                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local a, b, =', {wait:true}).end).to.throwError(&quot;[1:12] &lt;name&gt; expected near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local a, b, =', {wait:true}).end).to.throwError(/^\[1:12\] &lt;name&gt; expected near '='$/);</code></pre></dd>
         <dt>local a, b = 1, local                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local a, b = 1, local', {wait:true}).end).to.throwError(&quot;[1:16] &lt;expression&gt; expected near 'local'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local a, b = 1, local', {wait:true}).end).to.throwError(/^\[1:16\] &lt;expression&gt; expected near 'local'$/);</code></pre></dd>
         <dt>local a, b = , local                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local a, b = , local', {wait:true}).end).to.throwError(&quot;[1:13] &lt;expression&gt; expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local a, b = , local', {wait:true}).end).to.throwError(/^\[1:13\] &lt;expression&gt; expected near ','$/);</code></pre></dd>
         <dt>local function                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function', {wait:true}).end).to.throwError(&quot;[1:14] &lt;name&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function', {wait:true}).end).to.throwError(/^\[1:14\] &lt;name&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>local function 1                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function 1', {wait:true}).end).to.throwError(&quot;[1:15] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function 1', {wait:true}).end).to.throwError(/^\[1:15\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>local function end                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function end', {wait:true}).end).to.throwError(&quot;[1:15] &lt;name&gt; expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function end', {wait:true}).end).to.throwError(/^\[1:15\] &lt;name&gt; expected near 'end'$/);</code></pre></dd>
         <dt>local function a                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a', {wait:true}).end).to.throwError(&quot;[1:16] '(' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a', {wait:true}).end).to.throwError(/^\[1:16\] '\(' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>local function a end                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a end', {wait:true}).end).to.throwError(&quot;[1:17] '(' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a end', {wait:true}).end).to.throwError(/^\[1:17\] '\(' expected near 'end'$/);</code></pre></dd>
         <dt>local function a( end                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a( end', {wait:true}).end).to.throwError(&quot;[1:18] &lt;name&gt; or '...' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a( end', {wait:true}).end).to.throwError(/^\[1:18\] &lt;name&gt; or '\.\.\.' expected near 'end'$/);</code></pre></dd>
         <dt>local function a() end</dt>
         <dd><pre><code>expect(parser.parse('local function a() end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7067,15 +7067,15 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local function a(1                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(1', {wait:true}).end).to.throwError(&quot;[1:17] &lt;name&gt; or '...' expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(1', {wait:true}).end).to.throwError(/^\[1:17\] &lt;name&gt; or '\.\.\.' expected near '1'$/);</code></pre></dd>
         <dt>local function a(&quot;foo&quot;                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(&quot;foo&quot;', {wait:true}).end).to.throwError(&quot;[1:17] &lt;name&gt; or '...' expected near 'foo'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(&quot;foo&quot;', {wait:true}).end).to.throwError(/^\[1:17\] &lt;name&gt; or '\.\.\.' expected near 'foo'$/);</code></pre></dd>
         <dt>local function a(p                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p', {wait:true}).end).to.throwError(&quot;[1:18] &lt;name&gt; or '...' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p', {wait:true}).end).to.throwError(/^\[1:18\] &lt;name&gt; or '\.\.\.' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>local function a(p,)                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p,)', {wait:true}).end).to.throwError(&quot;[1:19] &lt;name&gt; expected near ')'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p,)', {wait:true}).end).to.throwError(/^\[1:19\] &lt;name&gt; expected near '\)'$/);</code></pre></dd>
         <dt>local function a(p q                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p q', {wait:true}).end).to.throwError(&quot;[1:19] &lt;name&gt; or '...' expected near 'q'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p q', {wait:true}).end).to.throwError(/^\[1:19\] &lt;name&gt; or '\.\.\.' expected near 'q'$/);</code></pre></dd>
         <dt>local function a(p) end</dt>
         <dd><pre><code>expect(parser.parse('local function a(p) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7100,7 +7100,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local function a(p,q,) end              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p,q,) end', {wait:true}).end).to.throwError(&quot;[1:21] &lt;name&gt; expected near ')'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:21\] &lt;name&gt; expected near '\)'$/);</code></pre></dd>
         <dt>local function a(p,q,r) end</dt>
         <dd><pre><code>expect(parser.parse('local function a(p,q,r) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7133,11 +7133,11 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local function a(p,q,1                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p,q,1', {wait:true}).end).to.throwError(&quot;[1:21] &lt;name&gt; expected near '1'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p,q,1', {wait:true}).end).to.throwError(/^\[1:21\] &lt;name&gt; expected near '1'$/);</code></pre></dd>
         <dt>local function a(p) do                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p) do', {wait:true}).end).to.throwError(&quot;[1:22] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p) do', {wait:true}).end).to.throwError(/^\[1:22\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>local function a(p) 1 end               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p) 1 end', {wait:true}).end).to.throwError(&quot;[1:20] Unexpected number '1' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p) 1 end', {wait:true}).end).to.throwError(/^\[1:20\] Unexpected number '1' near 'end'$/);</code></pre></dd>
         <dt>local function a(p) return end</dt>
         <dd><pre><code>expect(parser.parse('local function a(p) return end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7167,7 +7167,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local function a(p) return return end   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(p) return return end', {wait:true}).end).to.throwError(&quot;[1:27] 'end' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(p) return return end', {wait:true}).end).to.throwError(/^\[1:27\] 'end' expected near 'return'$/);</code></pre></dd>
         <dt>local function a(p) do end end</dt>
         <dd><pre><code>expect(parser.parse('local function a(p) do end end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7197,9 +7197,9 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local function a.                       -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a.', {wait:true}).end).to.throwError(&quot;[1:16] '(' expected near '.'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a.', {wait:true}).end).to.throwError(/^\[1:16\] '\(' expected near '\.'$/);</code></pre></dd>
         <dt>local function a:                       -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a:', {wait:true}).end).to.throwError(&quot;[1:16] '(' expected near ':'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a:', {wait:true}).end).to.throwError(/^\[1:16\] '\(' expected near ':'$/);</code></pre></dd>
         <dt>local function a(...) end</dt>
         <dd><pre><code>expect(parser.parse('local function a(...) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7219,7 +7219,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>local function a(...,                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('local function a(...,', {wait:true}).end).to.throwError(&quot;[1:20] ')' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('local function a(...,', {wait:true}).end).to.throwError(/^\[1:20\] '\)' expected near ','$/);</code></pre></dd>
         <dt>local function a(p,...) end</dt>
         <dd><pre><code>expect(parser.parse('local function a(p,...) end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7665,7 +7665,7 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = -                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = -', {wait:true}).end).to.throwError(&quot;[1:5] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = -', {wait:true}).end).to.throwError(/^\[1:5\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = not 10</dt>
         <dd><pre><code>expect(parser.parse('a = not 10')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -7913,7 +7913,7 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = not                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = not', {wait:true}).end).to.throwError(&quot;[1:7] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = not', {wait:true}).end).to.throwError(/^\[1:7\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1 + 2; a = 1 - 2</dt>
         <dd><pre><code>expect(parser.parse('a = 1 + 2; a = 1 - 2')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -8086,11 +8086,11 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 1 +                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 +', {wait:true}).end).to.throwError(&quot;[1:7] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 +', {wait:true}).end).to.throwError(/^\[1:7\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1 ..                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 ..', {wait:true}).end).to.throwError(&quot;[1:8] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 ..', {wait:true}).end).to.throwError(/^\[1:8\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1 * /                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 * /', {wait:true}).end).to.throwError(&quot;[1:8] &lt;expression&gt; expected near '/'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 * /', {wait:true}).end).to.throwError(/^\[1:8\] &lt;expression&gt; expected near '\/'$/);</code></pre></dd>
         <dt>a = 1 + -2; a = 1 - -2</dt>
         <dd><pre><code>expect(parser.parse('a = 1 + -2; a = 1 - -2')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -8157,7 +8157,7 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 1 * -                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 * -', {wait:true}).end).to.throwError(&quot;[1:9] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 * -', {wait:true}).end).to.throwError(/^\[1:9\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1 * not 2; a = 1 / not 2</dt>
         <dd><pre><code>expect(parser.parse('a = 1 * not 2; a = 1 / not 2')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -8224,7 +8224,7 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 1 / not                             -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 / not', {wait:true}).end).to.throwError(&quot;[1:11] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 / not', {wait:true}).end).to.throwError(/^\[1:11\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1 + 2 - 3 * 4 / 5 ^ 6</dt>
         <dd><pre><code>expect(parser.parse('a = 1 + 2 - 3 * 4 / 5 ^ 6')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -8430,11 +8430,11 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = ((1                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = ((1', {wait:true}).end).to.throwError(&quot;[1:7] ')' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = ((1', {wait:true}).end).to.throwError(/^\[1:7\] '\)' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = ((1 + 2)                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = ((1 + 2)', {wait:true}).end).to.throwError(&quot;[1:12] ')' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = ((1 + 2)', {wait:true}).end).to.throwError(/^\[1:12\] '\)' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = 1)                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1)', {wait:true}).end).to.throwError(&quot;[1:5] Unexpected symbol ')' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1)', {wait:true}).end).to.throwError(/^\[1:5\] Unexpected symbol '\)' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = a + b - c</dt>
         <dd><pre><code>expect(parser.parse('a = a + b - c')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -8947,13 +8947,13 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 1 ==                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 ==', {wait:true}).end).to.throwError(&quot;[1:8] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 ==', {wait:true}).end).to.throwError(/^\[1:8\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = `                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = `', {wait:true}).end).to.throwError(&quot;[1:5] Unexpected symbol '`' near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = `', {wait:true}).end).to.throwError(/^\[1:5\] Unexpected symbol '`' near '='$/);</code></pre></dd>
         <dt>a = ~                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = ~', {wait:true}).end).to.throwError(&quot;[1:5] '=' expected near '~'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = ~', {wait:true}).end).to.throwError(/^\[1:5\] '=' expected near '~'$/);</code></pre></dd>
         <dt>a = ~= 2                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = ~= 2', {wait:true}).end).to.throwError(&quot;[1:4] &lt;expression&gt; expected near '~='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = ~= 2', {wait:true}).end).to.throwError(/^\[1:4\] &lt;expression&gt; expected near '~='$/);</code></pre></dd>
         <dt>a = &quot;foo&quot; == &quot;bar&quot;</dt>
         <dd><pre><code>expect(parser.parse('a = &quot;foo&quot; == &quot;bar&quot;')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -9138,9 +9138,9 @@ expect(parse.end('break')).to.eql({
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = 1 and                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = 1 and', {wait:true}).end).to.throwError(&quot;[1:9] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = 1 and', {wait:true}).end).to.throwError(/^\[1:9\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = or 1                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = or 1', {wait:true}).end).to.throwError(&quot;[1:4] &lt;expression&gt; expected near 'or'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = or 1', {wait:true}).end).to.throwError(/^\[1:4\] &lt;expression&gt; expected near 'or'$/);</code></pre></dd>
         <dt>a = 1 and 2 and 3</dt>
         <dd><pre><code>expect(parser.parse('a = 1 and 2 and 3')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10413,9 +10413,9 @@ expect(test).to.eql(expected);</code></pre></dd>
       <h1>repeat</h1>
       <dl>
         <dt>repeat                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat', {wait:true}).end).to.throwError(&quot;[1:6] 'until' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat', {wait:true}).end).to.throwError(/^\[1:6\] 'until' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>repeat until                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat until', {wait:true}).end).to.throwError(&quot;[1:12] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat until', {wait:true}).end).to.throwError(/^\[1:12\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>repeat until 0</dt>
         <dd><pre><code>expect(parser.parse('repeat until 0')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10449,13 +10449,13 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>repeat until local                      -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat until local', {wait:true}).end).to.throwError(&quot;[1:13] &lt;expression&gt; expected near 'local'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat until local', {wait:true}).end).to.throwError(/^\[1:13\] &lt;expression&gt; expected near 'local'$/);</code></pre></dd>
         <dt>repeat end                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat end', {wait:true}).end).to.throwError(&quot;[1:7] 'until' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat end', {wait:true}).end).to.throwError(/^\[1:7\] 'until' expected near 'end'$/);</code></pre></dd>
         <dt>repeat 1                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat 1', {wait:true}).end).to.throwError(&quot;[1:7] Unexpected number '1' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat 1', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected number '1' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>repeat =                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat =', {wait:true}).end).to.throwError(&quot;[1:7] Unexpected symbol '=' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat =', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected symbol '=' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>repeat local a until 1</dt>
         <dd><pre><code>expect(parser.parse('repeat local a until 1')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10558,9 +10558,9 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>repeat 2 until 1                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat 2 until 1', {wait:true}).end).to.throwError(&quot;[1:7] Unexpected number '2' near 'until'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat 2 until 1', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected number '2' near 'until'$/);</code></pre></dd>
         <dt>repeat &quot;foo&quot; until 1                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat &quot;foo&quot; until 1', {wait:true}).end).to.throwError(&quot;[1:7] Unexpected string 'foo' near 'until'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat &quot;foo&quot; until 1', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected string 'foo' near 'until'$/);</code></pre></dd>
         <dt>repeat return until 0</dt>
         <dd><pre><code>expect(parser.parse('repeat return until 0')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10583,7 +10583,7 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>repeat return return until 0            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('repeat return return until 0', {wait:true}).end).to.throwError(&quot;[1:14] 'until' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('repeat return return until 0', {wait:true}).end).to.throwError(/^\[1:14\] 'until' expected near 'return'$/);</code></pre></dd>
         <dt>repeat break until 0</dt>
         <dd><pre><code>expect(parser.parse('repeat break until 0')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10682,7 +10682,7 @@ expect(test).to.eql(expected);</code></pre></dd>
       <h1>return</h1>
       <dl>
         <dt>return return                           -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('return return', {wait:true}).end).to.throwError(&quot;[1:7] Unexpected keyword 'return' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('return return', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected keyword 'return' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>return 1</dt>
         <dd><pre><code>expect(parser.parse('return 1')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10701,7 +10701,7 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>return local                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('return local', {wait:true}).end).to.throwError(&quot;[1:7] Unexpected keyword 'local' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('return local', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected keyword 'local' near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>return &quot;foo&quot;</dt>
         <dd><pre><code>expect(parser.parse('return &quot;foo&quot;')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10720,7 +10720,7 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>return 1,                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('return 1,', {wait:true}).end).to.throwError(&quot;[1:9] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('return 1,', {wait:true}).end).to.throwError(/^\[1:9\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>return 1,2,3</dt>
         <dd><pre><code>expect(parser.parse('return 1,2,3')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10814,7 +10814,7 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>::foo                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('::foo', {wait:true}).end).to.throwError(&quot;[1:5] '::' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('::foo', {wait:true}).end).to.throwError(/^\[1:5\] '::' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>::foo::</dt>
         <dd><pre><code>expect(parser.parse('::foo::')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10830,7 +10830,7 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>goto                                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('goto', {wait:true}).end).to.throwError(&quot;[1:4] &lt;name&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('goto', {wait:true}).end).to.throwError(/^\[1:4\] &lt;name&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>goto foo</dt>
         <dd><pre><code>expect(parser.parse('goto foo')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10846,14 +10846,14 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>nil                                     -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('nil', {wait:true}).end).to.throwError(&quot;[1:0] Unexpected symbol 'nil' near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('nil', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected symbol 'nil' near '&lt;eof&gt;'$/);</code></pre></dd>
       </dl>
     </section>
     <section class="suite">
       <h1>tableconstructors</h1>
       <dl>
         <dt>a = {                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = {', {wait:true}).end).to.throwError(&quot;[1:5] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = {', {wait:true}).end).to.throwError(/^\[1:5\] '\}' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = {}</dt>
         <dd><pre><code>expect(parser.parse('a = {}')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -10877,15 +10877,15 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = {,}                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = {,}', {wait:true}).end).to.throwError(&quot;[1:5] '}' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = {,}', {wait:true}).end).to.throwError(/^\[1:5\] '\}' expected near ','$/);</code></pre></dd>
         <dt>a = {;}                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = {;}', {wait:true}).end).to.throwError(&quot;[1:5] '}' expected near ';'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = {;}', {wait:true}).end).to.throwError(/^\[1:5\] '\}' expected near ';'$/);</code></pre></dd>
         <dt>a = {,,}                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = {,,}', {wait:true}).end).to.throwError(&quot;[1:5] '}' expected near ','&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = {,,}', {wait:true}).end).to.throwError(/^\[1:5\] '\}' expected near ','$/);</code></pre></dd>
         <dt>a = {;;}                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = {;;}', {wait:true}).end).to.throwError(&quot;[1:5] '}' expected near ';'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = {;;}', {wait:true}).end).to.throwError(/^\[1:5\] '\}' expected near ';'$/);</code></pre></dd>
         <dt>a = {{                                  -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = {{', {wait:true}).end).to.throwError(&quot;[1:6] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = {{', {wait:true}).end).to.throwError(/^\[1:6\] '\}' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = {{{}}}</dt>
         <dd><pre><code>expect(parser.parse('a = {{{}}}')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -11437,15 +11437,15 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = { a                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { a', {wait:true}).end).to.throwError(&quot;[1:7] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { a', {wait:true}).end).to.throwError(/^\[1:7\] '\}' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { a=                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { a=', {wait:true}).end).to.throwError(&quot;[1:8] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { a=', {wait:true}).end).to.throwError(/^\[1:8\] '\}' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { a=,                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { a=,', {wait:true}).end).to.throwError(&quot;[1:9] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { a=,', {wait:true}).end).to.throwError(/^\[1:9\] '\}' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { a=;                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { a=;', {wait:true}).end).to.throwError(&quot;[1:9] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { a=;', {wait:true}).end).to.throwError(/^\[1:9\] '\}' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { 1, a=&quot;foo&quot;                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { 1, a=&quot;foo&quot;', {wait:true}).end).to.throwError(&quot;[1:16] '}' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { 1, a=&quot;foo&quot;', {wait:true}).end).to.throwError(/^\[1:16\] '\}' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { 1, a=&quot;foo&quot;; b={}, d=true; }</dt>
         <dd><pre><code>expect(parser.parse('a = { 1, a=&quot;foo&quot;; b={}, d=true; }')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -11513,13 +11513,13 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = { [                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { [', {wait:true}).end).to.throwError(&quot;[1:7] ']' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { [', {wait:true}).end).to.throwError(/^\[1:7\] '\]' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { [1                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { [1', {wait:true}).end).to.throwError(&quot;[1:8] ']' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { [1', {wait:true}).end).to.throwError(/^\[1:8\] '\]' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { [1]                               -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { [1]', {wait:true}).end).to.throwError(&quot;[1:9] '=' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { [1]', {wait:true}).end).to.throwError(/^\[1:9\] '=' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { [a]=                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('a = { [a]=', {wait:true}).end).to.throwError(&quot;[1:10] &lt;expression&gt; expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('a = { [a]=', {wait:true}).end).to.throwError(/^\[1:10\] &lt;expression&gt; expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>a = { [&quot;foo&quot;]=&quot;bar&quot; }</dt>
         <dd><pre><code>expect(parser.parse('a = { [&quot;foo&quot;]=&quot;bar&quot; }')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -11665,13 +11665,13 @@ expect(test).to.eql(expected);</code></pre></dd>
       <h1>while</h1>
       <dl>
         <dt>while                                   -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while', {wait:true}).end).to.throwError(&quot;[1:5] 'do' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while', {wait:true}).end).to.throwError(/^\[1:5\] 'do' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>while do                                -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while do', {wait:true}).end).to.throwError(&quot;[1:8] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while do', {wait:true}).end).to.throwError(/^\[1:8\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>while =                                 -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while =', {wait:true}).end).to.throwError(&quot;[1:6] 'do' expected near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while =', {wait:true}).end).to.throwError(/^\[1:6\] 'do' expected near '='$/);</code></pre></dd>
         <dt>while 1 do                              -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 do', {wait:true}).end).to.throwError(&quot;[1:10] 'end' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 do', {wait:true}).end).to.throwError(/^\[1:10\] 'end' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>while 1 do end</dt>
         <dd><pre><code>expect(parser.parse('while 1 do end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -11790,9 +11790,9 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>while 1 do 2 end                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 do 2 end', {wait:true}).end).to.throwError(&quot;[1:11] Unexpected number '2' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 do 2 end', {wait:true}).end).to.throwError(/^\[1:11\] Unexpected number '2' near 'end'$/);</code></pre></dd>
         <dt>while 1 do &quot;foo&quot; end                    -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 do &quot;foo&quot; end', {wait:true}).end).to.throwError(&quot;[1:11] Unexpected string 'foo' near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 do &quot;foo&quot; end', {wait:true}).end).to.throwError(/^\[1:11\] Unexpected string 'foo' near 'end'$/);</code></pre></dd>
         <dt>while true do end</dt>
         <dd><pre><code>expect(parser.parse('while true do end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -11810,13 +11810,13 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>while 1 do while                        -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 do while', {wait:true}).end).to.throwError(&quot;[1:16] 'do' expected near '&lt;eof&gt;'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 do while', {wait:true}).end).to.throwError(/^\[1:16\] 'do' expected near '&lt;eof&gt;'$/);</code></pre></dd>
         <dt>while 1 end                             -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 end', {wait:true}).end).to.throwError(&quot;[1:8] 'do' expected near 'end'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 end', {wait:true}).end).to.throwError(/^\[1:8\] 'do' expected near 'end'$/);</code></pre></dd>
         <dt>while 1 2 do                            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 2 do', {wait:true}).end).to.throwError(&quot;[1:8] 'do' expected near '2'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 2 do', {wait:true}).end).to.throwError(/^\[1:8\] 'do' expected near '2'$/);</code></pre></dd>
         <dt>while 1 = 2 do                          -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 = 2 do', {wait:true}).end).to.throwError(&quot;[1:8] 'do' expected near '='&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 = 2 do', {wait:true}).end).to.throwError(/^\[1:8\] 'do' expected near '='$/);</code></pre></dd>
         <dt>while 1 do return end</dt>
         <dd><pre><code>expect(parser.parse('while 1 do return end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -11839,7 +11839,7 @@ expect(test).to.eql(expected);</code></pre></dd>
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>while 1 do return return end            -- FAIL</dt>
-        <dd><pre><code>expect(parser.parse('while 1 do return return end', {wait:true}).end).to.throwError(&quot;[1:18] 'end' expected near 'return'&quot;);</code></pre></dd>
+        <dd><pre><code>expect(parser.parse('while 1 do return return end', {wait:true}).end).to.throwError(/^\[1:18\] 'end' expected near 'return'$/);</code></pre></dd>
         <dt>while 1 do do end end</dt>
         <dd><pre><code>expect(parser.parse('while 1 do do end end')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
