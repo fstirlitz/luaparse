@@ -4,7 +4,6 @@
 'use strict';
 
 var Benchmark = require('benchmark')
-  , memwatch = require('memwatch')
   , luaparse = require('../')
   , fs = require('fs')
   , path = require('path')
@@ -13,19 +12,17 @@ var Benchmark = require('benchmark')
   , suite = new Benchmark.Suite()
   , results = []
   , verbose = false
-  , heap = false
   , minSamples = 5
   , minTime = 0;
 
 if (!files.length) {
   console.log("Usage:\n\tbenchmark [snippet|file]...");
-  console.log("Flags:\n\t-v|--verbose\n\t--samples=\n\t--minTime=\n\t--heap");
+  console.log("Flags:\n\t-v|--verbose\n\t--samples=\n\t--minTime=");
   process.exit(1);
 }
 
 files.forEach(function(file) {
   if (/^-v|--verbose/.test(file)) return verbose = true;
-  if (/^--heap/.test(file)) return heap = true;
   if (/^--samples=/.test(file)) {
     minSamples = file.replace(/^--samples=/, '');
     return;
@@ -39,16 +36,6 @@ files.forEach(function(file) {
   else suites[file] = fs.readFileSync(file, 'utf-8');
 });
 
-function insertHeap(file, source) {
-  var hd, diff;
-  for (var i = 0, l = minSamples; i < l; i++) {
-    hd = new memwatch.HeapDiff();
-    luaparse.parse(source);
-    diff = hd.end();
-    console.log(file + '\t' + diff.change.size);
-  }
-}
-
 function insertBenchmark(file, source) {
   suite.add(file, function() {
     luaparse.parse(source);
@@ -56,19 +43,16 @@ function insertBenchmark(file, source) {
 }
 
 Object.keys(suites).forEach(function(file) {
-  if (heap) insertHeap(file, suites[file]);
-  else insertBenchmark(file, suites[file]);
+  insertBenchmark(file, suites[file]);
 });
 
-if (!heap) {
-  suite.on('cycle', function(event) {
-    var stats = event.target.stats
-      , mean = (stats.mean * 1000).toFixed(4)
-      , variance = (stats.variance * 1000 * 1000).toFixed(4);
-    if (verbose) console.log(String(event.target) + ' (' + mean + 'ms)');
-    else console.log(mean + '\t' + variance);
-  });
-  suite.run();
-}
+suite.on('cycle', function(event) {
+  var stats = event.target.stats
+    , mean = (stats.mean * 1000).toFixed(4)
+    , variance = (stats.variance * 1000 * 1000).toFixed(4);
+  if (verbose) console.log(String(event.target) + ' (' + mean + 'ms)');
+  else console.log(mean + '\t' + variance);
+});
+suite.run();
 
 /* vim: set sw=2 ts=2 et tw=80 ft=javascript : */

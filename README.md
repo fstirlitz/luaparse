@@ -81,11 +81,9 @@ Benchmark a code snippet or a script file
       -v|--verbose
       --samples=5
       --minTime=0
-      --heap
 
     Example:
       ./scripts/benchmark -v --samples=100 --minTime=10 'local i = 1' 'i = 1'
-      ./scripts/benchmark --heap benchmarks/lib/ParseLua.lua
 
 List function complexity with an optional threshold defaulting to 10.
 
