@@ -43,27 +43,17 @@
     </div>
     <div class="container">
 <h1>luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.png" alt="Build Status"></a></h1>
-<p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.
-
-</p>
-<p><em>Still in development</em>
-
-</p>
+<p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.</p>
+<p><em>Still in development</em></p>
 <h2>Getting started</h2>
-<p>CommonJS
-
-</p>
+<p>CommonJS</p>
 <pre><code class="lang-javascript">var parser = require(&#39;luaparse&#39;);
 parser.parse(&#39;i = 0&#39;);</code></pre>
-<p>AMD
-
-</p>
+<p>AMD</p>
 <pre><code class="lang-javascript">require([&#39;luaparse&#39;], function(parser) {
   parser.parse(&#39;i = 0&#39;);
 });</code></pre>
-<p>Browser
-
-</p>
+<p>Browser</p>
 <pre><code class="lang-javascript">luaparse.parse(&#39;i = 0&#39;);</code></pre>
 <h2>Makefile</h2>
 <h3>Common</h3>
@@ -103,31 +93,23 @@ make profile
 # Run full benchmark
 make benchmark-full</code></pre>
 <h2>Scripts</h2>
-<p>Benchmark a code snippet or a script file
-
-</p>
+<p>Benchmark a code snippet or a script file</p>
 <pre><code>./scripts/benchmark [snippet|file]...
 
 Flags:
   -v|--verbose
   --samples=5
   --minTime=0
-  --heap
 
 Example:
-  ./scripts/benchmark -v --samples=100 --minTime=10 &#39;local i = 1&#39; &#39;i = 1&#39;
-  ./scripts/benchmark --heap benchmarks/lib/ParseLua.lua</code></pre>
-<p>List function complexity with an optional threshold defaulting to 10.
-
-</p>
+  ./scripts/benchmark -v --samples=100 --minTime=10 &#39;local i = 1&#39; &#39;i = 1&#39;</code></pre>
+<p>List function complexity with an optional threshold defaulting to 10.</p>
 <pre><code>./scripts/complexity [threshold]
 
 Example:
   ./scripts/complexity 5</code></pre>
 <p>Create a test from a snippet or a file of snippets separated by a newline.
-If a snippet ends with &quot;-- FAIL&quot; it will generate a failing test.
-
-</p>
+If a snippet ends with &quot;-- FAIL&quot; it will generate a failing test.</p>
 <pre><code>./scripts/make-test [snippet|file]...
 
 Flags:
@@ -143,18 +125,14 @@ Example:
 <li>Location tracking</li>
 </ul>
 <h2>Support</h2>
-<p>Has been tested in IE6+, Firefox 3+, Safari 4+, Chrome 10+, Node
-
-</p>
+<p>Has been tested in IE6+, Firefox 3+, Safari 4+, Chrome 10+, Node</p>
 <h2>Acknowledgements</h2>
 <ul>
 <li>Initial tests are scaffolded from <a href="http://yueliang.luaforge.net/">yueliang</a> and then manually checked for error.</li>
 <li>Much of the code is based on <a href="https://github.com/stravant/LuaMinify">LuaMinify</a>, the <a href="http://www.lua.org">Lua</a> source and <a href="http://esprima.org">Esprima</a>. All awesome projects.</li>
 </ul>
 <h2>License</h2>
-<p>MIT
-
-</p>
+<p>MIT</p>
 
     </div>
   </body>
