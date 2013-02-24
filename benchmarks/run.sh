@@ -226,7 +226,7 @@ benchmark() {
 
     if ((lua)); then
       benchLuaminify "lua5.1" "$samples"
-      benchLuaminify "luajit-2.0.0-beta9" "$samples"
+      benchLuaminify "luajit" "$samples"
     fi
 
     if ((esprima)); then
