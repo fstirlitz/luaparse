@@ -1535,34 +1535,38 @@ parser.parse('i = 0');
     input = _input || <span class="string">''</span>;
     options = extend(defaultOptions, _options);
 
+</pre></div>             </td>           </tr>                               <tr id="section-128">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-128">&#182;</a>               </div>               <p>Rewind the lexer</p>             </td>             <td class="code">               <div class="highlight"><pre>    index = <span class="number">0</span>;
+    line = <span class="number">1</span>;
+    lineStart = <span class="number">0</span>;
+    length = input.length;
+
     <span class="keyword">if</span> (options.comments) comments = [];
     <span class="keyword">if</span> (!options.wait) <span class="keyword">return</span> end();
     <span class="keyword">return</span> exports;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-128">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-128">&#182;</a>               </div>               <p>Write to the source code buffer without beginning the parse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.write = write;
+</pre></div>             </td>           </tr>                               <tr id="section-129">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-129">&#182;</a>               </div>               <p>Write to the source code buffer without beginning the parse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.write = write;
 
   <span class="function"><span class="keyword">function</span> <span class="title">write</span><span class="params">(_input)</span> {</span>
     input += String(_input);
+    length = input.length;
     <span class="keyword">return</span> exports;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-129">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-129">&#182;</a>               </div>               <p>Send an EOF and begin parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.end = end;
+</pre></div>             </td>           </tr>                               <tr id="section-130">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-130">&#182;</a>               </div>               <p>Send an EOF and begin parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.end = end;
 
   <span class="function"><span class="keyword">function</span> <span class="title">end</span><span class="params">(_input)</span> {</span>
     <span class="keyword">if</span> (<span class="string">'undefined'</span> !== <span class="keyword">typeof</span> _input) write(_input);
 
     length = input.length;
-    index = <span class="number">0</span>;
-    line = <span class="number">1</span>;
-    lineStart = <span class="number">0</span>;
-
-</pre></div>             </td>           </tr>                               <tr id="section-130">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-130">&#182;</a>               </div>               <p>Initialize with a lookahead token.</p>             </td>             <td class="code">               <div class="highlight"><pre>    lookahead = readToken();
+</pre></div>             </td>           </tr>                               <tr id="section-131">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-131">&#182;</a>               </div>               <p>Initialize with a lookahead token.</p>             </td>             <td class="code">               <div class="highlight"><pre>    lookahead = readToken();
 
     <span class="keyword">var</span> chunk = parseChunk();
     <span class="keyword">if</span> (options.comments) chunk.comments = comments;
     <span class="keyword">return</span> chunk;
   }
+
+</pre></div>             </td>           </tr>                               <tr id="section-132">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-132">&#182;</a>               </div>               <p>Expose the lex function</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.lex = readToken;
 
 }));
 <span class="comment">/* vim: set sw=2 ts=2 et tw=79 : */</span>
