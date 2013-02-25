@@ -70,7 +70,7 @@ docs-test:
 		> docs/tests.html
 
 docs-index:
-	@cat README.md | ./node_modules/.bin/marked --gfm \
+	@./node_modules/.bin/marked README.md --gfm \
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> docs/index.html
 
@@ -78,7 +78,7 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 
 %.html: %.md
 	@echo $<
-	@cat $< | ./node_modules/.bin/marked --gfm \
+	@./node_modules/.bin/marked $< --gfm \
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> $@
 

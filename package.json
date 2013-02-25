@@ -38,7 +38,7 @@
     "mocha-istanbul": "git://github.com/oxyc/mocha-istanbul.git#json",
     "grunt": "~0.3.17",
     "doccoh": "~0.4.1*",
-    "marked": "~0.2.6",
+    "marked": "~0.2.8",
     "benchmark": "~1.0.0",
     "grunt-lint-inline": "~0.0.1",
     "grunt-lint-bash": "~0.0.1",
