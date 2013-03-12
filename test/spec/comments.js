@@ -197,7 +197,7 @@ describe('comments', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": true,
