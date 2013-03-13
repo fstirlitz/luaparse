@@ -39,7 +39,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -61,7 +61,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -94,7 +94,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -137,7 +137,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -180,7 +180,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -206,7 +206,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -254,7 +254,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -308,7 +308,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -317,7 +317,7 @@ describe('conditional', function() {
             {
               "type": "ElseifClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               },
@@ -339,7 +339,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -359,7 +359,7 @@ describe('conditional', function() {
             {
               "type": "ElseifClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               },
@@ -392,7 +392,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -412,7 +412,7 @@ describe('conditional', function() {
             {
               "type": "ElseifClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               },
@@ -445,7 +445,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -454,7 +454,7 @@ describe('conditional', function() {
             {
               "type": "ElseifClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               },
@@ -480,7 +480,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -495,7 +495,7 @@ describe('conditional', function() {
                     {
                       "type": "IfClause",
                       "condition": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 2,
                         "raw": "2"
                       },
@@ -524,7 +524,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -554,7 +554,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -568,7 +568,7 @@ describe('conditional', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },

@@ -12,7 +12,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },
@@ -29,7 +29,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "BooleanLiteral",
             "value": false,
             "raw": "false"
           },
@@ -58,7 +58,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 1,
             "raw": "1"
           },
@@ -86,7 +86,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },
@@ -124,7 +124,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },
@@ -168,7 +168,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },
@@ -193,7 +193,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },
@@ -214,7 +214,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },
@@ -236,7 +236,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },
@@ -263,7 +263,7 @@ describe('repeat', function() {
         {
           "type": "RepeatStatement",
           "condition": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 0,
             "raw": "0"
           },

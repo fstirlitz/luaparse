@@ -25,7 +25,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -49,17 +49,17 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 2,
               "raw": "2"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 3,
               "raw": "3"
             }
@@ -91,7 +91,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -123,17 +123,17 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 2,
               "raw": "2"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 3,
               "raw": "3"
             }
@@ -165,7 +165,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -205,7 +205,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -236,7 +236,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -274,7 +274,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -313,7 +313,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -352,7 +352,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -394,7 +394,7 @@ describe('assignments', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }

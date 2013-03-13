@@ -151,7 +151,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -183,7 +183,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -215,7 +215,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -247,7 +247,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -255,7 +255,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 2,
                     "raw": "2"
                   }
@@ -332,7 +332,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": true,
                     "raw": "true"
                   }
@@ -340,7 +340,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": false,
                     "raw": "false"
                   }
@@ -348,7 +348,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "NilLiteral",
                     "value": null,
                     "raw": "nil"
                   }
@@ -455,12 +455,12 @@ describe('tableconstructors', function() {
                     "type": "BinaryExpression",
                     "operator": "+",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 1,
                       "raw": "1"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     }
@@ -487,12 +487,12 @@ describe('tableconstructors', function() {
                     "type": "LogicalExpression",
                     "operator": "or",
                     "left": {
-                      "type": "Literal",
+                      "type": "StringLiteral",
                       "value": "a",
                       "raw": "\"a\""
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "StringLiteral",
                       "value": "b",
                       "raw": "\"b\""
                     }
@@ -529,7 +529,7 @@ describe('tableconstructors', function() {
                     "name": "a"
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -565,7 +565,7 @@ describe('tableconstructors', function() {
                     "name": "a"
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -577,7 +577,7 @@ describe('tableconstructors', function() {
                     "name": "b"
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "foo",
                     "raw": "\"foo\""
                   }
@@ -589,7 +589,7 @@ describe('tableconstructors', function() {
                     "name": "c"
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "NilLiteral",
                     "value": null,
                     "raw": "nil"
                   }
@@ -636,7 +636,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -648,7 +648,7 @@ describe('tableconstructors', function() {
                     "name": "a"
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "foo",
                     "raw": "\"foo\""
                   }
@@ -671,7 +671,7 @@ describe('tableconstructors', function() {
                     "name": "d"
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": true,
                     "raw": "true"
                   }
@@ -715,12 +715,12 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableKey",
                   "key": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "foo",
                     "raw": "\"foo\""
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "bar",
                     "raw": "\"bar\""
                   }
@@ -752,7 +752,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableKey",
                   "key": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   },
@@ -764,7 +764,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableKey",
                   "key": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 2,
                     "raw": "2"
                   },
@@ -800,7 +800,7 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": true,
                     "raw": "true"
                   }
@@ -812,7 +812,7 @@ describe('tableconstructors', function() {
                     "name": "a"
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
@@ -820,12 +820,12 @@ describe('tableconstructors', function() {
                 {
                   "type": "TableKey",
                   "key": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "foo",
                     "raw": "\"foo\""
                   },
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "bar",
                     "raw": "\"bar\""
                   }

@@ -16,7 +16,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "-",
               "argument": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 10,
                 "raw": "10"
               }
@@ -44,7 +44,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "-",
               "argument": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               }
@@ -99,7 +99,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "-",
               "argument": {
-                "type": "Literal",
+                "type": "NilLiteral",
                 "value": null,
                 "raw": "nil"
               }
@@ -127,7 +127,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "-",
               "argument": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": true,
                 "raw": "true"
               }
@@ -184,7 +184,6 @@ describe('operators', function() {
               "argument": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -274,7 +273,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "not",
               "argument": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 10,
                 "raw": "10"
               }
@@ -302,7 +301,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "not",
               "argument": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               }
@@ -357,7 +356,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "not",
               "argument": {
-                "type": "Literal",
+                "type": "NilLiteral",
                 "value": null,
                 "raw": "nil"
               }
@@ -385,7 +384,7 @@ describe('operators', function() {
               "type": "UnaryExpression",
               "operator": "not",
               "argument": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": true,
                 "raw": "true"
               }
@@ -442,7 +441,6 @@ describe('operators', function() {
               "argument": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -532,12 +530,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "+",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -557,12 +555,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "-",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -590,12 +588,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "*",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -615,12 +613,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "/",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -648,12 +646,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "^",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -673,12 +671,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "..",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -715,7 +713,7 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "+",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -723,7 +721,7 @@ describe('operators', function() {
                 "type": "UnaryExpression",
                 "operator": "-",
                 "argument": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
@@ -744,7 +742,7 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "-",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -752,7 +750,7 @@ describe('operators', function() {
                 "type": "UnaryExpression",
                 "operator": "-",
                 "argument": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
@@ -784,7 +782,7 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "*",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -792,7 +790,7 @@ describe('operators', function() {
                 "type": "UnaryExpression",
                 "operator": "not",
                 "argument": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
@@ -813,7 +811,7 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "/",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -821,7 +819,7 @@ describe('operators', function() {
                 "type": "UnaryExpression",
                 "operator": "not",
                 "argument": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
@@ -856,12 +854,12 @@ describe('operators', function() {
                 "type": "BinaryExpression",
                 "operator": "+",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
@@ -873,12 +871,12 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "*",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 3,
                     "raw": "3"
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 4,
                     "raw": "4"
                   }
@@ -887,12 +885,12 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "^",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 5,
                     "raw": "5"
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 6,
                     "raw": "6"
                   }
@@ -928,18 +926,18 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "+",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 2,
                     "raw": "2"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 3,
                   "raw": "3"
                 }
@@ -948,7 +946,7 @@ describe('operators', function() {
                 "type": "BinaryExpression",
                 "operator": "/",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 4,
                   "raw": "4"
                 },
@@ -956,12 +954,12 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "^",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 5,
                     "raw": "5"
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 6,
                     "raw": "6"
                   }
@@ -991,7 +989,7 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "+",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
@@ -999,7 +997,7 @@ describe('operators', function() {
                 "type": "BinaryExpression",
                 "operator": "-",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 },
@@ -1007,7 +1005,7 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "*",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 3,
                     "raw": "3"
                   },
@@ -1015,7 +1013,7 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "/",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 4,
                       "raw": "4"
                     },
@@ -1023,12 +1021,12 @@ describe('operators', function() {
                       "type": "BinaryExpression",
                       "operator": "^",
                       "left": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 5,
                         "raw": "5"
                       },
                       "right": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 6,
                         "raw": "6"
                       }
@@ -1108,12 +1106,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "+",
               "left": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               },
               "right": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "bar",
                 "raw": "\"bar\""
               }
@@ -1141,7 +1139,7 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "..",
               "left": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               },
@@ -1149,12 +1147,12 @@ describe('operators', function() {
                 "type": "BinaryExpression",
                 "operator": "..",
                 "left": {
-                  "type": "Literal",
+                  "type": "StringLiteral",
                   "value": "bar",
                   "raw": "\"bar\""
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "StringLiteral",
                   "value": "baz",
                   "raw": "\"baz\""
                 }
@@ -1186,18 +1184,18 @@ describe('operators', function() {
                 "type": "BinaryExpression",
                 "operator": "+",
                 "left": {
-                  "type": "Literal",
+                  "type": "BooleanLiteral",
                   "value": true,
                   "raw": "true"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "BooleanLiteral",
                   "value": false,
                   "raw": "false"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "NilLiteral",
                 "value": null,
                 "raw": "nil"
               }
@@ -1258,7 +1256,6 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -1266,7 +1263,6 @@ describe('operators', function() {
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -1334,12 +1330,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "==",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1359,12 +1355,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "~=",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1392,12 +1388,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "<",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1417,12 +1413,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "<=",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1450,12 +1446,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": ">",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1475,12 +1471,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": ">=",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1511,18 +1507,18 @@ describe('operators', function() {
                 "type": "BinaryExpression",
                 "operator": "<",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 3,
                 "raw": "3"
               }
@@ -1553,18 +1549,18 @@ describe('operators', function() {
                 "type": "BinaryExpression",
                 "operator": ">=",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 3,
                 "raw": "3"
               }
@@ -1604,12 +1600,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "==",
               "left": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               },
               "right": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "bar",
                 "raw": "\"bar\""
               }
@@ -1637,12 +1633,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": ">",
               "left": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               },
               "right": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "bar",
                 "raw": "\"bar\""
               }
@@ -1701,12 +1697,12 @@ describe('operators', function() {
               "type": "BinaryExpression",
               "operator": "==",
               "left": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": true,
                 "raw": "true"
               },
               "right": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": false,
                 "raw": "false"
               }
@@ -1734,12 +1730,12 @@ describe('operators', function() {
               "type": "LogicalExpression",
               "operator": "and",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1759,12 +1755,12 @@ describe('operators', function() {
               "type": "LogicalExpression",
               "operator": "or",
               "left": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               }
@@ -1801,18 +1797,18 @@ describe('operators', function() {
                 "type": "LogicalExpression",
                 "operator": "and",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 3,
                 "raw": "3"
               }
@@ -1843,18 +1839,18 @@ describe('operators', function() {
                 "type": "LogicalExpression",
                 "operator": "or",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 3,
                 "raw": "3"
               }
@@ -1885,18 +1881,18 @@ describe('operators', function() {
                 "type": "LogicalExpression",
                 "operator": "and",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 3,
                 "raw": "3"
               }
@@ -2018,12 +2014,12 @@ describe('operators', function() {
               "type": "LogicalExpression",
               "operator": "and",
               "left": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               },
               "right": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "bar",
                 "raw": "\"bar\""
               }
@@ -2051,12 +2047,12 @@ describe('operators', function() {
               "type": "LogicalExpression",
               "operator": "or",
               "left": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": true,
                 "raw": "true"
               },
               "right": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": false,
                 "raw": "false"
               }
@@ -2126,18 +2122,18 @@ describe('operators', function() {
                 "type": "LogicalExpression",
                 "operator": "and",
                 "left": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "StringLiteral",
                   "value": "foo",
                   "raw": "\"foo\""
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "NilLiteral",
                 "value": null,
                 "raw": "nil"
               }
@@ -2167,7 +2163,6 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2175,7 +2170,6 @@ describe('operators', function() {
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2206,7 +2200,6 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2214,7 +2207,6 @@ describe('operators', function() {
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2252,30 +2244,30 @@ describe('operators', function() {
                     "type": "LogicalExpression",
                     "operator": "or",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 1,
                       "raw": "1"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "BooleanLiteral",
                       "value": false,
                       "raw": "false"
                     }
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": true,
                     "raw": "true"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "BooleanLiteral",
                   "value": false,
                   "raw": "false"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": true,
                 "raw": "true"
               }
@@ -2312,30 +2304,30 @@ describe('operators', function() {
                     "type": "LogicalExpression",
                     "operator": "and",
                     "left": {
-                      "type": "Literal",
+                      "type": "NilLiteral",
                       "value": null,
                       "raw": "nil"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "BooleanLiteral",
                       "value": true,
                       "raw": "true"
                     }
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": false,
                     "raw": "false"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "BooleanLiteral",
                   "value": true,
                   "raw": "true"
                 }
               },
               "right": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": false,
                 "raw": "false"
               }
@@ -2369,18 +2361,18 @@ describe('operators', function() {
                   "type": "LogicalExpression",
                   "operator": "or",
                   "left": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": true,
                     "raw": "true"
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "BooleanLiteral",
                     "value": false,
                     "raw": "false"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NilLiteral",
                   "value": null,
                   "raw": "nil"
                 }
@@ -2409,7 +2401,7 @@ describe('operators', function() {
               "type": "LogicalExpression",
               "operator": "or",
               "left": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": true,
                 "raw": "true"
               },
@@ -2417,12 +2409,12 @@ describe('operators', function() {
                 "type": "LogicalExpression",
                 "operator": "and",
                 "left": {
-                  "type": "Literal",
+                  "type": "BooleanLiteral",
                   "value": false,
                   "raw": "false"
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NilLiteral",
                   "value": null,
                   "raw": "nil"
                 }
@@ -2457,7 +2449,7 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "^",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 2,
                     "raw": "2"
                   },
@@ -2465,7 +2457,7 @@ describe('operators', function() {
                     "type": "UnaryExpression",
                     "operator": "-",
                     "argument": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     }
@@ -2475,12 +2467,12 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "/",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 4,
                     "raw": "4"
                   }
@@ -2496,7 +2488,7 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "^",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     },
@@ -2507,7 +2499,7 @@ describe('operators', function() {
                         "type": "UnaryExpression",
                         "operator": "-",
                         "argument": {
-                          "type": "Literal",
+                          "type": "NumericLiteral",
                           "value": 2,
                           "raw": "2"
                         }
@@ -2525,7 +2517,7 @@ describe('operators', function() {
                       "type": "UnaryExpression",
                       "operator": "-",
                       "argument": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 4,
                         "raw": "4"
                       }
@@ -2566,19 +2558,19 @@ describe('operators', function() {
                     "type": "UnaryExpression",
                     "operator": "-",
                     "argument": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     }
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 5,
                   "raw": "5"
                 }
@@ -2590,18 +2582,18 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "+",
                   "left": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 0,
                     "raw": "0"
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 0,
                     "raw": "0"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 9,
                   "raw": "9"
                 }
@@ -2642,12 +2634,12 @@ describe('operators', function() {
                       "type": "BinaryExpression",
                       "operator": "^",
                       "left": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 2,
                         "raw": "2"
                       },
                       "right": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 2,
                         "raw": "2"
                       }
@@ -2657,7 +2649,7 @@ describe('operators', function() {
                     "type": "UnaryExpression",
                     "operator": "-",
                     "argument": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 4,
                       "raw": "4"
                     }
@@ -2673,19 +2665,19 @@ describe('operators', function() {
                       "type": "UnaryExpression",
                       "operator": "-",
                       "argument": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 2,
                         "raw": "2"
                       }
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     }
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 4,
                     "raw": "4"
                   }
@@ -2704,30 +2696,30 @@ describe('operators', function() {
                       "type": "BinaryExpression",
                       "operator": "*",
                       "left": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 2,
                         "raw": "2"
                       },
                       "right": {
-                        "type": "Literal",
+                        "type": "NumericLiteral",
                         "value": 2,
                         "raw": "2"
                       }
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     }
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "NumericLiteral",
                     "value": 1,
                     "raw": "1"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 0,
                   "raw": "0"
                 }
@@ -2765,12 +2757,12 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "*",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 1,
                       "raw": "1"
                     }
@@ -2779,19 +2771,19 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "/",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     }
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 3,
                   "raw": "3"
                 }
@@ -2806,12 +2798,12 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "+",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 1,
                       "raw": "1"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     }
@@ -2820,19 +2812,19 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "*",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 1,
                       "raw": "1"
                     }
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "StringLiteral",
                   "value": "33",
                   "raw": "\"33\""
                 }
@@ -2867,13 +2859,13 @@ describe('operators', function() {
                   "type": "UnaryExpression",
                   "operator": "not",
                   "argument": {
-                    "type": "Literal",
+                    "type": "NilLiteral",
                     "value": null,
                     "raw": "nil"
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 2,
                   "raw": "2"
                 }
@@ -2888,12 +2880,12 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": ">",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     }
@@ -2902,12 +2894,12 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "<",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     }
@@ -2947,12 +2939,12 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "+",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 2,
                       "raw": "2"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 1,
                       "raw": "1"
                     }
@@ -2961,12 +2953,12 @@ describe('operators', function() {
                     "type": "BinaryExpression",
                     "operator": "*",
                     "left": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 3,
                       "raw": "3"
                     },
                     "right": {
-                      "type": "Literal",
+                      "type": "NumericLiteral",
                       "value": 1,
                       "raw": "1"
                     }
@@ -2980,18 +2972,18 @@ describe('operators', function() {
                   "type": "BinaryExpression",
                   "operator": "..",
                   "left": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "a",
                     "raw": "\"a\""
                   },
                   "right": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "b",
                     "raw": "\"b\""
                   }
                 },
                 "right": {
-                  "type": "Literal",
+                  "type": "StringLiteral",
                   "value": "a",
                   "raw": "\"a\""
                 }

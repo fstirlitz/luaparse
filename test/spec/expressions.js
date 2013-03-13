@@ -16,7 +16,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "[[foo]]"
             }
@@ -86,7 +86,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NilLiteral",
               "value": null,
               "raw": "nil"
             }
@@ -110,7 +110,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "BooleanLiteral",
               "value": true,
               "raw": "true"
             }
@@ -134,7 +134,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -158,7 +158,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "\"foo\""
             }
@@ -182,7 +182,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "[[foo]]"
             }
@@ -341,7 +341,7 @@ describe('expressions', function() {
                 "name": "a"
               },
               "index": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               }
@@ -372,7 +372,7 @@ describe('expressions', function() {
                 "name": "a"
               },
               "index": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               }
@@ -841,7 +841,11 @@ describe('expressions', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": "foo"
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\""
+              }
             }
           ]
         }
@@ -910,7 +914,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": false,
               "local": false,
               "parameters": [],
               "body": []
@@ -940,7 +943,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": false,
               "local": false,
               "parameters": [
                 {
@@ -957,10 +959,10 @@ describe('expressions', function() {
     });
   });
   it('a = function(p,)                        -- FAIL', function() {
-    expect(parser.parse('a = function(p,)', {wait:true}).end).to.throwError(/^\[1:15\] <name> expected near '\)'$/);
+    expect(parser.parse('a = function(p,)', {wait:true}).end).to.throwError(/^\[1:15\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('a = function(p q                        -- FAIL', function() {
-    expect(parser.parse('a = function(p q', {wait:true}).end).to.throwError(/^\[1:15\] <name> or '\.\.\.' expected near 'q'$/);
+    expect(parser.parse('a = function(p q', {wait:true}).end).to.throwError(/^\[1:16\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('a = function(p,q,r) end', function() {
     expect(parser.parse('a = function(p,q,r) end')).to.eql({
@@ -978,7 +980,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": false,
               "local": false,
               "parameters": [
                 {
@@ -1003,7 +1004,7 @@ describe('expressions', function() {
     });
   });
   it('a = function(p,q,1                      -- FAIL', function() {
-    expect(parser.parse('a = function(p,q,1', {wait:true}).end).to.throwError(/^\[1:17\] <name> expected near '1'$/);
+    expect(parser.parse('a = function(p,q,1', {wait:true}).end).to.throwError(/^\[1:17\] <name> or '\.\.\.' expected near '1'$/);
   });
   it('a = function(...) end', function() {
     expect(parser.parse('a = function(...) end')).to.eql({
@@ -1021,9 +1022,14 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": true,
               "local": false,
-              "parameters": [],
+              "parameters": [
+                {
+                  "type": "VarargLiteral",
+                  "value": "...",
+                  "raw": "..."
+                }
+              ],
               "body": []
             }
           ]
@@ -1051,12 +1057,16 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": true,
               "local": false,
               "parameters": [
                 {
                   "type": "Identifier",
                   "name": "p"
+                },
+                {
+                  "type": "VarargLiteral",
+                  "value": "...",
+                  "raw": "..."
                 }
               ],
               "body": []
@@ -1083,7 +1093,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": true,
               "local": false,
               "parameters": [
                 {
@@ -1097,6 +1106,11 @@ describe('expressions', function() {
                 {
                   "type": "Identifier",
                   "name": "r"
+                },
+                {
+                  "type": "VarargLiteral",
+                  "value": "...",
+                  "raw": "..."
                 }
               ],
               "body": []
@@ -1126,7 +1140,7 @@ describe('expressions', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "-",
                     "raw": "'-'"
                   }
@@ -1158,7 +1172,7 @@ describe('expressions', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "not",
                     "raw": "'not'"
                   }
@@ -1193,7 +1207,7 @@ describe('expressions', function() {
                     "type": "UnaryExpression",
                     "operator": "not",
                     "argument": {
-                      "type": "Literal",
+                      "type": "BooleanLiteral",
                       "value": true,
                       "raw": "true"
                     }

@@ -125,7 +125,7 @@ describe('local', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -186,12 +186,12 @@ describe('local', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 2,
               "raw": "2"
             }
@@ -223,17 +223,17 @@ describe('local', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 2,
               "raw": "2"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 3,
               "raw": "3"
             }
@@ -265,7 +265,7 @@ describe('local', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -289,17 +289,17 @@ describe('local', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 2,
               "raw": "2"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 3,
               "raw": "3"
             }
@@ -358,7 +358,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [],
           "body": []
@@ -377,10 +376,10 @@ describe('local', function() {
     expect(parser.parse('local function a(p', {wait:true}).end).to.throwError(/^\[1:18\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('local function a(p,)                    -- FAIL', function() {
-    expect(parser.parse('local function a(p,)', {wait:true}).end).to.throwError(/^\[1:19\] <name> expected near '\)'$/);
+    expect(parser.parse('local function a(p,)', {wait:true}).end).to.throwError(/^\[1:19\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('local function a(p q                    -- FAIL', function() {
-    expect(parser.parse('local function a(p q', {wait:true}).end).to.throwError(/^\[1:19\] <name> or '\.\.\.' expected near 'q'$/);
+    expect(parser.parse('local function a(p q', {wait:true}).end).to.throwError(/^\[1:20\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('local function a(p) end', function() {
     expect(parser.parse('local function a(p) end')).to.eql({
@@ -392,7 +391,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [
             {
@@ -407,7 +405,7 @@ describe('local', function() {
     });
   });
   it('local function a(p,q,) end              -- FAIL', function() {
-    expect(parser.parse('local function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:21\] <name> expected near '\)'$/);
+    expect(parser.parse('local function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:21\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('local function a(p,q,r) end', function() {
     expect(parser.parse('local function a(p,q,r) end')).to.eql({
@@ -419,7 +417,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [
             {
@@ -442,7 +439,7 @@ describe('local', function() {
     });
   });
   it('local function a(p,q,1                  -- FAIL', function() {
-    expect(parser.parse('local function a(p,q,1', {wait:true}).end).to.throwError(/^\[1:21\] <name> expected near '1'$/);
+    expect(parser.parse('local function a(p,q,1', {wait:true}).end).to.throwError(/^\[1:21\] <name> or '\.\.\.' expected near '1'$/);
   });
   it('local function a(p) do                  -- FAIL', function() {
     expect(parser.parse('local function a(p) do', {wait:true}).end).to.throwError(/^\[1:22\] 'end' expected near '<eof>'$/);
@@ -460,7 +457,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [
             {
@@ -492,7 +488,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [
             {
@@ -527,9 +522,14 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": true,
           "local": true,
-          "parameters": [],
+          "parameters": [
+            {
+              "type": "VarargLiteral",
+              "value": "...",
+              "raw": "..."
+            }
+          ],
           "body": []
         }
       ],
@@ -549,12 +549,16 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": true,
           "local": true,
           "parameters": [
             {
               "type": "Identifier",
               "name": "p"
+            },
+            {
+              "type": "VarargLiteral",
+              "value": "...",
+              "raw": "..."
             }
           ],
           "body": []
@@ -573,7 +577,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": true,
           "local": true,
           "parameters": [
             {
@@ -587,6 +590,11 @@ describe('local', function() {
             {
               "type": "Identifier",
               "name": "r"
+            },
+            {
+              "type": "VarargLiteral",
+              "value": "...",
+              "raw": "..."
             }
           ],
           "body": []
@@ -605,7 +613,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [],
           "body": [
@@ -645,7 +652,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [],
           "body": [
@@ -685,7 +691,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [],
           "body": []
@@ -696,7 +701,6 @@ describe('local', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": true,
           "parameters": [],
           "body": []
