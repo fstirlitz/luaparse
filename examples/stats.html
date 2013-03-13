@@ -86,8 +86,7 @@
 
     $('#analyze').on('click', function() {
         var nodes = {}
-          , expressions = {}
-          , literals = {};
+          , expressions = {};
 
       function increment(stats, type) {
         if (!stats[type]) stats[type] = 1;
@@ -103,22 +102,15 @@
           case 'UnaryExpression':
             increment(expressions, node.operator);
             break;
-          case 'Literal':
-            var name = typeof node.value !== 'object' ? typeof node.value
-              : 'nil';
-            increment(literals, name);
-            break;
         }
       });
 
       expressions = sortStats(expressions);
-      literals = sortStats(literals);
       nodes = sortStats(nodes);
 
       var $results = $('#results');
       $results.append(createTable('Node types', nodes));
       $results.append(createTable('Operators', expressions));
-      $results.append(createTable('Literal types', literals));
     });
   }());
 </script>
