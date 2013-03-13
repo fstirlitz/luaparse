@@ -1044,7 +1044,11 @@ describe('functioncalls', function() {
               "type": "Identifier",
               "name": "a"
             },
-            "argument": "foo"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "foo",
+              "raw": "\"foo\""
+            }
           }
         }
       ],
@@ -1063,7 +1067,11 @@ describe('functioncalls', function() {
               "type": "Identifier",
               "name": "a"
             },
-            "argument": "foo"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "foo",
+              "raw": "[[foo]]"
+            }
           }
         }
       ],
@@ -1090,7 +1098,11 @@ describe('functioncalls', function() {
                 "name": "a"
               }
             },
-            "argument": "foo"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "foo",
+              "raw": "\"foo\""
+            }
           }
         }
       ],
@@ -1116,7 +1128,11 @@ describe('functioncalls', function() {
                 "name": "b"
               }
             },
-            "argument": "foo"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "foo",
+              "raw": "\"foo\""
+            }
           }
         }
       ],
@@ -1143,7 +1159,11 @@ describe('functioncalls', function() {
                 "name": "a"
               }
             },
-            "argument": "foo"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "foo",
+              "raw": "\"foo\""
+            }
           }
         }
       ],
@@ -1277,7 +1297,11 @@ describe('functioncalls', function() {
               },
               "arguments": []
             },
-            "argument": "foo"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "foo",
+              "raw": "\"foo\""
+            }
           }
         }
       ],
@@ -1298,7 +1322,11 @@ describe('functioncalls', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": "foo"
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\""
+              }
             },
             "arguments": []
           }
@@ -1328,7 +1356,11 @@ describe('functioncalls', function() {
                   "type": "Identifier",
                   "name": "a"
                 },
-                "argument": "foo"
+                "argument": {
+                  "type": "StringLiteral",
+                  "value": "foo",
+                  "raw": "\"foo\""
+                }
               }
             },
             "arguments": []
@@ -1354,7 +1386,11 @@ describe('functioncalls', function() {
                   "type": "Identifier",
                   "name": "a"
                 },
-                "argument": "foo"
+                "argument": {
+                  "type": "StringLiteral",
+                  "value": "foo",
+                  "raw": "\"foo\""
+                }
               },
               "index": {
                 "type": "Identifier",
@@ -1389,7 +1425,11 @@ describe('functioncalls', function() {
                   "type": "Identifier",
                   "name": "a"
                 },
-                "argument": "foo"
+                "argument": {
+                  "type": "StringLiteral",
+                  "value": "foo",
+                  "raw": "\"foo\""
+                }
               }
             },
             "arguments": []
@@ -1413,9 +1453,17 @@ describe('functioncalls', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": "foo"
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\""
+              }
             },
-            "argument": "bar"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "bar",
+              "raw": "\"bar\""
+            }
           }
         }
       ],
@@ -1436,7 +1484,11 @@ describe('functioncalls', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": "foo"
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\""
+              }
             },
             "arguments": {
               "type": "TableConstructorExpression",
@@ -1486,7 +1538,11 @@ describe('functioncalls', function() {
                         "name": "a"
                       }
                     },
-                    "argument": "foo"
+                    "argument": {
+                      "type": "StringLiteral",
+                      "value": "foo",
+                      "raw": "\"foo\""
+                    }
                   }
                 },
                 "index": {
@@ -1495,7 +1551,11 @@ describe('functioncalls', function() {
                 }
               }
             },
-            "argument": "bar"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "bar",
+              "raw": "\"bar\""
+            }
           }
         }
       ],
@@ -1540,7 +1600,11 @@ describe('functioncalls', function() {
                         "name": "a"
                       }
                     },
-                    "argument": "foo"
+                    "argument": {
+                      "type": "StringLiteral",
+                      "value": "foo",
+                      "raw": "\"foo\""
+                    }
                   },
                   "index": {
                     "type": "Identifier",
@@ -1549,7 +1613,11 @@ describe('functioncalls', function() {
                 }
               }
             },
-            "argument": "bar"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "bar",
+              "raw": "\"bar\""
+            }
           }
         }
       ],
@@ -1728,7 +1796,11 @@ describe('functioncalls', function() {
                 "fields": []
               }
             },
-            "argument": "foo"
+            "argument": {
+              "type": "StringLiteral",
+              "value": "foo",
+              "raw": "\"foo\""
+            }
           }
         }
       ],

@@ -841,7 +841,11 @@ describe('expressions', function() {
                 "type": "Identifier",
                 "name": "a"
               },
-              "argument": "foo"
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\""
+              }
             }
           ]
         }
