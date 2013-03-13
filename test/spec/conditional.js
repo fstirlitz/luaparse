@@ -37,7 +37,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -59,7 +59,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -92,7 +92,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -135,7 +135,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -178,7 +178,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -204,7 +204,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -252,7 +252,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -306,7 +306,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -337,7 +337,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -390,7 +390,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -443,7 +443,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -478,7 +478,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -493,7 +493,7 @@ describe('conditional', function() {
                   "type": "IfStatement",
                   "clauses": [
                     {
-                      "type": "ElseifClause",
+                      "type": "IfClause",
                       "condition": {
                         "type": "Literal",
                         "value": 2,
@@ -522,7 +522,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -552,7 +552,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,
@@ -566,7 +566,7 @@ describe('conditional', function() {
           "type": "IfStatement",
           "clauses": [
             {
-              "type": "ElseifClause",
+              "type": "IfClause",
               "condition": {
                 "type": "Literal",
                 "value": 1,

@@ -76,6 +76,13 @@ easily be customized by overriding these functions.</p>             </td>       
         , clauses: clauses
       };
     }
+    , ifClause: <span class="keyword">function</span>(condition, body) {
+      <span class="keyword">return</span> {
+          type: <span class="string">'IfClause'</span>
+        , condition: condition
+        , body: body
+      };
+    }
     , elseifClause: <span class="keyword">function</span>(condition, body) {
       <span class="keyword">return</span> {
           type: <span class="string">'ElseifClause'</span>
@@ -1075,12 +1082,17 @@ elif ::= 'elseif' exp 'then' block
       , condition
       , body;
 
-    <span class="keyword">do</span> {
+    condition = parseExpression();
+    expect(<span class="string">'then'</span>);
+    body = parseBlock();
+    clauses.push(ast.ifClause(condition, body));
+
+    <span class="keyword">while</span> (consume(<span class="string">'elseif'</span>)) {
       condition = parseExpression();
       expect(<span class="string">'then'</span>);
       body = parseBlock();
       clauses.push(ast.elseifClause(condition, body));
-    } <span class="keyword">while</span> (consume(<span class="string">'elseif'</span>));
+    }
 
     <span class="keyword">if</span> (consume(<span class="string">'else'</span>)) {
       body = parseBlock();
