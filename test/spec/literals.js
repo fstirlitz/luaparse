@@ -590,7 +590,9 @@ describe('literals', function() {
           ],
           "init": [
             {
-              "type": "VarargLiteral"
+              "type": "VarargLiteral",
+              "value": "...",
+              "raw": "..."
             }
           ]
         }
