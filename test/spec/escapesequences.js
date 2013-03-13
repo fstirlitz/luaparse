@@ -294,7 +294,7 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
-  it("c = '\\123", function() {
+  it("c = '\\123'", function() {
     expect(parser.parse("c = '\\123'")).to.eql({
       "type": "Chunk",
       "body": [
@@ -318,7 +318,7 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
-  it("c = '\\x23", function() {
+  it("c = '\\x23'", function() {
     expect(parser.parse("c = '\\x23'")).to.eql({
       "type": "Chunk",
       "body": [
@@ -342,7 +342,7 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
-  it("c = '\\xx", function() {
+  it("c = '\\xx'", function() {
     expect(parser.parse("c = '\\xx'")).to.eql({
       "type": "Chunk",
       "body": [
