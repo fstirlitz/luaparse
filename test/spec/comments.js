@@ -199,7 +199,7 @@ describe('comments', function() {
             {
               "type": "IfClause",
               "condition": {
-                "type": "Literal",
+                "type": "BooleanLiteral",
                 "value": true,
                 "raw": "true"
               },

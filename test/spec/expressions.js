@@ -16,7 +16,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "[[foo]]"
             }
@@ -86,7 +86,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NilLiteral",
               "value": null,
               "raw": "nil"
             }
@@ -110,7 +110,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "BooleanLiteral",
               "value": true,
               "raw": "true"
             }
@@ -134,7 +134,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -158,7 +158,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "\"foo\""
             }
@@ -182,7 +182,7 @@ describe('expressions', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "[[foo]]"
             }
@@ -341,7 +341,7 @@ describe('expressions', function() {
                 "name": "a"
               },
               "index": {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               }
@@ -372,7 +372,7 @@ describe('expressions', function() {
                 "name": "a"
               },
               "index": {
-                "type": "Literal",
+                "type": "StringLiteral",
                 "value": "foo",
                 "raw": "\"foo\""
               }
@@ -1126,7 +1126,7 @@ describe('expressions', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "-",
                     "raw": "'-'"
                   }
@@ -1158,7 +1158,7 @@ describe('expressions', function() {
                 {
                   "type": "TableValue",
                   "value": {
-                    "type": "Literal",
+                    "type": "StringLiteral",
                     "value": "not",
                     "raw": "'not'"
                   }
@@ -1193,7 +1193,7 @@ describe('expressions', function() {
                     "type": "UnaryExpression",
                     "operator": "not",
                     "argument": {
-                      "type": "Literal",
+                      "type": "BooleanLiteral",
                       "value": true,
                       "raw": "true"
                     }

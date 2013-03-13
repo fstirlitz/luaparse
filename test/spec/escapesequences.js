@@ -13,7 +13,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\tbaz",
               "raw": "\"bar\tbaz\""
             }
@@ -37,7 +37,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\tbaz",
               "raw": "\"bar\\tbaz\""
             }
@@ -64,7 +64,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\nbaz",
               "raw": "\"bar\\nbaz\""
             }
@@ -91,7 +91,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\rbaz",
               "raw": "\"bar\\rbaz\""
             }
@@ -115,7 +115,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\\80baz",
               "raw": "\"bar\\80baz\""
             }
@@ -139,7 +139,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\\800\\0baz",
               "raw": "\"bar\\800\\0baz\""
             }
@@ -162,7 +162,7 @@ describe('escape sequences', function() {
             } ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "barbaz",
               "raw": "\"bar\\z   baz\""
             }
@@ -186,7 +186,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\f\u000b\bbaz", // @TODO a bit unsure about this
               "raw": "\"bar\\f\\v\\bbaz\""
             }
@@ -211,7 +211,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\f\u000b\bbaz",
               "raw": "\"bar\f\v\bbaz\""
             }
@@ -235,7 +235,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "bar\f\u000b\bbaz",
               "raw": "[[bar\\f\\v\\bbaz]]"
             }
@@ -260,7 +260,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "\\",
               "raw": "'\\\\'"
             }
@@ -284,7 +284,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "'",
               "raw": "'\\''"
             }
@@ -308,7 +308,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "\\123",
               "raw": "'\\123'"
             }
@@ -332,7 +332,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "\\x23",
               "raw": "'\\x23'"
             }
@@ -356,7 +356,7 @@ describe('escape sequences', function() {
           ],
           "init": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "\\xx",
               "raw": "'\\xx'"
             }

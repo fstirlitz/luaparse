@@ -133,7 +133,7 @@ describe('do', function() {
               ],
               "init": [
                 {
-                  "type": "Literal",
+                  "type": "NumericLiteral",
                   "value": 1,
                   "raw": "1"
                 }

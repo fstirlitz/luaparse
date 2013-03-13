@@ -10,7 +10,7 @@ describe('return', function() {
           "type": "ReturnStatement",
           "arguments": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -31,7 +31,7 @@ describe('return', function() {
           "type": "ReturnStatement",
           "arguments": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "\"foo\""
             }
@@ -52,17 +52,17 @@ describe('return', function() {
           "type": "ReturnStatement",
           "arguments": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 2,
               "raw": "2"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 3,
               "raw": "3"
             }
@@ -109,12 +109,12 @@ describe('return', function() {
           "type": "ReturnStatement",
           "arguments": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 2,
               "raw": "2"
             }

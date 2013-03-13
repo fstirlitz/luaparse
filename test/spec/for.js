@@ -247,7 +247,7 @@ describe('for', function() {
           ],
           "iterators": [
             {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             }
@@ -272,7 +272,7 @@ describe('for', function() {
           ],
           "iterators": [
             {
-              "type": "Literal",
+              "type": "BooleanLiteral",
               "value": true,
               "raw": "true"
             }
@@ -297,7 +297,7 @@ describe('for', function() {
           ],
           "iterators": [
             {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "\"foo\""
             }
@@ -527,12 +527,12 @@ describe('for', function() {
             "name": "a"
           },
           "start": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 1,
             "raw": "1"
           },
           "end": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 2,
             "raw": "2"
           },
@@ -554,12 +554,12 @@ describe('for', function() {
             "name": "a"
           },
           "start": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 1,
             "raw": "1"
           },
           "end": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 2,
             "raw": "2"
           },
@@ -602,12 +602,12 @@ describe('for', function() {
             "name": "a"
           },
           "start": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 1,
             "raw": "1"
           },
           "end": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 2,
             "raw": "2"
           },
@@ -684,17 +684,17 @@ describe('for', function() {
             "name": "a"
           },
           "start": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 1,
             "raw": "1"
           },
           "end": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 2,
             "raw": "2"
           },
           "step": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 3,
             "raw": "3"
           },
@@ -744,12 +744,12 @@ describe('for', function() {
             "name": "a"
           },
           "start": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 1,
             "raw": "1"
           },
           "end": {
-            "type": "Literal",
+            "type": "NumericLiteral",
             "value": 2,
             "raw": "2"
           },

@@ -35,7 +35,7 @@ describe('functioncalls', function() {
             },
             "arguments": [
               {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               }
@@ -63,17 +63,17 @@ describe('functioncalls', function() {
             },
             "arguments": [
               {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 1,
                 "raw": "1"
               },
               {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 2,
                 "raw": "2"
               },
               {
-                "type": "Literal",
+                "type": "NumericLiteral",
                 "value": 3,
                 "raw": "3"
               }
@@ -594,7 +594,7 @@ describe('functioncalls', function() {
           "expression": {
             "type": "CallExpression",
             "base": {
-              "type": "Literal",
+              "type": "NumericLiteral",
               "value": 1,
               "raw": "1"
             },
@@ -614,7 +614,7 @@ describe('functioncalls', function() {
           "expression": {
             "type": "CallExpression",
             "base": {
-              "type": "Literal",
+              "type": "StringLiteral",
               "value": "foo",
               "raw": "\"foo\""
             },
@@ -634,7 +634,7 @@ describe('functioncalls', function() {
           "expression": {
             "type": "CallExpression",
             "base": {
-              "type": "Literal",
+              "type": "BooleanLiteral",
               "value": true,
               "raw": "true"
             },
