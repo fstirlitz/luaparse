@@ -1,7 +1,7 @@
 {
   "name": "luaparse",
   "description": "A Lua parser in JavaScript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "http://oxyc.github.com/luaparse/",
   "bugs": "https://github.com/oxyc/luaparse/issues",
   "author": {
@@ -12,17 +12,19 @@
     "type": "git",
     "url": "git://github.com/oxyc/luaparse.git"
   },
-  "licenses": [{
-    "type": "MIT",
-    "url": "https://github.com/oxyc/luaparse/blob/master/LICENSE"
-  }],
-  "main" : "./index",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/oxyc/luaparse/blob/master/LICENSE"
+    }
+  ],
+  "main": "./index",
   "bin": {
-    "luaparse" : "./bin/luaparse"
+    "luaparse": "./bin/luaparse"
   },
   "scripts": {
-    "test" : "make test",
-    "quality-assurance" : "make qa"
+    "test": "make test",
+    "quality-assurance": "make qa"
   },
   "engines": {
     "node": ">=0.8.0"
