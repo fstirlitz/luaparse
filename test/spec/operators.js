@@ -184,7 +184,6 @@ describe('operators', function() {
               "argument": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -442,7 +441,6 @@ describe('operators', function() {
               "argument": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -1258,7 +1256,6 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -1266,7 +1263,6 @@ describe('operators', function() {
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2167,7 +2163,6 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2175,7 +2170,6 @@ describe('operators', function() {
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2206,7 +2200,6 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []
@@ -2214,7 +2207,6 @@ describe('operators', function() {
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "vararg": false,
                 "local": false,
                 "parameters": [],
                 "body": []

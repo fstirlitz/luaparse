@@ -27,7 +27,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": []
@@ -46,10 +45,10 @@ describe('functions', function() {
     expect(parser.parse('function a(p', {wait:true}).end).to.throwError(/^\[1:12\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('function a(p,)                          -- FAIL', function() {
-    expect(parser.parse('function a(p,)', {wait:true}).end).to.throwError(/^\[1:13\] <name> expected near '\)'$/);
+    expect(parser.parse('function a(p,)', {wait:true}).end).to.throwError(/^\[1:13\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('function a(p q                          -- FAIL', function() {
-    expect(parser.parse('function a(p q', {wait:true}).end).to.throwError(/^\[1:13\] <name> or '\.\.\.' expected near 'q'$/);
+    expect(parser.parse('function a(p q', {wait:true}).end).to.throwError(/^\[1:14\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('function a(p) end', function() {
     expect(parser.parse('function a(p) end')).to.eql({
@@ -61,7 +60,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [
             {
@@ -76,7 +74,7 @@ describe('functions', function() {
     });
   });
   it('function a(p,q,) end                    -- FAIL', function() {
-    expect(parser.parse('function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:15\] <name> expected near '\)'$/);
+    expect(parser.parse('function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:15\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('function a(p,q,r) end', function() {
     expect(parser.parse('function a(p,q,r) end')).to.eql({
@@ -88,7 +86,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [
             {
@@ -111,7 +108,7 @@ describe('functions', function() {
     });
   });
   it('function a(p,q,1                        -- FAIL', function() {
-    expect(parser.parse('function a(p,q,1', {wait:true}).end).to.throwError(/^\[1:15\] <name> expected near '1'$/);
+    expect(parser.parse('function a(p,q,1', {wait:true}).end).to.throwError(/^\[1:15\] <name> or '\.\.\.' expected near '1'$/);
   });
   it('function a(p) do                        -- FAIL', function() {
     expect(parser.parse('function a(p) do', {wait:true}).end).to.throwError(/^\[1:16\] 'end' expected near '<eof>'$/);
@@ -129,7 +126,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [
             {
@@ -161,7 +157,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [
             {
@@ -204,7 +199,6 @@ describe('functions', function() {
               "name": "a"
             }
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": []
@@ -253,7 +247,6 @@ describe('functions', function() {
               }
             }
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": []
@@ -286,7 +279,6 @@ describe('functions', function() {
               "name": "a"
             }
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": []
@@ -335,7 +327,6 @@ describe('functions', function() {
               }
             }
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": []
@@ -354,9 +345,14 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": true,
           "local": false,
-          "parameters": [],
+          "parameters": [
+            {
+              "type": "VarargLiteral",
+              "value": "...",
+              "raw": "..."
+            }
+          ],
           "body": []
         }
       ],
@@ -376,12 +372,16 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": true,
           "local": false,
           "parameters": [
             {
               "type": "Identifier",
               "name": "p"
+            },
+            {
+              "type": "VarargLiteral",
+              "value": "...",
+              "raw": "..."
             }
           ],
           "body": []
@@ -403,7 +403,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": true,
           "local": false,
           "parameters": [
             {
@@ -417,6 +416,11 @@ describe('functions', function() {
             {
               "type": "Identifier",
               "name": "r"
+            },
+            {
+              "type": "VarargLiteral",
+              "value": "...",
+              "raw": "..."
             }
           ],
           "body": []
@@ -435,7 +439,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": [
@@ -475,7 +478,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": [
@@ -515,7 +517,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": []
@@ -526,7 +527,6 @@ describe('functions', function() {
             "type": "Identifier",
             "name": "a"
           },
-          "vararg": false,
           "local": false,
           "parameters": [],
           "body": []

@@ -910,7 +910,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": false,
               "local": false,
               "parameters": [],
               "body": []
@@ -940,7 +939,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": false,
               "local": false,
               "parameters": [
                 {
@@ -957,10 +955,10 @@ describe('expressions', function() {
     });
   });
   it('a = function(p,)                        -- FAIL', function() {
-    expect(parser.parse('a = function(p,)', {wait:true}).end).to.throwError(/^\[1:15\] <name> expected near '\)'$/);
+    expect(parser.parse('a = function(p,)', {wait:true}).end).to.throwError(/^\[1:15\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('a = function(p q                        -- FAIL', function() {
-    expect(parser.parse('a = function(p q', {wait:true}).end).to.throwError(/^\[1:15\] <name> or '\.\.\.' expected near 'q'$/);
+    expect(parser.parse('a = function(p q', {wait:true}).end).to.throwError(/^\[1:16\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('a = function(p,q,r) end', function() {
     expect(parser.parse('a = function(p,q,r) end')).to.eql({
@@ -978,7 +976,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": false,
               "local": false,
               "parameters": [
                 {
@@ -1003,7 +1000,7 @@ describe('expressions', function() {
     });
   });
   it('a = function(p,q,1                      -- FAIL', function() {
-    expect(parser.parse('a = function(p,q,1', {wait:true}).end).to.throwError(/^\[1:17\] <name> expected near '1'$/);
+    expect(parser.parse('a = function(p,q,1', {wait:true}).end).to.throwError(/^\[1:17\] <name> or '\.\.\.' expected near '1'$/);
   });
   it('a = function(...) end', function() {
     expect(parser.parse('a = function(...) end')).to.eql({
@@ -1021,9 +1018,14 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": true,
               "local": false,
-              "parameters": [],
+              "parameters": [
+                {
+                  "type": "VarargLiteral",
+                  "value": "...",
+                  "raw": "..."
+                }
+              ],
               "body": []
             }
           ]
@@ -1051,12 +1053,16 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": true,
               "local": false,
               "parameters": [
                 {
                   "type": "Identifier",
                   "name": "p"
+                },
+                {
+                  "type": "VarargLiteral",
+                  "value": "...",
+                  "raw": "..."
                 }
               ],
               "body": []
@@ -1083,7 +1089,6 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "vararg": true,
               "local": false,
               "parameters": [
                 {
@@ -1097,6 +1102,11 @@ describe('expressions', function() {
                 {
                   "type": "Identifier",
                   "name": "r"
+                },
+                {
+                  "type": "VarargLiteral",
+                  "value": "...",
+                  "raw": "..."
                 }
               ],
               "body": []
