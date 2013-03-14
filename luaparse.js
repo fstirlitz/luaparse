@@ -49,6 +49,12 @@
     // Track identifier scopes by adding an isLocal attribute to each
     // identifier-node.
     , scope: false
+    // Store location information on each syntax node as
+    // `loc: { start: { line, column }, end: { line, column } }`.
+    , locations: false
+    // Store the start and end character locations on each syntax node as
+    // `range: [start, end]`.
+    , ranges: false
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -320,6 +326,14 @@
         , argument: argument
       };
     }
+
+    , comment: function(value, raw) {
+      return {
+          type: 'Comment'
+        , value: value
+        , raw: raw
+      };
+    }
   };
 
   // Helpers
@@ -470,6 +484,7 @@
 
   var index
     , token
+    , previousToken
     , lookahead
     , comments
     , tokenStart
@@ -846,7 +861,9 @@
     var character = input.charAt(index)
       , content = ''
       , isLong = false
-      , commentStart = index;
+      , commentStart = index
+      , lineStartComment = lineStart
+      , lineComment = line;
 
     if ('[' === character) {
       content = readLongString();
@@ -860,15 +877,24 @@
         if (isLineTerminator(input.charCodeAt(index))) break;
         index++;
       }
-      content = input.slice(commentStart, index);
+      if (options.comments) content = input.slice(commentStart, index);
     }
 
     if (options.comments) {
-      comments.push({
-          type: 'Comment'
-        , value: content
-        , raw: input.slice(tokenStart, index)
-      });
+      var node = ast.comment(content, input.slice(tokenStart, index));
+
+      // `Marker`s depend on tokens available in the parser and as comments are
+      // intercepted in the lexer all location data is set manually.
+      if (options.locations) {
+        node.loc = {
+            start: { line: lineComment, column: tokenStart - lineStartComment }
+          , end: { line: line, column: index - lineStart }
+        };
+      }
+      if (options.ranges) {
+        node.range = [tokenStart, index];
+      }
+      comments.push(node);
     }
   }
 
@@ -934,6 +960,7 @@
   // reading in the new lookahead token.
 
   function next() {
+    previousToken = token;
     token = lookahead;
     lookahead = lex();
   }
@@ -1102,9 +1129,12 @@
 
   function parseChunk() {
     next();
+    markLocation();
     var body = parseBlock();
     if (EOF !== token.type) unexpected(token);
-    return ast.chunk(body);
+    // If the body is empty no previousToken exists when finishNode runs.
+    if (trackLocations && !body.length) previousToken = token;
+    return finishNode(ast.chunk(body));
   }
 
   // A block contains a list of statements with an optional return statement
@@ -1143,6 +1173,7 @@
   //          | functioncall | ';'
 
   function parseStatement() {
+    markLocation();
     if (Keyword === token.type) {
       switch (token.value) {
         case 'local':    next(); return parseLocalStatement();
@@ -1163,6 +1194,9 @@
     if (Punctuator === token.type) {
       if (consume('::')) return parseLabelStatement();
     }
+    // Assignments memorizes the location and pushes it manually for wrapper
+    // nodes. Additionally empty `;` statements should not mark a location.
+    if (trackLocations) locations.pop();
 
     // When a `;` is encounted, simply eat it without storing it.
     if (consume(';')) return;
@@ -1184,13 +1218,13 @@
     }
 
     expect('::');
-    return ast.labelStatement(label);
+    return finishNode(ast.labelStatement(label));
   }
 
   //     break ::= 'break'
 
   function parseBreakStatement() {
-    return ast.breakStatement();
+    return finishNode(ast.breakStatement());
   }
 
   //     goto ::= 'goto' Name
@@ -1200,7 +1234,7 @@
       , label = parseIdentifier();
 
     if (options.scope) label.isLabel = scopeHasName('::' + name + '::');
-    return ast.gotoStatement(label);
+    return finishNode(ast.gotoStatement(label));
   }
 
   //     do ::= 'do' block 'end'
@@ -1208,7 +1242,7 @@
   function parseDoStatement() {
     var body = parseBlock();
     expect('end');
-    return ast.doStatement(body);
+    return finishNode(ast.doStatement(body));
   }
 
   //     while ::= 'while' exp 'do' block 'end'
@@ -1218,7 +1252,7 @@
     expect('do');
     var body = parseBlock();
     expect('end');
-    return ast.whileStatement(condition, body);
+    return finishNode(ast.whileStatement(condition, body));
   }
 
   //     repeat ::= 'repeat' block 'until' exp
@@ -1227,7 +1261,7 @@
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
-    return ast.repeatStatement(condition, body);
+    return finishNode(ast.repeatStatement(condition, body));
   }
 
   //     retstat ::= 'return' [exp {',' exp}] [';']
@@ -1244,7 +1278,7 @@
       }
       consume(';'); // grammar tells us ; is optional here.
     }
-    return ast.returnStatement(expressions);
+    return finishNode(ast.returnStatement(expressions));
   }
 
   //     if ::= 'if' exp 'then' block {elif} ['else' block] 'end'
@@ -1253,27 +1287,42 @@
   function parseIfStatement() {
     var clauses = []
       , condition
-      , body;
+      , body
+      , marker;
 
+    // IfClauses begin at the same location as the parent IfStatement.
+    // It ends at the start of `end`, `else`, or `elseif`.
+    if (trackLocations) {
+      marker = locations[locations.length - 1];
+      locations.push(marker);
+    }
     condition = parseExpectedExpression();
     expect('then');
     body = parseBlock();
-    clauses.push(ast.ifClause(condition, body));
+    clauses.push(finishNode(ast.ifClause(condition, body)));
 
+    if (trackLocations) marker = createLocationMarker();
     while (consume('elseif')) {
+      pushLocation(marker);
       condition = parseExpectedExpression();
       expect('then');
       body = parseBlock();
-      clauses.push(ast.elseifClause(condition, body));
+      clauses.push(finishNode(ast.elseifClause(condition, body)));
+      if (trackLocations) marker = createLocationMarker();
     }
 
     if (consume('else')) {
+      // Include the `else` in the location of ElseClause.
+      if (trackLocations) {
+        marker = new Marker(previousToken);
+        locations.push(marker);
+      }
       body = parseBlock();
-      clauses.push(ast.elseClause(body));
+      clauses.push(finishNode(ast.elseClause(body)));
     }
 
     expect('end');
-    return ast.ifStatement(clauses);
+    return finishNode(ast.ifStatement(clauses));
   }
 
   // There are two types of for statements, generic and numeric.
@@ -1305,7 +1354,7 @@
       body = parseBlock();
       expect('end');
 
-      return ast.forNumericStatement(variable, start, end, step, body);
+      return finishNode(ast.forNumericStatement(variable, start, end, step, body));
     }
     // If not, it's a Generic For Statement
     else {
@@ -1330,7 +1379,7 @@
       body = parseBlock();
       expect('end');
 
-      return ast.forGenericStatement(variables, iterators, body);
+      return finishNode(ast.forGenericStatement(variables, iterators, body));
     }
   }
 
@@ -1373,7 +1422,7 @@
         }
       }
 
-      return ast.localStatement(variables, init);
+      return finishNode(ast.localStatement(variables, init));
     }
     if (consume('function')) {
       name = parseIdentifier();
@@ -1397,7 +1446,10 @@
     // Keep a reference to the previous token for better error messages in case
     // of invalid statement
     var previous = token
-      , expression = parsePrefixExpression();
+      , expression, marker;
+
+    if (trackLocations) marker = createLocationMarker();
+    expression = parsePrefixExpression();
 
     if (null == expression) return unexpected(token);
     if (',='.indexOf(token.value) >= 0) {
@@ -1415,10 +1467,13 @@
         exp = parseExpectedExpression();
         init.push(exp);
       } while (consume(','));
-      return ast.assignmentStatement(variables, init);
+
+      pushLocation(marker);
+      return finishNode(ast.assignmentStatement(variables, init));
     }
     if (isCallExpression(expression)) {
-      return ast.callStatement(expression);
+      pushLocation(marker);
+      return finishNode(ast.callStatement(expression));
     }
     // The prefix expression was neither part of an assignment or a
     // callstatement, however as it was valid it's been consumed, so raise
@@ -1433,10 +1488,11 @@
   //     Identifier ::= Name
 
   function parseIdentifier() {
+    markLocation();
     var identifier = token.value;
     if (Identifier !== token.type) raiseUnexpectedToken('<name>', token);
     next();
-    return ast.identifier(identifier);
+    return finishNode(ast.identifier(identifier));
   }
 
   // Parse the functions parameters and body block. The name should already
@@ -1483,7 +1539,7 @@
     expect('end');
 
     isLocal = isLocal || false;
-    return ast.functionStatement(name, parameters, isLocal, body);
+    return finishNode(ast.functionStatement(name, parameters, isLocal, body));
   }
 
   // Parse the function name as identifiers and member expressions.
@@ -1491,20 +1547,25 @@
   //     Name {'.' Name} [':' Name]
 
   function parseFunctionName() {
-    var base = parseIdentifier()
-      , name;
+    var base, name, marker;
+
+    if (trackLocations) marker = createLocationMarker();
+    base = parseIdentifier();
+
     if (options.scope) attachScope(base, false);
 
     while (consume('.')) {
+      pushLocation(marker);
       name = parseIdentifier();
       if (options.scope) attachScope(name, false);
-      base = ast.memberExpression(base, '.', name);
+      base = finishNode(ast.memberExpression(base, '.', name));
     }
 
     if (consume(':')) {
+      pushLocation(marker);
       name = parseIdentifier();
       if (options.scope) attachScope(name, false);
-      base = ast.memberExpression(base, ':', name);
+      base = finishNode(ast.memberExpression(base, ':', name));
     }
 
     return base;
@@ -1521,23 +1582,27 @@
       , key, value;
 
     while (true) {
+      markLocation();
       if (Punctuator === token.type && consume('[')) {
         key = parseExpectedExpression();
         expect(']');
         expect('=');
         value = parseExpectedExpression();
-        fields.push(ast.tableKey(key, value));
+        fields.push(finishNode(ast.tableKey(key, value)));
       } else if (Identifier === token.type) {
         key = parseExpectedExpression();
         if (consume('=')) {
           value = parseExpectedExpression();
-          fields.push(ast.tableKeyString(key, value));
+          fields.push(finishNode(ast.tableKeyString(key, value)));
         } else {
-          fields.push(ast.tableValue(key));
+          fields.push(finishNode(ast.tableValue(key)));
         }
       } else {
-        if (null == (value = parseExpression())) break;
-        fields.push(ast.tableValue(value));
+        if (null == (value = parseExpression())) {
+          locations.pop();
+          break;
+        }
+        fields.push(finishNode(ast.tableValue(value)));
       }
       if (',;'.indexOf(token.value) >= 0) {
         next();
@@ -1546,7 +1611,7 @@
       if ('}' === token.value) break;
     }
     expect('}');
-    return ast.tableConstructorExpression(fields);
+    return finishNode(ast.tableConstructorExpression(fields));
   }
 
   // Expression parser
@@ -1617,16 +1682,19 @@
   //     exp ::= (unop exp | primary | prefixexp ) { binop exp }
 
   function parseSubExpression(minPrecedence) {
-    var operator = token.value;
+    var operator = token.value
     // The left-hand side in binary operations.
-    var expression;
+      , expression, marker;
+
+    if (trackLocations) marker = createLocationMarker();
 
     // UnaryExpression
     if (isUnary(token)) {
+      markLocation();
       next();
       var argument = parseSubExpression(8);
       if (argument == null) raiseUnexpectedToken('<expression>', token);
-      expression = ast.unaryExpression(operator, argument);
+      expression = finishNode(ast.unaryExpression(operator, argument));
     }
     if (null == expression) {
       // PrimaryExpression
@@ -1653,7 +1721,10 @@
       next();
       var right = parseSubExpression(precedence);
       if (null == right) raiseUnexpectedToken('<expression>', token);
-      expression = ast.binaryExpression(operator, expression, right);
+      // Push in the marker created before the loop to wrap its entirety.
+      if (trackLocations) locations.push(marker);
+      expression = finishNode(ast.binaryExpression(operator, expression, right));
+
     }
     return expression;
   }
@@ -1665,9 +1736,11 @@
   //     args ::= '(' [explist] ')' | tableconstructor | String
 
   function parsePrefixExpression() {
-    var base, name
+    var base, name, marker
       // Keep track of the scope, if a parent is local so are the children.
       , isLocal;
+
+    if (trackLocations) marker = createLocationMarker();
 
     // The prefix
     if (Identifier === token.type) {
@@ -1689,34 +1762,40 @@
       if (Punctuator === token.type) {
         switch (token.value) {
           case '[':
+            pushLocation(marker);
             next();
             expression = parseExpectedExpression();
-            base = ast.indexExpression(base, expression);
+            base = finishNode(ast.indexExpression(base, expression));
             expect(']');
             break;
           case '.':
+            pushLocation(marker);
             next();
             identifier = parseIdentifier();
             // Inherit the scope
             if (options.scope) attachScope(identifier, isLocal);
-            base = ast.memberExpression(base, '.', identifier);
+            base = finishNode(ast.memberExpression(base, '.', identifier));
             break;
           case ':':
+            pushLocation(marker);
             next();
             identifier = parseIdentifier();
             if (options.scope) attachScope(identifier, isLocal);
-            base = ast.memberExpression(base, ':', identifier);
-            // Once a : is found, this has to be a callexpression, otherwise
+            base = finishNode(ast.memberExpression(base, ':', identifier));
+            // Once a : is found, this has to be a CallExpression, otherwise
             // throw an error.
+            pushLocation(marker);
             base = parseCallExpression(base);
             break;
           case '(': case '{': // args
+            pushLocation(marker);
             base = parseCallExpression(base);
             break;
           default:
             return base;
         }
       } else if (StringLiteral === token.type) {
+        pushLocation(marker);
         base = parseCallExpression(base);
       } else {
         break;
@@ -1744,15 +1823,16 @@
           }
 
           expect(')');
-          return ast.callExpression(base, expressions);
+          return finishNode(ast.callExpression(base, expressions));
 
         case '{':
+          markLocation();
           next();
           var table = parseTableConstructor();
-          return ast.tableCallExpression(base, table);
+          return finishNode(ast.tableCallExpression(base, table));
       }
     } else if (StringLiteral === token.type) {
-      return ast.stringCallExpression(base, parsePrimaryExpression());
+      return finishNode(ast.stringCallExpression(base, parsePrimaryExpression()));
     }
 
     raiseUnexpectedToken('function arguments', token);
@@ -1764,17 +1844,78 @@
   function parsePrimaryExpression() {
     var literals = StringLiteral | NumericLiteral | BooleanLiteral | NilLiteral | VarargLiteral
       , value = token.value
-      , type = token.type;
+      , type = token.type
+      , marker;
+
+    if (trackLocations) marker = createLocationMarker();
 
     if (type & literals) {
+      pushLocation(marker);
       var raw = input.slice(token.range[0], token.range[1]);
       next();
-      return ast.literal(type, value, raw);
+      return finishNode(ast.literal(type, value, raw));
     } else if (Keyword === type && 'function' === value) {
+      pushLocation(marker);
       next();
       return parseFunctionDeclaration(null);
-    } else if (consume('{'))
+    } else if (consume('{')) {
+      pushLocation(marker);
       return parseTableConstructor();
+    }
+  }
+
+  // Location tracking
+  // -----------------
+
+  var locations = []
+    , ranges = []
+    , trackLocations;
+
+  function Marker(token) {
+    if (options.locations) {
+      this.loc = {
+          start: {
+            line: token.line
+          , column: token.range[0] - token.lineStart
+        }
+        , end: {
+            line: 0
+          , column: 0
+        }
+      };
+    }
+    if (options.ranges) this.range = [token.range[0], 0];
+  }
+
+  Marker.prototype.finish = function() {
+    if (options.locations) {
+      this.loc.end.line = previousToken.line;
+      this.loc.end.column = previousToken.range[1] - previousToken.lineStart;
+    }
+    if (options.ranges) {
+      this.range[1] = previousToken.range[1];
+    }
+  };
+
+  function createLocationMarker() {
+    return new Marker(token);
+  }
+
+  function markLocation() {
+    if (trackLocations) locations.push(createLocationMarker());
+  }
+
+  function pushLocation(marker) {
+    if (trackLocations) locations.push(marker);
+  }
+
+  function finishNode(node) {
+    if (!trackLocations) return node;
+    var location = locations.pop();
+    location.finish();
+    if (options.locations) node.loc = location.loc;
+    if (options.ranges) node.range = location.range;
+    return node;
   }
 
   // Parser
@@ -1813,6 +1954,8 @@
     scopeDepth = 0;
     globals = [];
     globalNames = [];
+    locations = [];
+    ranges = [];
 
     if (options.comments) comments = [];
     if (!options.wait) return end();
@@ -1835,12 +1978,17 @@
     if ('undefined' !== typeof _input) write(_input);
 
     length = input.length;
+    trackLocations = options.locations || options.ranges;
     // Initialize with a lookahead token.
     lookahead = lex();
 
     var chunk = parseChunk();
     if (options.comments) chunk.comments = comments;
     if (options.scope) chunk.globals = globals;
+
+    if (locations.length > 0 || ranges.length > 0)
+      throw new Error('Location tracking failed. This is most likely a bug in luaparse');
+
     return chunk;
   }
 

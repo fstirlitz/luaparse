@@ -45,6 +45,7 @@ Object.keys(suites).forEach(function(file) {
       'defaults': { },
       'scope: true': { scope: true },
       'comments: false': { comments: false },
+      'locations: true': { locations: true }
     };
 
   Object.keys(settingsSets).forEach(function(set) {
