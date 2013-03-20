@@ -10884,6 +10884,263 @@ expect(test).to.eql(expected);</code></pre></dd>
       </dl>
     </section>
     <section class="suite">
+      <h1>scope</h1>
+      <dl>
+        <dt>local foo = 1 do foo = 2 end</dt>
+        <dd><pre><code>expect(parser.parse('local foo = 1 do foo = 2 end', { scope: true } )).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;LocalStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;foo&quot;,
+          &quot;isLocal&quot;: true
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;NumericLiteral&quot;,
+          &quot;value&quot;: 1,
+          &quot;raw&quot;: &quot;1&quot;
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;DoStatement&quot;,
+      &quot;body&quot;: [
+        {
+          &quot;type&quot;: &quot;AssignmentStatement&quot;,
+          &quot;variables&quot;: [
+            {
+              &quot;type&quot;: &quot;Identifier&quot;,
+              &quot;name&quot;: &quot;foo&quot;,
+              &quot;isLocal&quot;: true
+            }
+          ],
+          &quot;init&quot;: [
+            {
+              &quot;type&quot;: &quot;NumericLiteral&quot;,
+              &quot;value&quot;: 2,
+              &quot;raw&quot;: &quot;2&quot;
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>local foo = 1 do foo = 2 bar = 3 end</dt>
+        <dd><pre><code>expect(parser.parse('local foo = 1 do foo = 2 bar = 3 end', { scope: true })).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;LocalStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;foo&quot;,
+          &quot;isLocal&quot;: true
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;NumericLiteral&quot;,
+          &quot;value&quot;: 1,
+          &quot;raw&quot;: &quot;1&quot;
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;DoStatement&quot;,
+      &quot;body&quot;: [
+        {
+          &quot;type&quot;: &quot;AssignmentStatement&quot;,
+          &quot;variables&quot;: [
+            {
+              &quot;type&quot;: &quot;Identifier&quot;,
+              &quot;name&quot;: &quot;foo&quot;,
+              &quot;isLocal&quot;: true
+            }
+          ],
+          &quot;init&quot;: [
+            {
+              &quot;type&quot;: &quot;NumericLiteral&quot;,
+              &quot;value&quot;: 2,
+              &quot;raw&quot;: &quot;2&quot;
+            }
+          ]
+        },
+        {
+          &quot;type&quot;: &quot;AssignmentStatement&quot;,
+          &quot;variables&quot;: [
+            {
+              &quot;type&quot;: &quot;Identifier&quot;,
+              &quot;name&quot;: &quot;bar&quot;,
+              &quot;isLocal&quot;: false
+            }
+          ],
+          &quot;init&quot;: [
+            {
+              &quot;type&quot;: &quot;NumericLiteral&quot;,
+              &quot;value&quot;: 3,
+              &quot;raw&quot;: &quot;3&quot;
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>do local foo = 1 end do foo = 2 end</dt>
+        <dd><pre><code>expect(parser.parse('do local foo = 1 end do foo = 2 end', { scope: true })).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;DoStatement&quot;,
+      &quot;body&quot;: [
+        {
+          &quot;type&quot;: &quot;LocalStatement&quot;,
+          &quot;variables&quot;: [
+            {
+              &quot;type&quot;: &quot;Identifier&quot;,
+              &quot;name&quot;: &quot;foo&quot;,
+              &quot;isLocal&quot;: true
+            }
+          ],
+          &quot;init&quot;: [
+            {
+              &quot;type&quot;: &quot;NumericLiteral&quot;,
+              &quot;value&quot;: 1,
+              &quot;raw&quot;: &quot;1&quot;
+            }
+          ]
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;DoStatement&quot;,
+      &quot;body&quot;: [
+        {
+          &quot;type&quot;: &quot;AssignmentStatement&quot;,
+          &quot;variables&quot;: [
+            {
+              &quot;type&quot;: &quot;Identifier&quot;,
+              &quot;name&quot;: &quot;foo&quot;,
+              &quot;isLocal&quot;: false
+            }
+          ],
+          &quot;init&quot;: [
+            {
+              &quot;type&quot;: &quot;NumericLiteral&quot;,
+              &quot;value&quot;: 2,
+              &quot;raw&quot;: &quot;2&quot;
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>local foo do foo = 1 do foo = 2 end end</dt>
+        <dd><pre><code>expect(parser.parse('local foo do foo = 1 do foo = 2 end end', { scope: true })).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;LocalStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;foo&quot;,
+          &quot;isLocal&quot;: true
+        }
+      ],
+      &quot;init&quot;: []
+    },
+    {
+      &quot;type&quot;: &quot;DoStatement&quot;,
+      &quot;body&quot;: [
+        {
+          &quot;type&quot;: &quot;AssignmentStatement&quot;,
+          &quot;variables&quot;: [
+            {
+              &quot;type&quot;: &quot;Identifier&quot;,
+              &quot;name&quot;: &quot;foo&quot;,
+              &quot;isLocal&quot;: true
+            }
+          ],
+          &quot;init&quot;: [
+            {
+              &quot;type&quot;: &quot;NumericLiteral&quot;,
+              &quot;value&quot;: 1,
+              &quot;raw&quot;: &quot;1&quot;
+            }
+          ]
+        },
+        {
+          &quot;type&quot;: &quot;DoStatement&quot;,
+          &quot;body&quot;: [
+            {
+              &quot;type&quot;: &quot;AssignmentStatement&quot;,
+              &quot;variables&quot;: [
+                {
+                  &quot;type&quot;: &quot;Identifier&quot;,
+                  &quot;name&quot;: &quot;foo&quot;,
+                  &quot;isLocal&quot;: true
+                }
+              ],
+              &quot;init&quot;: [
+                {
+                  &quot;type&quot;: &quot;NumericLiteral&quot;,
+                  &quot;value&quot;: 2,
+                  &quot;raw&quot;: &quot;2&quot;
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>local function foo() end foo()</dt>
+        <dd><pre><code>expect(parser.parse('local function foo() end foo()', { scope: true })).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;FunctionDeclaration&quot;,
+      &quot;identifier&quot;: {
+        &quot;type&quot;: &quot;Identifier&quot;,
+        &quot;name&quot;: &quot;foo&quot;,
+        &quot;isLocal&quot;: true
+      },
+      &quot;local&quot;: true,
+      &quot;parameters&quot;: [],
+      &quot;body&quot;: []
+    },
+    {
+      &quot;type&quot;: &quot;CallStatement&quot;,
+      &quot;expression&quot;: {
+        &quot;type&quot;: &quot;CallExpression&quot;,
+        &quot;base&quot;: {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;foo&quot;,
+          &quot;isLocal&quot;: true
+        },
+        &quot;arguments&quot;: []
+      }
+    }
+  ],
+  &quot;comments&quot;: []
+});</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
       <h1>statements</h1>
       <dl>
         <dt>break</dt>
