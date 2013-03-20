@@ -11,7 +11,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -49,7 +50,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -88,7 +90,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -141,7 +144,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -173,7 +177,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -205,7 +210,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -237,7 +243,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -277,7 +284,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -288,21 +296,24 @@ describe('tableconstructors', function() {
                   "type": "TableValue",
                   "value": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   }
                 },
                 {
                   "type": "TableValue",
                   "value": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   }
                 },
                 {
                   "type": "TableValue",
                   "value": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   }
                 }
               ]
@@ -322,7 +333,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -370,7 +382,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -384,11 +397,13 @@ describe('tableconstructors', function() {
                     "indexer": ".",
                     "identifier": {
                       "type": "Identifier",
-                      "name": "b"
+                      "name": "b",
+                      "isLocal": false
                     },
                     "base": {
                       "type": "Identifier",
-                      "name": "a"
+                      "name": "a",
+                      "isLocal": false
                     }
                   }
                 },
@@ -398,11 +413,13 @@ describe('tableconstructors', function() {
                     "type": "IndexExpression",
                     "base": {
                       "type": "Identifier",
-                      "name": "a"
+                      "name": "a",
+                      "isLocal": false
                     },
                     "index": {
                       "type": "Identifier",
-                      "name": "b"
+                      "name": "b",
+                      "isLocal": false
                     }
                   }
                 },
@@ -415,11 +432,13 @@ describe('tableconstructors', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "c"
+                        "name": "c",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "arguments": []
@@ -442,7 +461,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -473,11 +493,13 @@ describe('tableconstructors', function() {
                     "operator": ">",
                     "left": {
                       "type": "Identifier",
-                      "name": "a"
+                      "name": "a",
+                      "isLocal": false
                     },
                     "right": {
                       "type": "Identifier",
-                      "name": "b"
+                      "name": "b",
+                      "isLocal": false
                     }
                   }
                 },
@@ -515,7 +537,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -526,7 +549,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "NumericLiteral",
@@ -551,7 +575,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -562,7 +587,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "NumericLiteral",
@@ -574,7 +600,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "StringLiteral",
@@ -586,7 +613,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "NilLiteral",
@@ -626,7 +654,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -645,7 +674,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "StringLiteral",
@@ -657,7 +687,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "TableConstructorExpression",
@@ -668,7 +699,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "d"
+                    "name": "d",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "BooleanLiteral",
@@ -705,7 +737,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -742,7 +775,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -758,7 +792,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   }
                 },
                 {
@@ -770,7 +805,8 @@ describe('tableconstructors', function() {
                   },
                   "value": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   }
                 }
               ]
@@ -790,7 +826,8 @@ describe('tableconstructors', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -809,7 +846,8 @@ describe('tableconstructors', function() {
                   "type": "TableKeyString",
                   "key": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   },
                   "value": {
                     "type": "NumericLiteral",

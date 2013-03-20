@@ -11,7 +11,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -35,7 +36,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -59,7 +61,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -83,7 +86,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -110,7 +114,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -134,7 +139,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -158,7 +164,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -182,7 +189,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -209,7 +217,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -233,7 +242,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -257,7 +267,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -284,7 +295,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -308,7 +320,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -332,7 +345,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -356,7 +370,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -380,7 +395,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -426,7 +442,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -462,7 +479,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -486,7 +504,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -513,7 +532,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -537,7 +557,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -561,7 +582,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -585,7 +607,8 @@ describe('literals', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [

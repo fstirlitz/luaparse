@@ -11,7 +11,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -35,7 +36,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -58,13 +60,15 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ]
         }
@@ -81,7 +85,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -105,7 +110,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -129,7 +135,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -153,7 +160,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -177,7 +185,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -201,7 +210,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -224,7 +234,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -233,11 +244,13 @@ describe('expressions', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             }
           ]
@@ -258,7 +271,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -267,18 +281,21 @@ describe('expressions', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               }
             }
@@ -300,7 +317,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -308,11 +326,13 @@ describe('expressions', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             }
           ]
@@ -330,7 +350,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -338,7 +359,8 @@ describe('expressions', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "NumericLiteral",
@@ -361,7 +383,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -369,7 +392,8 @@ describe('expressions', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "StringLiteral",
@@ -392,7 +416,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -402,16 +427,19 @@ describe('expressions', function() {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               },
               "index": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             }
           ]
@@ -429,7 +457,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -440,16 +469,19 @@ describe('expressions', function() {
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               },
               "index": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             }
           ]
@@ -467,7 +499,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -476,17 +509,20 @@ describe('expressions', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               }
             }
@@ -505,7 +541,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -513,11 +550,13 @@ describe('expressions', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             }
           ]
@@ -535,7 +574,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -544,11 +584,13 @@ describe('expressions', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             }
           ]
@@ -558,7 +600,7 @@ describe('expressions', function() {
     });
   });
   it('a = ()                                  -- FAIL', function() {
-    expect(parser.parse('a = ()', {wait:true}).end).to.throwError(/^\[1:6\] <expression> expected near '<eof>'$/);
+    expect(parser.parse('a = ()', {wait:true}).end).to.throwError(/^\[1:5\] <expression> expected near '\)'$/);
   });
   it('a = a()', function() {
     expect(parser.parse('a = a()')).to.eql({
@@ -569,7 +611,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -577,7 +620,8 @@ describe('expressions', function() {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": []
             }
@@ -596,7 +640,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -607,11 +652,13 @@ describe('expressions', function() {
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               },
               "arguments": []
@@ -631,7 +678,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -641,11 +689,13 @@ describe('expressions', function() {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               },
               "arguments": []
@@ -665,7 +715,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -676,11 +727,13 @@ describe('expressions', function() {
                 "indexer": ":",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               },
               "arguments": []
@@ -700,7 +753,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -708,7 +762,8 @@ describe('expressions', function() {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": []
             }
@@ -727,7 +782,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -738,11 +794,13 @@ describe('expressions', function() {
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               },
               "arguments": []
@@ -762,7 +820,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -772,11 +831,13 @@ describe('expressions', function() {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               },
               "arguments": []
@@ -796,7 +857,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -807,11 +869,13 @@ describe('expressions', function() {
                 "indexer": ":",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               },
               "arguments": []
@@ -831,7 +895,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -839,7 +904,8 @@ describe('expressions', function() {
               "type": "StringCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "argument": {
                 "type": "StringLiteral",
@@ -862,7 +928,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -870,7 +937,8 @@ describe('expressions', function() {
               "type": "TableCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": {
                 "type": "TableConstructorExpression",
@@ -907,7 +975,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -936,7 +1005,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -947,7 +1017,8 @@ describe('expressions', function() {
               "parameters": [
                 {
                   "type": "Identifier",
-                  "name": "p"
+                  "name": "p",
+                  "isLocal": true
                 }
               ],
               "body": []
@@ -973,7 +1044,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -984,15 +1056,18 @@ describe('expressions', function() {
               "parameters": [
                 {
                   "type": "Identifier",
-                  "name": "p"
+                  "name": "p",
+                  "isLocal": true
                 },
                 {
                   "type": "Identifier",
-                  "name": "q"
+                  "name": "q",
+                  "isLocal": true
                 },
                 {
                   "type": "Identifier",
-                  "name": "r"
+                  "name": "r",
+                  "isLocal": true
                 }
               ],
               "body": []
@@ -1015,7 +1090,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1050,7 +1126,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1061,7 +1138,8 @@ describe('expressions', function() {
               "parameters": [
                 {
                   "type": "Identifier",
-                  "name": "p"
+                  "name": "p",
+                  "isLocal": true
                 },
                 {
                   "type": "VarargLiteral",
@@ -1086,7 +1164,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1097,15 +1176,18 @@ describe('expressions', function() {
               "parameters": [
                 {
                   "type": "Identifier",
-                  "name": "p"
+                  "name": "p",
+                  "isLocal": true
                 },
                 {
                   "type": "Identifier",
-                  "name": "q"
+                  "name": "q",
+                  "isLocal": true
                 },
                 {
                   "type": "Identifier",
-                  "name": "r"
+                  "name": "r",
+                  "isLocal": true
                 },
                 {
                   "type": "VarargLiteral",
@@ -1130,7 +1212,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1162,7 +1245,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1194,7 +1278,8 @@ describe('expressions', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [

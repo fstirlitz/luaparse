@@ -81,19 +81,23 @@ describe('return', function() {
           "arguments": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "d"
+              "name": "d",
+              "isLocal": false
             }
           ]
         }

@@ -45,7 +45,8 @@ describe('while', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -73,7 +74,8 @@ describe('while', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -83,7 +85,8 @@ describe('while', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -111,7 +114,8 @@ describe('while', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -121,7 +125,8 @@ describe('while', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []

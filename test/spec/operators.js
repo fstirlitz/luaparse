@@ -8,7 +8,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -36,7 +37,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -64,7 +66,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -73,7 +76,8 @@ describe('operators', function() {
               "operator": "-",
               "argument": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             }
           ]
@@ -91,7 +95,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -119,7 +124,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -147,7 +153,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -174,7 +181,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -204,7 +212,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -215,7 +224,8 @@ describe('operators', function() {
                 "type": "CallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "arguments": []
               }
@@ -235,7 +245,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -244,7 +255,8 @@ describe('operators', function() {
               "operator": "-",
               "argument": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             }
           ]
@@ -265,7 +277,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -293,7 +306,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -321,7 +335,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -330,7 +345,8 @@ describe('operators', function() {
               "operator": "not",
               "argument": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             }
           ]
@@ -348,7 +364,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -376,7 +393,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -404,7 +422,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -431,7 +450,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -461,7 +481,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -472,7 +493,8 @@ describe('operators', function() {
                 "type": "CallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "arguments": []
               }
@@ -492,7 +514,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -501,7 +524,8 @@ describe('operators', function() {
               "operator": "not",
               "argument": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             }
           ]
@@ -522,7 +546,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -547,7 +572,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -580,7 +606,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -605,7 +632,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -638,7 +666,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -663,7 +692,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -705,7 +735,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -734,7 +765,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -774,7 +806,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -803,7 +836,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -843,7 +877,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -912,7 +947,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -981,7 +1017,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1059,7 +1096,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1071,16 +1109,19 @@ describe('operators', function() {
                 "operator": "+",
                 "left": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "right": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               },
               "right": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             }
           ]
@@ -1098,7 +1139,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1131,7 +1173,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1173,7 +1216,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1215,7 +1259,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1246,7 +1291,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1283,7 +1329,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1294,7 +1341,8 @@ describe('operators', function() {
                 "type": "CallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "arguments": []
               },
@@ -1302,7 +1350,8 @@ describe('operators', function() {
                 "type": "CallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "arguments": []
               }
@@ -1322,7 +1371,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1347,7 +1397,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1380,7 +1431,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1405,7 +1457,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1438,7 +1491,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1463,7 +1517,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1496,7 +1551,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1538,7 +1594,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1592,7 +1649,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1625,7 +1683,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1658,7 +1717,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1667,11 +1727,13 @@ describe('operators', function() {
               "operator": "~=",
               "left": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "right": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             }
           ]
@@ -1689,7 +1751,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1722,7 +1785,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1747,7 +1811,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1786,7 +1851,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1828,7 +1894,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1870,7 +1937,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1912,7 +1980,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1924,16 +1993,19 @@ describe('operators', function() {
                 "operator": "and",
                 "left": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "right": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               },
               "right": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             }
           ]
@@ -1951,7 +2023,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -1965,7 +2038,8 @@ describe('operators', function() {
                   "type": "CallExpression",
                   "base": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   },
                   "arguments": []
                 },
@@ -1973,7 +2047,8 @@ describe('operators', function() {
                   "type": "CallExpression",
                   "base": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   },
                   "arguments": []
                 }
@@ -1983,11 +2058,13 @@ describe('operators', function() {
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "c"
+                  "name": "c",
+                  "isLocal": false
                 }
               }
             }
@@ -2006,7 +2083,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2039,7 +2117,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2072,7 +2151,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2111,7 +2191,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2153,7 +2234,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2190,7 +2272,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2227,7 +2310,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2287,7 +2371,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2347,7 +2432,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2393,7 +2479,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2435,7 +2522,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2541,7 +2629,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2614,7 +2703,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2740,7 +2830,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2845,7 +2936,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -2922,7 +3014,8 @@ describe('operators', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [

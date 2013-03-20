@@ -35,11 +35,13 @@ describe('do', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 },
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -62,7 +64,8 @@ describe('do', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -72,7 +75,8 @@ describe('do', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -95,7 +99,8 @@ describe('do', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -105,7 +110,8 @@ describe('do', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -128,7 +134,8 @@ describe('do', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": [
