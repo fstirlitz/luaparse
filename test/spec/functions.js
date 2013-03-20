@@ -25,7 +25,8 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [],
@@ -58,13 +59,15 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             }
           ],
           "body": []
@@ -84,21 +87,25 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "q"
+              "name": "q",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "r"
+              "name": "r",
+              "isLocal": true
             }
           ],
           "body": []
@@ -124,13 +131,15 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             }
           ],
           "body": [
@@ -155,13 +164,15 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             }
           ],
           "body": [
@@ -192,11 +203,13 @@ describe('functions', function() {
             "indexer": ".",
             "identifier": {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             },
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           },
           "local": false,
@@ -224,25 +237,29 @@ describe('functions', function() {
             "indexer": ".",
             "identifier": {
               "type": "Identifier",
-              "name": "d"
+              "name": "d",
+              "isLocal": false
             },
             "base": {
               "type": "MemberExpression",
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               }
             }
@@ -272,11 +289,13 @@ describe('functions', function() {
             "indexer": ":",
             "identifier": {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             },
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           },
           "local": false,
@@ -304,25 +323,29 @@ describe('functions', function() {
             "indexer": ":",
             "identifier": {
               "type": "Identifier",
-              "name": "d"
+              "name": "d",
+              "isLocal": false
             },
             "base": {
               "type": "MemberExpression",
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               }
             }
@@ -343,7 +366,8 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [
@@ -370,13 +394,15 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             },
             {
               "type": "VarargLiteral",
@@ -401,21 +427,25 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "q"
+              "name": "q",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "r"
+              "name": "r",
+              "isLocal": true
             },
             {
               "type": "VarargLiteral",
@@ -437,7 +467,8 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [],
@@ -447,7 +478,8 @@ describe('functions', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -457,7 +489,8 @@ describe('functions', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -476,7 +509,8 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [],
@@ -486,7 +520,8 @@ describe('functions', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -496,7 +531,8 @@ describe('functions', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -515,7 +551,8 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [],
@@ -525,7 +562,8 @@ describe('functions', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": false
           },
           "local": false,
           "parameters": [],

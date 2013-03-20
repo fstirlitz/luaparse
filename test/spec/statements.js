@@ -21,7 +21,8 @@ describe('statements', function() {
           "type": "LabelStatement",
           "label": {
             "type": "Identifier",
-            "name": "foo"
+            "name": "foo",
+            "isLocal": true
           }
         }
       ],
@@ -39,7 +40,8 @@ describe('statements', function() {
           "type": "GotoStatement",
           "label": {
             "type": "Identifier",
-            "name": "foo"
+            "name": "foo",
+            "isLabel": false
           }
         }
       ],

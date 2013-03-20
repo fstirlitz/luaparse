@@ -1,3 +1,4 @@
+// This file manually written.
 describe('escape sequences', function() {
   it('a = "bar\\tbaz"', function() {
     expect(parser.parse('a = "bar\tbaz"')).to.eql({
@@ -8,7 +9,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -32,7 +34,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -59,7 +62,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -86,7 +90,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -110,7 +115,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -134,7 +140,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -158,7 +165,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             } ],
           "init": [
             {
@@ -181,7 +189,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -206,7 +215,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -230,7 +240,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -255,7 +266,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             }
           ],
           "init": [
@@ -279,7 +291,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             }
           ],
           "init": [
@@ -303,7 +316,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             }
           ],
           "init": [
@@ -327,7 +341,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             }
           ],
           "init": [
@@ -351,7 +366,8 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             }
           ],
           "init": [

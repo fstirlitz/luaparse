@@ -12,7 +12,8 @@ describe('functioncalls', function() {
             "type": "CallExpression",
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             "arguments": []
           }
@@ -31,7 +32,8 @@ describe('functioncalls', function() {
             "type": "CallExpression",
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             "arguments": [
               {
@@ -59,7 +61,8 @@ describe('functioncalls', function() {
             "type": "CallExpression",
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             "arguments": [
               {
@@ -99,7 +102,8 @@ describe('functioncalls', function() {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": []
             },
@@ -123,11 +127,13 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -149,11 +155,13 @@ describe('functioncalls', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -188,18 +196,21 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               }
             },
@@ -224,16 +235,19 @@ describe('functioncalls', function() {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               },
               "index": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -256,17 +270,20 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               }
             },
@@ -292,16 +309,19 @@ describe('functioncalls', function() {
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               },
               "index": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -324,11 +344,13 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -357,18 +379,21 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               }
             },
@@ -392,17 +417,20 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               }
             },
@@ -429,7 +457,8 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "CallExpression",
@@ -438,11 +467,13 @@ describe('functioncalls', function() {
                   "indexer": ":",
                   "identifier": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   },
                   "base": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   }
                 },
                 "arguments": []
@@ -468,7 +499,8 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
@@ -477,7 +509,8 @@ describe('functioncalls', function() {
                   "indexer": ".",
                   "identifier": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   },
                   "base": {
                     "type": "CallExpression",
@@ -486,11 +519,13 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "arguments": []
@@ -498,7 +533,8 @@ describe('functioncalls', function() {
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 }
               }
             },
@@ -522,14 +558,16 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "IndexExpression",
@@ -540,18 +578,21 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "arguments": []
                   },
                   "index": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   }
                 }
               }
@@ -573,7 +614,8 @@ describe('functioncalls', function() {
             "type": "CallExpression",
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             "arguments": []
           }
@@ -583,7 +625,7 @@ describe('functioncalls', function() {
     });
   });
   it('()()                                    -- FAIL', function() {
-    expect(parser.parse('()()', {wait:true}).end).to.throwError(/^\[1:2\] <expression> expected near '\('$/);
+    expect(parser.parse('()()', {wait:true}).end).to.throwError(/^\[1:1\] <expression> expected near '\)'$/);
   });
   it('(1)()', function() {
     expect(parser.parse('(1)()')).to.eql({
@@ -657,7 +699,8 @@ describe('functioncalls', function() {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": []
             },
@@ -681,11 +724,13 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -707,11 +752,13 @@ describe('functioncalls', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -734,11 +781,13 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -760,11 +809,13 @@ describe('functioncalls', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -787,11 +838,13 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -814,7 +867,8 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "d"
+                "name": "d",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
@@ -823,16 +877,19 @@ describe('functioncalls', function() {
                   "indexer": ".",
                   "identifier": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   },
                   "base": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   }
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "c"
+                  "name": "c",
+                  "isLocal": false
                 }
               }
             },
@@ -856,24 +913,28 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "d"
+                "name": "d",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "c"
+                  "name": "c",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "IndexExpression",
                   "base": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   },
                   "index": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   }
                 }
               }
@@ -898,7 +959,8 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "CallExpression",
@@ -907,11 +969,13 @@ describe('functioncalls', function() {
                   "indexer": ":",
                   "identifier": {
                     "type": "Identifier",
-                    "name": "b"
+                    "name": "b",
+                    "isLocal": false
                   },
                   "base": {
                     "type": "Identifier",
-                    "name": "a"
+                    "name": "a",
+                    "isLocal": false
                   }
                 },
                 "arguments": []
@@ -937,7 +1001,8 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
@@ -946,7 +1011,8 @@ describe('functioncalls', function() {
                   "indexer": ".",
                   "identifier": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   },
                   "base": {
                     "type": "CallExpression",
@@ -955,11 +1021,13 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "arguments": []
@@ -967,7 +1035,8 @@ describe('functioncalls', function() {
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 }
               }
             },
@@ -991,14 +1060,16 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "IndexExpression",
@@ -1009,18 +1080,21 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "arguments": []
                   },
                   "index": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   }
                 }
               }
@@ -1042,7 +1116,8 @@ describe('functioncalls', function() {
             "type": "StringCallExpression",
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             "argument": {
               "type": "StringLiteral",
@@ -1065,7 +1140,8 @@ describe('functioncalls', function() {
             "type": "StringCallExpression",
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             "argument": {
               "type": "StringLiteral",
@@ -1091,11 +1167,13 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "argument": {
@@ -1121,11 +1199,13 @@ describe('functioncalls', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             "argument": {
@@ -1152,11 +1232,13 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "argument": {
@@ -1180,7 +1262,8 @@ describe('functioncalls', function() {
             "type": "TableCallExpression",
             "base": {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             "arguments": {
               "type": "TableConstructorExpression",
@@ -1205,11 +1288,13 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "arguments": {
@@ -1234,11 +1319,13 @@ describe('functioncalls', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             "arguments": {
@@ -1264,11 +1351,13 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             },
             "arguments": {
@@ -1293,7 +1382,8 @@ describe('functioncalls', function() {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": []
             },
@@ -1320,7 +1410,8 @@ describe('functioncalls', function() {
               "type": "StringCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "argument": {
                 "type": "StringLiteral",
@@ -1348,13 +1439,15 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "StringCallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "argument": {
                   "type": "StringLiteral",
@@ -1384,7 +1477,8 @@ describe('functioncalls', function() {
                 "type": "StringCallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "argument": {
                   "type": "StringLiteral",
@@ -1394,7 +1488,8 @@ describe('functioncalls', function() {
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -1417,13 +1512,15 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "StringCallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "argument": {
                   "type": "StringLiteral",
@@ -1451,7 +1548,8 @@ describe('functioncalls', function() {
               "type": "StringCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "argument": {
                 "type": "StringLiteral",
@@ -1482,7 +1580,8 @@ describe('functioncalls', function() {
               "type": "StringCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "argument": {
                 "type": "StringLiteral",
@@ -1513,7 +1612,8 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
@@ -1522,7 +1622,8 @@ describe('functioncalls', function() {
                   "indexer": ".",
                   "identifier": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   },
                   "base": {
                     "type": "StringCallExpression",
@@ -1531,11 +1632,13 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "argument": {
@@ -1547,7 +1650,8 @@ describe('functioncalls', function() {
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 }
               }
             },
@@ -1575,14 +1679,16 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "IndexExpression",
@@ -1593,11 +1699,13 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "argument": {
@@ -1608,7 +1716,8 @@ describe('functioncalls', function() {
                   },
                   "index": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   }
                 }
               }
@@ -1636,7 +1745,8 @@ describe('functioncalls', function() {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": []
             },
@@ -1662,7 +1772,8 @@ describe('functioncalls', function() {
               "type": "TableCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": {
                 "type": "TableConstructorExpression",
@@ -1689,13 +1800,15 @@ describe('functioncalls', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "TableCallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "arguments": {
                   "type": "TableConstructorExpression",
@@ -1724,7 +1837,8 @@ describe('functioncalls', function() {
                 "type": "TableCallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "arguments": {
                   "type": "TableConstructorExpression",
@@ -1733,7 +1847,8 @@ describe('functioncalls', function() {
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             "arguments": []
@@ -1756,13 +1871,15 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "TableCallExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "arguments": {
                   "type": "TableConstructorExpression",
@@ -1789,7 +1906,8 @@ describe('functioncalls', function() {
               "type": "TableCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": {
                 "type": "TableConstructorExpression",
@@ -1819,7 +1937,8 @@ describe('functioncalls', function() {
               "type": "TableCallExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "arguments": {
                 "type": "TableConstructorExpression",
@@ -1849,7 +1968,8 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
@@ -1858,7 +1978,8 @@ describe('functioncalls', function() {
                   "indexer": ".",
                   "identifier": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   },
                   "base": {
                     "type": "TableCallExpression",
@@ -1867,11 +1988,13 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "arguments": {
@@ -1882,7 +2005,8 @@ describe('functioncalls', function() {
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 }
               }
             },
@@ -1909,14 +2033,16 @@ describe('functioncalls', function() {
               "indexer": ":",
               "identifier": {
                 "type": "Identifier",
-                "name": "e"
+                "name": "e",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "d"
+                  "name": "d",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "IndexExpression",
@@ -1927,11 +2053,13 @@ describe('functioncalls', function() {
                       "indexer": ":",
                       "identifier": {
                         "type": "Identifier",
-                        "name": "b"
+                        "name": "b",
+                        "isLocal": false
                       },
                       "base": {
                         "type": "Identifier",
-                        "name": "a"
+                        "name": "a",
+                        "isLocal": false
                       }
                     },
                     "arguments": {
@@ -1941,7 +2069,8 @@ describe('functioncalls', function() {
                   },
                   "index": {
                     "type": "Identifier",
-                    "name": "c"
+                    "name": "c",
+                    "isLocal": false
                   }
                 }
               }

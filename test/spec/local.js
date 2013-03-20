@@ -20,7 +20,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "init": []
@@ -38,7 +39,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "init": []
@@ -56,15 +58,18 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": true
             }
           ],
           "init": []
@@ -82,7 +87,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "init": []
@@ -92,7 +98,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             }
           ],
           "init": []
@@ -102,7 +109,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": true
             }
           ],
           "init": []
@@ -120,7 +128,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "init": [
@@ -144,7 +153,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "init": []
@@ -154,13 +164,15 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             }
           ],
           "init": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ]
         }
@@ -177,11 +189,13 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             }
           ],
           "init": [
@@ -210,15 +224,18 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": true
             }
           ],
           "init": [
@@ -252,15 +269,18 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": true
             }
           ],
           "init": [
@@ -284,7 +304,8 @@ describe('local', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "init": [
@@ -356,7 +377,8 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [],
@@ -389,13 +411,15 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             }
           ],
           "body": []
@@ -415,21 +439,25 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "q"
+              "name": "q",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "r"
+              "name": "r",
+              "isLocal": true
             }
           ],
           "body": []
@@ -455,13 +483,15 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             }
           ],
           "body": [
@@ -486,13 +516,15 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             }
           ],
           "body": [
@@ -520,7 +552,8 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [
@@ -547,13 +580,15 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             },
             {
               "type": "VarargLiteral",
@@ -575,21 +610,25 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "q"
+              "name": "q",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "r"
+              "name": "r",
+              "isLocal": true
             },
             {
               "type": "VarargLiteral",
@@ -611,7 +650,8 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [],
@@ -621,7 +661,8 @@ describe('local', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -631,7 +672,8 @@ describe('local', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -650,7 +692,8 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [],
@@ -660,7 +703,8 @@ describe('local', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -670,7 +714,8 @@ describe('local', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -689,7 +734,8 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [],
@@ -699,7 +745,8 @@ describe('local', function() {
           "type": "FunctionDeclaration",
           "identifier": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "local": true,
           "parameters": [],

@@ -13,7 +13,10 @@
 
   <!-- Library -->
   <script src="../lib/luaparse.js"></script>
-  <script>window.parser = window.luaparse;</script>
+  <script>
+    window.parser = window.luaparse;
+    window.parser.defaultOptions.scope = true;
+  </script>
 
 
   <!-- Spec -->

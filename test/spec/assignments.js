@@ -20,7 +20,8 @@ describe('assignments', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -44,7 +45,8 @@ describe('assignments', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             }
           ],
           "init": [
@@ -78,15 +80,18 @@ describe('assignments', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             }
           ],
           "init": [
@@ -110,15 +115,18 @@ describe('assignments', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": false
             }
           ],
           "init": [
@@ -155,11 +163,13 @@ describe('assignments', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               },
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               }
             }
           ],
@@ -187,18 +197,21 @@ describe('assignments', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               }
             }
@@ -226,11 +239,13 @@ describe('assignments', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             }
           ],
@@ -259,16 +274,19 @@ describe('assignments', function() {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               },
               "index": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             }
           ],
@@ -298,16 +316,19 @@ describe('assignments', function() {
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 },
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 }
               },
               "index": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             }
           ],
@@ -335,17 +356,20 @@ describe('assignments', function() {
               "indexer": ".",
               "identifier": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               },
               "base": {
                 "type": "IndexExpression",
                 "base": {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": false
                 }
               }
             }
@@ -373,22 +397,26 @@ describe('assignments', function() {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "b"
+                "name": "b",
+                "isLocal": false
               }
             },
             {
               "type": "IndexExpression",
               "base": {
                 "type": "Identifier",
-                "name": "a"
+                "name": "a",
+                "isLocal": false
               },
               "index": {
                 "type": "Identifier",
-                "name": "c"
+                "name": "c",
+                "isLocal": false
               }
             }
           ],

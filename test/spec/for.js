@@ -47,13 +47,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": []
@@ -71,13 +73,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": [
@@ -86,7 +90,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -96,7 +101,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -116,13 +122,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": [
@@ -131,7 +139,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -141,7 +150,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -170,21 +180,25 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": false
             }
           ],
           "body": []
@@ -202,29 +216,35 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": true
             },
             {
               "type": "Identifier",
-              "name": "c"
+              "name": "c",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "p"
+              "name": "p",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "q"
+              "name": "q",
+              "isLocal": false
             },
             {
               "type": "Identifier",
-              "name": "r"
+              "name": "r",
+              "isLocal": false
             }
           ],
           "body": []
@@ -242,7 +262,8 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
@@ -267,7 +288,8 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
@@ -292,7 +314,8 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
@@ -317,13 +340,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": [
@@ -345,13 +370,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": [
@@ -377,13 +404,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": [
@@ -406,13 +435,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": [
@@ -439,13 +470,15 @@ describe('for', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a"
+              "name": "a",
+              "isLocal": true
             }
           ],
           "iterators": [
             {
               "type": "Identifier",
-              "name": "b"
+              "name": "b",
+              "isLocal": false
             }
           ],
           "body": [
@@ -499,15 +532,18 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "Identifier",
-            "name": "p"
+            "name": "p",
+            "isLocal": false
           },
           "end": {
             "type": "Identifier",
-            "name": "q"
+            "name": "q",
+            "isLocal": false
           },
           "step": null,
           "body": []
@@ -524,7 +560,8 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "NumericLiteral",
@@ -551,7 +588,8 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "NumericLiteral",
@@ -570,7 +608,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -580,7 +619,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -599,7 +639,8 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "NumericLiteral",
@@ -618,7 +659,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "a"
+                  "name": "a",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -628,7 +670,8 @@ describe('for', function() {
               "variables": [
                 {
                   "type": "Identifier",
-                  "name": "b"
+                  "name": "b",
+                  "isLocal": true
                 }
               ],
               "init": []
@@ -653,19 +696,23 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "Identifier",
-            "name": "p"
+            "name": "p",
+            "isLocal": false
           },
           "end": {
             "type": "Identifier",
-            "name": "q"
+            "name": "q",
+            "isLocal": false
           },
           "step": {
             "type": "Identifier",
-            "name": "r"
+            "name": "r",
+            "isLocal": false
           },
           "body": []
         }
@@ -681,7 +728,8 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "NumericLiteral",
@@ -712,15 +760,18 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "Identifier",
-            "name": "p"
+            "name": "p",
+            "isLocal": false
           },
           "end": {
             "type": "Identifier",
-            "name": "q"
+            "name": "q",
+            "isLocal": false
           },
           "step": null,
           "body": [
@@ -741,7 +792,8 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "NumericLiteral",
@@ -776,15 +828,18 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "Identifier",
-            "name": "p"
+            "name": "p",
+            "isLocal": false
           },
           "end": {
             "type": "Identifier",
-            "name": "q"
+            "name": "q",
+            "isLocal": false
           },
           "step": null,
           "body": [
@@ -806,15 +861,18 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "Identifier",
-            "name": "p"
+            "name": "p",
+            "isLocal": false
           },
           "end": {
             "type": "Identifier",
-            "name": "q"
+            "name": "q",
+            "isLocal": false
           },
           "step": null,
           "body": [
@@ -840,15 +898,18 @@ describe('for', function() {
           "type": "ForNumericStatement",
           "variable": {
             "type": "Identifier",
-            "name": "a"
+            "name": "a",
+            "isLocal": true
           },
           "start": {
             "type": "Identifier",
-            "name": "p"
+            "name": "p",
+            "isLocal": false
           },
           "end": {
             "type": "Identifier",
-            "name": "q"
+            "name": "q",
+            "isLocal": false
           },
           "step": null,
           "body": [

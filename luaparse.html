@@ -13,7 +13,7 @@
 }(<span class="keyword">this</span>, <span class="string">'luaparse'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span>
   <span class="string">'use strict'</span>;
 
-  exports.version = <span class="string">'0.0.4'</span>;
+  exports.version = <span class="string">'0.0.6'</span>;
 
   <span class="keyword">var</span> input, options, length;
 
@@ -963,32 +963,33 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
   }
 
 </pre></div>             </td>           </tr>                               <tr id="section-77">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-77">&#182;</a>               </div>               <h2>Scope</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-  <span class="keyword">var</span> scopes = [[]]
-    , scopeDepth = <span class="number">0</span>;
+  <span class="keyword">var</span> scopes, scopeDepth;
 
-</pre></div>             </td>           </tr>                               <tr id="section-78">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-78">&#182;</a>               </div>               <p>Create a new scope inheriting all declarations from the previous scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">createScope</span><span class="params">()</span> {</span>
+</pre></div>             </td>           </tr>                               <tr id="section-78">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-78">&#182;</a>               </div>               <p>Create a new scope inheriting all declarations from the previous scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">createScope</span><span class="params">()</span> {</span>
     scopes.push(Array.apply(<span class="literal">null</span>, scopes[scopeDepth++]));
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-79">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-79">&#182;</a>               </div>               <p>Add identifier name to the current scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">scopeIdentifier</span><span class="params">(name)</span> {</span>
-    scopes[scopeDepth].push(name);
-  }
-
-</pre></div>             </td>           </tr>                               <tr id="section-80">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-80">&#182;</a>               </div>               <p>Attach scope information to the identifier node.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">attachScope</span><span class="params">(node)</span> {</span>
-    node.isLocal = indexOf.call(scopes[scopeDepth], node.name) !== -<span class="number">1</span>;
-  }
-
-</pre></div>             </td>           </tr>                               <tr id="section-81">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-81">&#182;</a>               </div>               <p>Exit and remove the current scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>
-  <span class="function"><span class="keyword">function</span> <span class="title">exitScope</span><span class="params">()</span> {</span>
+</pre></div>             </td>           </tr>                               <tr id="section-79">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-79">&#182;</a>               </div>               <p>Exit and remove the current scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">exitScope</span><span class="params">()</span> {</span>
     scopes.pop();
     scopeDepth--;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-82">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-82">&#182;</a>               </div>               <h2>Parse functions</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-83">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-83">&#182;</a>               </div>               <p>Chunk is the main program object. Syntactically it's the same as a block.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-80">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-80">&#182;</a>               </div>               <p>Add identifier name to the current scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">scopeIdentifierName</span><span class="params">(name)</span> {</span>
+    scopes[scopeDepth].push(name);
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-81">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-81">&#182;</a>               </div>               <p>Add identifier to the current scope</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">scopeIdentifier</span><span class="params">(node)</span> {</span>
+    scopeIdentifierName(node.name);
+    node.isLocal = <span class="literal">true</span>;
+  }
+
+</pre></div>             </td>           </tr>                               <tr id="section-82">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-82">&#182;</a>               </div>               <p>Is the identifier name available in this scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="function"><span class="keyword">function</span> <span class="title">scopeHasName</span><span class="params">(name)</span> {</span>
+    <span class="keyword">return</span> (-<span class="number">1</span> !== indexOf.call(scopes[scopeDepth], name));
+  }
+
+
+</pre></div>             </td>           </tr>                               <tr id="section-83">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-83">&#182;</a>               </div>               <h2>Parse functions</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-84">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-84">&#182;</a>               </div>               <p>Chunk is the main program object. Syntactically it's the same as a block.</p>
 
 <pre><code>chunk ::= block
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
@@ -999,7 +1000,7 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
     <span class="keyword">return</span> ast.chunk(body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-84">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-84">&#182;</a>               </div>               <p>A block contains a list of statements with an optional return statement
+</pre></div>             </td>           </tr>                               <tr id="section-85">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-85">&#182;</a>               </div>               <p>A block contains a list of statements with an optional return statement
 as its last statement.</p>
 
 <pre><code>block ::= {stat} [retstat]
@@ -1008,21 +1009,23 @@ as its last statement.</p>
     <span class="keyword">var</span> block = []
       , statement;
 
-    <span class="keyword">if</span> (options.scope) createScope();
+</pre></div>             </td>           </tr>                               <tr id="section-86">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-86">&#182;</a>               </div>               <p>Each block creates a new scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (options.scope) createScope();
+
     <span class="keyword">while</span> (!isBlockFollow(token)) {
-</pre></div>             </td>           </tr>                               <tr id="section-85">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-85">&#182;</a>               </div>               <p>Return has to be the last statement in a block.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'return'</span> === token.value) {
+</pre></div>             </td>           </tr>                               <tr id="section-87">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-87">&#182;</a>               </div>               <p>Return has to be the last statement in a block.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'return'</span> === token.value) {
         block.push(parseStatement());
         <span class="keyword">break</span>;
       }
       statement = parseStatement();
-</pre></div>             </td>           </tr>                               <tr id="section-86">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-86">&#182;</a>               </div>               <p>Statements are only added if they are returned, this allows us to
+</pre></div>             </td>           </tr>                               <tr id="section-88">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-88">&#182;</a>               </div>               <p>Statements are only added if they are returned, this allows us to
 ignore some statements, such as EmptyStatement.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (statement) block.push(statement);
     }
+
     <span class="keyword">if</span> (options.scope) exitScope();
-</pre></div>             </td>           </tr>                               <tr id="section-87">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-87">&#182;</a>               </div>               <p>Doesn't really need an ast node</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">return</span> block;
+</pre></div>             </td>           </tr>                               <tr id="section-89">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-89">&#182;</a>               </div>               <p>Doesn't really need an ast node</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">return</span> block;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-88">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-88">&#182;</a>               </div>               <p>There are two types of statements, simple and compound.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-90">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-90">&#182;</a>               </div>               <p>There are two types of statements, simple and compound.</p>
 
 <pre><code>statement ::= break | goto | do | while | repeat | return
      | if | for | function | local | label | assignment
@@ -1050,34 +1053,44 @@ ignore some statements, such as EmptyStatement.</p>             </td>           
       <span class="keyword">if</span> (consume(<span class="string">'::'</span>)) <span class="keyword">return</span> parseLabelStatement();
     }
 
-</pre></div>             </td>           </tr>                               <tr id="section-89">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-89">&#182;</a>               </div>               <p>When a <code>;</code> is encounted, simply eat it without storing it.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (consume(<span class="string">';'</span>)) <span class="keyword">return</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-91">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-91">&#182;</a>               </div>               <p>When a <code>;</code> is encounted, simply eat it without storing it.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (consume(<span class="string">';'</span>)) <span class="keyword">return</span>;
 
     <span class="keyword">return</span> parseAssignmentOrCallStatement();
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-90">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-90">&#182;</a>               </div>               <h2>Statements</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-91">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-91">&#182;</a>               </div>               <pre><code>label ::= '::' Name '::'
+</pre></div>             </td>           </tr>                               <tr id="section-92">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-92">&#182;</a>               </div>               <h2>Statements</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-93">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-93">&#182;</a>               </div>               <pre><code>label ::= '::' Name '::'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseLabelStatement</span><span class="params">()</span> {</span>
-    <span class="keyword">var</span> label = parseIdentifier();
+    <span class="keyword">var</span> name = token.value
+      , label = parseIdentifier();
+
+    <span class="keyword">if</span> (options.scope) {
+      scopeIdentifierName(<span class="string">'::'</span> + name + <span class="string">'::'</span>);
+      label.isLocal = <span class="literal">true</span>;
+    }
+
     expect(<span class="string">'::'</span>);
     <span class="keyword">return</span> ast.labelStatement(label);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-92">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-92">&#182;</a>               </div>               <pre><code>break ::= 'break'
+</pre></div>             </td>           </tr>                               <tr id="section-94">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-94">&#182;</a>               </div>               <pre><code>break ::= 'break'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseBreakStatement</span><span class="params">()</span> {</span>
     <span class="keyword">return</span> ast.breakStatement();
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-93">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-93">&#182;</a>               </div>               <pre><code>goto ::= 'goto' Name
+</pre></div>             </td>           </tr>                               <tr id="section-95">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-95">&#182;</a>               </div>               <pre><code>goto ::= 'goto' Name
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseGotoStatement</span><span class="params">()</span> {</span>
-    <span class="keyword">var</span> label = parseIdentifier();
+    <span class="keyword">var</span> name = token.value
+      , label = parseIdentifier();
+
+    <span class="keyword">if</span> (options.scope) label.isLabel = scopeHasName(<span class="string">'::'</span> + name + <span class="string">'::'</span>);
     <span class="keyword">return</span> ast.gotoStatement(label);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-94">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-94">&#182;</a>               </div>               <pre><code>do ::= 'do' block 'end'
+</pre></div>             </td>           </tr>                               <tr id="section-96">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-96">&#182;</a>               </div>               <pre><code>do ::= 'do' block 'end'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseDoStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> body = parseBlock();
@@ -1085,7 +1098,7 @@ ignore some statements, such as EmptyStatement.</p>             </td>           
     <span class="keyword">return</span> ast.doStatement(body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-95">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-95">&#182;</a>               </div>               <pre><code>while ::= 'while' exp 'do' block 'end'
+</pre></div>             </td>           </tr>                               <tr id="section-97">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-97">&#182;</a>               </div>               <pre><code>while ::= 'while' exp 'do' block 'end'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseWhileStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> condition = parseExpression();
@@ -1095,7 +1108,7 @@ ignore some statements, such as EmptyStatement.</p>             </td>           
     <span class="keyword">return</span> ast.whileStatement(condition, body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-96">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-96">&#182;</a>               </div>               <pre><code>repeat ::= 'repeat' block 'until' exp
+</pre></div>             </td>           </tr>                               <tr id="section-98">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-98">&#182;</a>               </div>               <pre><code>repeat ::= 'repeat' block 'until' exp
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseRepeatStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> body = parseBlock();
@@ -1104,7 +1117,7 @@ ignore some statements, such as EmptyStatement.</p>             </td>           
     <span class="keyword">return</span> ast.repeatStatement(condition, body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-97">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-97">&#182;</a>               </div>               <pre><code>retstat ::= 'return' [exp {',' exp}] [';']
+</pre></div>             </td>           </tr>                               <tr id="section-99">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-99">&#182;</a>               </div>               <pre><code>retstat ::= 'return' [exp {',' exp}] [';']
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseReturnStatement</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> expressions = [];
@@ -1121,7 +1134,7 @@ ignore some statements, such as EmptyStatement.</p>             </td>           
     <span class="keyword">return</span> ast.returnStatement(expressions);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-98">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-98">&#182;</a>               </div>               <pre><code>if ::= 'if' exp 'then' block {elif} ['else' block] 'end'
+</pre></div>             </td>           </tr>                               <tr id="section-100">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-100">&#182;</a>               </div>               <pre><code>if ::= 'if' exp 'then' block {elif} ['else' block] 'end'
 elif ::= 'elseif' exp 'then' block
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseIfStatement</span><span class="params">()</span> {</span>
@@ -1150,7 +1163,7 @@ elif ::= 'elseif' exp 'then' block
     <span class="keyword">return</span> ast.ifStatement(clauses);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-99">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-99">&#182;</a>               </div>               <p>There are two types of for statements, generic and numeric.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-101">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-101">&#182;</a>               </div>               <p>There are two types of for statements, generic and numeric.</p>
 
 <pre><code>for ::= Name '=' exp ',' exp [',' exp] 'do' block 'end'
 for ::= namelist 'in' explist 'do' block 'end'
@@ -1161,12 +1174,14 @@ explist ::= exp {',' exp}
     <span class="keyword">var</span> variable = parseIdentifier()
       , body;
 
-</pre></div>             </td>           </tr>                               <tr id="section-100">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-100">&#182;</a>               </div>               <p>If the first expression is followed by a <code>=</code> punctuator, this is a
+</pre></div>             </td>           </tr>                               <tr id="section-102">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-102">&#182;</a>               </div>               <p>The start-identifier is local.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (options.scope) scopeIdentifier(variable);
+
+</pre></div>             </td>           </tr>                               <tr id="section-103">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-103">&#182;</a>               </div>               <p>If the first expression is followed by a <code>=</code> punctuator, this is a
 Numeric For Statement.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (consume(<span class="string">'='</span>)) {
-</pre></div>             </td>           </tr>                               <tr id="section-101">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-101">&#182;</a>               </div>               <p>Start expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> start = expectExpression(parseExpression());
+</pre></div>             </td>           </tr>                               <tr id="section-104">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-104">&#182;</a>               </div>               <p>Start expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> start = expectExpression(parseExpression());
       expect(<span class="string">','</span>);
-</pre></div>             </td>           </tr>                               <tr id="section-102">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-102">&#182;</a>               </div>               <p>End expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> end = expectExpression(parseExpression());
-</pre></div>             </td>           </tr>                               <tr id="section-103">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-103">&#182;</a>               </div>               <p>Optional step expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> step = consume(<span class="string">','</span>) ? expectExpression(parseExpression()) : <span class="literal">null</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-105">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-105">&#182;</a>               </div>               <p>End expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> end = expectExpression(parseExpression());
+</pre></div>             </td>           </tr>                               <tr id="section-106">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-106">&#182;</a>               </div>               <p>Optional step expression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> step = consume(<span class="string">','</span>) ? expectExpression(parseExpression()) : <span class="literal">null</span>;
 
       expect(<span class="string">'do'</span>);
       body = parseBlock();
@@ -1174,13 +1189,17 @@ Numeric For Statement.</p>             </td>             <td class="code">      
 
       <span class="keyword">return</span> ast.forNumericStatement(variable, start, end, step, body);
 
-</pre></div>             </td>           </tr>                               <tr id="section-104">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-104">&#182;</a>               </div>               <p>If not, it's a Generic For Statement</p>             </td>             <td class="code">               <div class="highlight"><pre>    } <span class="keyword">else</span> {
-</pre></div>             </td>           </tr>                               <tr id="section-105">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-105">&#182;</a>               </div>               <p>The namelist can contain one or more identifiers.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> variables = [variable];
-      <span class="keyword">while</span> (consume(<span class="string">','</span>)) variables.push(parseIdentifier());
+</pre></div>             </td>           </tr>                               <tr id="section-107">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-107">&#182;</a>               </div>               <p>If not, it's a Generic For Statement</p>             </td>             <td class="code">               <div class="highlight"><pre>    } <span class="keyword">else</span> {
+</pre></div>             </td>           </tr>                               <tr id="section-108">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-108">&#182;</a>               </div>               <p>The namelist can contain one or more identifiers.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> variables = [variable];
+      <span class="keyword">while</span> (consume(<span class="string">','</span>)) {
+        variable = parseIdentifier();
+</pre></div>             </td>           </tr>                               <tr id="section-109">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-109">&#182;</a>               </div>               <p>Each variable in the namelist is locally scoped.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (options.scope) scopeIdentifier(variable);
+        variables.push(variable);
+      }
       expect(<span class="string">'in'</span>);
       <span class="keyword">var</span> iterators = [];
 
-</pre></div>             </td>           </tr>                               <tr id="section-106">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-106">&#182;</a>               </div>               <p>One or more expressions in the explist.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">do</span> {
+</pre></div>             </td>           </tr>                               <tr id="section-110">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-110">&#182;</a>               </div>               <p>One or more expressions in the explist.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">do</span> {
         <span class="keyword">var</span> expression = expectExpression(parseExpression());
         iterators.push(expression);
       } <span class="keyword">while</span> (consume(<span class="string">','</span>));
@@ -1193,7 +1212,7 @@ Numeric For Statement.</p>             </td>             <td class="code">      
     }
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-107">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-107">&#182;</a>               </div>               <p>Local statements can either be variable assignments or function
+</pre></div>             </td>           </tr>                               <tr id="section-111">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-111">&#182;</a>               </div>               <p>Local statements can either be variable assignments or function
 definitions. If a function definition is found, it will be delegated to
 <code>parseFunctionDeclaration()</code> with the isLocal flag.</p>
 
@@ -1204,13 +1223,16 @@ child.</p>
    | 'local' Name {',' Name} ['=' exp {',' exp}
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseLocalStatement</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> name;
+
     <span class="keyword">if</span> (Identifier === token.type) {
       <span class="keyword">var</span> variables = []
         , init = [];
 
       <span class="keyword">do</span> {
-</pre></div>             </td>           </tr>                               <tr id="section-108">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-108">&#182;</a>               </div>               <p>Add the identifier to the scope</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="keyword">if</span> (options.scope) scopeIdentifier(token.value);
-        variables.push(parseIdentifier());
+        name = parseIdentifier();
+
+        variables.push(name);
       } <span class="keyword">while</span> (consume(<span class="string">','</span>));
 
       <span class="keyword">if</span> (consume(<span class="string">'='</span>)) {
@@ -1220,18 +1242,27 @@ child.</p>
         } <span class="keyword">while</span> (consume(<span class="string">','</span>));
       }
 
+</pre></div>             </td>           </tr>                               <tr id="section-112">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-112">&#182;</a>               </div>               <p>Declarations doesn't exist before the statement has been evaluated.
+Therefore assignments can't use their declarator. And the identifiers
+shouldn't be added to the scope until the statement is complete.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (options.scope) {
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = variables.length; i &lt; l; i++) {
+          scopeIdentifier(variables[i]);
+        }
+      }
+
       <span class="keyword">return</span> ast.localStatement(variables, init);
     }
     <span class="keyword">if</span> (consume(<span class="string">'function'</span>)) {
-      <span class="keyword">if</span> (options.scope) scopeIdentifier(token.value);
-</pre></div>             </td>           </tr>                               <tr id="section-109">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-109">&#182;</a>               </div>               <p>MemberExpressions are not allowed in local function statements.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">var</span> name = parseIdentifier();
-      <span class="keyword">return</span> parseFunctionDeclaration(name, <span class="literal">true</span>);
+      name = parseIdentifier();
+      <span class="keyword">if</span> (options.scope) scopeIdentifier(name);
+
+</pre></div>             </td>           </tr>                               <tr id="section-113">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-113">&#182;</a>               </div>               <p>MemberExpressions are not allowed in local function statements.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">return</span> parseFunctionDeclaration(name, <span class="literal">true</span>);
     } <span class="keyword">else</span> {
       raiseUnexpectedToken(<span class="string">'&lt;name&gt;'</span>, token);
     }
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-110">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-110">&#182;</a>               </div>               <pre><code>assignment ::= varlist '=' explist
+</pre></div>             </td>           </tr>                               <tr id="section-114">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-114">&#182;</a>               </div>               <pre><code>assignment ::= varlist '=' explist
 varlist ::= prefixexp {',' prefixexp}
 explist ::= exp {',' exp}
 
@@ -1239,7 +1270,7 @@ call ::= callexp
 callexp ::= prefixexp args | prefixexp ':' Name args
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseAssignmentOrCallStatement</span><span class="params">()</span> {</span>
-</pre></div>             </td>           </tr>                               <tr id="section-111">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-111">&#182;</a>               </div>               <p>Keep a reference to the previous token for better error messages in case
+</pre></div>             </td>           </tr>                               <tr id="section-115">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-115">&#182;</a>               </div>               <p>Keep a reference to the previous token for better error messages in case
 of invalid statement</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> previous = token
       , expression = parsePrefixExpression();
 
@@ -1263,27 +1294,24 @@ of invalid statement</p>             </td>             <td class="code">        
     <span class="keyword">if</span> (isCallExpression(expression)) {
       <span class="keyword">return</span> ast.callStatement(expression);
     }
-</pre></div>             </td>           </tr>                               <tr id="section-112">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-112">&#182;</a>               </div>               <p>The prefix expression was neither part of an assignment or a
+</pre></div>             </td>           </tr>                               <tr id="section-116">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-116">&#182;</a>               </div>               <p>The prefix expression was neither part of an assignment or a
 callstatement, however as it was valid it's been consumed, so raise
 the exception on the previous token to provide a helpful message.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">return</span> unexpected(previous);
   }
 
 
 
-</pre></div>             </td>           </tr>                               <tr id="section-113">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-113">&#182;</a>               </div>               <h3>Non-statements</h3>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-114">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-114">&#182;</a>               </div>               <pre><code>Identifier ::= Name
+</pre></div>             </td>           </tr>                               <tr id="section-117">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-117">&#182;</a>               </div>               <h3>Non-statements</h3>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-118">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-118">&#182;</a>               </div>               <pre><code>Identifier ::= Name
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseIdentifier</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> identifier = token.value;
     <span class="keyword">if</span> (Identifier !== token.type) raiseUnexpectedToken(<span class="string">'&lt;name&gt;'</span>, token);
     next();
-    <span class="keyword">var</span> node = ast.identifier(identifier);
-    <span class="keyword">if</span> (options.scope) attachScope(node);
-    <span class="keyword">return</span> node;
+    <span class="keyword">return</span> ast.identifier(identifier);
   }
 
-
-</pre></div>             </td>           </tr>                               <tr id="section-115">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-115">&#182;</a>               </div>               <p>Parse the functions parameters and body block. The name should already
+</pre></div>             </td>           </tr>                               <tr id="section-119">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-119">&#182;</a>               </div>               <p>Parse the functions parameters and body block. The name should already
 have been parsed and passed to this declaration function. By separating
 this we allow for anonymous functions in expressions.</p>
 
@@ -1297,15 +1325,18 @@ parlist ::= Name {',' Name} | [',' '...'] | '...'
     <span class="keyword">var</span> parameters = [];
     expect(<span class="string">'('</span>);
 
-</pre></div>             </td>           </tr>                               <tr id="section-116">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-116">&#182;</a>               </div>               <p>The declaration has arguments</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (!consume(<span class="string">')'</span>)) {
-</pre></div>             </td>           </tr>                               <tr id="section-117">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-117">&#182;</a>               </div>               <p>Arguments are a comma separated list of identifiers, optionally ending
+</pre></div>             </td>           </tr>                               <tr id="section-120">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-120">&#182;</a>               </div>               <p>The declaration has arguments</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (!consume(<span class="string">')'</span>)) {
+</pre></div>             </td>           </tr>                               <tr id="section-121">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-121">&#182;</a>               </div>               <p>Arguments are a comma separated list of identifiers, optionally ending
 with a vararg.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">while</span> (<span class="literal">true</span>) {
         <span class="keyword">if</span> (Identifier === token.type) {
-          parameters.push(parseIdentifier());
+          <span class="keyword">var</span> parameter = parseIdentifier();
+</pre></div>             </td>           </tr>                               <tr id="section-122">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-122">&#182;</a>               </div>               <p>Function parameters are local.</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="keyword">if</span> (options.scope) scopeIdentifier(parameter);
+
+          parameters.push(parameter);
 
           <span class="keyword">if</span> (consume(<span class="string">','</span>)) <span class="keyword">continue</span>;
           <span class="keyword">else</span> <span class="keyword">if</span> (consume(<span class="string">')'</span>)) <span class="keyword">break</span>;
-</pre></div>             </td>           </tr>                               <tr id="section-118">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-118">&#182;</a>               </div>               <p>No arguments are allowed after a vararg.</p>             </td>             <td class="code">               <div class="highlight"><pre>        } <span class="keyword">else</span> <span class="keyword">if</span> (VarargLiteral === token.type) {
+</pre></div>             </td>           </tr>                               <tr id="section-123">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-123">&#182;</a>               </div>               <p>No arguments are allowed after a vararg.</p>             </td>             <td class="code">               <div class="highlight"><pre>        } <span class="keyword">else</span> <span class="keyword">if</span> (VarargLiteral === token.type) {
           parameters.push(parsePrimaryExpression());
           expect(<span class="string">')'</span>);
           <span class="keyword">break</span>;
@@ -1322,25 +1353,31 @@ with a vararg.</p>             </td>             <td class="code">              
     <span class="keyword">return</span> ast.functionStatement(name, parameters, isLocal, body);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-119">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-119">&#182;</a>               </div>               <p>Parse the function name as identifiers and member expressions.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-124">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-124">&#182;</a>               </div>               <p>Parse the function name as identifiers and member expressions.</p>
 
 <pre><code>Name {'.' Name} [':' Name]
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseFunctionName</span><span class="params">()</span> {</span>
-    <span class="keyword">var</span> base = parseIdentifier();
+    <span class="keyword">var</span> base = parseIdentifier()
+      , name;
+    <span class="keyword">if</span> (options.scope) base.isLocal = <span class="literal">false</span>;
 
     <span class="keyword">while</span> (consume(<span class="string">'.'</span>)) {
-      base = ast.memberExpression(base, <span class="string">'.'</span>, parseIdentifier());
+      name = parseIdentifier();
+      <span class="keyword">if</span> (options.scope) name.isLocal = <span class="literal">false</span>;
+      base = ast.memberExpression(base, <span class="string">'.'</span>, name);
     }
 
     <span class="keyword">if</span> (consume(<span class="string">':'</span>)) {
-      base = ast.memberExpression(base, <span class="string">':'</span>, parseIdentifier());
+      name = parseIdentifier();
+      <span class="keyword">if</span> (options.scope) name.isLocal = <span class="literal">false</span>;
+      base = ast.memberExpression(base, <span class="string">':'</span>, name);
     }
 
     <span class="keyword">return</span> base;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-120">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-120">&#182;</a>               </div>               <pre><code>tableconstructor ::= '{' [fieldlist] '}'
+</pre></div>             </td>           </tr>                               <tr id="section-125">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-125">&#182;</a>               </div>               <pre><code>tableconstructor ::= '{' [fieldlist] '}'
 fieldlist ::= field {fieldsep field} fieldsep
 field ::= '[' exp ']' '=' exp | Name = 'exp' | exp
 
@@ -1379,7 +1416,7 @@ fieldsep ::= ',' | ';'
     <span class="keyword">return</span> ast.tableConstructorExpression(fields);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-121">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-121">&#182;</a>               </div>               <h2>Expression parser</h2>
+</pre></div>             </td>           </tr>                               <tr id="section-126">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-126">&#182;</a>               </div>               <h2>Expression parser</h2>
 
 <p>Expressions are evaluated and always return a value.</p>
 
@@ -1396,7 +1433,7 @@ prefixexp ::= (Name | '(' exp ')' ) { '[' exp ']'
     <span class="keyword">return</span> expression;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-122">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-122">&#182;</a>               </div>               <p>Return the precedence priority of the operator.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-127">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-127">&#182;</a>               </div>               <p>Return the precedence priority of the operator.</p>
 
 <p>As unary <code>-</code> can't be distinguished from binary <code>-</code>, unary precedence
 isn't described in this table but in <code>parseSubExpression()</code> itself.</p>
@@ -1424,7 +1461,7 @@ the expensive CompareICStub which took ~8% of the parse time.</p>             </
     <span class="keyword">return</span> <span class="number">0</span>;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-123">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-123">&#182;</a>               </div>               <p>Implement an operator-precedence parser to handle binary operator
+</pre></div>             </td>           </tr>                               <tr id="section-128">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-128">&#182;</a>               </div>               <p>Implement an operator-precedence parser to handle binary operator
 precedence.</p>
 
 <p>We use this algorithm because it's compact, it's fast and Lua core uses
@@ -1435,21 +1472,21 @@ without excessive amounts of tests.</p>
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseSubExpression</span><span class="params">(minPrecedence)</span> {</span>
     <span class="keyword">var</span> operator = token.value;
-</pre></div>             </td>           </tr>                               <tr id="section-124">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-124">&#182;</a>               </div>               <p>The left-hand side in binary operations.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression;
+</pre></div>             </td>           </tr>                               <tr id="section-129">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-129">&#182;</a>               </div>               <p>The left-hand side in binary operations.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression;
 
-</pre></div>             </td>           </tr>                               <tr id="section-125">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-125">&#182;</a>               </div>               <p>UnaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isUnary(token)) {
+</pre></div>             </td>           </tr>                               <tr id="section-130">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-130">&#182;</a>               </div>               <p>UnaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (isUnary(token)) {
       next();
       <span class="keyword">var</span> argument = expectExpression(parseSubExpression(<span class="number">8</span>));
       expression = ast.unaryExpression(operator, argument);
     }
     <span class="keyword">if</span> (<span class="literal">null</span> == expression) {
-</pre></div>             </td>           </tr>                               <tr id="section-126">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-126">&#182;</a>               </div>               <p>PrimaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      expression = parsePrimaryExpression();
+</pre></div>             </td>           </tr>                               <tr id="section-131">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-131">&#182;</a>               </div>               <p>PrimaryExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      expression = parsePrimaryExpression();
 
-</pre></div>             </td>           </tr>                               <tr id="section-127">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-127">&#182;</a>               </div>               <p>PrefixExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="literal">null</span> == expression) {
+</pre></div>             </td>           </tr>                               <tr id="section-132">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-132">&#182;</a>               </div>               <p>PrefixExpression</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="literal">null</span> == expression) {
         expression = parsePrefixExpression();
       }
     }
-</pre></div>             </td>           </tr>                               <tr id="section-128">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-128">&#182;</a>               </div>               <p>This is not a valid left hand expression.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="literal">null</span> == expression) <span class="keyword">return</span> <span class="literal">null</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-133">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-133">&#182;</a>               </div>               <p>This is not a valid left hand expression.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="literal">null</span> == expression) <span class="keyword">return</span> <span class="literal">null</span>;
 
     <span class="keyword">var</span> precedence;
     <span class="keyword">while</span> (<span class="literal">true</span>) {
@@ -1459,7 +1496,7 @@ without excessive amounts of tests.</p>
         binaryPrecedence(operator) : <span class="number">0</span>;
 
       <span class="keyword">if</span> (precedence === <span class="number">0</span> || precedence &lt;= minPrecedence) <span class="keyword">break</span>;
-</pre></div>             </td>           </tr>                               <tr id="section-129">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-129">&#182;</a>               </div>               <p>Right-hand precedence operators</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'^'</span> === operator || <span class="string">'..'</span> === operator) precedence--;
+</pre></div>             </td>           </tr>                               <tr id="section-134">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-134">&#182;</a>               </div>               <p>Right-hand precedence operators</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'^'</span> === operator || <span class="string">'..'</span> === operator) precedence--;
       next();
       <span class="keyword">var</span> right = expectExpression(parseSubExpression(precedence));
       expression = ast.binaryExpression(operator, expression, right);
@@ -1467,25 +1504,29 @@ without excessive amounts of tests.</p>
     <span class="keyword">return</span> expression;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-130">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-130">&#182;</a>               </div>               <pre><code>prefixexp ::= prefix {suffix}
+</pre></div>             </td>           </tr>                               <tr id="section-135">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-135">&#182;</a>               </div>               <pre><code>prefixexp ::= prefix {suffix}
 prefix ::= Name | '(' exp ')'
 suffix ::= '[' exp ']' | '.' Name | ':' Name args | args
 
 args ::= '(' [explist] ')' | tableconstructor | String
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parsePrefixExpression</span><span class="params">()</span> {</span>
-    <span class="keyword">var</span> base;
+    <span class="keyword">var</span> base, name
+</pre></div>             </td>           </tr>                               <tr id="section-136">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-136">&#182;</a>               </div>               <p>Keep track of the scope, if a parent is local so are the children.</p>             </td>             <td class="code">               <div class="highlight"><pre>      , isLocal;
 
-</pre></div>             </td>           </tr>                               <tr id="section-131">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-131">&#182;</a>               </div>               <p>The prefix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (Identifier === token.type) {
+</pre></div>             </td>           </tr>                               <tr id="section-137">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-137">&#182;</a>               </div>               <p>The prefix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (Identifier === token.type) {
+      name = token.value;
       base = parseIdentifier();
+</pre></div>             </td>           </tr>                               <tr id="section-138">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-138">&#182;</a>               </div>               <p>Set the parent scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (options.scope) base.isLocal = isLocal = scopeHasName(name);
     } <span class="keyword">else</span> <span class="keyword">if</span> (consume(<span class="string">'('</span>)) {
-      base = parseExpression();
+      base = expectExpression(parseExpression());
       expect(<span class="string">')'</span>);
+      <span class="keyword">if</span> (options.scope) isLocal = base.isLocal;
     } <span class="keyword">else</span> {
       <span class="keyword">return</span> <span class="literal">null</span>;
     }
 
-</pre></div>             </td>           </tr>                               <tr id="section-132">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-132">&#182;</a>               </div>               <p>The suffix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression, identifier;
+</pre></div>             </td>           </tr>                               <tr id="section-139">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-139">&#182;</a>               </div>               <p>The suffix</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">var</span> expression, identifier;
     <span class="keyword">while</span> (<span class="literal">true</span>) {
       expectExpression(base);
       <span class="keyword">if</span> (Punctuator === token.type) {
@@ -1499,13 +1540,15 @@ args ::= '(' [explist] ')' | tableconstructor | String
           <span class="keyword">case</span> <span class="string">'.'</span>:
             next();
             identifier = parseIdentifier();
+</pre></div>             </td>           </tr>                               <tr id="section-140">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-140">&#182;</a>               </div>               <p>Inherit the scope</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="keyword">if</span> (options.scope) identifier.isLocal = isLocal;
             base = ast.memberExpression(base, <span class="string">'.'</span>, identifier);
             <span class="keyword">break</span>;
           <span class="keyword">case</span> <span class="string">':'</span>:
             next();
             identifier = parseIdentifier();
+            <span class="keyword">if</span> (options.scope) identifier.isLocal = isLocal;
             base = ast.memberExpression(base, <span class="string">':'</span>, identifier);
-</pre></div>             </td>           </tr>                               <tr id="section-133">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-133">&#182;</a>               </div>               <p>Once a : is found, this has to be a callexpression, otherwise
+</pre></div>             </td>           </tr>                               <tr id="section-141">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-141">&#182;</a>               </div>               <p>Once a : is found, this has to be a callexpression, otherwise
 throw an error.</p>             </td>             <td class="code">               <div class="highlight"><pre>            base = parseCallExpression(base);
             <span class="keyword">break</span>;
           <span class="keyword">case</span> <span class="string">'('</span>: <span class="keyword">case</span> <span class="string">'{'</span>: <span class="comment">// args</span>
@@ -1524,7 +1567,7 @@ throw an error.</p>             </td>             <td class="code">             
     <span class="keyword">return</span> base;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-134">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-134">&#182;</a>               </div>               <pre><code>args ::= '(' [explist] ')' | tableconstructor | String
+</pre></div>             </td>           </tr>                               <tr id="section-142">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-142">&#182;</a>               </div>               <pre><code>args ::= '(' [explist] ')' | tableconstructor | String
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parseCallExpression</span><span class="params">(base)</span> {</span>
     <span class="keyword">if</span> (Punctuator === token.type) {
@@ -1532,7 +1575,7 @@ throw an error.</p>             </td>             <td class="code">             
         <span class="keyword">case</span> <span class="string">'('</span>:
           next();
 
-</pre></div>             </td>           </tr>                               <tr id="section-135">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-135">&#182;</a>               </div>               <p>List of expressions</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="keyword">var</span> expressions = [];
+</pre></div>             </td>           </tr>                               <tr id="section-143">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-143">&#182;</a>               </div>               <p>List of expressions</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="keyword">var</span> expressions = [];
           <span class="keyword">var</span> expression = parseExpression();
           <span class="keyword">if</span> (<span class="literal">null</span> != expression) expressions.push(expression);
           <span class="keyword">while</span> (consume(<span class="string">','</span>)) {
@@ -1556,7 +1599,7 @@ throw an error.</p>             </td>             <td class="code">             
     raiseUnexpectedToken(<span class="string">'function arguments'</span>, token);
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-136">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-136">&#182;</a>               </div>               <pre><code>primary ::= String | Numeric | nil | true | false
+</pre></div>             </td>           </tr>                               <tr id="section-144">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-144">&#182;</a>               </div>               <pre><code>primary ::= String | Numeric | nil | true | false
      | functiondef | tableconstructor | '...'
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
   <span class="function"><span class="keyword">function</span> <span class="title">parsePrimaryExpression</span><span class="params">()</span> {</span>
@@ -1575,8 +1618,8 @@ throw an error.</p>             </td>             <td class="code">             
       <span class="keyword">return</span> parseTableConstructor();
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-137">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-137">&#182;</a>               </div>               <h2>Parser</h2>             </td>             <td class="code">               <div class="highlight"><pre>
-</pre></div>             </td>           </tr>                               <tr id="section-138">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-138">&#182;</a>               </div>               <p>Export the main parser.</p>
+</pre></div>             </td>           </tr>                               <tr id="section-145">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-145">&#182;</a>               </div>               <h2>Parser</h2>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-146">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-146">&#182;</a>               </div>               <p>Export the main parser.</p>
 
 <ul>
 <li><code>wait</code> Hold parsing until end() is called. Defaults to false</li>
@@ -1599,17 +1642,19 @@ parser.parse('i = 0');
     input = _input || <span class="string">''</span>;
     options = extend(defaultOptions, _options);
 
-</pre></div>             </td>           </tr>                               <tr id="section-139">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-139">&#182;</a>               </div>               <p>Rewind the lexer</p>             </td>             <td class="code">               <div class="highlight"><pre>    index = <span class="number">0</span>;
+</pre></div>             </td>           </tr>                               <tr id="section-147">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-147">&#182;</a>               </div>               <p>Rewind the lexer</p>             </td>             <td class="code">               <div class="highlight"><pre>    index = <span class="number">0</span>;
     line = <span class="number">1</span>;
     lineStart = <span class="number">0</span>;
     length = input.length;
+</pre></div>             </td>           </tr>                               <tr id="section-148">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-148">&#182;</a>               </div>               <p>When tracking identifier scope, initialize with an empty scope.</p>             </td>             <td class="code">               <div class="highlight"><pre>    scopes = [[]];
+    scopeDepth = <span class="number">0</span>;
 
     <span class="keyword">if</span> (options.comments) comments = [];
     <span class="keyword">if</span> (!options.wait) <span class="keyword">return</span> end();
     <span class="keyword">return</span> exports;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-140">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-140">&#182;</a>               </div>               <p>Write to the source code buffer without beginning the parse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.write = write;
+</pre></div>             </td>           </tr>                               <tr id="section-149">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-149">&#182;</a>               </div>               <p>Write to the source code buffer without beginning the parse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.write = write;
 
   <span class="function"><span class="keyword">function</span> <span class="title">write</span><span class="params">(_input)</span> {</span>
     input += String(_input);
@@ -1617,20 +1662,20 @@ parser.parse('i = 0');
     <span class="keyword">return</span> exports;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-141">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-141">&#182;</a>               </div>               <p>Send an EOF and begin parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.end = end;
+</pre></div>             </td>           </tr>                               <tr id="section-150">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-150">&#182;</a>               </div>               <p>Send an EOF and begin parsing.</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.end = end;
 
   <span class="function"><span class="keyword">function</span> <span class="title">end</span><span class="params">(_input)</span> {</span>
     <span class="keyword">if</span> (<span class="string">'undefined'</span> !== <span class="keyword">typeof</span> _input) write(_input);
 
     length = input.length;
-</pre></div>             </td>           </tr>                               <tr id="section-142">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-142">&#182;</a>               </div>               <p>Initialize with a lookahead token.</p>             </td>             <td class="code">               <div class="highlight"><pre>    lookahead = readToken();
+</pre></div>             </td>           </tr>                               <tr id="section-151">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-151">&#182;</a>               </div>               <p>Initialize with a lookahead token.</p>             </td>             <td class="code">               <div class="highlight"><pre>    lookahead = readToken();
 
     <span class="keyword">var</span> chunk = parseChunk();
     <span class="keyword">if</span> (options.comments) chunk.comments = comments;
     <span class="keyword">return</span> chunk;
   }
 
-</pre></div>             </td>           </tr>                               <tr id="section-143">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-143">&#182;</a>               </div>               <p>Expose the lex function</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.lex = readToken;
+</pre></div>             </td>           </tr>                               <tr id="section-152">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-152">&#182;</a>               </div>               <p>Expose the lex function</p>             </td>             <td class="code">               <div class="highlight"><pre>  exports.lex = readToken;
 
 }));
 <span class="comment">/* vim: set sw=2 ts=2 et tw=79 : */</span>
