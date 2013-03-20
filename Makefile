@@ -125,7 +125,7 @@ complexity-analysis:
 
 coverage-analysis: coverage-instrument coverage-cover
 	@node ./node_modules/istanbul/lib/cli.js check-coverage \
-		--statements -3 --branches -8 --functions 100 \
+		--statements -7 --branches -11 --functions -1 \
 		coverage.json
 	@rm -f coverage.json
 
