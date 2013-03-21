@@ -1,6 +1,6 @@
 describe('comments', function() {
   it('-- comment', function() {
-    expect(parser.parse('-- comment')).to.eql({
+    expect(parser.parse('-- comment', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -9,11 +9,12 @@ describe('comments', function() {
           "value": " comment",
           "raw": "-- comment"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('-- comment\\n-- comment', function() {
-    expect(parser.parse('-- comment\n-- comment')).to.eql({
+    expect(parser.parse('-- comment\n-- comment', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -27,11 +28,12 @@ describe('comments', function() {
           "value": " comment",
           "raw": "-- comment"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--coment', function() {
-    expect(parser.parse('--coment')).to.eql({
+    expect(parser.parse('--coment', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -40,11 +42,12 @@ describe('comments', function() {
           "value": "coment",
           "raw": "--coment"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('-- comment\\nbreak', function() {
-    expect(parser.parse('-- comment\nbreak')).to.eql({
+    expect(parser.parse('-- comment\nbreak', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -57,11 +60,12 @@ describe('comments', function() {
           "value": " comment",
           "raw": "-- comment"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('break--comment', function() {
-    expect(parser.parse('break--comment')).to.eql({
+    expect(parser.parse('break--comment', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -74,11 +78,12 @@ describe('comments', function() {
           "value": "comment",
           "raw": "--comment"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--[[comment]]--', function() {
-    expect(parser.parse('--[[comment]]--')).to.eql({
+    expect(parser.parse('--[[comment]]--', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -87,11 +92,12 @@ describe('comments', function() {
           "value": "comment",
           "raw": "--[[comment]]--"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--[[comment]]--break', function() {
-    expect(parser.parse('--[[comment]]--break')).to.eql({
+    expect(parser.parse('--[[comment]]--break', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -104,11 +110,12 @@ describe('comments', function() {
           "value": "comment",
           "raw": "--[[comment]]--"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--[=[comment]=]--break', function() {
-    expect(parser.parse('--[=[comment]=]--break')).to.eql({
+    expect(parser.parse('--[=[comment]=]--break', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -121,11 +128,12 @@ describe('comments', function() {
           "value": "comment",
           "raw": "--[=[comment]=]--"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--[===[comment\\n--[=[sub]=]--\\n]===]--break', function() {
-    expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]--break')).to.eql({
+    expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]--break', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -138,11 +146,12 @@ describe('comments', function() {
           "value": "comment\n--[=[sub]=]--\n",
           "raw": "--[===[comment\n--[=[sub]=]--\n]===]--"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--[[comment\\nline two]]--', function() {
-    expect(parser.parse('--[[comment\nline two]]--')).to.eql({
+    expect(parser.parse('--[[comment\nline two]]--', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -151,11 +160,12 @@ describe('comments', function() {
           "value": "comment\nline two",
           "raw": "--[[comment\nline two]]--"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--[[\\ncomment\\nline two\\n]]--', function() {
-    expect(parser.parse('--[[\ncomment\nline two\n]]--')).to.eql({
+    expect(parser.parse('--[[\ncomment\nline two\n]]--', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [],
       "comments": [
@@ -164,11 +174,12 @@ describe('comments', function() {
           "value": "comment\nline two\n",
           "raw": "--[[\ncomment\nline two\n]]--"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('--[==\\nbreak --]]--', function() {
-    expect(parser.parse('--[==\nbreak --]]--')).to.eql({
+    expect(parser.parse('--[==\nbreak --]]--', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -186,11 +197,12 @@ describe('comments', function() {
           "value": "]]--",
           "raw": "--]]--"
         }
-      ]
+      ],
+      "globals": []
     });
   });
   it('if true -- comment\\nthen end', function() {
-    expect(parser.parse('if true -- comment\nthen end')).to.eql({
+    expect(parser.parse('if true -- comment\nthen end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -214,7 +226,8 @@ describe('comments', function() {
           "value": " comment",
           "raw": "-- comment"
         }
-      ]
+      ],
+      "globals": []
     });
   });
 });

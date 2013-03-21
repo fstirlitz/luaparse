@@ -1,20 +1,21 @@
 describe('statements', function() {
   it('break', function() {
-    expect(parser.parse('break')).to.eql({
+    expect(parser.parse('break', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
           "type": "BreakStatement"
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('::foo                                   -- FAIL', function() {
     expect(parser.parse('::foo', {wait:true}).end).to.throwError(/^\[1:5\] '::' expected near '<eof>'$/);
   });
   it('::foo::', function() {
-    expect(parser.parse('::foo::')).to.eql({
+    expect(parser.parse('::foo::', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -26,14 +27,15 @@ describe('statements', function() {
           }
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('goto                                    -- FAIL', function() {
     expect(parser.parse('goto', {wait:true}).end).to.throwError(/^\[1:4\] <name> expected near '<eof>'$/);
   });
   it('goto foo', function() {
-    expect(parser.parse('goto foo')).to.eql({
+    expect(parser.parse('goto foo', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -45,7 +47,8 @@ describe('statements', function() {
           }
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('nil                                     -- FAIL', function() {

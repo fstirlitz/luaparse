@@ -5,6 +5,7 @@
 
 var fs = require('fs')
   , luaparse = require('../')
+  , options = { scope: true }
   , indent = '  '
   , verbose = true
   , testName
@@ -60,7 +61,7 @@ function scaffoldIt(snippet) {
       exec = exec.replace(/\s*-- FAIL\s*$/, '');
       snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
       try {
-        luaparse.parse(exec);
+        luaparse.parse(exec, options);
         // For some reason it didnt throw a error, output the regular assertion
         // but comment on it in the source.
         intro += indent + "// This fails in semantic analysis!\n";
@@ -74,7 +75,7 @@ function scaffoldIt(snippet) {
     case false:
       // Success case
       try {
-        result = JSON.stringify(luaparse.parse(exec), null, indent);
+        result = JSON.stringify(luaparse.parse(exec, options), null, indent);
         assertion = scaffoldAssertion(snippet, result);
       } catch (error) {
         notifications.push('\x1B[31m' + error + ':\x1B[0m ' + name);
@@ -100,7 +101,7 @@ function scaffoldAssertion(snippet, result) {
   // Output \n instead of real newlines in the source passed to the paser.
   // result = result.replace(/\\\\([ntr])/g, '\\$1');
 
-  return indent + "expect(parser.parse('" + snippet + "')).to.eql(" +
+  return indent + "expect(parser.parse('" + snippet + "', { scope: true })).to.eql(" +
     firstline + "\n" + // {
     result.replace(/^([\s\S])/gm, indent + "$1") +
     ");";

@@ -12,7 +12,7 @@ describe('while', function() {
     expect(parser.parse('while 1 do', {wait:true}).end).to.throwError(/^\[1:10\] 'end' expected near '<eof>'$/);
   });
   it('while 1 do end', function() {
-    expect(parser.parse('while 1 do end')).to.eql({
+    expect(parser.parse('while 1 do end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -25,11 +25,12 @@ describe('while', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do local a end', function() {
-    expect(parser.parse('while 1 do local a end')).to.eql({
+    expect(parser.parse('while 1 do local a end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -54,11 +55,12 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do local a local b end', function() {
-    expect(parser.parse('while 1 do local a local b end')).to.eql({
+    expect(parser.parse('while 1 do local a local b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -94,11 +96,12 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do local a; local b; end', function() {
-    expect(parser.parse('while 1 do local a; local b; end')).to.eql({
+    expect(parser.parse('while 1 do local a; local b; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -134,7 +137,8 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do 2 end                        -- FAIL', function() {
@@ -144,7 +148,7 @@ describe('while', function() {
     expect(parser.parse('while 1 do "foo" end', {wait:true}).end).to.throwError(/^\[1:11\] Unexpected string 'foo' near 'end'$/);
   });
   it('while true do end', function() {
-    expect(parser.parse('while true do end')).to.eql({
+    expect(parser.parse('while true do end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -157,7 +161,8 @@ describe('while', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do while                        -- FAIL', function() {
@@ -173,7 +178,7 @@ describe('while', function() {
     expect(parser.parse('while 1 = 2 do', {wait:true}).end).to.throwError(/^\[1:8\] 'do' expected near '='$/);
   });
   it('while 1 do return end', function() {
-    expect(parser.parse('while 1 do return end')).to.eql({
+    expect(parser.parse('while 1 do return end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -191,14 +196,15 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do return return end            -- FAIL', function() {
     expect(parser.parse('while 1 do return return end', {wait:true}).end).to.throwError(/^\[1:18\] 'end' expected near 'return'$/);
   });
   it('while 1 do do end end', function() {
-    expect(parser.parse('while 1 do do end end')).to.eql({
+    expect(parser.parse('while 1 do do end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -216,11 +222,12 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do do return end end', function() {
-    expect(parser.parse('while 1 do do return end end')).to.eql({
+    expect(parser.parse('while 1 do do return end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -243,11 +250,12 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do break end', function() {
-    expect(parser.parse('while 1 do break end')).to.eql({
+    expect(parser.parse('while 1 do break end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -264,11 +272,12 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('while 1 do do break end end', function() {
-    expect(parser.parse('while 1 do do break end end')).to.eql({
+    expect(parser.parse('while 1 do do break end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -290,7 +299,8 @@ describe('while', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
 });

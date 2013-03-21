@@ -1,6 +1,6 @@
 describe('operators', function() {
   it('a = -10', function() {
-    expect(parser.parse('a = -10')).to.eql({
+    expect(parser.parse('a = -10', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -25,11 +25,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -"foo"', function() {
-    expect(parser.parse('a = -"foo"')).to.eql({
+    expect(parser.parse('a = -"foo"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -54,11 +61,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -a', function() {
-    expect(parser.parse('a = -a')).to.eql({
+    expect(parser.parse('a = -a', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -83,11 +97,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -nil', function() {
-    expect(parser.parse('a = -nil')).to.eql({
+    expect(parser.parse('a = -nil', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -112,11 +133,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -true', function() {
-    expect(parser.parse('a = -true')).to.eql({
+    expect(parser.parse('a = -true', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -141,11 +169,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -{}', function() {
-    expect(parser.parse('a = -{}')).to.eql({
+    expect(parser.parse('a = -{}', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -169,11 +204,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -function() end', function() {
-    expect(parser.parse('a = -function() end')).to.eql({
+    expect(parser.parse('a = -function() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -200,11 +242,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -a()', function() {
-    expect(parser.parse('a = -a()')).to.eql({
+    expect(parser.parse('a = -a()', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -233,11 +282,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -(a)', function() {
-    expect(parser.parse('a = -(a)')).to.eql({
+    expect(parser.parse('a = -(a)', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -262,14 +318,21 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -                                   -- FAIL', function() {
     expect(parser.parse('a = -', {wait:true}).end).to.throwError(/^\[1:5\] <expression> expected near '<eof>'$/);
   });
   it('a = not 10', function() {
-    expect(parser.parse('a = not 10')).to.eql({
+    expect(parser.parse('a = not 10', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -294,11 +357,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not "foo"', function() {
-    expect(parser.parse('a = not "foo"')).to.eql({
+    expect(parser.parse('a = not "foo"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -323,11 +393,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not a', function() {
-    expect(parser.parse('a = not a')).to.eql({
+    expect(parser.parse('a = not a', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -352,11 +429,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not nil', function() {
-    expect(parser.parse('a = not nil')).to.eql({
+    expect(parser.parse('a = not nil', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -381,11 +465,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not true', function() {
-    expect(parser.parse('a = not true')).to.eql({
+    expect(parser.parse('a = not true', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -410,11 +501,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not {}', function() {
-    expect(parser.parse('a = not {}')).to.eql({
+    expect(parser.parse('a = not {}', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -438,11 +536,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not function() end', function() {
-    expect(parser.parse('a = not function() end')).to.eql({
+    expect(parser.parse('a = not function() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -469,11 +574,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not a()', function() {
-    expect(parser.parse('a = not a()')).to.eql({
+    expect(parser.parse('a = not a()', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -502,11 +614,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not (a)', function() {
-    expect(parser.parse('a = not (a)')).to.eql({
+    expect(parser.parse('a = not (a)', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -531,14 +650,21 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not                                 -- FAIL', function() {
     expect(parser.parse('a = not', {wait:true}).end).to.throwError(/^\[1:7\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 + 2; a = 1 - 2', function() {
-    expect(parser.parse('a = 1 + 2; a = 1 - 2')).to.eql({
+    expect(parser.parse('a = 1 + 2; a = 1 - 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -594,11 +720,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 * 2; a = 1 / 2', function() {
-    expect(parser.parse('a = 1 * 2; a = 1 / 2')).to.eql({
+    expect(parser.parse('a = 1 * 2; a = 1 / 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -654,11 +787,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 ^ 2; a = 1 .. 2', function() {
-    expect(parser.parse('a = 1 ^ 2; a = 1 .. 2')).to.eql({
+    expect(parser.parse('a = 1 ^ 2; a = 1 .. 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -714,7 +854,14 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 +                                 -- FAIL', function() {
@@ -727,7 +874,7 @@ describe('operators', function() {
     expect(parser.parse('a = 1 * /', {wait:true}).end).to.throwError(/^\[1:8\] <expression> expected near '\/'$/);
   });
   it('a = 1 + -2; a = 1 - -2', function() {
-    expect(parser.parse('a = 1 + -2; a = 1 - -2')).to.eql({
+    expect(parser.parse('a = 1 + -2; a = 1 - -2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -791,14 +938,21 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 * -                               -- FAIL', function() {
     expect(parser.parse('a = 1 * -', {wait:true}).end).to.throwError(/^\[1:9\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 * not 2; a = 1 / not 2', function() {
-    expect(parser.parse('a = 1 * not 2; a = 1 / not 2')).to.eql({
+    expect(parser.parse('a = 1 * not 2; a = 1 / not 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -862,14 +1016,21 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 / not                             -- FAIL', function() {
     expect(parser.parse('a = 1 / not', {wait:true}).end).to.throwError(/^\[1:11\] <expression> expected near '<eof>'$/);
   });
   it('a = 1 + 2 - 3 * 4 / 5 ^ 6', function() {
-    expect(parser.parse('a = 1 + 2 - 3 * 4 / 5 ^ 6')).to.eql({
+    expect(parser.parse('a = 1 + 2 - 3 * 4 / 5 ^ 6', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -935,11 +1096,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = ((1 + 2) - 3) * (4 / (5 ^ 6))', function() {
-    expect(parser.parse('a = ((1 + 2) - 3) * (4 / (5 ^ 6))')).to.eql({
+    expect(parser.parse('a = ((1 + 2) - 3) * (4 / (5 ^ 6))', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1005,11 +1173,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))', function() {
-    expect(parser.parse('a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))')).to.eql({
+    expect(parser.parse('a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1075,7 +1250,14 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = ((1                                 -- FAIL', function() {
@@ -1088,7 +1270,7 @@ describe('operators', function() {
     expect(parser.parse('a = 1)', {wait:true}).end).to.throwError(/^\[1:5\] Unexpected symbol '\)' near '<eof>'$/);
   });
   it('a = a + b - c', function() {
-    expect(parser.parse('a = a + b - c')).to.eql({
+    expect(parser.parse('a = a + b - c', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1127,11 +1309,28 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = "foo" + "bar"', function() {
-    expect(parser.parse('a = "foo" + "bar"')).to.eql({
+    expect(parser.parse('a = "foo" + "bar"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1161,11 +1360,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = "foo".."bar".."baz"', function() {
-    expect(parser.parse('a = "foo".."bar".."baz"')).to.eql({
+    expect(parser.parse('a = "foo".."bar".."baz"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1204,11 +1410,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = true + false - nil', function() {
-    expect(parser.parse('a = true + false - nil')).to.eql({
+    expect(parser.parse('a = true + false - nil', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1247,11 +1460,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = {} * {}', function() {
-    expect(parser.parse('a = {} * {}')).to.eql({
+    expect(parser.parse('a = {} * {}', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1279,11 +1499,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = function() end / function() end', function() {
-    expect(parser.parse('a = function() end / function() end')).to.eql({
+    expect(parser.parse('a = function() end / function() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1317,11 +1544,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = a() ^ b()', function() {
-    expect(parser.parse('a = a() ^ b()')).to.eql({
+    expect(parser.parse('a = a() ^ b()', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1359,11 +1593,23 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 == 2; a = 1 ~= 2', function() {
-    expect(parser.parse('a = 1 == 2; a = 1 ~= 2')).to.eql({
+    expect(parser.parse('a = 1 == 2; a = 1 ~= 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1419,11 +1665,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 < 2; a = 1 <= 2', function() {
-    expect(parser.parse('a = 1 < 2; a = 1 <= 2')).to.eql({
+    expect(parser.parse('a = 1 < 2; a = 1 <= 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1479,11 +1732,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 > 2; a = 1 >= 2', function() {
-    expect(parser.parse('a = 1 > 2; a = 1 >= 2')).to.eql({
+    expect(parser.parse('a = 1 > 2; a = 1 >= 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1539,11 +1799,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 < 2 < 3', function() {
-    expect(parser.parse('a = 1 < 2 < 3')).to.eql({
+    expect(parser.parse('a = 1 < 2 < 3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1582,11 +1849,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 >= 2 >= 3', function() {
-    expect(parser.parse('a = 1 >= 2 >= 3')).to.eql({
+    expect(parser.parse('a = 1 >= 2 >= 3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1625,7 +1899,14 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 ==                                -- FAIL', function() {
@@ -1641,7 +1922,7 @@ describe('operators', function() {
     expect(parser.parse('a = ~= 2', {wait:true}).end).to.throwError(/^\[1:4\] <expression> expected near '~='$/);
   });
   it('a = "foo" == "bar"', function() {
-    expect(parser.parse('a = "foo" == "bar"')).to.eql({
+    expect(parser.parse('a = "foo" == "bar"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1671,11 +1952,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = "foo" > "bar"', function() {
-    expect(parser.parse('a = "foo" > "bar"')).to.eql({
+    expect(parser.parse('a = "foo" > "bar"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1705,11 +1993,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = a ~= b', function() {
-    expect(parser.parse('a = a ~= b')).to.eql({
+    expect(parser.parse('a = a ~= b', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1739,11 +2034,23 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = true == false', function() {
-    expect(parser.parse('a = true == false')).to.eql({
+    expect(parser.parse('a = true == false', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1773,11 +2080,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 and 2; a = 1 or 2', function() {
-    expect(parser.parse('a = 1 and 2; a = 1 or 2')).to.eql({
+    expect(parser.parse('a = 1 and 2; a = 1 or 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1833,7 +2147,14 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 and                               -- FAIL', function() {
@@ -1843,7 +2164,7 @@ describe('operators', function() {
     expect(parser.parse('a = or 1', {wait:true}).end).to.throwError(/^\[1:4\] <expression> expected near 'or'$/);
   });
   it('a = 1 and 2 and 3', function() {
-    expect(parser.parse('a = 1 and 2 and 3')).to.eql({
+    expect(parser.parse('a = 1 and 2 and 3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1882,11 +2203,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 or 2 or 3', function() {
-    expect(parser.parse('a = 1 or 2 or 3')).to.eql({
+    expect(parser.parse('a = 1 or 2 or 3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1925,11 +2253,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1 and 2 or 3', function() {
-    expect(parser.parse('a = 1 and 2 or 3')).to.eql({
+    expect(parser.parse('a = 1 and 2 or 3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -1968,11 +2303,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = a and b or c', function() {
-    expect(parser.parse('a = a and b or c')).to.eql({
+    expect(parser.parse('a = a and b or c', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2011,11 +2353,28 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = a() and (b)() or c.d', function() {
-    expect(parser.parse('a = a() and (b)() or c.d')).to.eql({
+    expect(parser.parse('a = a() and (b)() or c.d', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2071,11 +2430,33 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "d",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = "foo" and "bar"', function() {
-    expect(parser.parse('a = "foo" and "bar"')).to.eql({
+    expect(parser.parse('a = "foo" and "bar"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2105,11 +2486,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = true or false', function() {
-    expect(parser.parse('a = true or false')).to.eql({
+    expect(parser.parse('a = true or false', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2139,11 +2527,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = {} and {} or {}', function() {
-    expect(parser.parse('a = {} and {} or {}')).to.eql({
+    expect(parser.parse('a = {} and {} or {}', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2179,11 +2574,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = (1) and ("foo") or (nil)', function() {
-    expect(parser.parse('a = (1) and ("foo") or (nil)')).to.eql({
+    expect(parser.parse('a = (1) and ("foo") or (nil)', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2222,11 +2624,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = function() end == function() end', function() {
-    expect(parser.parse('a = function() end == function() end')).to.eql({
+    expect(parser.parse('a = function() end == function() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2260,11 +2669,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = function() end or function() end', function() {
-    expect(parser.parse('a = function() end or function() end')).to.eql({
+    expect(parser.parse('a = function() end or function() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2298,11 +2714,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = (((1 or false) and true) or false) == true', function() {
-    expect(parser.parse('a = (((1 or false) and true) or false) == true')).to.eql({
+    expect(parser.parse('a = (((1 or false) and true) or false) == true', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2359,11 +2782,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = (((nil and true) or false) and true) == false', function() {
-    expect(parser.parse('a = (((nil and true) or false) and true) == false')).to.eql({
+    expect(parser.parse('a = (((nil and true) or false) and true) == false', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2420,11 +2850,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not ((true or false) and nil)', function() {
-    expect(parser.parse('a = not ((true or false) and nil)')).to.eql({
+    expect(parser.parse('a = not ((true or false) and nil)', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2467,11 +2904,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = true or false  and nil', function() {
-    expect(parser.parse('a = true or false  and nil')).to.eql({
+    expect(parser.parse('a = true or false  and nil', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2510,11 +2954,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 2^-2 == 1/4 and -2^- -2 == - - -4', function() {
-    expect(parser.parse('a = 2^-2 == 1/4 and -2^- -2 == - - -4')).to.eql({
+    expect(parser.parse('a = 2^-2 == 1/4 and -2^- -2 == - - -4', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2617,11 +3068,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -3-1-5 == 0+0-9', function() {
-    expect(parser.parse('a = -3-1-5 == 0+0-9')).to.eql({
+    expect(parser.parse('a = -3-1-5 == 0+0-9', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2691,11 +3149,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0', function() {
-    expect(parser.parse('a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0')).to.eql({
+    expect(parser.parse('a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2818,11 +3283,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"', function() {
-    expect(parser.parse('a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"')).to.eql({
+    expect(parser.parse('a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -2924,11 +3396,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not nil and 2 and not(2>3 or 3<2)', function() {
-    expect(parser.parse('a = not nil and 2 and not(2>3 or 3<2)')).to.eql({
+    expect(parser.parse('a = not nil and 2 and not(2>3 or 3<2)', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -3002,11 +3481,18 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = not(2+1 > 3*1) and "a".."b" > "a"', function() {
-    expect(parser.parse('a = not(2+1 > 3*1) and "a".."b" > "a"')).to.eql({
+    expect(parser.parse('a = not(2+1 > 3*1) and "a".."b" > "a"', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -3085,7 +3571,14 @@ describe('operators', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
 });

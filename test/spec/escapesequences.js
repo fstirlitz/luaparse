@@ -9,8 +9,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -34,8 +33,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -62,8 +60,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -90,8 +87,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -115,8 +111,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -140,8 +135,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -165,9 +159,9 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
-            } ],
+              "name": "a"
+            }
+          ],
           "init": [
             {
               "type": "StringLiteral",
@@ -189,8 +183,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -215,8 +208,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -240,8 +232,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "a",
-              "isLocal": false
+              "name": "a"
             }
           ],
           "init": [
@@ -266,8 +257,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c",
-              "isLocal": false
+              "name": "c"
             }
           ],
           "init": [
@@ -291,8 +281,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c",
-              "isLocal": false
+              "name": "c"
             }
           ],
           "init": [
@@ -316,8 +305,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c",
-              "isLocal": false
+              "name": "c"
             }
           ],
           "init": [
@@ -341,8 +329,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c",
-              "isLocal": false
+              "name": "c"
             }
           ],
           "init": [
@@ -366,8 +353,7 @@ describe('escape sequences', function() {
           "variables": [
             {
               "type": "Identifier",
-              "name": "c",
-              "isLocal": false
+              "name": "c"
             }
           ],
           "init": [

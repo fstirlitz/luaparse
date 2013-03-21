@@ -18,7 +18,7 @@ describe('functions', function() {
     expect(parser.parse('function a( end', {wait:true}).end).to.throwError(/^\[1:12\] <name> or '\.\.\.' expected near 'end'$/);
   });
   it('function a() end', function() {
-    expect(parser.parse('function a() end')).to.eql({
+    expect(parser.parse('function a() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -33,7 +33,14 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a(1                            -- FAIL', function() {
@@ -52,7 +59,7 @@ describe('functions', function() {
     expect(parser.parse('function a(p q', {wait:true}).end).to.throwError(/^\[1:14\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('function a(p) end', function() {
-    expect(parser.parse('function a(p) end')).to.eql({
+    expect(parser.parse('function a(p) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -73,14 +80,21 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a(p,q,) end                    -- FAIL', function() {
     expect(parser.parse('function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:15\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('function a(p,q,r) end', function() {
-    expect(parser.parse('function a(p,q,r) end')).to.eql({
+    expect(parser.parse('function a(p,q,r) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -111,7 +125,14 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a(p,q,1                        -- FAIL', function() {
@@ -124,7 +145,7 @@ describe('functions', function() {
     expect(parser.parse('function a(p) 1 end', {wait:true}).end).to.throwError(/^\[1:14\] Unexpected number '1' near 'end'$/);
   });
   it('function a(p) return end', function() {
-    expect(parser.parse('function a(p) return end')).to.eql({
+    expect(parser.parse('function a(p) return end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -150,14 +171,21 @@ describe('functions', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a(p) return return end         -- FAIL', function() {
     expect(parser.parse('function a(p) return return end', {wait:true}).end).to.throwError(/^\[1:21\] 'end' expected near 'return'$/);
   });
   it('function a(p) do end end', function() {
-    expect(parser.parse('function a(p) do end end')).to.eql({
+    expect(parser.parse('function a(p) do end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -183,7 +211,14 @@ describe('functions', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a.(                            -- FAIL', function() {
@@ -193,7 +228,7 @@ describe('functions', function() {
     expect(parser.parse('function a.1', {wait:true}).end).to.throwError(/^\[1:10\] '\(' expected near '0\.1'$/);
   });
   it('function a.b() end', function() {
-    expect(parser.parse('function a.b() end')).to.eql({
+    expect(parser.parse('function a.b() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -217,7 +252,19 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a.b,                           -- FAIL', function() {
@@ -227,7 +274,7 @@ describe('functions', function() {
     expect(parser.parse('function a.b.(', {wait:true}).end).to.throwError(/^\[1:13\] <name> expected near '\('$/);
   });
   it('function a.b.c.d() end', function() {
-    expect(parser.parse('function a.b.c.d() end')).to.eql({
+    expect(parser.parse('function a.b.c.d() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -269,7 +316,29 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "d",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a:                             -- FAIL', function() {
@@ -279,7 +348,7 @@ describe('functions', function() {
     expect(parser.parse('function a:1', {wait:true}).end).to.throwError(/^\[1:11\] <name> expected near '1'$/);
   });
   it('function a:b() end', function() {
-    expect(parser.parse('function a:b() end')).to.eql({
+    expect(parser.parse('function a:b() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -303,7 +372,19 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a:b:                           -- FAIL', function() {
@@ -313,7 +394,7 @@ describe('functions', function() {
     expect(parser.parse('function a:b.', {wait:true}).end).to.throwError(/^\[1:12\] '\(' expected near '\.'$/);
   });
   it('function a.b.c:d() end', function() {
-    expect(parser.parse('function a.b.c:d() end')).to.eql({
+    expect(parser.parse('function a.b.c:d() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -355,11 +436,33 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "d",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a(...) end', function() {
-    expect(parser.parse('function a(...) end')).to.eql({
+    expect(parser.parse('function a(...) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -380,14 +483,21 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a(...,                         -- FAIL', function() {
     expect(parser.parse('function a(...,', {wait:true}).end).to.throwError(/^\[1:14\] '\)' expected near ','$/);
   });
   it('function a(p,...) end', function() {
-    expect(parser.parse('function a(p,...) end')).to.eql({
+    expect(parser.parse('function a(p,...) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -413,14 +523,21 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a(...,p) end                   -- FAIL', function() {
     expect(parser.parse('function a(...,p) end', {wait:true}).end).to.throwError(/^\[1:14\] '\)' expected near ','$/);
   });
   it('function a(p,q,r,...) end', function() {
-    expect(parser.parse('function a(p,q,r,...) end')).to.eql({
+    expect(parser.parse('function a(p,q,r,...) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -456,11 +573,18 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a() local a local b end', function() {
-    expect(parser.parse('function a() local a local b end')).to.eql({
+    expect(parser.parse('function a() local a local b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -498,11 +622,18 @@ describe('functions', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a() local a; local b; end', function() {
-    expect(parser.parse('function a() local a; local b; end')).to.eql({
+    expect(parser.parse('function a() local a; local b; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -540,11 +671,18 @@ describe('functions', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('function a() end; function a() end;', function() {
-    expect(parser.parse('function a() end; function a() end;')).to.eql({
+    expect(parser.parse('function a() end; function a() end;', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -570,7 +708,14 @@ describe('functions', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
 });
