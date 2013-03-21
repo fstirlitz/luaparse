@@ -983,7 +983,7 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [],
               "body": []
             }
@@ -1013,7 +1013,7 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [
                 {
                   "type": "Identifier",
@@ -1052,7 +1052,7 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [
                 {
                   "type": "Identifier",
@@ -1098,7 +1098,7 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [
                 {
                   "type": "VarargLiteral",
@@ -1134,7 +1134,7 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [
                 {
                   "type": "Identifier",
@@ -1172,7 +1172,7 @@ describe('expressions', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [
                 {
                   "type": "Identifier",

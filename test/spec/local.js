@@ -380,7 +380,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": []
         }
@@ -414,7 +414,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -442,7 +442,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -486,7 +486,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -519,7 +519,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -555,7 +555,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "VarargLiteral",
@@ -583,7 +583,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -613,7 +613,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -653,7 +653,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": [
             {
@@ -695,7 +695,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": [
             {
@@ -737,7 +737,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": []
         },
@@ -748,7 +748,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": []
         }

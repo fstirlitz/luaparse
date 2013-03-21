@@ -219,7 +219,7 @@ describe('scope', function() {
             "name": "foo",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": []
         },
@@ -531,7 +531,7 @@ describe('scope', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [],
               "body": []
             }
@@ -615,7 +615,7 @@ describe('scope', function() {
             {
               "type": "FunctionDeclaration",
               "identifier": null,
-              "local": false,
+              "isLocal": false,
               "parameters": [],
               "body": [
                 {

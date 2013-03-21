@@ -28,7 +28,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": []
         }
@@ -62,7 +62,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [
             {
               "type": "Identifier",
@@ -90,7 +90,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [
             {
               "type": "Identifier",
@@ -134,7 +134,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [
             {
               "type": "Identifier",
@@ -167,7 +167,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [
             {
               "type": "Identifier",
@@ -212,7 +212,7 @@ describe('functions', function() {
               "isLocal": false
             }
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": []
         }
@@ -264,7 +264,7 @@ describe('functions', function() {
               }
             }
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": []
         }
@@ -298,7 +298,7 @@ describe('functions', function() {
               "isLocal": false
             }
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": []
         }
@@ -350,7 +350,7 @@ describe('functions', function() {
               }
             }
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": []
         }
@@ -369,7 +369,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [
             {
               "type": "VarargLiteral",
@@ -397,7 +397,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [
             {
               "type": "Identifier",
@@ -430,7 +430,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [
             {
               "type": "Identifier",
@@ -470,7 +470,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": [
             {
@@ -512,7 +512,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": [
             {
@@ -554,7 +554,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": []
         },
@@ -565,7 +565,7 @@ describe('functions', function() {
             "name": "a",
             "isLocal": false
           },
-          "local": false,
+          "isLocal": false,
           "parameters": [],
           "body": []
         }

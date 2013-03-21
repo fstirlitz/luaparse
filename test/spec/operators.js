@@ -192,7 +192,7 @@ describe('operators', function() {
               "argument": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               }
@@ -461,7 +461,7 @@ describe('operators', function() {
               "argument": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               }
@@ -1302,14 +1302,14 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               },
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               }
@@ -2245,14 +2245,14 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               },
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               }
@@ -2283,14 +2283,14 @@ describe('operators', function() {
               "left": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               },
               "right": {
                 "type": "FunctionDeclaration",
                 "identifier": null,
-                "local": false,
+                "isLocal": false,
                 "parameters": [],
                 "body": []
               }
