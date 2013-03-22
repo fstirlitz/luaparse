@@ -13,7 +13,7 @@
 }(<span class="keyword">this</span>, <span class="string">'luaparse'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span>
   <span class="string">'use strict'</span>;
 
-  exports.version = <span class="string">'0.0.7'</span>;
+  exports.version = <span class="string">'0.0.8'</span>;
 
   <span class="keyword">var</span> input, options, length;
 
@@ -966,7 +966,7 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
 </pre></div>             </td>           </tr>                               <tr id="section-78">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-78">&#182;</a>               </div>               <h2>Scope</h2>             </td>             <td class="code">               <div class="highlight"><pre>
 </pre></div>             </td>           </tr>                               <tr id="section-79">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-79">&#182;</a>               </div>               <p>Store each block scope as a an array of identifier names. Each scope is
 stored in an FILO-array.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="keyword">var</span> scopes
-</pre></div>             </td>           </tr>                               <tr id="section-80">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-80">&#182;</a>               </div>               <p>The currrent scope index</p>             </td>             <td class="code">               <div class="highlight"><pre>    , scopeDepth
+</pre></div>             </td>           </tr>                               <tr id="section-80">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-80">&#182;</a>               </div>               <p>The current scope index</p>             </td>             <td class="code">               <div class="highlight"><pre>    , scopeDepth
 </pre></div>             </td>           </tr>                               <tr id="section-81">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-81">&#182;</a>               </div>               <p>A list of all global identifier nodes.</p>             </td>             <td class="code">               <div class="highlight"><pre>    , globals
 </pre></div>             </td>           </tr>                               <tr id="section-82">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-82">&#182;</a>               </div>               <p>A list of all global identifiers names used for faster lookup.
 @TODO benchmark, with exposing the globals this entire implementation
