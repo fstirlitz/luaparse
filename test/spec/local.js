@@ -12,7 +12,7 @@ describe('local', function() {
     expect(parser.parse('local end', {wait:true}).end).to.throwError(/^\[1:6\] <name> expected near 'end'$/);
   });
   it('local a', function() {
-    expect(parser.parse('local a')).to.eql({
+    expect(parser.parse('local a', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -27,11 +27,12 @@ describe('local', function() {
           "init": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a;', function() {
-    expect(parser.parse('local a;')).to.eql({
+    expect(parser.parse('local a;', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -46,11 +47,12 @@ describe('local', function() {
           "init": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a, b, c', function() {
-    expect(parser.parse('local a, b, c')).to.eql({
+    expect(parser.parse('local a, b, c', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -75,11 +77,12 @@ describe('local', function() {
           "init": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a; local b local c;', function() {
-    expect(parser.parse('local a; local b local c;')).to.eql({
+    expect(parser.parse('local a; local b local c;', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -116,11 +119,12 @@ describe('local', function() {
           "init": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a = 1', function() {
-    expect(parser.parse('local a = 1')).to.eql({
+    expect(parser.parse('local a = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -141,11 +145,12 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a local b = a', function() {
-    expect(parser.parse('local a local b = a')).to.eql({
+    expect(parser.parse('local a local b = a', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -177,11 +182,12 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a, b = 1, 2', function() {
-    expect(parser.parse('local a, b = 1, 2')).to.eql({
+    expect(parser.parse('local a, b = 1, 2', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -212,11 +218,12 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a, b, c = 1, 2, 3', function() {
-    expect(parser.parse('local a, b, c = 1, 2, 3')).to.eql({
+    expect(parser.parse('local a, b, c = 1, 2, 3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -257,11 +264,12 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a, b, c = 1', function() {
-    expect(parser.parse('local a, b, c = 1')).to.eql({
+    expect(parser.parse('local a, b, c = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -292,11 +300,12 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a = 1, 2, 3', function() {
-    expect(parser.parse('local a = 1, 2, 3')).to.eql({
+    expect(parser.parse('local a = 1, 2, 3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -327,7 +336,8 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local a, local                          -- FAIL', function() {
@@ -370,7 +380,7 @@ describe('local', function() {
     expect(parser.parse('local function a( end', {wait:true}).end).to.throwError(/^\[1:18\] <name> or '\.\.\.' expected near 'end'$/);
   });
   it('local function a() end', function() {
-    expect(parser.parse('local function a() end')).to.eql({
+    expect(parser.parse('local function a() end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -380,12 +390,13 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a(1                      -- FAIL', function() {
@@ -404,7 +415,7 @@ describe('local', function() {
     expect(parser.parse('local function a(p q', {wait:true}).end).to.throwError(/^\[1:20\] <name> or '\.\.\.' expected near '<eof>'$/);
   });
   it('local function a(p) end', function() {
-    expect(parser.parse('local function a(p) end')).to.eql({
+    expect(parser.parse('local function a(p) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -414,7 +425,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -425,14 +436,15 @@ describe('local', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a(p,q,) end              -- FAIL', function() {
     expect(parser.parse('local function a(p,q,) end', {wait:true}).end).to.throwError(/^\[1:21\] <name> or '\.\.\.' expected near '\)'$/);
   });
   it('local function a(p,q,r) end', function() {
-    expect(parser.parse('local function a(p,q,r) end')).to.eql({
+    expect(parser.parse('local function a(p,q,r) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -442,7 +454,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -463,7 +475,8 @@ describe('local', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a(p,q,1                  -- FAIL', function() {
@@ -476,7 +489,7 @@ describe('local', function() {
     expect(parser.parse('local function a(p) 1 end', {wait:true}).end).to.throwError(/^\[1:20\] Unexpected number '1' near 'end'$/);
   });
   it('local function a(p) return end', function() {
-    expect(parser.parse('local function a(p) return end')).to.eql({
+    expect(parser.parse('local function a(p) return end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -486,7 +499,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -502,14 +515,15 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a(p) return return end   -- FAIL', function() {
     expect(parser.parse('local function a(p) return return end', {wait:true}).end).to.throwError(/^\[1:27\] 'end' expected near 'return'$/);
   });
   it('local function a(p) do end end', function() {
-    expect(parser.parse('local function a(p) do end end')).to.eql({
+    expect(parser.parse('local function a(p) do end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -519,7 +533,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -535,7 +549,8 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a.                       -- FAIL', function() {
@@ -545,7 +560,7 @@ describe('local', function() {
     expect(parser.parse('local function a:', {wait:true}).end).to.throwError(/^\[1:16\] '\(' expected near ':'$/);
   });
   it('local function a(...) end', function() {
-    expect(parser.parse('local function a(...) end')).to.eql({
+    expect(parser.parse('local function a(...) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -555,7 +570,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "VarargLiteral",
@@ -566,14 +581,15 @@ describe('local', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a(...,                   -- FAIL', function() {
     expect(parser.parse('local function a(...,', {wait:true}).end).to.throwError(/^\[1:20\] '\)' expected near ','$/);
   });
   it('local function a(p,...) end', function() {
-    expect(parser.parse('local function a(p,...) end')).to.eql({
+    expect(parser.parse('local function a(p,...) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -583,7 +599,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -599,11 +615,12 @@ describe('local', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a(p,q,r,...) end', function() {
-    expect(parser.parse('local function a(p,q,r,...) end')).to.eql({
+    expect(parser.parse('local function a(p,q,r,...) end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -613,7 +630,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [
             {
               "type": "Identifier",
@@ -639,11 +656,12 @@ describe('local', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a() local a local b end', function() {
-    expect(parser.parse('local function a() local a local b end')).to.eql({
+    expect(parser.parse('local function a() local a local b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -653,7 +671,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": [
             {
@@ -681,11 +699,12 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a() local a; local b; end', function() {
-    expect(parser.parse('local function a() local a; local b; end')).to.eql({
+    expect(parser.parse('local function a() local a; local b; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -695,7 +714,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": [
             {
@@ -723,11 +742,12 @@ describe('local', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('local function a() end; local function a() end;', function() {
-    expect(parser.parse('local function a() end; local function a() end;')).to.eql({
+    expect(parser.parse('local function a() end; local function a() end;', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -737,7 +757,7 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": []
         },
@@ -748,12 +768,13 @@ describe('local', function() {
             "name": "a",
             "isLocal": true
           },
-          "local": true,
+          "isLocal": true,
           "parameters": [],
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
 });

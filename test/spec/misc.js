@@ -18,13 +18,42 @@ describe('API', function () {
       "comments": []
     });
   });
-  it('should support waiting on input', function () {
+  it('should support waiting on input', function() {
     var parse = parser.parse({ wait: true });
     expect(parse.end('break')).to.eql({
       "type": "Chunk",
       "body": [
         {
           "type": "BreakStatement"
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('should not scope by default', function() {
+    expect(parser.parse('goto foo local a, b')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "GotoStatement",
+          "label": {
+            "type": "Identifier",
+            "name": "foo"
+          }
+        },
+        {
+          "type": "LocalStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            },
+            {
+              "type": "Identifier",
+              "name": "b"
+            }
+          ],
+          "init": []
         }
       ],
       "comments": []

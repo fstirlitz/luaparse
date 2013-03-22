@@ -30,7 +30,7 @@ describe('conditional', function() {
     expect(parser.parse('if 1 then elseif', {wait:true}).end).to.throwError(/^\[1:16\] 'then' expected near '<eof>'$/);
   });
   it('if 1 then end', function() {
-    expect(parser.parse('if 1 then end')).to.eql({
+    expect(parser.parse('if 1 then end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -48,11 +48,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then local a end', function() {
-    expect(parser.parse('if 1 then local a end')).to.eql({
+    expect(parser.parse('if 1 then local a end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -82,11 +83,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then local a local b end', function() {
-    expect(parser.parse('if 1 then local a local b end')).to.eql({
+    expect(parser.parse('if 1 then local a local b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -127,11 +129,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then local a; local b; end', function() {
-    expect(parser.parse('if 1 then local a; local b; end')).to.eql({
+    expect(parser.parse('if 1 then local a; local b; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -172,11 +175,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then else end', function() {
-    expect(parser.parse('if 1 then else end')).to.eql({
+    expect(parser.parse('if 1 then else end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -198,11 +202,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then local a else local b end', function() {
-    expect(parser.parse('if 1 then local a else local b end')).to.eql({
+    expect(parser.parse('if 1 then local a else local b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -248,11 +253,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then local a; else local b; end', function() {
-    expect(parser.parse('if 1 then local a; else local b; end')).to.eql({
+    expect(parser.parse('if 1 then local a; else local b; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -298,7 +304,8 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then elseif 2                      -- FAIL', function() {
@@ -308,7 +315,7 @@ describe('conditional', function() {
     expect(parser.parse('if 1 then elseif 2 then', {wait:true}).end).to.throwError(/^\[1:23\] 'end' expected near '<eof>'$/);
   });
   it('if 1 then elseif 2 then end', function() {
-    expect(parser.parse('if 1 then elseif 2 then end')).to.eql({
+    expect(parser.parse('if 1 then elseif 2 then end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -335,11 +342,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then local a elseif 2 then local b end', function() {
-    expect(parser.parse('if 1 then local a elseif 2 then local b end')).to.eql({
+    expect(parser.parse('if 1 then local a elseif 2 then local b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -390,11 +398,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then local a; elseif 2 then local b; end', function() {
-    expect(parser.parse('if 1 then local a; elseif 2 then local b; end')).to.eql({
+    expect(parser.parse('if 1 then local a; elseif 2 then local b; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -445,11 +454,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then elseif 2 then else end', function() {
-    expect(parser.parse('if 1 then elseif 2 then else end')).to.eql({
+    expect(parser.parse('if 1 then elseif 2 then else end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -480,11 +490,12 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then else if 2 then end end', function() {
-    expect(parser.parse('if 1 then else if 2 then end end')).to.eql({
+    expect(parser.parse('if 1 then else if 2 then end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -521,14 +532,15 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then else if 2 then end            -- FAIL', function() {
     expect(parser.parse('if 1 then else if 2 then end', {wait:true}).end).to.throwError(/^\[1:28\] 'end' expected near '<eof>'$/);
   });
   it('if 1 then return end', function() {
-    expect(parser.parse('if 1 then return end')).to.eql({
+    expect(parser.parse('if 1 then return end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -551,14 +563,15 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('if 1 then return return end             -- FAIL', function() {
     expect(parser.parse('if 1 then return return end', {wait:true}).end).to.throwError(/^\[1:17\] 'end' expected near 'return'$/);
   });
   it('if 1 then end; if 1 then end;', function() {
-    expect(parser.parse('if 1 then end; if 1 then end;')).to.eql({
+    expect(parser.parse('if 1 then end; if 1 then end;', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -590,7 +603,8 @@ describe('conditional', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
 });

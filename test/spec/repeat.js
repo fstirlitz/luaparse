@@ -6,7 +6,7 @@ describe('repeat', function() {
     expect(parser.parse('repeat until', {wait:true}).end).to.throwError(/^\[1:12\] <expression> expected near '<eof>'$/);
   });
   it('repeat until 0', function() {
-    expect(parser.parse('repeat until 0')).to.eql({
+    expect(parser.parse('repeat until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -19,11 +19,12 @@ describe('repeat', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat until false', function() {
-    expect(parser.parse('repeat until false')).to.eql({
+    expect(parser.parse('repeat until false', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -36,7 +37,8 @@ describe('repeat', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat until local                      -- FAIL', function() {
@@ -52,7 +54,7 @@ describe('repeat', function() {
     expect(parser.parse('repeat =', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected symbol '=' near '<eof>'$/);
   });
   it('repeat local a until 1', function() {
-    expect(parser.parse('repeat local a until 1')).to.eql({
+    expect(parser.parse('repeat local a until 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -77,11 +79,12 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat local a local b until 0', function() {
-    expect(parser.parse('repeat local a local b until 0')).to.eql({
+    expect(parser.parse('repeat local a local b until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -117,11 +120,12 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat local a; local b; until 0', function() {
-    expect(parser.parse('repeat local a; local b; until 0')).to.eql({
+    expect(parser.parse('repeat local a; local b; until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -157,7 +161,8 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat 2 until 1                        -- FAIL', function() {
@@ -167,7 +172,7 @@ describe('repeat', function() {
     expect(parser.parse('repeat "foo" until 1', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected string 'foo' near 'until'$/);
   });
   it('repeat return until 0', function() {
-    expect(parser.parse('repeat return until 0')).to.eql({
+    expect(parser.parse('repeat return until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -185,14 +190,15 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat return return until 0            -- FAIL', function() {
     expect(parser.parse('repeat return return until 0', {wait:true}).end).to.throwError(/^\[1:14\] 'until' expected near 'return'$/);
   });
   it('repeat break until 0', function() {
-    expect(parser.parse('repeat break until 0')).to.eql({
+    expect(parser.parse('repeat break until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -209,11 +215,12 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat do end until 0', function() {
-    expect(parser.parse('repeat do end until 0')).to.eql({
+    expect(parser.parse('repeat do end until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -231,11 +238,12 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat do return end until 0', function() {
-    expect(parser.parse('repeat do return end until 0')).to.eql({
+    expect(parser.parse('repeat do return end until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -258,11 +266,12 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('repeat do break end until 0', function() {
-    expect(parser.parse('repeat do break end until 0')).to.eql({
+    expect(parser.parse('repeat do break end until 0', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -284,7 +293,8 @@ describe('repeat', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
 });

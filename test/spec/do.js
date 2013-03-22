@@ -6,7 +6,7 @@ describe('do', function() {
     expect(parser.parse('end', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected keyword 'end' near '<eof>'$/);
   });
   it('do end', function() {
-    expect(parser.parse('do end')).to.eql({
+    expect(parser.parse('do end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -14,7 +14,8 @@ describe('do', function() {
           "body": []
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do 1 end                                -- FAIL', function() {
@@ -24,7 +25,7 @@ describe('do', function() {
     expect(parser.parse('do "foo" end', {wait:true}).end).to.throwError(/^\[1:3\] Unexpected string 'foo' near 'end'$/);
   });
   it('do local a, b end', function() {
-    expect(parser.parse('do local a, b end')).to.eql({
+    expect(parser.parse('do local a, b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -49,11 +50,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do local a local b end', function() {
-    expect(parser.parse('do local a local b end')).to.eql({
+    expect(parser.parse('do local a local b end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -84,11 +86,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do local a; local b; end', function() {
-    expect(parser.parse('do local a; local b; end')).to.eql({
+    expect(parser.parse('do local a; local b; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -119,11 +122,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do local a = 1 end', function() {
-    expect(parser.parse('do local a = 1 end')).to.eql({
+    expect(parser.parse('do local a = 1 end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -149,11 +153,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do do end end', function() {
-    expect(parser.parse('do do end end')).to.eql({
+    expect(parser.parse('do do end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -166,11 +171,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do do end; end', function() {
-    expect(parser.parse('do do end; end')).to.eql({
+    expect(parser.parse('do do end; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -183,11 +189,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do do do end end end', function() {
-    expect(parser.parse('do do do end end end')).to.eql({
+    expect(parser.parse('do do do end end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -205,11 +212,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do do do end; end; end', function() {
-    expect(parser.parse('do do do end; end; end')).to.eql({
+    expect(parser.parse('do do do end; end; end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -227,11 +235,12 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do do do return end end end', function() {
-    expect(parser.parse('do do do return end end end')).to.eql({
+    expect(parser.parse('do do do return end end end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -254,7 +263,8 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do end do                               -- FAIL', function() {
@@ -264,7 +274,7 @@ describe('do', function() {
     expect(parser.parse('do end end', {wait:true}).end).to.throwError(/^\[1:7\] Unexpected keyword 'end' near '<eof>'$/);
   });
   it('do return end', function() {
-    expect(parser.parse('do return end')).to.eql({
+    expect(parser.parse('do return end', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -277,7 +287,8 @@ describe('do', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": []
     });
   });
   it('do return return end                    -- FAIL', function() {

@@ -12,7 +12,7 @@ describe('assignments', function() {
     expect(parser.parse('a,b =', {wait:true}).end).to.throwError(/^\[1:5\] <expression> expected near '<eof>'$/);
   });
   it('a = 1', function() {
-    expect(parser.parse('a = 1')).to.eql({
+    expect(parser.parse('a = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -33,11 +33,18 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a = 1,2,3', function() {
-    expect(parser.parse('a = 1,2,3')).to.eql({
+    expect(parser.parse('a = 1,2,3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -68,11 +75,18 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a,b,c = 1', function() {
-    expect(parser.parse('a,b,c = 1')).to.eql({
+    expect(parser.parse('a,b,c = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -103,11 +117,28 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a,b,c = 1,2,3', function() {
-    expect(parser.parse('a,b,c = 1,2,3')).to.eql({
+    expect(parser.parse('a,b,c = 1,2,3', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -148,11 +179,28 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a.b = 1', function() {
-    expect(parser.parse('a.b = 1')).to.eql({
+    expect(parser.parse('a.b = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -182,11 +230,23 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a.b.c = 1', function() {
-    expect(parser.parse('a.b.c = 1')).to.eql({
+    expect(parser.parse('a.b.c = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -225,11 +285,28 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a[b] = 1', function() {
-    expect(parser.parse('a[b] = 1')).to.eql({
+    expect(parser.parse('a[b] = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -258,11 +335,23 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a[b][c] = 1', function() {
-    expect(parser.parse('a[b][c] = 1')).to.eql({
+    expect(parser.parse('a[b][c] = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -299,11 +388,28 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a.b[c] = 1', function() {
-    expect(parser.parse('a.b[c] = 1')).to.eql({
+    expect(parser.parse('a.b[c] = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -341,11 +447,28 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a[b].c = 1', function() {
-    expect(parser.parse('a[b].c = 1')).to.eql({
+    expect(parser.parse('a[b].c = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -383,11 +506,28 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('a[b], a[c] = 1', function() {
-    expect(parser.parse('a[b], a[c] = 1')).to.eql({
+    expect(parser.parse('a[b], a[c] = 1', { scope: true })).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -429,7 +569,24 @@ describe('assignments', function() {
           ]
         }
       ],
-      "comments": []
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "b",
+          "isLocal": false
+        },
+        {
+          "type": "Identifier",
+          "name": "c",
+          "isLocal": false
+        }
+      ]
     });
   });
   it('0 =                                     -- FAIL', function() {
