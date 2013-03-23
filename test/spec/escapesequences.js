@@ -189,7 +189,7 @@ describe('escape sequences', function() {
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\f\v\bbaz",
+              "value": "bar\f\u000b\bbaz",
               "raw": "\"bar\\f\\v\\bbaz\""
             }
           ]
@@ -200,7 +200,7 @@ describe('escape sequences', function() {
   });
 
   it('a = "bar\\f\\v\\bbaz"', function() {
-    expect(parser.parse('a = "bar\f\v\bbaz"')).to.eql({
+    expect(parser.parse('a = "bar\f\x0B\bbaz"')).to.eql({
       "type": "Chunk",
       "body": [
         {
@@ -214,8 +214,8 @@ describe('escape sequences', function() {
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\f\v\bbaz",
-              "raw": "\"bar\f\v\bbaz\""
+              "value": "bar\f\u000b\bbaz",
+              "raw": "\"bar\f\x0B\bbaz\""
             }
           ]
         }
@@ -238,7 +238,7 @@ describe('escape sequences', function() {
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\f\v\bbaz",
+              "value": "bar\f\u000b\bbaz",
               "raw": "[[bar\\f\\v\\bbaz]]"
             }
           ]
