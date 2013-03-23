@@ -113,7 +113,7 @@ If a snippet ends with "-- FAIL" it will generate a failing test.
 
 ## Support
 
-Has been tested in IE6+, Firefox 3+, Safari 4+, Chrome 10+, Node
+Has been tested in IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+, Node
 
 ## Acknowledgements
 
