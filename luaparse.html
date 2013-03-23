@@ -13,7 +13,7 @@
 }(<span class="keyword">this</span>, <span class="string">'luaparse'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span>
   <span class="string">'use strict'</span>;
 
-  exports.version = <span class="string">'0.0.9'</span>;
+  exports.version = <span class="string">'0.0.10'</span>;
 
   <span class="keyword">var</span> input, options, length;
 
@@ -739,7 +739,7 @@ functions.</p>             </td>             <td class="code">               <di
 We don't escape the bell sequence.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">case</span> <span class="string">'n'</span>: index++; <span class="keyword">return</span> <span class="string">'\n'</span>;
       <span class="keyword">case</span> <span class="string">'r'</span>: index++; <span class="keyword">return</span> <span class="string">'\r'</span>;
       <span class="keyword">case</span> <span class="string">'t'</span>: index++; <span class="keyword">return</span> <span class="string">'\t'</span>;
-      <span class="keyword">case</span> <span class="string">'v'</span>: index++; <span class="keyword">return</span> <span class="string">'\v'</span>;
+      <span class="keyword">case</span> <span class="string">'v'</span>: index++; <span class="keyword">return</span> <span class="string">'\x0B'</span>;
       <span class="keyword">case</span> <span class="string">'b'</span>: index++; <span class="keyword">return</span> <span class="string">'\b'</span>;
       <span class="keyword">case</span> <span class="string">'f'</span>: index++; <span class="keyword">return</span> <span class="string">'\f'</span>;
 </pre></div>             </td>           </tr>                               <tr id="section-52">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-52">&#182;</a>               </div>               <p>Skips the following span of white-space.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">case</span> <span class="string">'z'</span>: index++; skipWhiteSpace(); <span class="keyword">return</span> <span class="string">''</span>;

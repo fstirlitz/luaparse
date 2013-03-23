@@ -1918,7 +1918,7 @@
       &quot;init&quot;: [
         {
           &quot;type&quot;: &quot;StringLiteral&quot;,
-          &quot;value&quot;: &quot;bar\f\v\bbaz&quot;,
+          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot;,
           &quot;raw&quot;: &quot;\&quot;bar\\f\\v\\bbaz\&quot;&quot;
         }
       ]
@@ -1927,7 +1927,7 @@
   &quot;comments&quot;: []
 });</code></pre></dd>
         <dt>a = &quot;bar\f\v\bbaz&quot;</dt>
-        <dd><pre><code>expect(parser.parse('a = &quot;bar\f\v\bbaz&quot;')).to.eql({
+        <dd><pre><code>expect(parser.parse('a = &quot;bar\f\x0B\bbaz&quot;')).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [
     {
@@ -1941,8 +1941,8 @@
       &quot;init&quot;: [
         {
           &quot;type&quot;: &quot;StringLiteral&quot;,
-          &quot;value&quot;: &quot;bar\f\v\bbaz&quot;,
-          &quot;raw&quot;: &quot;\&quot;bar\f\v\bbaz\&quot;&quot;
+          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot;,
+          &quot;raw&quot;: &quot;\&quot;bar\f\x0B\bbaz\&quot;&quot;
         }
       ]
     }
@@ -1964,7 +1964,7 @@
       &quot;init&quot;: [
         {
           &quot;type&quot;: &quot;StringLiteral&quot;,
-          &quot;value&quot;: &quot;bar\f\v\bbaz&quot;,
+          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot;,
           &quot;raw&quot;: &quot;[[bar\\f\\v\\bbaz]]&quot;
         }
       ]
