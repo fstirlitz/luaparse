@@ -189,7 +189,7 @@ describe('escape sequences', function() {
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\f\u000b\bbaz", // @TODO a bit unsure about this
+              "value": "bar\f\v\bbaz",
               "raw": "\"bar\\f\\v\\bbaz\""
             }
           ]
@@ -214,7 +214,7 @@ describe('escape sequences', function() {
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\f\u000b\bbaz",
+              "value": "bar\f\v\bbaz",
               "raw": "\"bar\f\v\bbaz\""
             }
           ]
@@ -238,7 +238,7 @@ describe('escape sequences', function() {
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\f\u000b\bbaz",
+              "value": "bar\f\v\bbaz",
               "raw": "[[bar\\f\\v\\bbaz]]"
             }
           ]

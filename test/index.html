@@ -15,6 +15,9 @@
   <script src="../lib/luaparse.js"></script>
   <script>
     window.parser = window.luaparse;
+    beforeEach(function(done) {
+      setTimeout(done, 0);
+    });
   </script>
 
 

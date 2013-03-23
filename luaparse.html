@@ -13,7 +13,7 @@
 }(<span class="keyword">this</span>, <span class="string">'luaparse'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span>
   <span class="string">'use strict'</span>;
 
-  exports.version = <span class="string">'0.0.8'</span>;
+  exports.version = <span class="string">'0.0.9'</span>;
 
   <span class="keyword">var</span> input, options, length;
 
@@ -642,7 +642,7 @@ later on in the process.</p>
     <span class="keyword">var</span> character = input.charAt(index)
       , next = input.charAt(index + <span class="number">1</span>);
 
-    <span class="keyword">var</span> value = (<span class="string">'0'</span> === character &amp;&amp; ~<span class="string">'xX'</span>.indexOf(next || <span class="literal">null</span>)) ?
+    <span class="keyword">var</span> value = (<span class="string">'0'</span> === character &amp;&amp; <span class="string">'xX'</span>.indexOf(next || <span class="literal">null</span>) &gt;= <span class="number">0</span>) ?
       readHexLiteral() : readDecLiteral();
 
     <span class="keyword">return</span> {
@@ -689,10 +689,10 @@ Number := ( Digit + Fraction ) * BinaryExp
         : parseInt(fraction, <span class="number">16</span>) / Math.pow(<span class="number">16</span>, index - fractionStart);
     }
 
-</pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>Binary exponents are optional</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (~<span class="string">'pP'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
+</pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>Binary exponents are optional</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'pP'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>) &gt;= <span class="number">0</span>) {
       index++;
 
-</pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Sign part is optional and defaults to 1 (positive).</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>))
+</pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Sign part is optional and defaults to 1 (positive).</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>) &gt;= <span class="number">0</span>)
         binarySign = (<span class="string">'+'</span> === input.charAt(index++)) ? <span class="number">1</span> : -<span class="number">1</span>;
 
       exponentStart = index;
@@ -718,9 +718,9 @@ functions.</p>             </td>             <td class="code">               <di
       index++;
 </pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>Fraction part defaults to 0</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
     }
-</pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>Exponent part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (~<span class="string">'eE'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) {
+</pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>Exponent part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (<span class="string">'eE'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>) &gt;= <span class="number">0</span>) {
       index++;
-</pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Sign part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (~<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>)) index++;
+</pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Sign part is optional.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="string">'+-'</span>.indexOf(input.charAt(index) || <span class="literal">null</span>) &gt;= <span class="number">0</span>) index++;
 </pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <p>An exponent is required to contain at least one decimal digit.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
@@ -935,7 +935,7 @@ identifiers cannot use locale-dependet letters.</p>             </td>           
   }
 
   <span class="function"><span class="keyword">function</span> <span class="title">isUnary</span><span class="params">(token)</span> {</span>
-    <span class="keyword">if</span> (Punctuator === token.type) <span class="keyword">return</span> ~<span class="string">'#-'</span>.indexOf(token.value);
+    <span class="keyword">if</span> (Punctuator === token.type) <span class="keyword">return</span> <span class="string">'#-'</span>.indexOf(token.value) &gt;= <span class="number">0</span>;
     <span class="keyword">if</span> (Keyword === token.type) <span class="keyword">return</span> <span class="string">'not'</span> === token.value;
     <span class="keyword">return</span> <span class="literal">false</span>;
   }
@@ -1293,7 +1293,7 @@ of invalid statement</p>             </td>             <td class="code">        
       , expression = parsePrefixExpression();
 
     <span class="keyword">if</span> (<span class="literal">null</span> == expression) <span class="keyword">return</span> unexpected(token);
-    <span class="keyword">if</span> (~<span class="string">',='</span>.indexOf(token.value)) {
+    <span class="keyword">if</span> (<span class="string">',='</span>.indexOf(token.value) &gt;= <span class="number">0</span>) {
       <span class="keyword">var</span> variables = [expression]
         , init = []
         , exp;
@@ -1424,7 +1424,7 @@ fieldsep ::= ',' | ';'
         <span class="keyword">if</span> (<span class="literal">null</span> == (value = parseExpression())) <span class="keyword">break</span>;
         fields.push(ast.tableValue(value));
       }
-      <span class="keyword">if</span> (~<span class="string">',;'</span>.indexOf(token.value)) {
+      <span class="keyword">if</span> (<span class="string">',;'</span>.indexOf(token.value) &gt;= <span class="number">0</span>) {
         next();
         <span class="keyword">continue</span>;
       }
