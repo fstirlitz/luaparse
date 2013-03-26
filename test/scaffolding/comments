@@ -3,11 +3,11 @@
 --coment
 -- comment\nbreak
 break--comment
---[[comment]]--
---[[comment]]--break
---[=[comment]=]--break
---[===[comment\n--[=[sub]=]--\n]===]--break
---[[comment\nline two]]--
---[[\ncomment\nline two\n]]--
---[==\nbreak --]]--
+--[[comment]]
+if true--[[comment]]then end
+--[=[comment]=]break
+--[===[comment\n--[=[sub]=]--\n]===]break
+--[[comment\nline two]]
+--[[\ncomment\nline two\n]]
+--[==\nbreak --]]
 if true -- comment\nthen end
