@@ -344,4 +344,68 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
+  it('a = [[bar\\f\\v\\bbaz]]', function() {
+    expect(parser.parse('a = [[bar\\f\\v\\bbaz]]', { scope: true })).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "bar\\f\\v\\bbaz",
+              "raw": "[[bar\\f\\v\\bbaz]]"
+            }
+          ]
+        }
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
+    });
+  });
+  it('a = [[\\]]', function() {
+    expect(parser.parse('a = [[\\]]', { scope: true })).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "\\",
+              "raw": "[[\\]]"
+            }
+          ]
+        }
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "isLocal": false
+        }
+      ]
+    });
+  });
 });
