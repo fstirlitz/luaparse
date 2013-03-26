@@ -726,21 +726,49 @@
   ],
   &quot;globals&quot;: []
 });</code></pre></dd>
-        <dt>--[[comment]]--</dt>
-        <dd><pre><code>expect(parser.parse('--[[comment]]--', { scope: true })).to.eql({
+        <dt>--[[comment]]</dt>
+        <dd><pre><code>expect(parser.parse('--[[comment]]', { scope: true })).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [],
   &quot;comments&quot;: [
     {
       &quot;type&quot;: &quot;Comment&quot;,
       &quot;value&quot;: &quot;comment&quot;,
-      &quot;raw&quot;: &quot;--[[comment]]--&quot;
+      &quot;raw&quot;: &quot;--[[comment]]&quot;
     }
   ],
   &quot;globals&quot;: []
 });</code></pre></dd>
-        <dt>--[[comment]]--break</dt>
-        <dd><pre><code>expect(parser.parse('--[[comment]]--break', { scope: true })).to.eql({
+        <dt>if true--[[comment]]then end</dt>
+        <dd><pre><code>expect(parser.parse('if true--[[comment]]then end', { scope: true })).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;IfStatement&quot;,
+      &quot;clauses&quot;: [
+        {
+          &quot;type&quot;: &quot;IfClause&quot;,
+          &quot;condition&quot;: {
+            &quot;type&quot;: &quot;BooleanLiteral&quot;,
+            &quot;value&quot;: true,
+            &quot;raw&quot;: &quot;true&quot;
+          },
+          &quot;body&quot;: []
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: [
+    {
+      &quot;type&quot;: &quot;Comment&quot;,
+      &quot;value&quot;: &quot;comment&quot;,
+      &quot;raw&quot;: &quot;--[[comment]]&quot;
+    }
+  ],
+  &quot;globals&quot;: []
+});</code></pre></dd>
+        <dt>--[=[comment]=]break</dt>
+        <dd><pre><code>expect(parser.parse('--[=[comment]=]break', { scope: true })).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [
     {
@@ -751,30 +779,13 @@
     {
       &quot;type&quot;: &quot;Comment&quot;,
       &quot;value&quot;: &quot;comment&quot;,
-      &quot;raw&quot;: &quot;--[[comment]]--&quot;
+      &quot;raw&quot;: &quot;--[=[comment]=]&quot;
     }
   ],
   &quot;globals&quot;: []
 });</code></pre></dd>
-        <dt>--[=[comment]=]--break</dt>
-        <dd><pre><code>expect(parser.parse('--[=[comment]=]--break', { scope: true })).to.eql({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;BreakStatement&quot;
-    }
-  ],
-  &quot;comments&quot;: [
-    {
-      &quot;type&quot;: &quot;Comment&quot;,
-      &quot;value&quot;: &quot;comment&quot;,
-      &quot;raw&quot;: &quot;--[=[comment]=]--&quot;
-    }
-  ],
-  &quot;globals&quot;: []
-});</code></pre></dd>
-        <dt>--[===[comment\n--[=[sub]=]--\n]===]--break</dt>
-        <dd><pre><code>expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]--break', { scope: true })).to.eql({
+        <dt>--[===[comment\n--[=[sub]=]--\n]===]break</dt>
+        <dd><pre><code>expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]break', { scope: true })).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [
     {
@@ -785,39 +796,39 @@
     {
       &quot;type&quot;: &quot;Comment&quot;,
       &quot;value&quot;: &quot;comment\n--[=[sub]=]--\n&quot;,
-      &quot;raw&quot;: &quot;--[===[comment\n--[=[sub]=]--\n]===]--&quot;
+      &quot;raw&quot;: &quot;--[===[comment\n--[=[sub]=]--\n]===]&quot;
     }
   ],
   &quot;globals&quot;: []
 });</code></pre></dd>
-        <dt>--[[comment\nline two]]--</dt>
-        <dd><pre><code>expect(parser.parse('--[[comment\nline two]]--', { scope: true })).to.eql({
+        <dt>--[[comment\nline two]]</dt>
+        <dd><pre><code>expect(parser.parse('--[[comment\nline two]]', { scope: true })).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [],
   &quot;comments&quot;: [
     {
       &quot;type&quot;: &quot;Comment&quot;,
       &quot;value&quot;: &quot;comment\nline two&quot;,
-      &quot;raw&quot;: &quot;--[[comment\nline two]]--&quot;
+      &quot;raw&quot;: &quot;--[[comment\nline two]]&quot;
     }
   ],
   &quot;globals&quot;: []
 });</code></pre></dd>
-        <dt>--[[\ncomment\nline two\n]]--</dt>
-        <dd><pre><code>expect(parser.parse('--[[\ncomment\nline two\n]]--', { scope: true })).to.eql({
+        <dt>--[[\ncomment\nline two\n]]</dt>
+        <dd><pre><code>expect(parser.parse('--[[\ncomment\nline two\n]]', { scope: true })).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [],
   &quot;comments&quot;: [
     {
       &quot;type&quot;: &quot;Comment&quot;,
       &quot;value&quot;: &quot;comment\nline two\n&quot;,
-      &quot;raw&quot;: &quot;--[[\ncomment\nline two\n]]--&quot;
+      &quot;raw&quot;: &quot;--[[\ncomment\nline two\n]]&quot;
     }
   ],
   &quot;globals&quot;: []
 });</code></pre></dd>
-        <dt>--[==\nbreak --]]--</dt>
-        <dd><pre><code>expect(parser.parse('--[==\nbreak --]]--', { scope: true })).to.eql({
+        <dt>--[==\nbreak --]]</dt>
+        <dd><pre><code>expect(parser.parse('--[==\nbreak --]]', { scope: true })).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [
     {
@@ -832,8 +843,8 @@
     },
     {
       &quot;type&quot;: &quot;Comment&quot;,
-      &quot;value&quot;: &quot;]]--&quot;,
-      &quot;raw&quot;: &quot;--]]--&quot;
+      &quot;value&quot;: &quot;]]&quot;,
+      &quot;raw&quot;: &quot;--]]&quot;
     }
   ],
   &quot;globals&quot;: []
@@ -1949,29 +1960,6 @@
   ],
   &quot;comments&quot;: []
 });</code></pre></dd>
-        <dt>a = [[bar\f\v\bbaz]]</dt>
-        <dd><pre><code>expect(parser.parse('a = [[bar\\f\\v\\bbaz]]')).to.eql({
-  &quot;type&quot;: &quot;Chunk&quot;,
-  &quot;body&quot;: [
-    {
-      &quot;type&quot;: &quot;AssignmentStatement&quot;,
-      &quot;variables&quot;: [
-        {
-          &quot;type&quot;: &quot;Identifier&quot;,
-          &quot;name&quot;: &quot;a&quot;
-        }
-      ],
-      &quot;init&quot;: [
-        {
-          &quot;type&quot;: &quot;StringLiteral&quot;,
-          &quot;value&quot;: &quot;bar\f\u000b\bbaz&quot;,
-          &quot;raw&quot;: &quot;[[bar\\f\\v\\bbaz]]&quot;
-        }
-      ]
-    }
-  ],
-  &quot;comments&quot;: []
-});</code></pre></dd>
         <dt>c = '\\'</dt>
         <dd><pre><code>expect(parser.parse(&quot;c = '\\\\'&quot;)).to.eql({
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -2086,6 +2074,68 @@
     }
   ],
   &quot;comments&quot;: []
+});</code></pre></dd>
+        <dt>a = [[bar\f\v\bbaz]]</dt>
+        <dd><pre><code>expect(parser.parse('a = [[bar\\f\\v\\bbaz]]', { scope: true })).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;,
+          &quot;isLocal&quot;: false
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;StringLiteral&quot;,
+          &quot;value&quot;: &quot;bar\\f\\v\\bbaz&quot;,
+          &quot;raw&quot;: &quot;[[bar\\f\\v\\bbaz]]&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: [],
+  &quot;globals&quot;: [
+    {
+      &quot;type&quot;: &quot;Identifier&quot;,
+      &quot;name&quot;: &quot;a&quot;,
+      &quot;isLocal&quot;: false
+    }
+  ]
+});</code></pre></dd>
+        <dt>a = [[\]]</dt>
+        <dd><pre><code>expect(parser.parse('a = [[\\]]', { scope: true })).to.eql({
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;a&quot;,
+          &quot;isLocal&quot;: false
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;StringLiteral&quot;,
+          &quot;value&quot;: &quot;\\&quot;,
+          &quot;raw&quot;: &quot;[[\\]]&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: [],
+  &quot;globals&quot;: [
+    {
+      &quot;type&quot;: &quot;Identifier&quot;,
+      &quot;name&quot;: &quot;a&quot;,
+      &quot;isLocal&quot;: false
+    }
+  ]
 });</code></pre></dd>
       </dl>
     </section>

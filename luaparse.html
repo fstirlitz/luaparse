@@ -13,7 +13,7 @@
 }(<span class="keyword">this</span>, <span class="string">'luaparse'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span>
   <span class="string">'use strict'</span>;
 
-  exports.version = <span class="string">'0.0.10'</span>;
+  exports.version = <span class="string">'0.0.11'</span>;
 
   <span class="keyword">var</span> input, options, length;
 
@@ -776,10 +776,7 @@ literals so we reuse the functionality.</p>             </td>             <td cl
     <span class="keyword">if</span> (<span class="string">'['</span> === character) {
       content = readLongString();
 </pre></div>             </td>           </tr>                               <tr id="section-59">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-59">&#182;</a>               </div>               <p>This wasn't a multiline comment after all.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (<span class="literal">false</span> === content) content = character;
-      <span class="keyword">else</span> {
-        isLong = <span class="literal">true</span>;
-        index += <span class="number">2</span>; <span class="comment">// Trailing --</span>
-      }
+      <span class="keyword">else</span> isLong = <span class="literal">true</span>;
     }
 </pre></div>             </td>           </tr>                               <tr id="section-60">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-60">&#182;</a>               </div>               <p>Scan until next line as long as it's not a multiline comment.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="keyword">if</span> (!isLong) {
       <span class="keyword">while</span> (index &lt; length) {
@@ -839,11 +836,6 @@ if it matches.</p>             </td>             <td class="code">              
       }
 
 </pre></div>             </td>           </tr>                               <tr id="section-67">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-67">&#182;</a>               </div>               <p>We reached the end of the multiline string. Get out now.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="keyword">if</span> (terminator) <span class="keyword">break</span>;
-
-      <span class="keyword">if</span> (<span class="string">'\\'</span> === character) {
-        content += input.slice(stringStart, index - <span class="number">1</span>) + readEscapeSequence();
-        stringStart = index;
-      }
     }
     content += input.slice(stringStart, index - <span class="number">1</span>);
     index += level + <span class="number">1</span>;
