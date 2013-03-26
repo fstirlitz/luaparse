@@ -784,4 +784,53 @@ describe('literals', function() {
       ]
     });
   });
+  it('a = [[bar\\f\\v\\bbaz]]', function() {
+    expect(parser.parse('a = [[bar\\f\\v\\bbaz]]')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "bar\\f\\v\\bbaz",
+              "raw": "[[bar\\f\\v\\bbaz]]"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+  it('a = [[\\]]', function() {
+    expect(parser.parse('a = [[\\]]')).to.eql({
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a"
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "\\",
+              "raw": "[[\\]]"
+            }
+          ]
+        }
+      ],
+      "comments": []
+    });
+  });
+
 });

@@ -223,30 +223,6 @@ describe('escape sequences', function() {
       "comments": []
     });
   });
-  it('a = [[bar\\f\\v\\bbaz]]', function() {
-    expect(parser.parse('a = [[bar\\f\\v\\bbaz]]')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\f\u000b\bbaz",
-              "raw": "[[bar\\f\\v\\bbaz]]"
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
 
   it("c = '\\\\'", function() {
     expect(parser.parse("c = '\\\\'")).to.eql({
