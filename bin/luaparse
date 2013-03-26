@@ -7,13 +7,14 @@ var fs = require('fs')
   , luaparse = require('../')
   , args = process.argv.splice(2)
   , stdin = process.stdin
+  , isTTY = stdin.isTTY
   , beautify = false
   , quiet = false
   , input = ''
   , options = {}
   , snippets = [];
 
-if (/^(--help|-h)$/.test(args[0])) {
+if (/^(--help|-h)$/.test(args[0]) || (isTTY && !args.length)) {
   console.log([
       "Usage: luaparse [option]... [file|code]..."
     , "\nOptions:"
