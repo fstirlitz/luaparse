@@ -31,3 +31,5 @@ a = { [a]=                              -- FAIL
 a = { ["foo"]="bar" }
 a = { [1]=a, [2]=b, }
 a = { true, a=1; ["foo"]="bar", }
+a = { [] }                              -- FAIL
+a = { a= }                              -- FAIL

@@ -1,12 +1,12 @@
 describe('while', function() {
   it('while                                   -- FAIL', function() {
-    expect(parser.parse('while', {wait:true}).end).to.throwError(/^\[1:5\] 'do' expected near '<eof>'$/);
+    expect(parser.parse('while', {wait:true}).end).to.throwError(/^\[1:5\] <expression> expected near '<eof>'$/);
   });
   it('while do                                -- FAIL', function() {
-    expect(parser.parse('while do', {wait:true}).end).to.throwError(/^\[1:8\] 'end' expected near '<eof>'$/);
+    expect(parser.parse('while do', {wait:true}).end).to.throwError(/^\[1:6\] <expression> expected near 'do'$/);
   });
   it('while =                                 -- FAIL', function() {
-    expect(parser.parse('while =', {wait:true}).end).to.throwError(/^\[1:6\] 'do' expected near '='$/);
+    expect(parser.parse('while =', {wait:true}).end).to.throwError(/^\[1:6\] <expression> expected near '='$/);
   });
   it('while 1 do                              -- FAIL', function() {
     expect(parser.parse('while 1 do', {wait:true}).end).to.throwError(/^\[1:10\] 'end' expected near '<eof>'$/);
@@ -166,7 +166,7 @@ describe('while', function() {
     });
   });
   it('while 1 do while                        -- FAIL', function() {
-    expect(parser.parse('while 1 do while', {wait:true}).end).to.throwError(/^\[1:16\] 'do' expected near '<eof>'$/);
+    expect(parser.parse('while 1 do while', {wait:true}).end).to.throwError(/^\[1:16\] <expression> expected near '<eof>'$/);
   });
   it('while 1 end                             -- FAIL', function() {
     expect(parser.parse('while 1 end', {wait:true}).end).to.throwError(/^\[1:8\] 'do' expected near 'end'$/);

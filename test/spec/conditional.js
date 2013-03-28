@@ -1,6 +1,6 @@
 describe('conditional', function() {
   it('if                                      -- FAIL', function() {
-    expect(parser.parse('if', {wait:true}).end).to.throwError(/^\[1:2\] 'then' expected near '<eof>'$/);
+    expect(parser.parse('if', {wait:true}).end).to.throwError(/^\[1:2\] <expression> expected near '<eof>'$/);
   });
   it('elseif                                  -- FAIL', function() {
     expect(parser.parse('elseif', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected keyword 'elseif' near '<eof>'$/);
@@ -12,7 +12,7 @@ describe('conditional', function() {
     expect(parser.parse('then', {wait:true}).end).to.throwError(/^\[1:0\] Unexpected keyword 'then' near '<eof>'$/);
   });
   it('if then                                 -- FAIL', function() {
-    expect(parser.parse('if then', {wait:true}).end).to.throwError(/^\[1:7\] 'end' expected near '<eof>'$/);
+    expect(parser.parse('if then', {wait:true}).end).to.throwError(/^\[1:3\] <expression> expected near 'then'$/);
   });
   it('if 1                                    -- FAIL', function() {
     expect(parser.parse('if 1', {wait:true}).end).to.throwError(/^\[1:4\] 'then' expected near '<eof>'$/);
@@ -27,7 +27,7 @@ describe('conditional', function() {
     expect(parser.parse('if 1 then else', {wait:true}).end).to.throwError(/^\[1:14\] 'end' expected near '<eof>'$/);
   });
   it('if 1 then elseif                        -- FAIL', function() {
-    expect(parser.parse('if 1 then elseif', {wait:true}).end).to.throwError(/^\[1:16\] 'then' expected near '<eof>'$/);
+    expect(parser.parse('if 1 then elseif', {wait:true}).end).to.throwError(/^\[1:16\] <expression> expected near '<eof>'$/);
   });
   it('if 1 then end', function() {
     expect(parser.parse('if 1 then end', { scope: true })).to.eql({
@@ -606,5 +606,11 @@ describe('conditional', function() {
       "comments": [],
       "globals": []
     });
+  });
+  it('if then end                             -- FAIL', function() {
+    expect(parser.parse('if then end', {wait:true}).end).to.throwError(/^\[1:3\] <expression> expected near 'then'$/);
+  });
+  it('if 1 then elseif then end               -- FAIL', function() {
+    expect(parser.parse('if 1 then elseif then end', {wait:true}).end).to.throwError(/^\[1:17\] <expression> expected near 'then'$/);
   });
 });
