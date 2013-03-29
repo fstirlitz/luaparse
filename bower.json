@@ -1,0 +1,12 @@
+{
+  "name": "luaparse",
+  "version": "0.0.11",
+  "main": "./lib/luaparse.js",
+  "dependencies": {},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "scripts",
+    "benchmarks"
+  ]
+}
