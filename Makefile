@@ -31,9 +31,11 @@ update-browserscope:
 
 # Usage: make VERSION=0.1.0 version-bump
 version-bump:
-	@npm version $(VERSION)
-	@sed -i 's|\("version": "\)[^"]*\("\)|\1$(VERSION)\2|' bower.json
+	@sed -i 's|\("version": "\)[^"]*\("\)|\1$(VERSION)\2|' bower.json package.json
 	@sed -i "s|\(exports\.version = '\)[^']*\('\)|\1$(VERSION)\2|" lib/luaparse.js
+	@git add package.json bower.json lib/luaparse.js
+	@git commit -m "Version $(VERSION)"
+	@git tag "v$(VERSION)"
 
 # Tests
 # -----
