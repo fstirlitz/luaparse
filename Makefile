@@ -29,8 +29,13 @@ install-test:
 update-browserscope:
 	@sed -i "s/\(window\.commit = '\)[^']*\(';\)/\1$(HASH)\2/" test/benchmarks.html
 
+# Usage: make VERSION=0.1.0 version-bump
 version-bump:
-	@sed -i 's/\("version": "\)[^"]*\("\)/\1$(VERSION)\2/' package.json component.json
+	@sed -i 's|\("version": "\)[^"]*\("\)|\1$(VERSION)\2|' bower.json package.json
+	@sed -i "s|\(exports\.version = '\)[^']*\('\)|\1$(VERSION)\2|" lib/luaparse.js
+	@git add package.json bower.json lib/luaparse.js
+	@git commit -m "Version $(VERSION)"
+	@git tag "v$(VERSION)"
 
 # Tests
 # -----
