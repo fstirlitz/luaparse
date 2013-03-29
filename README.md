@@ -49,7 +49,7 @@ luaparse.parse('i = 0');
     make update
 
     # Version bump
-    make VERSION=0.1.1 version-vump
+    make VERSION=0.1.1 version-bump
 
     # Scaffold the test files, useful if something has changed in the AST.
     make scaffold-tests
