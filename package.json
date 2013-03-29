@@ -35,8 +35,8 @@
     "parsing"
   ],
   "devDependencies": {
-    "mocha": "~1.7.4",
-    "expect.js": "git://github.com/oxyc/expect.js.git#showDiff",
+    "mocha": "~1.8.2",
+    "expect.js": "~0.2.0",
     "mocha-istanbul": "git://github.com/oxyc/mocha-istanbul.git#json",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.6",
