@@ -37,12 +37,21 @@ version-bump:
 # Tests
 # -----
 
-test: test-spec
+test: test-mocha
 
-test-spec:
+test-mocha:
 	@./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
-		test/spec/*
+		test/spec/*.js
+
+testem:
+	@testem
+
+testem-modern:
+	@testem -l bs_ie_9.0,bs_ie_10.0,bs_chrome_27.0,bs_ff_20.0,bs_safari_6.0,bs_opera_12.14
+
+testem-legacy:
+	@testem -l bs_ie_6.0,bs_ie_7.0,bs_ie_8.0,bs_opera_10.0,bs_safari_4.0
 
 # Scaffold all test files in the scaffolding dir.
 scaffold-tests:
@@ -130,7 +139,7 @@ coverage-analysis: coverage-instrument coverage-cover
 	@rm -f coverage.json
 
 qa:
-	@$(MAKE) -s test-spec REPORTER=dot
+	@$(MAKE) -s test REPORTER=dot
 	@$(MAKE) -s lint complexity-analysis coverage-analysis
 
 clean:
