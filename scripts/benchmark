@@ -10,7 +10,6 @@ var Benchmark = require('benchmark')
   , files = process.argv.slice(2)
   , suites = {}
   , suite = new Benchmark.Suite()
-  , results = []
   , verbose = false
   , minSamples = 5
   , minTime = 0;
@@ -33,23 +32,21 @@ files.forEach(function(file) {
   }
 
   if (!fs.existsSync(file)) suites[path.basename(file)] = file;
-  else suites[file] = fs.readFileSync(file, 'utf-8');
+  else suites[file] = fs.readFileSync(file, 'utf8');
 });
 
-function insertBenchmark(file, source) {
+Object.keys(suites).forEach(function(file) {
+  var source = suites[file];
   suite.add(file, function() {
     luaparse.parse(source);
   }, { minSamples: minSamples, minTime: minTime });
-}
-
-Object.keys(suites).forEach(function(file) {
-  insertBenchmark(file, suites[file]);
 });
 
 suite.on('cycle', function(event) {
   var stats = event.target.stats
     , mean = (stats.mean * 1000).toFixed(4)
     , variance = (stats.variance * 1000 * 1000).toFixed(4);
+
   if (verbose) console.log(String(event.target) + ' (' + mean + 'ms)');
   else console.log(mean + '\t' + variance);
 });

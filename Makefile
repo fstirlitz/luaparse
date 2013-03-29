@@ -113,10 +113,10 @@ benchmark:
 	@./scripts/benchmark -v benchmarks/lib/ParseLua.lua
 
 profile:
-	@bash benchmarks/run.sh -v --d8 HEAD
+	@bash benchmarks/run.sh -v --profile HEAD
 
-benchmark-full:
-	@bash benchmarks/run.sh -v --js --lua --esprima HEAD
+benchmark-previous:
+	@bash benchmarks/run.sh --js HEAD HEAD~1
 
 # Quality Assurance
 # -----------------
