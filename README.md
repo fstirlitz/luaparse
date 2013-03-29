@@ -45,7 +45,13 @@ luaparse.parse('i = 0');
     # Install necessary development packages
     make install
 
-    # Scaffold the test files
+    # Update mocha, expect.js and benchmark scripts.
+    make update
+
+    # Version bump
+    make VERSION=0.1.1 version-vump
+
+    # Scaffold the test files, useful if something has changed in the AST.
     make scaffold-tests
 
     # Before contributing any code check quality assurance.
@@ -65,48 +71,16 @@ luaparse.parse('i = 0');
     # Run simple benchmark
     make benchmark
 
-    # Profile v8 internals
+    # Profile v8 internals (Expects /opt/v8/tools/linux-tick-processor)
+    # Alternatively you can specify the tick-processor path using a PROCESSOR variable.
     make profile
 
-    # Run full benchmark
-    make benchmark-full
-
-## Scripts
-
-Benchmark a code snippet or a script file
-
-    ./scripts/benchmark [snippet|file]...
-
-    Flags:
-      -v|--verbose
-      --samples=5
-      --minTime=0
-
-    Example:
-      ./scripts/benchmark -v --samples=100 --minTime=10 'local i = 1' 'i = 1'
-
-List function complexity with an optional threshold defaulting to 10.
-
-    ./scripts/complexity [threshold]
-
-    Example:
-      ./scripts/complexity 5
-
-Create a test from a snippet or a file of snippets separated by a newline.
-If a snippet ends with "-- FAIL" it will generate a failing test.
-
-    ./scripts/make-test [snippet|file]...
-
-    Flags:
-      --ignore-errors
-      --name=
-
-    Example:
-      ./scripts/make-test 'local i = 1' 'local 1 = 1 -- FAIL'
+    # Compare current current commit to previous
+    make benchmark-previous
 
 ## Todo
 
-#### 0.2
+#### 0.1.0
 
 - Tolerant error handling
 - Location tracking

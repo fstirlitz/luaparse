@@ -1,7 +1,6 @@
-REPORTER?=spec
-DOCS=docs/*.md
-HTMLDOCS=$(DOCS:.md=.html)
-HASH=$(shell git rev-parse HEAD | cut -c1-5)
+DOCS = docs/*.md
+REPORTER ?= spec
+PROCESSOR ?= "/opt/v8/tools/linux-tick-processor"
 
 all: build
 
@@ -20,14 +19,12 @@ lint:
 install:
 	@npm install
 
-install-test:
+# This is required if mocha, expect or benchmark is updated.
+update:
 	@cp ./node_modules/mocha/mocha.js test/lib/mocha/
 	@cp ./node_modules/mocha/mocha.css test/lib/mocha/
 	@cp ./node_modules/expect.js/expect.js test/lib/
 	@cp ./node_modules/benchmark/benchmark.js test/lib/
-
-update-browserscope:
-	@sed -i "s/\(window\.commit = '\)[^']*\(';\)/\1$(HASH)\2/" test/benchmarks.html
 
 # Usage: make VERSION=0.1.0 version-bump
 version-bump:
@@ -46,8 +43,6 @@ test-spec:
 	@./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
 		test/spec/*
-
-test-all: test-spec
 
 # Scaffold all test files in the scaffolding dir.
 scaffold-tests:
@@ -113,7 +108,7 @@ benchmark:
 	@./scripts/benchmark -v benchmarks/lib/ParseLua.lua
 
 profile:
-	@bash benchmarks/run.sh -v --profile HEAD
+	@bash benchmarks/run.sh -v --processor $(PROCESSOR) --profile HEAD
 
 benchmark-previous:
 	@bash benchmarks/run.sh --js HEAD HEAD~1
