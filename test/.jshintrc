@@ -1,6 +1,6 @@
 {
   "curly": false,
-  "eqeqeq": true,
+  "eqeqeq": false,
   "forin": true,
   "immed": true,
   "latedef": false,
@@ -16,6 +16,6 @@
   "eqnull": true,
   "laxcomma": true,
   "predef": [
-    "describe", "it", "before", "after", "expect", "parser"
+    "exports", "require", "define", "global", "module"
   ]
 }

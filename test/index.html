@@ -1,50 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Mocha Spec Runner</title>
-  <link rel="stylesheet" href="lib/mocha/mocha.css">
+  <title>Spec Unit Tests</title>
+  <link rel="stylesheet" href="lib/newton.css">
 </head>
 <body>
-  <div id="mocha"></div>
-  <script src="lib/mocha/mocha.js"></script>
+  <div id="suite"></div>
   <script src="/testem.js"></script>
-  <script>mocha.setup({ ui: 'bdd', globals: ['__testem_ui__'] });</script>
-  <script src="lib/expect.js"></script>
+  <script src="lib/spec.js"></script>
+  <script src="lib/newton.js"></script>
 
   <!-- Library -->
-  <script src="../lib/luaparse.js"></script>
   <script>
-    window.parser = window.luaparse;
-    beforeEach(function(done) {
-      setTimeout(done, 0);
-    });
+    (function () {
+      var Spec = this.Spec, Newton = this.Newton, parameters;
+      if (!Spec || !Newton) {
+        return;
+      }
+      parameters = Newton.parseQuery(this.location.search);
+      if (Spec.hasKey(parameters, 'amd')) {
+        // Load RequireJS or `curl.js`. `document.write` is used because older
+        // versions of Safari and Chrome do not support DOM script injection.
+        this.curl = { 'apiName': 'require' };
+        this.document.write('<script src="lib/vendor/' + (parameters.amd == 'require' ? 'require' : 'curl') + '.js"><\/script>');
+      }
+    }).call(this);
   </script>
+  <script>
+    var luaparse
+      , testSuite = {};
+    (function () {
+      var specs = [
+          'assignments'
+        , 'comments'
+        , 'conditional'
+        , 'do'
+        , 'escapesequences'
+        , 'expressions'
+        , 'for'
+        , 'functioncalls'
+        , 'functions'
+        , 'literals'
+        , 'local'
+        , 'operators'
+        , 'repeat'
+        , 'return'
+        , 'scope'
+        , 'statements'
+        , 'tableconstructors'
+        , 'while'
+      ];
+      if (typeof require == 'function' && typeof define == 'function') {
+        require({
+          // RequireJS accepts relative paths in the module name; `curl.js` does
+          // not. Both accept a `paths` map of module paths to relative paths.
+          'paths': { 'luaparse': '../lib/luaparse' },
+          // Thwart aggressive resource caching. RequireJS only.
+          'urlArgs': 'async=' + (+new Date())
+        }, ['luaparse', 'runner'].concat(specs), function (Spec, testSuite) {
+          // Test asynchronous module loading via RequireJS/`curl.js`.
+          testSuite.addTest('Asynchronous Module Definition', function (test) {
+            setTimeout(function () {
+              test.equal(luaparse.version, '0.1.11', 'Luaparse should be exported as an asynchronous module').done(1);
+            }, 1500);
+          });
+          testSuite.run();
+        });
+      } else {
+        this.document.write('<script src="../lib/luaparse.js"><\/script>');
 
-
-  <!-- Spec -->
-  <script src="spec/assignments.js"></script>
-  <script src="spec/comments.js"></script>
-  <script src="spec/conditional.js"></script>
-  <script src="spec/do.js"></script>
-  <script src="spec/expressions.js"></script>
-  <script src="spec/for.js"></script>
-  <script src="spec/functioncalls.js"></script>
-  <script src="spec/functions.js"></script>
-  <script src="spec/literals.js"></script>
-  <script src="spec/escapesequences.js"></script>
-  <script src="spec/local.js"></script>
-  <script src="spec/misc.js"></script>
-  <script src="spec/operators.js"></script>
-  <script src="spec/precedence.js"></script>
-  <script src="spec/repeat.js"></script>
-  <script src="spec/return.js"></script>
-  <script src="spec/scope.js"></script>
-  <script src="spec/statements.js"></script>
-  <script src="spec/tableconstructors.js"></script>
-  <script src="spec/while.js"></script>
-
-  <!-- trigger the mocha runner -->
-  <script src="runner/mocha.js"></script>
+        Spec.forEach(specs, function(spec) {
+          this.document.write('<script src="spec/' + spec + '.js"><\/script>');
+        });
+        this.document.write('<script src="runner.js"><\/script>');
+        this.onload = function () {
+          // if (this.location.hash === '#testem') this.Testem.useCustomAdapter(this.specAdapter);
+          luaparse.testSuite.run();
+        };
+      }
+    }());
+  </script>
 </body>
 </html>
