@@ -10,114 +10,121 @@ var fs = require('fs')
   , verbose = true
   , testName
   , snippets = []
-  , notifications = [];
+  // A list of notifications to display at the end of the scaffolding
+  , notifications = []
+  , intro = [
+      "(function (root) {"
+    , "  var freeExports = typeof exports === 'object' && exports"
+    , "    , freeModule = typeof module === 'object' && module && module.exports == freeExports && module"
+    , "    , freeGlobal = typeof global === 'object' && global;"
+    , ""
+    , "  if (freeGlobal.global == freeGlobal) root = freeGlobal;"
+    , ""
+    , "  var tests = "
+  ].join('\n')
+  , outro = [
+      ";"
+    , ""
+    , "  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {"
+    , "    define(function() { return tests; });"
+    , "  } else if (freeExports && !freeExports.nodeType) {"
+    , "    if (freeModule) freeModule.exports = tests; // In Node.js or Ringo v0.8.0+"
+    , "    else { // In Narwhal or RingoJS v0.7.0-"
+    , "      for (var test in tests) if (tests.hasOwnProperty(test)) {"
+    , "         freeExports[test] = tests[test];"
+    , "      }"
+    , "    }"
+    , "  } else { // In Rhino or web browser"
+    , "    if (!root.testSuite) root.testSuite = {};"
+    , "    root.testSuite['%NAME%'] = tests;"
+    , "  }"
+    , "}(this));"
+  ].join('\n');
 
-// Scaffold the file, with possible description.
+
+// Scaffold content of a test file. If no test name is specified, simply return
+// the tests as objects.
 function scaffoldFile() {
-  var output = '';
-  if (testName) output += "describe('" + testName + "', function() {\n";
+  // Scaffold the test
+  var expected = JSON.stringify(scaffoldTest(), null, indent)
+    , firstline;
+  if (!testName) return expected;
+
+  // The frist line should not be indented so we separate it from the result.
+  expected = expected.split('\n');
+  firstline = expected.splice(0, 1);
+  expected = expected.join('\n');
+
+  return intro +
+    firstline + '\n' +
+    expected.replace(/^([\s\S])/gm, indent + "$1") +
+    outro.replace(/%NAME%/, testName);
+}
+
+// Scaffold the test
+function scaffoldTest() {
+  var output = {};
 
   // Iterate over all snippets and generate their tests.
   snippets.forEach(function(snippet) {
-    // Skip comment lines
+    // Skip lines beginning with //
     if (/^\/\//.test(snippet)) return;
-    output += scaffoldIt(snippet) + "\n";
+
+    // Convert to real escape sequences.
+    snippet = snippet.replace(/\\n/g, '\n')
+      .replace(/\\r/g, '\r')
+      .replace(/\\t/g, '\t')
+      .replace(/\\f/g, '\f')
+      .replace(/\\v/g, '\v');
+
+    // Generate the assertion.
+    var result = scaffoldTestAssertion(snippet);
+
+    // Remove the trailing FAIL flag as this will later be parsed as is by the
+    // test suite. To identify failing tests we will check the type of the
+    // expected result, an object is an assertion, while a string is a thrown
+    // error.
+    snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
+    output[snippet] = result;
   });
 
-  if (testName) output += "});";
+  // If a test name is used, wrap it around the test cases.
+  if (testName) {
+    var temp = {};
+    temp[testName] = output;
+    output = temp;
+  }
 
   return output;
 }
 
-// Scaffold an it-test.
-function scaffoldIt(snippet) {
-  var result = ''
-    // The name needs to be escaped as we want to display it.
-    , name = snippet.replace(/([\\'])/g, "\\$1")
-    , intro = "it('" + name + "', function() {\n"
-    , outro = "\n});"
-    , assertion
-    , success = true
-    , exec;
+// Scaffold a test case.
+function scaffoldTestAssertion(snippet) {
+  var name = snippet // Store the original name with the FAIL flag.
+    , expected
+    , success = true;
 
-  // The code that actually gets executed, newlines have to be real.
-  exec = snippet.replace(/\\n/g, '\n')
-    .replace(/\\t/g, '\t')
-    .replace(/\\r/g, '\r');
-
-  // Change manual \n strings into real \n chars.
-  snippet = snippet
-    .replace(/'/g, '\\\'') // escape ' as we use ' as our delimiter
-    .replace(/\\([\n\t\r])/, '\\$1');
-
-
-  // snippet = snippet.replace(/\n/g, '\\n') // escape real \n
-  //   .replace(/\t/, '\\t') // replace escaped \t with real
-  //   .replace(/\r/, '\\r');
-
-  switch (/-- FAIL\s*$/.test(snippet)) {
-    // Failure case
-    case true:
-      exec = exec.replace(/\s*-- FAIL\s*$/, '');
-      snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
-      try {
-        luaparse.parse(exec, options);
-        // For some reason it didnt throw a error, output the regular assertion
-        // but comment on it in the source.
-        intro += indent + "// This fails in semantic analysis!\n";
-        notifications.push('\x1B[33mExpected failure: \x1B[0m' + name);
-        /* falls through */
-      } catch (error) {
-        assertion = scaffoldThrowAssertion(snippet, error);
-        break;
-      }
-      /* falls through */
-    case false:
-      // Success case
-      try {
-        result = JSON.stringify(luaparse.parse(exec, options), null, indent);
-        assertion = scaffoldAssertion(snippet, result);
-      } catch (error) {
-        notifications.push('\x1B[31m' + error + ':\x1B[0m ' + name);
-        success = false;
-      }
-      break;
+  if (/-- FAIL\s*$/.test(snippet)) {
+    snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
+    try {
+      luaparse.parse(snippet, options);
+      // For some reason it didnt throw a error.
+      notifications.push('\x1B[33mExpected failure: \x1B[0m' + name);
+    } catch (exception) {
+      expected = exception.message;
+    }
+  } else {
+    try {
+      expected = luaparse.parse(snippet, options);
+    } catch (exception) {
+      notifications.push('\x1B[31m' + exception + ':\x1B[0m ' + name);
+      success = false;
+    }
   }
 
   if (verbose && !success) return '';
 
-  return (intro + assertion + outro).replace(/^([\s\S])/gm, indent + "$1");
-}
-
-// Scaffold a deep equals assertion.
-function scaffoldAssertion(snippet, result) {
-
-  // Remove and store the first line from the result
-  var firstline;
-  result = result.split('\n');
-  firstline = result.splice(0, 1);
-  result = result.join('\n');
-
-  // Output \n instead of real newlines in the source passed to the paser.
-  // result = result.replace(/\\\\([ntr])/g, '\\$1');
-
-  return indent + "expect(parser.parse('" + snippet + "', { scope: true })).to.eql(" +
-    firstline + "\n" + // {
-    result.replace(/^([\s\S])/gm, indent + "$1") +
-    ");";
-}
-
-// Scaffold an expect throw assertion.
-function scaffoldThrowAssertion(snippet, error) {
-  // Sanitize the error message.
-  error = error.message
-    .replace(/([\\"])/g, "\\$1")
-    .replace(/\n/g, '\\n')
-    .replace(/\r/g, '\\r')
-    .replace(/\t/g, '\\t')
-    .replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-
-  return indent + "expect(parser.parse('" + snippet + "', {wait:true}).end).to.throwError(/^"+ error + "$/);";
+  return expected;
 }
 
 // Main ---------------------------------------------------
@@ -127,9 +134,9 @@ var args = process.argv.splice(2);
 if (!args.length) {
   console.log([
       "Usage:"
-    , "\tmake-test [snippet|file]..."
-    , "\tmake-test \"locale foo = \\\"bar\\\"\""
-    , "\tmake-test ./tests"
+    , "\tscaffold-test [snippet|file]..."
+    , "\tscaffold-test \"locale foo = \\\"bar\\\"\""
+    , "\tscaffold-test ./tests"
     , "\nOptions:"
     , "\t--ignore-errors"
   ].join('\n'));
@@ -152,7 +159,7 @@ args.forEach(function(arg, index) {
   }
   // File
   else {
-    fs.readFileSync(arg, 'utf-8')
+    fs.readFileSync(arg, 'utf8')
       .split("\n")
       .forEach(function(snippet) {
         if (!snippet.length) return;
