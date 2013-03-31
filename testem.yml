@@ -62,9 +62,25 @@ launchers:
     protocol: browser
 
   node:
-    command: mocha test/spec/*.js -R tap
+    command: node test/runner.js
     protocol: tap
 
-launch_in_ci: [PhantomJS, node]
+  narwhal:
+    command: narwhal test/runner.js 2>&1
+    protocol: tap
+
+  ringo:
+    command: ringo test/runner.js 2>&1
+    protocol: tap
+
+  rhino:
+    command: cd test; rhino runner.js 2>&1
+    protocol: tap
+
+  rhino1.7R5:
+    command: cd test; java -jar /opt/rhino/build/rhino1_7R5pre/js.jar runner.js 2>&1
+    protocol: tap
+
+launch_in_ci: [PhantomJS, node, narwhal, ringo, rhino]
 
 launch_in_dev: [Firefox, Chrome, PhantomJS, node]
