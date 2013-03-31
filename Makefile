@@ -61,7 +61,7 @@ scaffold-tests:
 	)
 
 scaffold-test:
-	@./scripts/make-test --name=$(FILE) \
+	@./scripts/scaffold-test --name=$(FILE) \
 		test/scaffolding/$(FILE) \
 		> test/spec/$(FILE).js
 
