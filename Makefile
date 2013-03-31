@@ -1,6 +1,8 @@
-DOCS = docs/*.md
+DOCS := docs/*.md
 REPORTER ?= spec
 PROCESSOR ?= "/opt/v8/tools/linux-tick-processor"
+LIB := ./node_modules
+BIN := $(LIB)/.bin
 
 all: build
 
@@ -8,10 +10,10 @@ all: build
 # ----------
 
 build:
-	@./node_modules/.bin/grunt build
+	@$(BIN)/grunt build
 
 lint:
-	@./node_modules/.bin/grunt lint
+	@$(BIN)/grunt lint
 
 # Install and internal updates
 # ----------------------------
@@ -21,10 +23,8 @@ install:
 
 # This is required if mocha, expect or benchmark is updated.
 update:
-	@cp ./node_modules/mocha/mocha.js test/lib/mocha/
-	@cp ./node_modules/mocha/mocha.css test/lib/mocha/
-	@cp ./node_modules/expect.js/expect.js test/lib/
-	@cp ./node_modules/benchmark/benchmark.js test/lib/
+	@cp -v $(LIB)/spec/lib/* test/lib/
+	@cp -v $(LIB)/benchmark/benchmark.js test/lib/
 
 # Usage: make VERSION=0.1.0 version-bump
 version-bump:
@@ -40,7 +40,7 @@ version-bump:
 test: test-mocha
 
 test-mocha:
-	@./node_modules/.bin/mocha \
+	@$(BIN)/mocha \
 		--reporter $(REPORTER) \
 		test/spec/*.js
 
@@ -71,7 +71,7 @@ scaffold-test:
 docs: docco coverage docs-test docs-md
 
 docco:
-	@./node_modules/.bin/doccoh lib/*.js
+	@$(BIN)/doccoh lib/*.js
 
 docs-test:
 	@$(MAKE) -s test REPORTER=doc \
@@ -79,7 +79,7 @@ docs-test:
 		> docs/tests.html
 
 docs-index:
-	@./node_modules/.bin/marked README.md --gfm \
+	@$(BIN)/marked README.md --gfm \
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> docs/index.html
 
@@ -87,7 +87,7 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 
 %.html: %.md
 	@echo $<
-	@./node_modules/.bin/marked $< --gfm \
+	@$(BIN)/marked $< --gfm \
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> $@
 
@@ -106,7 +106,7 @@ coverage-cover:
 
 coverage-instrument:
 	@rm -rf lib-cov
-	@./node_modules/.bin/istanbul instrument \
+	@$(BIN)/istanbul instrument \
 		--output lib-cov --no-compact --variable global.__coverage__ \
 		lib
 
@@ -128,12 +128,12 @@ benchmark-previous:
 complexity-analysis:
 	@echo "===================== Complexity analysis ============================"
 	@./scripts/complexity 10
-	@node ./node_modules/complexity-report/src/cli.js \
+	@node $(LIB)/complexity-report/src/cli.js \
 		-lws --maxcc 15 \
 		lib/luaparse.js
 
 coverage-analysis: coverage-instrument coverage-cover
-	@node ./node_modules/istanbul/lib/cli.js check-coverage \
+	@node $(LIB)/istanbul/lib/cli.js check-coverage \
 		--statements -7 --branches -11 --functions -1 \
 		coverage.json
 	@rm -f coverage.json
