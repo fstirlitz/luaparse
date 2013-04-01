@@ -67,7 +67,7 @@ scaffold-test:
 docs: docco coverage docs-test docs-md
 
 docco:
-	@$(BIN)/doccoh luaparse.js
+	@$(BIN)/docco luaparse.js
 
 docs-test:
 	@$(MAKE) -s test REPORTER=doc \
