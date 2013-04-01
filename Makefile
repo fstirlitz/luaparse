@@ -29,8 +29,8 @@ update:
 # Usage: make VERSION=0.1.0 version-bump
 version-bump:
 	@sed -i 's|\("version": "\)[^"]*\("\)|\1$(VERSION)\2|' bower.json package.json
-	@sed -i "s|\(exports\.version = '\)[^']*\('\)|\1$(VERSION)\2|" lib/luaparse.js
-	@git add package.json bower.json lib/luaparse.js
+	@sed -i "s|\(exports\.version = '\)[^']*\('\)|\1$(VERSION)\2|" luaparse.js
+	@git add package.json bower.json luaparse.js
 	@git commit -m "Version $(VERSION)"
 	@git tag "v$(VERSION)"
 
@@ -67,7 +67,7 @@ scaffold-test:
 docs: docco coverage docs-test docs-md
 
 docco:
-	@$(BIN)/doccoh lib/*.js
+	@$(BIN)/doccoh luaparse.js
 
 docs-test:
 	@$(MAKE) -s test REPORTER=doc \
@@ -114,7 +114,7 @@ complexity-analysis:
 	@./scripts/complexity 10
 	@node $(LIB)/complexity-report/src/cli.js \
 		-lws --maxcc 15 \
-		lib/luaparse.js
+		luaparse.js
 
 coverage-analysis: coverage
 	@$(BIN)/istanbul check-coverage --statements -7 --branches -11 --functions -1 \

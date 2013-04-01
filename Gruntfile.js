@@ -26,7 +26,7 @@ module.exports = function (grunt) {
           ' */\n'
       },
       dist: {
-        src: ['lib/luaparse.js'],
+        src: ['luaparse.js'],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
@@ -45,7 +45,7 @@ module.exports = function (grunt) {
       browser: {
         options: { browser: true, globals: { define: true } },
         src: [
-          'lib/*.js',
+          'luaparse.js',
           'examples/**/*.js',
           'benchmarks/*.js'
         ]

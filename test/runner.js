@@ -22,7 +22,7 @@
 
   var Spec = load('Spec', './lib/spec')
     , Newton = load('Newton', './lib/newton')
-    , luaparse = load('luaparse', '../lib/luaparse')
+    , luaparse = load('luaparse', '../luaparse')
     , options = { scope: true }
     , specs = [
         'assignments'

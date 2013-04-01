@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var cr = require('complexity-report')
   , fs = require('fs')
-  , script = fs.readFileSync(__dirname + '/../lib/luaparse.js', 'utf-8')
+  , script = fs.readFileSync(__dirname + '/../luaparse.js', 'utf-8')
   , args = process.argv.slice(2)
   , threshold = 10
   , options = { logicalor: false, switchcase: false };
