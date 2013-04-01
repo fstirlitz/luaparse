@@ -37,12 +37,8 @@ version-bump:
 # Tests
 # -----
 
-test: test-mocha
-
-test-mocha:
-	@$(BIN)/mocha \
-		--reporter $(REPORTER) \
-		test/spec/*.js
+test:
+	@node test/runner.js --console
 
 testem:
 	@testem
@@ -94,21 +90,9 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 # Coverage
 # --------
 
-coverage: coverage-instrument
+coverage:
 	@rm -rf html-report docs/coverage
-	@ISTANBUL_REPORTERS=html,text-summary COVERAGE=1 \
-		$(MAKE) -s test REPORTER=mocha-istanbul
-	@mv html-report docs/coverage
-
-coverage-cover:
-	@ISTANBUL_REPORTERS=text-summary,json COVERAGE=1 \
-		$(MAKE) -s test REPORTER=mocha-istanbul
-
-coverage-instrument:
-	@rm -rf lib-cov
-	@$(BIN)/istanbul instrument \
-		--output lib-cov --no-compact --variable global.__coverage__ \
-		lib
+	@$(BIN)/istanbul cover --report html --dir docs/coverage test/runner.js >/dev/null
 
 # Benchmark
 # ---------
@@ -132,15 +116,12 @@ complexity-analysis:
 		-lws --maxcc 15 \
 		lib/luaparse.js
 
-coverage-analysis: coverage-instrument coverage-cover
-	@node $(LIB)/istanbul/lib/cli.js check-coverage \
-		--statements -7 --branches -11 --functions -1 \
-		coverage.json
-	@rm -f coverage.json
+coverage-analysis: coverage
+	@$(BIN)/istanbul check-coverage --statements -7 --branches -11 --functions -1 \
+		docs/coverage/coverage.json
 
 qa:
-	@$(MAKE) -s test REPORTER=dot
-	@$(MAKE) -s lint complexity-analysis coverage-analysis
+	@$(MAKE) -s test lint complexity-analysis coverage-analysis
 
 clean:
 	@rm -f docs/*.html docs/*.1
