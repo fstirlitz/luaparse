@@ -215,47 +215,130 @@
       "body": [],
       "comments": []
     }, 'should produce empty tree on empty input');
-    var parse = luaparse.parse('local ', { wait: true });
-    this.deepEqual(luaparse.end('a'), {
+    var parse = luaparse.parse({ wait: true });
+    this.deepEqual(luaparse.end('break'), {
       "type": "Chunk",
       "body": [
         {
-          "type": "LocalStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": []
+          "type": "BreakStatement"
         }
       ],
       "comments": []
     }, 'should support waiting on input');
-    // Increase coverage
-    this.deepEqual(luaparse.parse('goto foo local a, b'), {
+    // Bump coverage for scopes.
+    this.deepEqual(luaparse.parse('function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end'), {
       "type": "Chunk",
       "body": [
         {
-          "type": "GotoStatement",
-          "label": {
-            "type": "Identifier",
-            "name": "foo"
-          }
-        },
-        {
-          "type": "LocalStatement",
-          "variables": [
+          "type": "FunctionDeclaration",
+          "identifier": {
+            "type": "MemberExpression",
+            "indexer": ":",
+            "identifier": {
+              "type": "Identifier",
+              "name": "baz"
+            },
+            "base": {
+              "type": "MemberExpression",
+              "indexer": ".",
+              "identifier": {
+                "type": "Identifier",
+                "name": "bar"
+              },
+              "base": {
+                "type": "Identifier",
+                "name": "foo"
+              }
+            }
+          },
+          "isLocal": false,
+          "parameters": [
             {
               "type": "Identifier",
               "name": "a"
-            },
-            {
-              "type": "Identifier",
-              "name": "b"
             }
           ],
-          "init": []
+          "body": [
+            {
+              "type": "GotoStatement",
+              "label": {
+                "type": "Identifier",
+                "name": "foo"
+              }
+            }
+          ]
+        },
+        {
+          "type": "FunctionDeclaration",
+          "identifier": {
+            "type": "Identifier",
+            "name": "a"
+          },
+          "isLocal": true,
+          "parameters": [],
+          "body": [
+            {
+              "type": "LocalStatement",
+              "variables": [
+                {
+                  "type": "Identifier",
+                  "name": "a"
+                },
+                {
+                  "type": "Identifier",
+                  "name": "b"
+                }
+              ],
+              "init": []
+            },
+            {
+              "type": "LabelStatement",
+              "label": {
+                "type": "Identifier",
+                "name": "c"
+              }
+            },
+            {
+              "type": "ForGenericStatement",
+              "variables": [
+                {
+                  "type": "Identifier",
+                  "name": "a"
+                },
+                {
+                  "type": "Identifier",
+                  "name": "b"
+                }
+              ],
+              "iterators": [
+                {
+                  "type": "CallExpression",
+                  "base": {
+                    "type": "MemberExpression",
+                    "indexer": ":",
+                    "identifier": {
+                      "type": "Identifier",
+                      "name": "e"
+                    },
+                    "base": {
+                      "type": "MemberExpression",
+                      "indexer": ".",
+                      "identifier": {
+                        "type": "Identifier",
+                        "name": "d"
+                      },
+                      "base": {
+                        "type": "Identifier",
+                        "name": "c"
+                      }
+                    }
+                  },
+                  "arguments": []
+                }
+              ],
+              "body": []
+            }
+          ]
         }
       ],
       "comments": []
