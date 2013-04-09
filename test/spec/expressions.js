@@ -400,6 +400,9 @@ describe('expressions', function() {
   it('a = a:b                                 -- FAIL', function() {
     expect(parser.parse('a = a:b', {wait:true}).end).to.throwError(/^\[1:7\] function arguments expected near '<eof>'$/);
   });
+  it('a = a[]                                 -- FAIL', function() {
+    expect(parser.parse('a = a[]', {wait:true}).end).to.throwError(/^\[1:6\] <expression> expected near '\]'$/);
+  });
   it('a = a[b]', function() {
     expect(parser.parse('a = a[b]', { scope: true })).to.eql({
       "type": "Chunk",

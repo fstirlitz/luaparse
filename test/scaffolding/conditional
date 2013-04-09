@@ -27,3 +27,5 @@ if 1 then else if 2 then end            -- FAIL
 if 1 then return end
 if 1 then return return end             -- FAIL
 if 1 then end; if 1 then end;
+if then end                             -- FAIL
+if 1 then elseif then end               -- FAIL

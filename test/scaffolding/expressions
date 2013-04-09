@@ -12,6 +12,7 @@ a = a.b
 a = a.b.                                -- FAIL
 a = a.b.c
 a = a:b                                 -- FAIL
+a = a[]                                 -- FAIL
 a = a[b]
 a = a[1]
 a = a["foo"]

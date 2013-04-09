@@ -1327,7 +1327,7 @@
           }
         }
         // continue clone if `value` doesn't have an accessor descriptor
-        // http://es5.github.com/#x8.10.1
+        // http://es5.github.io/#x8.10.1
         if (clone && clone != value &&
             !(descriptor = source && support.descriptors && getDescriptor(source, key),
               accessor = descriptor && (descriptor.get || descriptor.set))) {

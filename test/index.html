@@ -8,7 +8,8 @@
 <body>
   <div id="mocha"></div>
   <script src="lib/mocha/mocha.js"></script>
-  <script>mocha.setup('bdd')</script>
+  <script src="/testem.js"></script>
+  <script>mocha.setup({ ui: 'bdd', globals: ['__testem_ui__'] });</script>
   <script src="lib/expect.js"></script>
 
   <!-- Library -->

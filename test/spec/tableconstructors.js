@@ -760,13 +760,13 @@ describe('tableconstructors', function() {
     expect(parser.parse('a = { a', {wait:true}).end).to.throwError(/^\[1:7\] '\}' expected near '<eof>'$/);
   });
   it('a = { a=                                -- FAIL', function() {
-    expect(parser.parse('a = { a=', {wait:true}).end).to.throwError(/^\[1:8\] '\}' expected near '<eof>'$/);
+    expect(parser.parse('a = { a=', {wait:true}).end).to.throwError(/^\[1:8\] <expression> expected near '<eof>'$/);
   });
   it('a = { a=,                               -- FAIL', function() {
-    expect(parser.parse('a = { a=,', {wait:true}).end).to.throwError(/^\[1:9\] '\}' expected near '<eof>'$/);
+    expect(parser.parse('a = { a=,', {wait:true}).end).to.throwError(/^\[1:8\] <expression> expected near ','$/);
   });
   it('a = { a=;                               -- FAIL', function() {
-    expect(parser.parse('a = { a=;', {wait:true}).end).to.throwError(/^\[1:9\] '\}' expected near '<eof>'$/);
+    expect(parser.parse('a = { a=;', {wait:true}).end).to.throwError(/^\[1:8\] <expression> expected near ';'$/);
   });
   it('a = { 1, a="foo"                        -- FAIL', function() {
     expect(parser.parse('a = { 1, a="foo"', {wait:true}).end).to.throwError(/^\[1:16\] '\}' expected near '<eof>'$/);
@@ -860,7 +860,7 @@ describe('tableconstructors', function() {
     });
   });
   it('a = { [                                 -- FAIL', function() {
-    expect(parser.parse('a = { [', {wait:true}).end).to.throwError(/^\[1:7\] '\]' expected near '<eof>'$/);
+    expect(parser.parse('a = { [', {wait:true}).end).to.throwError(/^\[1:7\] <expression> expected near '<eof>'$/);
   });
   it('a = { [1                                -- FAIL', function() {
     expect(parser.parse('a = { [1', {wait:true}).end).to.throwError(/^\[1:8\] '\]' expected near '<eof>'$/);
@@ -1044,5 +1044,11 @@ describe('tableconstructors', function() {
         }
       ]
     });
+  });
+  it('a = { [] }                              -- FAIL', function() {
+    expect(parser.parse('a = { [] }', {wait:true}).end).to.throwError(/^\[1:7\] <expression> expected near '\]'$/);
+  });
+  it('a = { a= }                              -- FAIL', function() {
+    expect(parser.parse('a = { a= }', {wait:true}).end).to.throwError(/^\[1:9\] <expression> expected near '\}'$/);
   });
 });

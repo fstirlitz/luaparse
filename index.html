@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Luaparse</title>
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <style>
       .hero-unit .nav-pills a {
         font-size: 70%;
@@ -26,7 +26,7 @@
           </div>
           <div class="span6" style="padding-top: 35px;">
             <div class="btn-group">
-              <a class="btn" href="https://github.com/oxyc/luaparse">Github</a>
+              <a class="btn" href="https://github.com/oxyc/luaparse">GitHub</a>
               <a class="btn" href="luaparse.html">Annotated source</a>
               <a class="btn" href="tests.html">Test docs</a>
             </div>
@@ -68,7 +68,13 @@ make build</code></pre>
 <pre><code># Install necessary development packages
 make install
 
-# Scaffold the test files
+# Update mocha, expect.js and benchmark scripts.
+make update
+
+# Version bump
+make VERSION=0.1.1 version-bump
+
+# Scaffold the test files, useful if something has changed in the AST.
 make scaffold-tests
 
 # Before contributing any code check quality assurance.
@@ -86,39 +92,14 @@ make lint</code></pre>
 <pre><code># Run simple benchmark
 make benchmark
 
-# Profile v8 internals
+# Profile v8 internals (Expects /opt/v8/tools/linux-tick-processor)
+# Alternatively you can specify the tick-processor path using a PROCESSOR variable.
 make profile
 
-# Run full benchmark
-make benchmark-full</code></pre>
-<h2>Scripts</h2>
-<p>Benchmark a code snippet or a script file</p>
-<pre><code>./scripts/benchmark [snippet|file]...
-
-Flags:
-  -v|--verbose
-  --samples=5
-  --minTime=0
-
-Example:
-  ./scripts/benchmark -v --samples=100 --minTime=10 &#39;local i = 1&#39; &#39;i = 1&#39;</code></pre>
-<p>List function complexity with an optional threshold defaulting to 10.</p>
-<pre><code>./scripts/complexity [threshold]
-
-Example:
-  ./scripts/complexity 5</code></pre>
-<p>Create a test from a snippet or a file of snippets separated by a newline.
-If a snippet ends with &quot;-- FAIL&quot; it will generate a failing test.</p>
-<pre><code>./scripts/make-test [snippet|file]...
-
-Flags:
-  --ignore-errors
-  --name=
-
-Example:
-  ./scripts/make-test &#39;local i = 1&#39; &#39;local 1 = 1 -- FAIL&#39;</code></pre>
+# Compare current current commit to previous
+make benchmark-previous</code></pre>
 <h2>Todo</h2>
-<h4>0.2</h4>
+<h4>0.1.0</h4>
 <ul>
 <li>Tolerant error handling</li>
 <li>Location tracking</li>
