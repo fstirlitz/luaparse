@@ -528,7 +528,7 @@
     return j <= i ? -1 : i;
   };
 
-  // https://gist.github.com/1044128/
+  // https://gist.github.com/eligrey/1044128/
   var getOuterHTML = function(element) {
     if ('outerHTML' in element) return element.outerHTML;
     var ns = "http://www.w3.org/1999/xhtml";

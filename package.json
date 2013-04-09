@@ -2,7 +2,7 @@
   "name": "luaparse",
   "description": "A Lua parser in JavaScript",
   "version": "0.0.11",
-  "homepage": "http://oxyc.github.com/luaparse/",
+  "homepage": "http://oxyc.github.io/luaparse/",
   "bugs": "https://github.com/oxyc/luaparse/issues",
   "author": {
     "name": "Oskar Schöldström",
