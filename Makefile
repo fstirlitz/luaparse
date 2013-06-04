@@ -32,7 +32,7 @@ version-bump:
 	@sed -i "s|\(exports\.version = '\)[^']*\('\)|\1$(VERSION)\2|" luaparse.js
 	@git add package.json bower.json luaparse.js
 	@git commit -m "Version $(VERSION)"
-	@git tag "v$(VERSION)"
+	@git tag -a "v$(VERSION)" -m "v$(VERSION)"
 
 # Tests
 # -----
