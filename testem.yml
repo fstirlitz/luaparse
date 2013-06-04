@@ -1,66 +1,6 @@
-test_page: test/index.html
-
-on_start:
-  command: browserstack tunnel localhost:<port>
-  wait_for_text: You can now access your local server(s) in our remote browser
+test_page: test/index.html?amd=require
 
 launchers:
-  bs_chrome_14.0:
-    command: browserstack launch --attach chrome:14.0 <url>
-    protocol: browser
-
-  bs_chrome_27.0:
-    command: browserstack launch --attach chrome:27.0 <url>
-    protocol: browser
-
-  bs_ff_3.6:
-    command: browserstack launch --attach firefox:3.6 <url>
-    protocol: browser
-
-  bs_ff_4.0:
-    command: browserstack launch --attach firefox:4.0 <url>
-    protocol: browser
-
-  bs_ff_20.0:
-    command: browserstack launch --attach firefox:20.0 <url>
-    protocol: browser
-
-  bs_safari_4.0:
-    command: browserstack launch --attach safari:4.0 <url>
-    protocol: browser
-
-  bs_safari_6.0:
-    command: browserstack launch --attach safari:6.0 <url>
-    protocol: browser
-
-  bs_ie_6.0:
-    command: browserstack launch --attach ie:6.0 <url>
-    protocol: browser
-
-  bs_ie_7.0:
-    command: browserstack launch --attach ie:7.0 <url>
-    protocol: browser
-
-  bs_ie_8.0:
-    command: browserstack launch --attach ie:8.0 <url>
-    protocol: browser
-
-  bs_ie_9.0:
-    command: browserstack launch --attach ie:9.0 <url>
-    protocol: browser
-
-  bs_ie_10.0:
-    command: browserstack launch --attach ie:10.0 <url>
-    protocol: browser
-
-  bs_opera_10.0:
-    command: browserstack launch --attach opera:10.0 <url>
-    protocol: browser
-
-  bs_opera_12.14:
-    command: browserstack launch --attach opera:12.14 <url>
-    protocol: browser
-
   node:
     command: node test/runner.js
     protocol: tap
@@ -83,4 +23,4 @@ launchers:
 
 launch_in_ci: [PhantomJS, node, narwhal, ringo, rhino]
 
-launch_in_dev: [Firefox, Chrome, PhantomJS, node]
+launch_in_dev: [Firefox, Chrome, PhantomJS, node, narwhal, ringo, rhino, rhino1.7R5]

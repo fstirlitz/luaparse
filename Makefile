@@ -43,11 +43,8 @@ test:
 testem:
 	@testem
 
-testem-modern:
-	@testem -l bs_ie_9.0,bs_ie_10.0,bs_chrome_27.0,bs_ff_20.0,bs_safari_6.0,bs_opera_12.14
-
-testem-legacy:
-	@testem -l bs_ie_6.0,bs_ie_7.0,bs_ie_8.0,bs_opera_10.0,bs_safari_4.0
+testem-engines:
+	@testem -l PhantomJS,node,narwhal,ringo,rhino,rhino1.7R5
 
 # Scaffold all test files in the scaffolding dir.
 scaffold-tests:
