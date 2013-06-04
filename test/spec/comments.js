@@ -1,244 +1,240 @@
-describe('comments', function() {
-  it('-- comment', function() {
-    expect(parser.parse('-- comment', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": " comment",
-          "raw": "-- comment"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('-- comment\\n-- comment', function() {
-    expect(parser.parse('-- comment\n-- comment', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": " comment",
-          "raw": "-- comment"
-        },
-        {
-          "type": "Comment",
-          "value": " comment",
-          "raw": "-- comment"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('--coment', function() {
-    expect(parser.parse('--coment', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "coment",
-          "raw": "--coment"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('-- comment\\nbreak', function() {
-    expect(parser.parse('-- comment\nbreak', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "BreakStatement"
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": " comment",
-          "raw": "-- comment"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('break--comment', function() {
-    expect(parser.parse('break--comment', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "BreakStatement"
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment",
-          "raw": "--comment"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('--[[comment]]', function() {
-    expect(parser.parse('--[[comment]]', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment",
-          "raw": "--[[comment]]"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('if true--[[comment]]then end', function() {
-    expect(parser.parse('if true--[[comment]]then end', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "BooleanLiteral",
-                "value": true,
-                "raw": "true"
-              },
-              "body": []
-            }
-          ]
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment",
-          "raw": "--[[comment]]"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('--[=[comment]=]break', function() {
-    expect(parser.parse('--[=[comment]=]break', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "BreakStatement"
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment",
-          "raw": "--[=[comment]=]"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('--[===[comment\\n--[=[sub]=]--\\n]===]break', function() {
-    expect(parser.parse('--[===[comment\n--[=[sub]=]--\n]===]break', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "BreakStatement"
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment\n--[=[sub]=]--\n",
-          "raw": "--[===[comment\n--[=[sub]=]--\n]===]"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('--[[comment\\nline two]]', function() {
-    expect(parser.parse('--[[comment\nline two]]', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment\nline two",
-          "raw": "--[[comment\nline two]]"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('--[[\\ncomment\\nline two\\n]]', function() {
-    expect(parser.parse('--[[\ncomment\nline two\n]]', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment\nline two\n",
-          "raw": "--[[\ncomment\nline two\n]]"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('--[==\\nbreak --]]', function() {
-    expect(parser.parse('--[==\nbreak --]]', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "BreakStatement"
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "[==",
-          "raw": "--[=="
-        },
-        {
-          "type": "Comment",
-          "value": "]]",
-          "raw": "--]]"
-        }
-      ],
-      "globals": []
-    });
-  });
-  it('if true -- comment\\nthen end', function() {
-    expect(parser.parse('if true -- comment\nthen end', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "BooleanLiteral",
-                "value": true,
-                "raw": "true"
-              },
-              "body": []
-            }
-          ]
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": " comment",
-          "raw": "-- comment"
-        }
-      ],
-      "globals": []
-    });
-  });
-});
+(function (root) {
+  var freeExports = typeof exports === 'object' && exports
+    , freeModule = typeof module === 'object' && module && module.exports == freeExports && module
+    , freeGlobal = typeof global === 'object' && global;
+
+  if (freeGlobal.global == freeGlobal) root = freeGlobal;
+
+  var tests = {
+    "comments": {
+      "-- comment": {
+        "type": "Chunk",
+        "body": [],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": " comment",
+            "raw": "-- comment"
+          }
+        ],
+        "globals": []
+      },
+      "-- comment\n-- comment": {
+        "type": "Chunk",
+        "body": [],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": " comment",
+            "raw": "-- comment"
+          },
+          {
+            "type": "Comment",
+            "value": " comment",
+            "raw": "-- comment"
+          }
+        ],
+        "globals": []
+      },
+      "--coment": {
+        "type": "Chunk",
+        "body": [],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "coment",
+            "raw": "--coment"
+          }
+        ],
+        "globals": []
+      },
+      "-- comment\nbreak": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "BreakStatement"
+          }
+        ],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": " comment",
+            "raw": "-- comment"
+          }
+        ],
+        "globals": []
+      },
+      "break--comment": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "BreakStatement"
+          }
+        ],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "comment",
+            "raw": "--comment"
+          }
+        ],
+        "globals": []
+      },
+      "--[[comment]]": {
+        "type": "Chunk",
+        "body": [],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "comment",
+            "raw": "--[[comment]]"
+          }
+        ],
+        "globals": []
+      },
+      "if true--[[comment]]then end": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "BooleanLiteral",
+                  "value": true,
+                  "raw": "true"
+                },
+                "body": []
+              }
+            ]
+          }
+        ],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "comment",
+            "raw": "--[[comment]]"
+          }
+        ],
+        "globals": []
+      },
+      "--[=[comment]=]break": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "BreakStatement"
+          }
+        ],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "comment",
+            "raw": "--[=[comment]=]"
+          }
+        ],
+        "globals": []
+      },
+      "--[===[comment\n--[=[sub]=]--\n]===]break": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "BreakStatement"
+          }
+        ],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "comment\n--[=[sub]=]--\n",
+            "raw": "--[===[comment\n--[=[sub]=]--\n]===]"
+          }
+        ],
+        "globals": []
+      },
+      "--[[comment\nline two]]": {
+        "type": "Chunk",
+        "body": [],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "comment\nline two",
+            "raw": "--[[comment\nline two]]"
+          }
+        ],
+        "globals": []
+      },
+      "--[[\ncomment\nline two\n]]": {
+        "type": "Chunk",
+        "body": [],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "comment\nline two\n",
+            "raw": "--[[\ncomment\nline two\n]]"
+          }
+        ],
+        "globals": []
+      },
+      "--[==\nbreak --]]": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "BreakStatement"
+          }
+        ],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": "[==",
+            "raw": "--[=="
+          },
+          {
+            "type": "Comment",
+            "value": "]]",
+            "raw": "--]]"
+          }
+        ],
+        "globals": []
+      },
+      "if true -- comment\nthen end": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "BooleanLiteral",
+                  "value": true,
+                  "raw": "true"
+                },
+                "body": []
+              }
+            ]
+          }
+        ],
+        "comments": [
+          {
+            "type": "Comment",
+            "value": " comment",
+            "raw": "-- comment"
+          }
+        ],
+        "globals": []
+      }
+    }
+  };
+
+  if (freeExports && !freeExports.nodeType) {
+    if (freeModule) freeModule.exports = tests; // In Node.js or Ringo v0.8.0+
+    else { // In Narwhal or RingoJS v0.7.0-
+      for (var test in tests) if (tests.hasOwnProperty(test)) {
+         freeExports[test] = tests[test];
+      }
+    }
+  } else { // In Rhino or web browser
+    if (!root.testSuite) root.testSuite = {};
+    root.testSuite['comments'] = tests;
+  }
+}(this));

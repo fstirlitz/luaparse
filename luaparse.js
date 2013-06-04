@@ -13,7 +13,7 @@
 }(this, 'luaparse', function (exports) {
   'use strict';
 
-  exports.version = '0.0.11';
+  exports.version = '0.0.13';
 
   var input, options, length;
 
@@ -305,8 +305,7 @@
 
   var slice = Array.prototype.slice
     , toString = Object.prototype.toString
-    // Simple indexOf implementation which only provides what's required.
-    , indexOf = Array.prototype.indexOf || function indexOf(element) {
+    , indexOf = function indexOf(element) {
       for (var i = 0, length = this.length; i < length; i++) {
         if (this[i] === element) return i;
       }

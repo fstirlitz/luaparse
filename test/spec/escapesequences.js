@@ -1,411 +1,386 @@
-// This file manually written.
-describe('escape sequences', function() {
-  it('a = "bar\\tbaz"', function() {
-    expect(parser.parse('a = "bar\tbaz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\tbaz",
-              "raw": "\"bar\tbaz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = "bar\\\\tbaz"', function() {
-    expect(parser.parse('a = "bar\\tbaz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\tbaz",
-              "raw": "\"bar\\tbaz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = "bar\\nbaz"                                    -- FAIL', function() {
-    expect(parser.parse('a = "bar\nbaz"', {wait:true}).end).to.throwError("[1:10] unfinished string near 'bar\n'");
-  });
-  it('a = "bar\\\\nbaz"', function() {
-    expect(parser.parse('a = "bar\\nbaz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\nbaz",
-              "raw": "\"bar\\nbaz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = "bar\\rbaz"                                    -- FAIL', function() {
-    expect(parser.parse('a = "bar\rbaz"', {wait:true}).end).to.throwError("[1:10] unfinished string near 'bar\r'");
-  });
-  it('a = "bar\\\\rbaz"', function() {
-    expect(parser.parse('a = "bar\\rbaz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\rbaz",
-              "raw": "\"bar\\rbaz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = "bar\\80baz"', function() {
-    expect(parser.parse('a = "bar\\80baz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\\80baz",
-              "raw": "\"bar\\80baz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = "bar\\800\\0baz"', function() {
-    expect(parser.parse('a = "bar\\800\\0baz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\\800\\0baz",
-              "raw": "\"bar\\800\\0baz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = "bar\\\\z   baz"', function() {
-    expect(parser.parse('a = "bar\\z   baz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "barbaz",
-              "raw": "\"bar\\z   baz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = "bar\\\\f\\\\v\\bbaz"', function() {
-    expect(parser.parse('a = "bar\\f\\v\\bbaz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\f\u000b\bbaz",
-              "raw": "\"bar\\f\\v\\bbaz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
+(function (root) {
+  var freeExports = typeof exports === 'object' && exports
+    , freeModule = typeof module === 'object' && module && module.exports == freeExports && module
+    , freeGlobal = typeof global === 'object' && global;
 
-  it('a = "bar\\f\\v\\bbaz"', function() {
-    expect(parser.parse('a = "bar\f\x0B\bbaz"')).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\f\u000b\bbaz",
-              "raw": "\"bar\f\x0B\bbaz\""
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
+  if (freeGlobal.global == freeGlobal) root = freeGlobal;
 
-  it("c = '\\\\'", function() {
-    expect(parser.parse("c = '\\\\'")).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "c"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "\\",
-              "raw": "'\\\\'"
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it("c = '\\\''", function() {
-    expect(parser.parse("c = '\\\''")).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "c"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "'",
-              "raw": "'\\''"
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it("c = '\\123'", function() {
-    expect(parser.parse("c = '\\123'")).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "c"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "\\123",
-              "raw": "'\\123'"
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it("c = '\\x23'", function() {
-    expect(parser.parse("c = '\\x23'")).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "c"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "\\x23",
-              "raw": "'\\x23'"
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it("c = '\\xx'", function() {
-    expect(parser.parse("c = '\\xx'")).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "c"
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "\\xx",
-              "raw": "'\\xx'"
-            }
-          ]
-        }
-      ],
-      "comments": []
-    });
-  });
-  it('a = [[bar\\f\\v\\bbaz]]', function() {
-    expect(parser.parse('a = [[bar\\f\\v\\bbaz]]', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a",
-              "isLocal": false
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "bar\\f\\v\\bbaz",
-              "raw": "[[bar\\f\\v\\bbaz]]"
-            }
-          ]
-        }
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "isLocal": false
-        }
-      ]
-    });
-  });
-  it('a = [[\\]]', function() {
-    expect(parser.parse('a = [[\\]]', { scope: true })).to.eql({
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "a",
-              "isLocal": false
-            }
-          ],
-          "init": [
-            {
-              "type": "StringLiteral",
-              "value": "\\",
-              "raw": "[[\\]]"
-            }
-          ]
-        }
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "isLocal": false
-        }
-      ]
-    });
-  });
-});
+  var tests = {
+    "escapesequences": {
+      "a = \"bar\nbaz\"": "[1:10] unfinished string near 'bar\n'",
+      "a = \"bar\rbaz\"": "[1:10] unfinished string near 'bar\r'",
+      "a = \"bar\\n\\r\\t\tbaz\"": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "bar\n\r\t\tbaz",
+                "raw": "\"bar\\n\\r\\t\tbaz\""
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = \"bar\\80baz\\800\\0foo\"": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "bar\\80baz\\800\\0foo",
+                "raw": "\"bar\\80baz\\800\\0foo\""
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = \"bar\\z    baz\"": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "barbaz",
+                "raw": "\"bar\\z    baz\""
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = \"bar\\f\\v\\bbaz\"": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "bar\f\u000b\bbaz",
+                "raw": "\"bar\\f\\v\\bbaz\""
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = \"bar\f\u000b\bbaz\"": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "bar\f\u000b\bbaz",
+                "raw": "\"bar\f\u000b\bbaz\""
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = '\\\\'": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "\\",
+                "raw": "'\\\\'"
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = '\\''": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "'",
+                "raw": "'\\''"
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = '\\123'": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "\\123",
+                "raw": "'\\123'"
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = '\\x23'": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "\\x23",
+                "raw": "'\\x23'"
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = '\\xx'": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "\\xx",
+                "raw": "'\\xx'"
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = [[bar\\f\\v\\bbaz]]": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "bar\\f\\v\\bbaz",
+                "raw": "[[bar\\f\\v\\bbaz]]"
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = [[\\]]": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "\\",
+                "raw": "[[\\]]"
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      }
+    }
+  };
+
+  if (freeExports && !freeExports.nodeType) {
+    if (freeModule) freeModule.exports = tests; // In Node.js or Ringo v0.8.0+
+    else { // In Narwhal or RingoJS v0.7.0-
+      for (var test in tests) if (tests.hasOwnProperty(test)) {
+         freeExports[test] = tests[test];
+      }
+    }
+  } else { // In Rhino or web browser
+    if (!root.testSuite) root.testSuite = {};
+    root.testSuite['escapesequences'] = tests;
+  }
+}(this));
