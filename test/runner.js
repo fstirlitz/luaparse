@@ -5,8 +5,8 @@
     , isModule = typeof require === 'function' && typeof exports === 'object' && exports && !isLoader
     , isBrowser = 'window' in root && root.window == root && typeof root.navigator !== 'undefined'
     , isEngine = !isBrowser && !isModule && typeof root.load === 'function'
-    // Use the console reporter
     , isTestem = isBrowser && root.location.hash === '#testem'
+    // Use the console reporter
     , isConsole = typeof process == 'object' && process.argv && process.argv.indexOf('--console') >= 0;
 
   var load = function load(module, path) {
@@ -48,7 +48,7 @@
       if (typeof console !== 'undefined' && console.log) return console.log;
       // In browsers, the global `print` function prints the current page.
       else if (typeof print === 'function' && !isBrowser) return print;
-      else return function(value) { throw value; };
+      else return function(value) { };
     }())
 
     // Create the test suite.
@@ -72,9 +72,9 @@
       ok = actual === expected;
     }
     return this.ok(ok, {
-      "expected": expected,
-      "actual": actual,
-      "message": escapeString(source)
+      'expected': expected,
+      'actual': actual,
+      'message': escapeString(source)
     });
   };
 
@@ -93,10 +93,8 @@
       var count = 0;
       for (var source in tests) if (tests.hasOwnProperty(source)) {
         var expected = tests[source];
-
         if (typeof expected === 'string') this.parseError(source, expected, options);
         else this.parses(source, expected, options);
-
         count++;
       }
       this.done(count);
@@ -149,46 +147,53 @@
     };
   }());
 
-  var testemReporter = function() {
-    switch (event.type) {
-      case 'assertion':
-      case 'failure':
-        var isSuccess = (event.type === 'assertion');
-        test = {
-            passed: isSuccess ? 1 : 0
-          , failed: isSuccess ? 0 : 1
-          , total: 1
-          , id: id++
-          , name: event.message
-          , items: []
-        };
-        if (!isSuccess) {
-          test.items.push({
-              passed: false
-            , message: Newton.substitute('Expected %o to match %o', event.expected, event.actual)
+  var testemReporter = (function() {
+    var id = 0
+      , testResults = [];
+
+    return function(event) {
+      var test, isSuccess;
+      switch (event.type) {
+        case 'assertion':
+        case 'failure':
+          isSuccess = (event.type === 'assertion');
+          test = {
+              passed: isSuccess ? 1 : 0
+            , failed: isSuccess ? 0 : 1
+            , total: 1
+            , id: id++
+            , name: event.message
+            , items: []
+          };
+          if (!isSuccess) {
+            test.items.push({
+                passed: false
+              , message: Newton.substitute('Expected %o to match %o', event.expected, event.actual)
+            });
+          }
+          testResults.push(test);
+          root.Testem.emit('test-result', test);
+          break;
+        case 'complete':
+          root.Testem.emit('all-test-results', {
+              failed: this.failures
+            , total: this.assertions
+            , tests: []
           });
-        }
-        testResults.push(test);
-        root.Testem.emit('test-result', test);
-        break;
-      case 'complete':
-        root.Testem.emit('all-test-results', {
-            failed: this.failures
-          , total: this.assertions
-          , tests: []
-        });
-        break;
-      case 'start':
-        root.Testem.emit('tests-start');
-        break;
-    }
-  };
+          break;
+        case 'start':
+          root.Testem.emit('tests-start');
+          break;
+      }
+    };
+  }());
 
   // Use the appropiate reporter depending on enviroment.
   var reporter = isBrowser ? Newton.createReport('suite') :
-    isTestem ? testemReporter :
     isConsole ? consoleReporter :
     Newton.createTAP(output);
+
+  if (isTestem) testSuite.on('all', testemReporter);
 
   testSuite.on('all', reporter);
 

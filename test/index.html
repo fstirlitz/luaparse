@@ -6,9 +6,9 @@
 </head>
 <body>
   <div id="suite"></div>
-  <script src="/testem.js"></script>
   <script src="lib/spec.js"></script>
   <script src="lib/newton.js"></script>
+  <script src="lib/spec_adapter.js"></script>
 
   <!-- Library -->
   <script>
@@ -18,67 +18,69 @@
         return;
       }
       parameters = Newton.parseQuery(this.location.search);
+      if (this.location.hash === '#testem') {
+        this.document.write('<script src="/testem.js"><\/script>');
+      }
       if (Spec.hasKey(parameters, 'amd')) {
-        // Load RequireJS or `curl.js`. `document.write` is used because older
-        // versions of Safari and Chrome do not support DOM script injection.
-        this.curl = { 'apiName': 'require' };
-        this.document.write('<script src="lib/vendor/' + (parameters.amd == 'require' ? 'require' : 'curl') + '.js"><\/script>');
+        this.document.write('<script src="../components/requirejs/require.js"><\/script>');
       }
     }).call(this);
   </script>
   <script>
-    var luaparse
-      , testSuite = {};
-    (function () {
+    var testSuite = {};
+    (function (root) {
       var specs = [
-          'assignments'
-        , 'comments'
-        , 'conditional'
-        , 'do'
-        , 'escapesequences'
-        , 'expressions'
-        , 'for'
-        , 'functioncalls'
-        , 'functions'
-        , 'literals'
-        , 'local'
-        , 'operators'
-        , 'repeat'
-        , 'return'
-        , 'scope'
-        , 'statements'
-        , 'tableconstructors'
-        , 'while'
-      ];
+            'spec/assignments'
+          , 'spec/comments'
+          , 'spec/conditional'
+          , 'spec/do'
+          , 'spec/escapesequences'
+          , 'spec/expressions'
+          , 'spec/for'
+          , 'spec/functioncalls'
+          , 'spec/functions'
+          , 'spec/literals'
+          , 'spec/local'
+          , 'spec/operators'
+          , 'spec/repeat'
+          , 'spec/return'
+          , 'spec/scope'
+          , 'spec/statements'
+          , 'spec/tableconstructors'
+          , 'spec/while'
+        ];
+
       if (typeof require == 'function' && typeof define == 'function') {
         require({
-          // RequireJS accepts relative paths in the module name; `curl.js` does
-          // not. Both accept a `paths` map of module paths to relative paths.
-          'paths': { 'luaparse': '../luaparse' },
-          // Thwart aggressive resource caching. RequireJS only.
+          // Thwart aggressive resource caching.
           'urlArgs': 'async=' + (+new Date())
-        }, ['luaparse', 'runner'].concat(specs), function (Spec, testSuite) {
-          // Test asynchronous module loading via RequireJS/`curl.js`.
-          testSuite.addTest('Asynchronous Module Definition', function (test) {
-            setTimeout(function () {
-              test.equal(luaparse.version, '0.1.11', 'Luaparse should be exported as an asynchronous module').done(1);
-            }, 1500);
+        }, ['../luaparse'].concat(specs), function (luaparse) {
+          // Remember whether luaparse exposed a global.
+          var notExposed = typeof root.luaparse === 'undefined';
+          // The runner relies on the global.
+          root.luaparse = luaparse;
+
+          require(['runner'], function(testSuite) {
+            testSuite.addTest('Asynchronous Module Definition', function (test) {
+              setTimeout(function () {
+                test.equal(typeof luaparse.parse, 'function', 'Luaparse should be exported as an asynchronous module').done(2);
+              }, 1500);
+              test.ok(notExposed, 'Luaparse should not expose itself as a global when loaded as a module');
+            });
+            testSuite.run();
           });
-          testSuite.run();
         });
       } else {
-        this.document.write('<script src="../luaparse.js"><\/script>');
-
+        root.document.write('<script src="../luaparse.js"><\/script>');
         Spec.forEach(specs, function(spec) {
-          this.document.write('<script src="spec/' + spec + '.js"><\/script>');
+          root.document.write('<script src="' + spec + '.js"><\/script>');
         });
-        this.document.write('<script src="runner.js"><\/script>');
-        this.onload = function () {
-          // if (this.location.hash === '#testem') this.Testem.useCustomAdapter(this.specAdapter);
+        root.document.write('<script src="runner.js"><\/script>');
+        root.onload = function () {
           luaparse.testSuite.run();
         };
       }
-    }());
+    }(this));
   </script>
 </body>
 </html>
