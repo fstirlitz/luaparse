@@ -4,9 +4,24 @@
   "main": "./luaparse.js",
   "dependencies": {},
   "ignore": [
-    "**/.*",
+    "benchmarks",
+    "bin",
+    "components",
+    "dist",
+    "docs",
+    "examples",
+    "Gruntfile.js",
+    "index.js",
+    "Makefile",
     "node_modules",
+    "package.json",
     "scripts",
-    "benchmarks"
-  ]
+    "test",
+    "testem.yml",
+    ".*"
+  ],
+  "devDependencies": {
+    "requirejs": "~2.1.5",
+    "curl": "~0.7.3"
+  }
 }

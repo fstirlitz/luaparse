@@ -2,7 +2,7 @@ node_modules
 docs/*
 !docs/*.md
 !docs/layout/
-lib-cov
-html-report
 dist
 logs
+components
+npm-debug.log

@@ -54,6 +54,8 @@ module.exports = function (grunt) {
         options: { node: true },
         src: [
           'package.json',
+          'bower.json',
+          '.bowerrc',
           'Gruntfile.js',
           'scripts/make-test',
           'scripts/pre-commit',
