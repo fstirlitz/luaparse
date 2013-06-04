@@ -226,9 +226,7 @@
     }
   };
 
-  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-    define(function() { return tests; });
-  } else if (freeExports && !freeExports.nodeType) {
+  if (freeExports && !freeExports.nodeType) {
     if (freeModule) freeModule.exports = tests; // In Node.js or Ringo v0.8.0+
     else { // In Narwhal or RingoJS v0.7.0-
       for (var test in tests) if (tests.hasOwnProperty(test)) {
