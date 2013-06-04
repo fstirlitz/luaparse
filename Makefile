@@ -12,7 +12,7 @@ checkout: clean-old
 	@$(MAKE) -s -C luaparse install docs
 	@mv luaparse/docs/* .
 	@mv luaparse/examples .
-	@mv luaparse/lib .
+	@mv luaparse/luaparse.js .
 	@mv luaparse/benchmarks .
 	@cp -rf luaparse/test .
 
