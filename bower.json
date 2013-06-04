@@ -1,6 +1,6 @@
 {
   "name": "luaparse",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "./luaparse.js",
   "dependencies": {},
   "ignore": [
