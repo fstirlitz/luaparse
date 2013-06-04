@@ -37,14 +37,14 @@ version-bump:
 # Tests
 # -----
 
-test:
+test-node:
 	@node test/runner.js --console
 
-testem:
-	@testem
+test:
+	@$(LIB)/testem/testem.js ci
 
 testem-engines:
-	@testem -l PhantomJS,node,narwhal,ringo,rhino,rhino1.7R5
+	@$(LIB)/testem/testem.js -l PhantomJS,node,narwhal,ringo,rhino,rhino1.7R5
 
 # Scaffold all test files in the scaffolding dir.
 scaffold-tests:
