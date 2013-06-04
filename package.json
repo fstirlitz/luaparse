@@ -53,6 +53,7 @@
     "istanbul": "~0.1.27",
     "esprima": "~1.0.2",
     "falafel": "~0.2.0",
-    "spec": "git://github.com/oxyc/spec.git#22af8f07"
+    "spec": "git://github.com/kitcambridge/spec.git#gh-pages",
+    "testem": "~0.2.96"
   }
 }

@@ -1,4 +1,4 @@
-test_page: test/index.html?amd=require
+test_page: test/index.html
 
 launchers:
   node:
