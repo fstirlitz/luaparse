@@ -9,7 +9,7 @@
     "escapesequences": {
       "a = \"bar\nbaz\"": "[1:10] unfinished string near 'bar\n'",
       "a = \"bar\rbaz\"": "[1:10] unfinished string near 'bar\r'",
-      "a = \"bar\\\n\\\r\\\t\tbaz\"": {
+      "a = \"bar\\n\\r\\t\tbaz\"": {
         "type": "Chunk",
         "body": [
           {
@@ -25,7 +25,7 @@
               {
                 "type": "StringLiteral",
                 "value": "bar\n\r\t\tbaz",
-                "raw": "\"bar\\\n\\\r\\\t\tbaz\""
+                "raw": "\"bar\\n\\r\\t\tbaz\""
               }
             ]
           }
@@ -69,7 +69,7 @@
           }
         ]
       },
-      "a = \"bar\\\\z    baz\"": {
+      "a = \"bar\\z    baz\"": {
         "type": "Chunk",
         "body": [
           {
@@ -84,8 +84,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "bar\\z    baz",
-                "raw": "\"bar\\\\z    baz\""
+                "value": "barbaz",
+                "raw": "\"bar\\z    baz\""
               }
             ]
           }
@@ -99,37 +99,7 @@
           }
         ]
       },
-      "a = \"bar\\\f\\\u000b\\\\bbaz\"": {
-        "type": "Chunk",
-        "body": [
-          {
-            "type": "AssignmentStatement",
-            "variables": [
-              {
-                "type": "Identifier",
-                "name": "a",
-                "isLocal": false
-              }
-            ],
-            "init": [
-              {
-                "type": "StringLiteral",
-                "value": "bar\f\u000b\\bbaz",
-                "raw": "\"bar\\\f\\\u000b\\\\bbaz\""
-              }
-            ]
-          }
-        ],
-        "comments": [],
-        "globals": [
-          {
-            "type": "Identifier",
-            "name": "a",
-            "isLocal": false
-          }
-        ]
-      },
-      "a = \"bar\f\u000b\\bbaz\"": {
+      "a = \"bar\\f\\v\\bbaz\"": {
         "type": "Chunk",
         "body": [
           {
@@ -145,7 +115,37 @@
               {
                 "type": "StringLiteral",
                 "value": "bar\f\u000b\bbaz",
-                "raw": "\"bar\f\u000b\\bbaz\""
+                "raw": "\"bar\\f\\v\\bbaz\""
+              }
+            ]
+          }
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "isLocal": false
+          }
+        ]
+      },
+      "a = \"bar\f\u000b\bbaz\"": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "bar\f\u000b\bbaz",
+                "raw": "\"bar\f\u000b\bbaz\""
               }
             ]
           }
@@ -309,7 +309,7 @@
           }
         ]
       },
-      "a = '[[bar\f\u000b\\bbaz]]'": {
+      "a = [[bar\\f\\v\\bbaz]]": {
         "type": "Chunk",
         "body": [
           {
@@ -324,8 +324,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "[[bar\f\u000b\bbaz]]",
-                "raw": "'[[bar\f\u000b\\bbaz]]'"
+                "value": "bar\\f\\v\\bbaz",
+                "raw": "[[bar\\f\\v\\bbaz]]"
               }
             ]
           }
@@ -339,7 +339,7 @@
           }
         ]
       },
-      "a = '[[\\]'": {
+      "a = [[\\]]": {
         "type": "Chunk",
         "body": [
           {
@@ -354,8 +354,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "[[]",
-                "raw": "'[[\\]'"
+                "value": "\\",
+                "raw": "[[\\]]"
               }
             ]
           }
