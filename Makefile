@@ -21,4 +21,4 @@ clean-old:
 
 clean:
 	@rm -f *.md
-	@rm -rf layout luaparse
+	@rm -rf layout luaparse public
