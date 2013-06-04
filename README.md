@@ -87,7 +87,7 @@ luaparse.parse('i = 0');
 
 ## Support
 
-Has been tested in IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+, Node
+Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+, Node 0.4.0+, RingoJS 0.8, Narwhal 0.2.2, Rhino 1.7R4-1.7R5.
 
 ## Acknowledgements
 
