@@ -444,7 +444,7 @@
   // containing its value and as well as its position in the input string (this
   // is always enabled to provide proper debug messages).
   //
-  // `readToken()` starts lexing and returns the following token in the stream.
+  // `lex()` starts lexing and returns the following token in the stream.
 
   var index
     , token
@@ -454,7 +454,9 @@
     , line
     , lineStart;
 
-  function readToken() {
+  exports.lex = lex;
+
+  function lex() {
     skipWhiteSpace();
 
     // Skip comments beginning with --
@@ -912,7 +914,7 @@
 
   function next() {
     token = lookahead;
-    lookahead = readToken();
+    lookahead = lex();
   }
 
   // Consume a token if its value matches. Once consumed or not, return the
@@ -1813,16 +1815,13 @@
 
     length = input.length;
     // Initialize with a lookahead token.
-    lookahead = readToken();
+    lookahead = lex();
 
     var chunk = parseChunk();
     if (options.comments) chunk.comments = comments;
     if (options.scope) chunk.globals = globals;
     return chunk;
   }
-
-  // Expose the lex function
-  exports.lex = readToken;
 
 }));
 /* vim: set sw=2 ts=2 et tw=79 : */
