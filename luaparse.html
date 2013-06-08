@@ -637,7 +637,7 @@ they will simply be disregarded.</p>
 <p>When the lexer has derived a valid token, it will be returned as an object
 containing its value and as well as its position in the input string (this
 is always enabled to provide proper debug messages).</p>
-<p><code>readToken()</code> starts lexing and returns the following token in the stream.</p>
+<p><code>lex()</code> starts lexing and returns the following token in the stream.</p>
 
             </div>
             
@@ -649,7 +649,9 @@ is always enabled to provide proper debug messages).</p>
     , line
     , lineStart;
 
-  <span class="function"><span class="keyword">function</span> <span class="title">readToken</span><span class="params">()</span> {</span>
+  exports.lex = lex;
+
+  <span class="function"><span class="keyword">function</span> <span class="title">lex</span><span class="params">()</span> {</span>
     skipWhiteSpace();</pre></div></div>
             
         </li>
@@ -1719,7 +1721,7 @@ reading in the new lookahead token.</p>
             
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">next</span><span class="params">()</span> {</span>
     token = lookahead;
-    lookahead = readToken();
+    lookahead = lex();
   }</pre></div></div>
             
         </li>
@@ -3627,28 +3629,13 @@ parser.parse(&#39;i = 0&#39;);</code></pre>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    lookahead = readToken();
+            <div class="content"><div class='highlight'><pre>    lookahead = lex();
 
     <span class="keyword">var</span> chunk = parseChunk();
     <span class="keyword">if</span> (options.comments) chunk.comments = comments;
     <span class="keyword">if</span> (options.scope) chunk.globals = globals;
     <span class="keyword">return</span> chunk;
-  }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-156">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-156">&#182;</a>
-              </div>
-              <p>Expose the lex function</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  exports.lex = readToken;
+  }
 
 }));
 <span class="comment">/* vim: set sw=2 ts=2 et tw=79 : */</span></pre></div></div>

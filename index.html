@@ -14,6 +14,7 @@
       .hero-unit .nav-pills a:hover {
         text-decoration: underline;
       }
+      h2, h3, h4 { margin-top: 1em; }
     </style>
   </head>
   <body>
@@ -28,12 +29,11 @@
             <div class="btn-group">
               <a class="btn" href="https://github.com/oxyc/luaparse">GitHub</a>
               <a class="btn" href="luaparse.html">Annotated source</a>
-              <a class="btn" href="tests.html">Test docs</a>
+              <a class="btn" href="test/index.html">Tests</a>
             </div>
             <ul class="nav nav-pills">
               <li><a href="index.html">Home</a></li>
               <li><a href="coverage.html">Coverage</a></li>
-              <li><a href="test/index.html">Tests</a></li>
               <li><a href="examples.html">Examples</a></li>
             </ul>
           </div>
@@ -44,60 +44,116 @@
 <h1>luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.png" alt="Build Status"></a></h1>
 <p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.</p>
 <p><em>Still in development</em></p>
-<h2>Getting started</h2>
+<h2>Installation</h2>
+<p>Install through <code>bower install luaparse</code> or <code>npm install luaparse</code>.</p>
+<h2>Usage</h2>
 <p>CommonJS</p>
-<pre><code class="lang-javascript">var parser = require(&#39;luaparse&#39;);
-parser.parse(&#39;i = 0&#39;);</code></pre>
+<pre><code class="lang-js">var parser = require(&#39;luaparse&#39;);
+var ast = parser.parse(&#39;i = 0&#39;);
+console.log(JSON.stringify(ast));</code></pre>
 <p>AMD</p>
-<pre><code class="lang-javascript">require([&#39;luaparse&#39;], function(parser) {
-  parser.parse(&#39;i = 0&#39;);
+<pre><code class="lang-js">require([&#39;luaparse&#39;], function(parser) {
+  var ast = parser.parse(&#39;i = 0&#39;);
+  console.log(JSON.stringify(ast));
 });</code></pre>
 <p>Browser</p>
-<pre><code class="lang-javascript">luaparse.parse(&#39;i = 0&#39;);</code></pre>
-<h2>Makefile</h2>
-<h3>Common</h3>
-<pre><code># Run the tests
-make test
+<pre><code class="lang-html">&lt;script src=&quot;luaparse.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var ast = luaparse.parse(&#39;i = 0&#39;);
+console.log(JSON.stringify(ast));
+&lt;/script&gt;</code></pre>
+<h2>Parser Interface</h2>
+<p>Basic usage:</p>
+<pre><code class="lang-js">luaparse.parse(code, options);</code></pre>
+<p>The output of the parser is an Abstract Syntax Tree (AST) formatted in JSON.</p>
+<p>The available options are:</p>
+<ul>
+<li><code>wait: false</code> Explicitly tell the parser when the input ends.</li>
+<li><code>comments: true</code> Store comments as an array in the chunk object.</li>
+<li><code>scope: false</code> Track identifier scopes.</li>
+</ul>
+<p>The default options are also exposed through <code>luaparse.defaultOptions</code> where
+they can be overriden globally.</p>
+<p>There is a second interface which might be preferable when using the <code>wait</code>
+option.</p>
+<pre><code class="lang-js">var parser = luaparse.parse({ wait: true });
+parser.write(&#39;foo = &quot;&#39;);
+parser.write(&#39;bar&#39;);
+var ast = parser.end(&#39;&quot;&#39;);</code></pre>
+<p>This would be identical to:</p>
+<pre><code class="lang-js">var ast = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
+<h3>AST format</h3>
+<p>If the following code is executed:</p>
+<pre><code class="lang-js">luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
+<p>then the returned value will be:</p>
+<pre><code class="lang-js">{
+  &quot;type&quot;: &quot;Chunk&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;AssignmentStatement&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;type&quot;: &quot;Identifier&quot;,
+          &quot;name&quot;: &quot;foo&quot;
+        }
+      ],
+      &quot;init&quot;: [
+        {
+          &quot;type&quot;: &quot;StringLiteral&quot;,
+          &quot;value&quot;: &quot;bar&quot;,
+          &quot;raw&quot;: &quot;\&quot;bar\&quot;&quot;
+        }
+      ]
+    }
+  ],
+  &quot;comments&quot;: []
+}</code></pre>
+<h3>Custom AST</h3>
+<p>The default AST structure is somewhat inspired by the Mozilla Parser API but
+can easily be overriden to customize the structure or to inject custom logic.</p>
+<p><code>luaparse.ast</code> is an object containing all functions used to create the AST, if
+you for example wanted to trigger an event on node creations you could use the
+following:</p>
+<pre><code class="lang-js">var luaparse = require(&#39;luaparse&#39;),
+  events = new (require(&#39;events&#39;).EventEmitter);
 
-# Create the documentation
-make docs
+Object.keys(luaparse.ast).forEach(function(type) {
+  var original = luaparse.ast[type];
+  luaparse.ast[type] = function() {
+    var node = original.apply(null, arguments);
+    events.emit(node.type, node);
+    return node;
+  };
+});
+events.on(&#39;Identifier&#39;, function(node) { console.log(node); });
+luaparse.parse(&#39;i = &quot;foo&quot;&#39;);</code></pre>
+<h2>Examples</h2>
+<p>Have a look in the <a href="https://github.com/oxyc/luaparse/tree/master/examples">examples directory</a>
+of the repository for some code examples or check them out <a href="http://oxyc.github.io/luaparse/examples.html">live</a>.</p>
+<h2>luaparse(1)</h2>
+<p>The <code>luaparse</code> exectuable can be used in your shell by installing <code>luaparse</code> globally using npm:</p>
+<pre><code class="lang-bash">$ npm install -g luaparse
+$ luaparse --help
 
-# Build a distribution file
-make build</code></pre>
-<h3>Development</h3>
-<pre><code># Install necessary development packages
-make install
+Usage: luaparse [option]... [file|code]...
 
-# Update mocha, expect.js and benchmark scripts.
-make update
+Options:
+  -c|--code [code]    parse code snippet
+  -f|--file [file]    parse from file
+  -b|--beautify       output an indented AST
+  --[no]-comments     ignore comments. defaults to false
+  --[no]-scope        ignore variable scope. defaults to true
+  -q|--quiet          suppress output
+  -h|--help
+  -v|--version
 
-# Version bump
-make VERSION=0.1.1 version-bump
+Examples:
+  luaparse --no-comments -c &quot;locale foo = \&quot;bar\&quot;
+  luaparse foo.lua</code></pre>
+<p>Example usage</p>
+<pre><code class="lang-bash">$ luaparse &quot;i = 0&quot;
 
-# Scaffold the test files, useful if something has changed in the AST.
-make scaffold-tests
-
-# Before contributing any code check quality assurance.
-make qa
-
-# Check complexity
-make complexity-analysis
-
-# Check coverage
-make coverage-analysis
-
-# Lint code
-make lint</code></pre>
-<h3>Benchmark</h3>
-<pre><code># Run simple benchmark
-make benchmark
-
-# Profile v8 internals (Expects /opt/v8/tools/linux-tick-processor)
-# Alternatively you can specify the tick-processor path using a PROCESSOR variable.
-make profile
-
-# Compare current current commit to previous
-make benchmark-previous</code></pre>
+{&quot;type&quot;:&quot;Chunk&quot;,&quot;body&quot;:[{&quot;type&quot;:&quot;AssignmentStatement&quot;,&quot;variables&quot;:[{&quot;type&quot;:&quot;Identifier&quot;,&quot;name&quot;:&quot;i&quot;}],&quot;init&quot;:[{&quot;type&quot;:&quot;NumericLiteral&quot;,&quot;value&quot;:0,&quot;raw&quot;:&quot;0&quot;}]}],&quot;comments&quot;:[]}</code></pre>
 <h2>Todo</h2>
 <h4>0.1.0</h4>
 <ul>
@@ -105,7 +161,45 @@ make benchmark-previous</code></pre>
 <li>Location tracking</li>
 </ul>
 <h2>Support</h2>
-<p>Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+, Node 0.4.0+, RingoJS 0.8, Narwhal 0.2.2, Rhino 1.7R4-1.7R5.</p>
+<p>Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+,
+Node 0.4.0+, RingoJS 0.8, Narwhal 0.2.2, Rhino 1.7R4-1.7R5.</p>
+<h2>Quality Assurance</h2>
+<p><em>TL;DR simply run <code>make qa</code>. This will run all quality assurance scripts but
+assumes you have it set up correctly.</em></p>
+<p>Begin by cloning the repository and installing the development dependencies
+with <code>npm install</code>. To test AMD loading for browsers you should run <code>bower
+install</code> which will download RequireJS.</p>
+<p>The luaparse test suite uses <a href="https://github.com/airportyh/testem">testem</a> as a
+test runner, and because of this it&#39;s very easy to run the tests using
+different javascript engines or even on locally installed browsers. Currently
+the default runner uses <a href="http://phantomjs.org/">PhantomJS</a> and node so when
+using <code>make test</code> or <code>npm test</code> you should have PhantomJS installed.</p>
+<h3>Test runners</h3>
+<ul>
+<li><code>make test</code> uses PhantomJS and node.</li>
+<li><code>make testem-engines</code> uses PhantomJS, node, narwhal, ringo, rhino and rhino
+1.7R5. This requires that you have the engines installed.</li>
+<li><code>make test-node</code> uses a custom command line reporter to make the output
+easier on the eyes while practicing TDD.</li>
+<li>By installing <code>testem</code> globally you can also run the tests in a locally
+installed browser.</li>
+</ul>
+<h3>Other quality assurance measures</h3>
+<ul>
+<li>You can check the function complexity using <a href="https://github.com/philbooth/complexityReport.js">complexity-report</a>
+using <code>make complexity-analysis</code></li>
+<li>Running <code>make coverage</code> will generate the <a href="http://oxyc.github.io/luaparse/coverage.html">coverage report</a>.
+To simply check that all code has coverage you can run <code>make coverage-analysis</code>.</li>
+<li><code>make lint</code>, <code>make benchmark</code>, <code>make profile</code>.</li>
+</ul>
+<h3>Documentation</h3>
+<p>By running <code>make docs</code> all <a href="http://oxyc.github.io/luaparse/">documentation</a>
+will be generated.</p>
+<h2>Projects using luaparse</h2>
+<ul>
+<li><a href="http://mths.be/luamin">luamin</a>, a lua minifier written by Mathias Bynens.</li>
+<li><a href="https://github.com/ajaxorg/ace">Ace</a>, an online code editor.</li>
+</ul>
 <h2>Acknowledgements</h2>
 <ul>
 <li>Initial tests are scaffolded from <a href="http://yueliang.luaforge.net/">yueliang</a> and then manually checked for error.</li>

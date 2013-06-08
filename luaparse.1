@@ -1,0 +1,76 @@
+.TH luaparse "1" "June 7, 2013" "" "luaparse manual"
+.SH NAME
+
+luaparse - Lua parser
+.SH SYNOPSIS
+
+.B luaparse
+[-v|--version] [-h|--help] [-b|--beautify] [-q|--quiet]
+.RS
+[--[no]-comments] [--[no]-scope]
+.br
+[-c|--code
+.I snippet
+]
+.br
+[-f|--file
+.I script.lua
+]
+.br
+[
+.I code
+] [
+.I snippet
+]
+.RE
+.SH DESCRIPTION
+
+.B
+luaparse
+is a parser producing JSON formatted Abstract Syntax Tree representations
+.br
+of Lua programs.
+.SH OPTIONS
+.B
+.IP "-v, --version"
+print luaparse's version
+.IP "-h, --help"
+prints usage instructions
+.B
+.IP "-c, --code [code]"
+parse Lua program from code snippet provided as an argument
+.B
+.IP "-f, --file [file.lua]"
+parse Lua program from file
+.B
+.IP "-b, --beautify"
+output an indented AST
+.B
+.IP "--[no]-comments"
+ignore comments while parsing. defaults to false
+.B
+.IP "--[no]-scope"
+ignore variable scope tracking while parsing. defaults to true
+.B
+.IP "-q, --quiet"
+suppress output
+.SH EXAMPLES
+
+.B
+.IP "luaparse 'i = 2^2^3^4' 'i = 2^(2^(3^4))'"
+Output the AST of both code snippets separated by a newline.
+.B
+.IP "luaparse foo.lua"
+Output the AST of the Lua code in the file.
+.B
+.IP "luaparse --scope -b -c 'locale foo = 1'"
+Output the indented AST of the code snippet and track variable scopes.
+.SH BUGS
+
+luaparse's bug tracker is located at <https://github.com/oxyc/luaparse/issues>
+.SH DOCUMENTATION
+
+See the website for documentation <http://oxyc.github.io/luaparse/>
+.SH AUTHOR
+
+Oskar Schöldström <http://www.oxy.fi/>

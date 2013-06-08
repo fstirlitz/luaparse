@@ -14,6 +14,7 @@
       .hero-unit .nav-pills a:hover {
         text-decoration: underline;
       }
+      h2, h3, h4 { margin-top: 1em; }
     </style>
   </head>
   <body>
@@ -28,12 +29,11 @@
             <div class="btn-group">
               <a class="btn" href="https://github.com/oxyc/luaparse">GitHub</a>
               <a class="btn" href="luaparse.html">Annotated source</a>
-              <a class="btn" href="tests.html">Test docs</a>
+              <a class="btn" href="test/index.html">Tests</a>
             </div>
             <ul class="nav nav-pills">
               <li><a href="index.html">Home</a></li>
               <li><a href="coverage.html">Coverage</a></li>
-              <li><a href="test/index.html">Tests</a></li>
               <li><a href="examples.html">Examples</a></li>
             </ul>
           </div>
@@ -41,1225 +41,618 @@
       </div>
     </div>
     <div class="container">
-# Launching PhantomJS
-# ............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
-TAP version 13
-ok 1 - PhantomJS repeat
-ok 2 - PhantomJS repeat until
-ok 3 - PhantomJS repeat until 0
-ok 4 - PhantomJS repeat until false
-ok 5 - PhantomJS repeat until local
-ok 6 - PhantomJS repeat end
-ok 7 - PhantomJS repeat 1
-ok 8 - PhantomJS repeat =
-ok 9 - PhantomJS repeat local a until 1
-ok 10 - PhantomJS repeat local a local b until 0
-ok 11 - PhantomJS repeat local a; local b; until 0
-ok 12 - PhantomJS repeat 2 until 1
-ok 13 - PhantomJS repeat "foo" until 1
-ok 14 - PhantomJS repeat return until 0
-ok 15 - PhantomJS repeat return return until 0
-ok 16 - PhantomJS repeat break until 0
-ok 17 - PhantomJS repeat do end until 0
-ok 18 - PhantomJS repeat do return end until 0
-ok 19 - PhantomJS repeat do break end until 0
-ok 20 - PhantomJS do
-ok 21 - PhantomJS end
-ok 22 - PhantomJS do end
-ok 23 - PhantomJS do 1 end
-ok 24 - PhantomJS do "foo" end
-ok 25 - PhantomJS do local a, b end
-ok 26 - PhantomJS do local a local b end
-ok 27 - PhantomJS do local a; local b; end
-ok 28 - PhantomJS do local a = 1 end
-ok 29 - PhantomJS do do end end
-ok 30 - PhantomJS do do end; end
-ok 31 - PhantomJS do do do end end end
-ok 32 - PhantomJS do do do end; end; end
-ok 33 - PhantomJS do do do return end end end
-ok 34 - PhantomJS do end do
-ok 35 - PhantomJS do end end
-ok 36 - PhantomJS do return end
-ok 37 - PhantomJS do return return end
-ok 38 - PhantomJS a = "bar\nbaz"
-ok 39 - PhantomJS a = "bar\rbaz"
-ok 40 - PhantomJS a = "bar\n\r\t\tbaz"
-ok 41 - PhantomJS a = "bar\80baz\800\0foo"
-ok 42 - PhantomJS a = "bar\z    baz"
-ok 43 - PhantomJS a = "bar\f\v\bbaz"
-ok 44 - PhantomJS a = "bar\f\vbaz"
-ok 45 - PhantomJS a = '\\'
-ok 46 - PhantomJS a = '\''
-ok 47 - PhantomJS a = '\123'
-ok 48 - PhantomJS a = '\x23'
-ok 49 - PhantomJS a = '\xx'
-ok 50 - PhantomJS a = [[bar\f\v\bbaz]]
-ok 51 - PhantomJS a = [[\]]
-ok 52 - PhantomJS luaparse is an object
-ok 53 - PhantomJS luaparse.parse() is a function
-ok 54 - PhantomJS luaparse.write() is a function
-ok 55 - PhantomJS luaparse.end() is a function
-ok 56 - PhantomJS should ignore comments if told to
-ok 57 - PhantomJS should produce empty tree on empty input
-ok 58 - PhantomJS should support waiting on input
-ok 59 - PhantomJS should not scope by default
-ok 60 - PhantomJS if
-ok 61 - PhantomJS elseif
-ok 62 - PhantomJS else
-ok 63 - PhantomJS then
-ok 64 - PhantomJS if then
-ok 65 - PhantomJS if 1
-ok 66 - PhantomJS if 1 then
-ok 67 - PhantomJS if 1 else
-ok 68 - PhantomJS if 1 then else
-ok 69 - PhantomJS if 1 then elseif
-ok 70 - PhantomJS if 1 then end
-ok 71 - PhantomJS if 1 then local a end
-ok 72 - PhantomJS if 1 then local a local b end
-ok 73 - PhantomJS if 1 then local a; local b; end
-ok 74 - PhantomJS if 1 then else end
-ok 75 - PhantomJS if 1 then local a else local b end
-ok 76 - PhantomJS if 1 then local a; else local b; end
-ok 77 - PhantomJS if 1 then elseif 2
-ok 78 - PhantomJS if 1 then elseif 2 then
-ok 79 - PhantomJS if 1 then elseif 2 then end
-ok 80 - PhantomJS if 1 then local a elseif 2 then local b end
-ok 81 - PhantomJS if 1 then local a; elseif 2 then local b; end
-ok 82 - PhantomJS if 1 then elseif 2 then else end
-ok 83 - PhantomJS if 1 then else if 2 then end end
-ok 84 - PhantomJS if 1 then else if 2 then end
-ok 85 - PhantomJS if 1 then return end
-ok 86 - PhantomJS if 1 then return return end
-ok 87 - PhantomJS if 1 then end; if 1 then end;
-ok 88 - PhantomJS if then end
-ok 89 - PhantomJS if 1 then elseif then end
-ok 90 - PhantomJS break
-ok 91 - PhantomJS ::foo
-ok 92 - PhantomJS ::foo::
-ok 93 - PhantomJS goto
-ok 94 - PhantomJS goto foo
-ok 95 - PhantomJS nil
-ok 96 - PhantomJS return return
-ok 97 - PhantomJS return 1
-ok 98 - PhantomJS return local
-ok 99 - PhantomJS return "foo"
-ok 100 - PhantomJS return 1,
-ok 101 - PhantomJS return 1,2,3
-ok 102 - PhantomJS return a,b,c,d
-ok 103 - PhantomJS return 1,2;
-ok 104 - PhantomJS a
-ok 105 - PhantomJS a,
-ok 106 - PhantomJS a,b,c
-ok 107 - PhantomJS a,b =
-ok 108 - PhantomJS a = 1
-ok 109 - PhantomJS a = 1,2,3
-ok 110 - PhantomJS a,b,c = 1
-ok 111 - PhantomJS a,b,c = 1,2,3
-ok 112 - PhantomJS a.b = 1
-ok 113 - PhantomJS a.b.c = 1
-ok 114 - PhantomJS a[b] = 1
-ok 115 - PhantomJS a[b][c] = 1
-ok 116 - PhantomJS a.b[c] = 1
-ok 117 - PhantomJS a[b].c = 1
-ok 118 - PhantomJS a[b], a[c] = 1
-ok 119 - PhantomJS 0 =
-ok 120 - PhantomJS "foo" =
-ok 121 - PhantomJS true =
-ok 122 - PhantomJS (a) =
-ok 123 - PhantomJS {} =
-ok 124 - PhantomJS a:b() =
-ok 125 - PhantomJS a() =
-ok 126 - PhantomJS a.b:c() =
-ok 127 - PhantomJS a[b]() =
-ok 128 - PhantomJS a = a b
-ok 129 - PhantomJS a = 1 2
-ok 130 - PhantomJS a = a = 1
-ok 131 - PhantomJS local foo = 1 do foo = 2 end
-ok 132 - PhantomJS do local foo = 1 end foo = 2
-ok 133 - PhantomJS do local foo = 1 end do foo = 2 end
-ok 134 - PhantomJS local foo do foo = 1 do foo = 2 end end
-ok 135 - PhantomJS local function foo() end foo()
-ok 136 - PhantomJS local a = { a }
-ok 137 - PhantomJS local b = { b, b.a, b[a], b:a() }
-ok 138 - PhantomJS local b = {} local a = { b, b.a, b[a], b:a() }
-ok 139 - PhantomJS local c local a = { b[c] }
-ok 140 - PhantomJS local a = function() end a()
-ok 141 - PhantomJS local a, b = 1, a
-ok 142 - PhantomJS local a, b = 1, function() b = 2 end
-ok 143 - PhantomJS local a (a):b():c()
-ok 144 - PhantomJS local a, b for i, a, b in c do end
-ok 145 - PhantomJS local a, b, c for i, a, b in c do end
-ok 146 - PhantomJS -- comment
-ok 147 - PhantomJS -- comment\n-- comment
-ok 148 - PhantomJS --coment
-ok 149 - PhantomJS -- comment\nbreak
-ok 150 - PhantomJS break--comment
-ok 151 - PhantomJS --[[comment]]
-ok 152 - PhantomJS if true--[[comment]]then end
-ok 153 - PhantomJS --[=[comment]=]break
-ok 154 - PhantomJS --[===[comment\n--[=[sub]=]--\n]===]break
-ok 155 - PhantomJS --[[comment\nline two]]
-ok 156 - PhantomJS --[[\ncomment\nline two\n]]
-ok 157 - PhantomJS --[==\nbreak --]]
-ok 158 - PhantomJS if true -- comment\nthen end
-ok 159 - PhantomJS for
-ok 160 - PhantomJS for do
-ok 161 - PhantomJS for end
-ok 162 - PhantomJS for 1
-ok 163 - PhantomJS for a
-ok 164 - PhantomJS for true
-ok 165 - PhantomJS for a, in
-ok 166 - PhantomJS for a in
-ok 167 - PhantomJS for a do
-ok 168 - PhantomJS for a in do
-ok 169 - PhantomJS for a in b do
-ok 170 - PhantomJS for a in b end
-ok 171 - PhantomJS for a in b, do
-ok 172 - PhantomJS for a in b do end
-ok 173 - PhantomJS for a in b do local a local b end
-ok 174 - PhantomJS for a in b do local a; local b; end
-ok 175 - PhantomJS for a in b do 1 end
-ok 176 - PhantomJS for a in b do "foo" end
-ok 177 - PhantomJS for a b in
-ok 178 - PhantomJS for a, b, c in p do end
-ok 179 - PhantomJS for a, b, c in p, q, r do end
-ok 180 - PhantomJS for a in 1 do end
-ok 181 - PhantomJS for a in true do end
-ok 182 - PhantomJS for a in "foo" do end
-ok 183 - PhantomJS for a in b do break end
-ok 184 - PhantomJS for a in b do return end
-ok 185 - PhantomJS for a in b do return return end
-ok 186 - PhantomJS for a in b do do end end
-ok 187 - PhantomJS for a in b do do break end end
-ok 188 - PhantomJS for a in b do do return end end
-ok 189 - PhantomJS for =
-ok 190 - PhantomJS for a =
-ok 191 - PhantomJS for a, b =
-ok 192 - PhantomJS for a = do
-ok 193 - PhantomJS for a = 1, do
-ok 194 - PhantomJS for a = p, q, do
-ok 195 - PhantomJS for a = p q do
-ok 196 - PhantomJS for a = b do end
-ok 197 - PhantomJS for a = 1, 2, 3, 4 do end
-ok 198 - PhantomJS for a = p, q do end
-ok 199 - PhantomJS for a = 1, 2 do end
-ok 200 - PhantomJS for a = 1, 2 do local a local b end
-ok 201 - PhantomJS for a = 1, 2 do local a; local b; end
-ok 202 - PhantomJS for a = 1, 2 do 3 end
-ok 203 - PhantomJS for a = 1, 2 do "foo" end
-ok 204 - PhantomJS for a = p, q, r do end
-ok 205 - PhantomJS for a = 1, 2, 3 do end
-ok 206 - PhantomJS for a = p, q do break end
-ok 207 - PhantomJS for a = 1, 2 do return end
-ok 208 - PhantomJS for a = 1, 2 do return return end
-ok 209 - PhantomJS for a = p, q do do end end
-ok 210 - PhantomJS for a = p, q do do break end end
-ok 211 - PhantomJS for a = p, q do do return end end
-ok 212 - PhantomJS a =
-ok 213 - PhantomJS a = [[foo]]
-ok 214 - PhantomJS a = {}
-ok 215 - PhantomJS a = (a)
-ok 216 - PhantomJS a = (nil)
-ok 217 - PhantomJS a = (true)
-ok 218 - PhantomJS a = (1)
-ok 219 - PhantomJS a = ("foo")
-ok 220 - PhantomJS a = ([[foo]])
-ok 221 - PhantomJS a = ({})
-ok 222 - PhantomJS a = a.b
-ok 223 - PhantomJS a = a.b.
-ok 224 - PhantomJS a = a.b.c
-ok 225 - PhantomJS a = a:b
-ok 226 - PhantomJS a = a[]
-ok 227 - PhantomJS a = a[b]
-ok 228 - PhantomJS a = a[1]
-ok 229 - PhantomJS a = a["foo"]
-ok 230 - PhantomJS a = a[b][c]
-ok 231 - PhantomJS a = a.b[c]
-ok 232 - PhantomJS a = a[b].c
-ok 233 - PhantomJS a = (a)[b]
-ok 234 - PhantomJS a = (a).c
-ok 235 - PhantomJS a = ()
-ok 236 - PhantomJS a = a()
-ok 237 - PhantomJS a = a.b()
-ok 238 - PhantomJS a = a[b]()
-ok 239 - PhantomJS a = a:b()
-ok 240 - PhantomJS a = (a)()
-ok 241 - PhantomJS a = (a).b()
-ok 242 - PhantomJS a = (a)[b]()
-ok 243 - PhantomJS a = (a):b()
-ok 244 - PhantomJS a = a"foo"
-ok 245 - PhantomJS a = a{}
-ok 246 - PhantomJS a = function
-ok 247 - PhantomJS a = function 1
-ok 248 - PhantomJS a = function a
-ok 249 - PhantomJS a = function end
-ok 250 - PhantomJS a = function(
-ok 251 - PhantomJS a = function() end
-ok 252 - PhantomJS a = function(1
-ok 253 - PhantomJS a = function(p) end
-ok 254 - PhantomJS a = function(p,)
-ok 255 - PhantomJS a = function(p q
-ok 256 - PhantomJS a = function(p,q,r) end
-ok 257 - PhantomJS a = function(p,q,1
-ok 258 - PhantomJS a = function(...) end
-ok 259 - PhantomJS a = function(...,
-ok 260 - PhantomJS a = function(p,...) end
-ok 261 - PhantomJS a = function(p,q,r,...) end
-ok 262 - PhantomJS a = {'-'}
-ok 263 - PhantomJS a = {'not'}
-ok 264 - PhantomJS a = {not true}
-ok 265 - PhantomJS a
-ok 266 - PhantomJS a = 1
-ok 267 - PhantomJS a = .1
-ok 268 - PhantomJS a = 1.1
-ok 269 - PhantomJS a = 10.1
-ok 270 - PhantomJS a = 1e
-ok 271 - PhantomJS a = 1e1
-ok 272 - PhantomJS a = 1E1
-ok 273 - PhantomJS a = 1e+9
-ok 274 - PhantomJS a = 1e-1
-ok 275 - PhantomJS a = 0x
-ok 276 - PhantomJS a = 0xf
-ok 277 - PhantomJS a = 0xf.
-ok 278 - PhantomJS a = 0xf.3
-ok 279 - PhantomJS a = 0xfp
-ok 280 - PhantomJS a = 0xfp1
-ok 281 - PhantomJS a = 0xfp+1
-ok 282 - PhantomJS a = 0xfp-1
-ok 283 - PhantomJS a = 0xFP+9
-ok 284 - PhantomJS a = 1 .. 3 .. -2
-ok 285 - PhantomJS a = 1 .. "bar"
-ok 286 - PhantomJS a = "bar
-ok 287 - PhantomJS a = 'bar'
-ok 288 - PhantomJS a = "bar"
-ok 289 - PhantomJS a = [=aa
-ok 290 - PhantomJS a = nil
-ok 291 - PhantomJS a = true
-ok 292 - PhantomJS a = false
-ok 293 - PhantomJS a = ...
-ok 294 - PhantomJS local
-ok 295 - PhantomJS local;
-ok 296 - PhantomJS local =
-ok 297 - PhantomJS local end
-ok 298 - PhantomJS local a
-ok 299 - PhantomJS local a;
-ok 300 - PhantomJS local a, b, c
-ok 301 - PhantomJS local a; local b local c;
-ok 302 - PhantomJS local a = 1
-ok 303 - PhantomJS local a local b = a
-ok 304 - PhantomJS local a, b = 1, 2
-ok 305 - PhantomJS local a, b, c = 1, 2, 3
-ok 306 - PhantomJS local a, b, c = 1
-ok 307 - PhantomJS local a = 1, 2, 3
-ok 308 - PhantomJS local a, local
-ok 309 - PhantomJS local 1
-ok 310 - PhantomJS local "foo"
-ok 311 - PhantomJS local a = local
-ok 312 - PhantomJS local a, b, =
-ok 313 - PhantomJS local a, b = 1, local
-ok 314 - PhantomJS local a, b = , local
-ok 315 - PhantomJS local function
-ok 316 - PhantomJS local function 1
-ok 317 - PhantomJS local function end
-ok 318 - PhantomJS local function a
-ok 319 - PhantomJS local function a end
-ok 320 - PhantomJS local function a( end
-ok 321 - PhantomJS local function a() end
-ok 322 - PhantomJS local function a(1
-ok 323 - PhantomJS local function a("foo"
-ok 324 - PhantomJS local function a(p
-ok 325 - PhantomJS local function a(p,)
-ok 326 - PhantomJS local function a(p q
-ok 327 - PhantomJS local function a(p) end
-ok 328 - PhantomJS local function a(p,q,) end
-ok 329 - PhantomJS local function a(p,q,r) end
-ok 330 - PhantomJS local function a(p,q,1
-ok 331 - PhantomJS local function a(p) do
-ok 332 - PhantomJS local function a(p) 1 end
-ok 333 - PhantomJS local function a(p) return end
-ok 334 - PhantomJS local function a(p) return return end
-ok 335 - PhantomJS local function a(p) do end end
-ok 336 - PhantomJS local function a.
-ok 337 - PhantomJS local function a:
-ok 338 - PhantomJS local function a(...) end
-ok 339 - PhantomJS local function a(...,
-ok 340 - PhantomJS local function a(p,...) end
-ok 341 - PhantomJS local function a(p,q,r,...) end
-ok 342 - PhantomJS local function a() local a local b end
-ok 343 - PhantomJS local function a() local a; local b; end
-ok 344 - PhantomJS local function a() end; local function a() end;
-ok 345 - PhantomJS while
-ok 346 - PhantomJS while do
-ok 347 - PhantomJS while =
-ok 348 - PhantomJS while 1 do
-ok 349 - PhantomJS while 1 do end
-ok 350 - PhantomJS while 1 do local a end
-ok 351 - PhantomJS while 1 do local a local b end
-ok 352 - PhantomJS while 1 do local a; local b; end
-ok 353 - PhantomJS while 1 do 2 end
-ok 354 - PhantomJS while 1 do "foo" end
-ok 355 - PhantomJS while true do end
-ok 356 - PhantomJS while 1 do while
-ok 357 - PhantomJS while 1 end
-ok 358 - PhantomJS while 1 2 do
-ok 359 - PhantomJS while 1 = 2 do
-ok 360 - PhantomJS while 1 do return end
-ok 361 - PhantomJS while 1 do return return end
-ok 362 - PhantomJS while 1 do do end end
-ok 363 - PhantomJS while 1 do do return end end
-ok 364 - PhantomJS while 1 do break end
-ok 365 - PhantomJS while 1 do do break end end
-ok 366 - PhantomJS a = {
-ok 367 - PhantomJS a = {}
-ok 368 - PhantomJS a = {,}
-ok 369 - PhantomJS a = {;}
-ok 370 - PhantomJS a = {,,}
-ok 371 - PhantomJS a = {;;}
-ok 372 - PhantomJS a = {{
-ok 373 - PhantomJS a = {{{}}}
-ok 374 - PhantomJS a = {{},{},{{}},}
-ok 375 - PhantomJS a = { 1 }
-ok 376 - PhantomJS a = { 1, }
-ok 377 - PhantomJS a = { 1; }
-ok 378 - PhantomJS a = { 1, 2 }
-ok 379 - PhantomJS a = { a, b, c, }
-ok 380 - PhantomJS a = { true; false, nil; }
-ok 381 - PhantomJS a = { a.b, a[b]; a:c(), }
-ok 382 - PhantomJS a = { 1 + 2, a > b, "a" or "b" }
-ok 383 - PhantomJS a = { a=1, }
-ok 384 - PhantomJS a = { a=1, b="foo", c=nil }
-ok 385 - PhantomJS a = { a
-ok 386 - PhantomJS a = { a=
-ok 387 - PhantomJS a = { a=,
-ok 388 - PhantomJS a = { a=;
-ok 389 - PhantomJS a = { 1, a="foo"
-ok 390 - PhantomJS a = { 1, a="foo"; b={}, d=true; }
-ok 391 - PhantomJS a = { [
-ok 392 - PhantomJS a = { [1
-ok 393 - PhantomJS a = { [1]
-ok 394 - PhantomJS a = { [a]=
-ok 395 - PhantomJS a = { ["foo"]="bar" }
-ok 396 - PhantomJS a = { [1]=a, [2]=b, }
-ok 397 - PhantomJS a = { true, a=1; ["foo"]="bar", }
-ok 398 - PhantomJS a = { [] }
-ok 399 - PhantomJS a = { a= }
-ok 400 - PhantomJS function
-ok 401 - PhantomJS function 1
-ok 402 - PhantomJS function end
-ok 403 - PhantomJS function a
-ok 404 - PhantomJS function a end
-ok 405 - PhantomJS function a( end
-ok 406 - PhantomJS function a() end
-ok 407 - PhantomJS function a(1
-ok 408 - PhantomJS function a("foo"
-ok 409 - PhantomJS function a(p
-ok 410 - PhantomJS function a(p,)
-ok 411 - PhantomJS function a(p q
-ok 412 - PhantomJS function a(p) end
-ok 413 - PhantomJS function a(p,q,) end
-ok 414 - PhantomJS function a(p,q,r) end
-ok 415 - PhantomJS function a(p,q,1
-ok 416 - PhantomJS function a(p) do
-ok 417 - PhantomJS function a(p) 1 end
-ok 418 - PhantomJS function a(p) return end
-ok 419 - PhantomJS function a(p) return return end
-ok 420 - PhantomJS function a(p) do end end
-ok 421 - PhantomJS function a.(
-ok 422 - PhantomJS function a.1
-ok 423 - PhantomJS function a.b() end
-ok 424 - PhantomJS function a.b,
-ok 425 - PhantomJS function a.b.(
-ok 426 - PhantomJS function a.b.c.d() end
-ok 427 - PhantomJS function a:
-ok 428 - PhantomJS function a:1
-ok 429 - PhantomJS function a:b() end
-ok 430 - PhantomJS function a:b:
-ok 431 - PhantomJS function a:b.
-ok 432 - PhantomJS function a.b.c:d() end
-ok 433 - PhantomJS function a(...) end
-ok 434 - PhantomJS function a(...,
-ok 435 - PhantomJS function a(p,...) end
-ok 436 - PhantomJS function a(...,p) end
-ok 437 - PhantomJS function a(p,q,r,...) end
-ok 438 - PhantomJS function a() local a local b end
-ok 439 - PhantomJS function a() local a; local b; end
-ok 440 - PhantomJS function a() end; function a() end;
-ok 441 - PhantomJS a(
-ok 442 - PhantomJS a()
-ok 443 - PhantomJS a(1)
-ok 444 - PhantomJS a(1,)
-ok 445 - PhantomJS a(1,2,3)
-ok 446 - PhantomJS 1()
-ok 447 - PhantomJS a()()
-ok 448 - PhantomJS a.b()
-ok 449 - PhantomJS a[b]()
-ok 450 - PhantomJS a.1
-ok 451 - PhantomJS a.b
-ok 452 - PhantomJS a[b]
-ok 453 - PhantomJS a.b.(
-ok 454 - PhantomJS a.b.c()
-ok 455 - PhantomJS a[b][c]()
-ok 456 - PhantomJS a[b].c()
-ok 457 - PhantomJS a.b[c]()
-ok 458 - PhantomJS a:b()
-ok 459 - PhantomJS a:b
-ok 460 - PhantomJS a:1
-ok 461 - PhantomJS a.b:c()
-ok 462 - PhantomJS a[b]:c()
-ok 463 - PhantomJS a:b:
-ok 464 - PhantomJS a:b():c()
-ok 465 - PhantomJS a:b().c[d]:e()
-ok 466 - PhantomJS a:b()[c].d:e()
-ok 467 - PhantomJS (a)()
-ok 468 - PhantomJS ()()
-ok 469 - PhantomJS (1)()
-ok 470 - PhantomJS ("foo")()
-ok 471 - PhantomJS (true)()
-ok 472 - PhantomJS (a)()()
-ok 473 - PhantomJS (a.b)()
-ok 474 - PhantomJS (a[b])()
-ok 475 - PhantomJS (a).b()
-ok 476 - PhantomJS (a)[b]()
-ok 477 - PhantomJS (a):b()
-ok 478 - PhantomJS (a).b[c]:d()
-ok 479 - PhantomJS (a)[b].c:d()
-ok 480 - PhantomJS (a):b():c()
-ok 481 - PhantomJS (a):b().c[d]:e()
-ok 482 - PhantomJS (a):b()[c].d:e()
-ok 483 - PhantomJS a"foo"
-ok 484 - PhantomJS a[[foo]]
-ok 485 - PhantomJS a.b"foo"
-ok 486 - PhantomJS a[b]"foo"
-ok 487 - PhantomJS a:b"foo"
-ok 488 - PhantomJS a{}
-ok 489 - PhantomJS a.b{}
-ok 490 - PhantomJS a[b]{}
-ok 491 - PhantomJS a:b{}
-ok 492 - PhantomJS a()"foo"
-ok 493 - PhantomJS a"foo"()
-ok 494 - PhantomJS a"foo".b()
-ok 495 - PhantomJS a"foo"[b]()
-ok 496 - PhantomJS a"foo":c()
-ok 497 - PhantomJS a"foo""bar"
-ok 498 - PhantomJS a"foo"{}
-ok 499 - PhantomJS (a):b"foo".c[d]:e"bar"
-ok 500 - PhantomJS (a):b"foo"[c].d:e"bar"
-ok 501 - PhantomJS a(){}
-ok 502 - PhantomJS a{}()
-ok 503 - PhantomJS a{}.b()
-ok 504 - PhantomJS a{}[b]()
-ok 505 - PhantomJS a{}:c()
-ok 506 - PhantomJS a{}"foo"
-ok 507 - PhantomJS a{}{}
-ok 508 - PhantomJS (a):b{}.c[d]:e{}
-ok 509 - PhantomJS (a):b{}[c].d:e{}
-ok 510 - PhantomJS a = -10
-ok 511 - PhantomJS a = -"foo"
-ok 512 - PhantomJS a = -a
-ok 513 - PhantomJS a = -nil
-ok 514 - PhantomJS a = -true
-ok 515 - PhantomJS a = -{}
-ok 516 - PhantomJS a = -function() end
-ok 517 - PhantomJS a = -a()
-ok 518 - PhantomJS a = -(a)
-ok 519 - PhantomJS a = -
-ok 520 - PhantomJS a = not 10
-ok 521 - PhantomJS a = not "foo"
-ok 522 - PhantomJS a = not a
-ok 523 - PhantomJS a = not nil
-ok 524 - PhantomJS a = not true
-ok 525 - PhantomJS a = not {}
-ok 526 - PhantomJS a = not function() end
-ok 527 - PhantomJS a = not a()
-ok 528 - PhantomJS a = not (a)
-ok 529 - PhantomJS a = not
-ok 530 - PhantomJS a = 1 + 2; a = 1 - 2
-ok 531 - PhantomJS a = 1 * 2; a = 1 / 2
-ok 532 - PhantomJS a = 1 ^ 2; a = 1 .. 2
-ok 533 - PhantomJS a = 1 +
-ok 534 - PhantomJS a = 1 ..
-ok 535 - PhantomJS a = 1 * /
-ok 536 - PhantomJS a = 1 + -2; a = 1 - -2
-ok 537 - PhantomJS a = 1 * -
-ok 538 - PhantomJS a = 1 * not 2; a = 1 / not 2
-ok 539 - PhantomJS a = 1 / not
-ok 540 - PhantomJS a = 1 + 2 - 3 * 4 / 5 ^ 6
-ok 541 - PhantomJS a = ((1 + 2) - 3) * (4 / (5 ^ 6))
-ok 542 - PhantomJS a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))
-ok 543 - PhantomJS a = ((1
-ok 544 - PhantomJS a = ((1 + 2)
-ok 545 - PhantomJS a = 1)
-ok 546 - PhantomJS a = a + b - c
-ok 547 - PhantomJS a = "foo" + "bar"
-ok 548 - PhantomJS a = "foo".."bar".."baz"
-ok 549 - PhantomJS a = true + false - nil
-ok 550 - PhantomJS a = {} * {}
-ok 551 - PhantomJS a = function() end / function() end
-ok 552 - PhantomJS a = a() ^ b()
-ok 553 - PhantomJS a = 1 == 2; a = 1 ~= 2
-ok 554 - PhantomJS a = 1 < 2; a = 1 <= 2
-ok 555 - PhantomJS a = 1 > 2; a = 1 >= 2
-ok 556 - PhantomJS a = 1 < 2 < 3
-ok 557 - PhantomJS a = 1 >= 2 >= 3
-ok 558 - PhantomJS a = 1 ==
-ok 559 - PhantomJS a = `
-ok 560 - PhantomJS a = ~
-ok 561 - PhantomJS a = ~= 2
-ok 562 - PhantomJS a = "foo" == "bar"
-ok 563 - PhantomJS a = "foo" > "bar"
-ok 564 - PhantomJS a = a ~= b
-ok 565 - PhantomJS a = true == false
-ok 566 - PhantomJS a = 1 and 2; a = 1 or 2
-ok 567 - PhantomJS a = 1 and
-ok 568 - PhantomJS a = or 1
-ok 569 - PhantomJS a = 1 and 2 and 3
-ok 570 - PhantomJS a = 1 or 2 or 3
-ok 571 - PhantomJS a = 1 and 2 or 3
-ok 572 - PhantomJS a = a and b or c
-ok 573 - PhantomJS a = a() and (b)() or c.d
-ok 574 - PhantomJS a = "foo" and "bar"
-ok 575 - PhantomJS a = true or false
-ok 576 - PhantomJS a = {} and {} or {}
-ok 577 - PhantomJS a = (1) and ("foo") or (nil)
-ok 578 - PhantomJS a = function() end == function() end
-ok 579 - PhantomJS a = function() end or function() end
-ok 580 - PhantomJS a = (((1 or false) and true) or false) == true
-ok 581 - PhantomJS a = (((nil and true) or false) and true) == false
-ok 582 - PhantomJS a = not ((true or false) and nil)
-ok 583 - PhantomJS a = true or false  and nil
-ok 584 - PhantomJS a = 2^-2 == 1/4 and -2^- -2 == - - -4
-ok 585 - PhantomJS a = -3-1-5 == 0+0-9
-ok 586 - PhantomJS a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0
-ok 587 - PhantomJS a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"
-ok 588 - PhantomJS a = not nil and 2 and not(2>3 or 3<2)
-ok 589 - PhantomJS a = not(2+1 > 3*1) and "a".."b" > "a"
-ok 590 - PhantomJS 2^3^2 is equal to 2^(3^2)
-ok 591 - PhantomJS 2^3*4 is equal to (2^3)*4
-ok 592 - PhantomJS 2^2^3 is equal to 2^(2^3)
-ok 593 - PhantomJS 2^2^3^4 is equal to 2^(2^(3^4))
-ok 594 - PhantomJS 2^2^3^4+1 is equal to 2^(2^(3^4))+1
-ok 595 - PhantomJS 1*2/3 is equal to (1*2)/3
-ok 596 - PhantomJS 1 + 1 * 2 > 3 is equal to ( 1 + ( 1 * 2 ) ) > 3
-ok 597 - PhantomJS 1 < 2 and 2 < 1 is equal to (1 < 2) and (2 < 1)
-ok 598 - PhantomJS 1 / 2 + 4 * 2 > 8 is equal to ((1 / 2) + (4 * 2)) > 8
-ok 599 - PhantomJS 2 < 1 == true is equal to (2 < 1) == true
-ok 600 - PhantomJS 2 < 1 + 1 == true is equal to (2 < (1 + 1)) == true
-ok 601 - PhantomJS not 1 + 1 is equal to (not 1) + 1
-ok 602 - PhantomJS not not 1 + 1 is equal to (not (not (1)) + 1)
-ok 603 - PhantomJS 1 + #1 is equal to 1 + (#1)
-ok 604 - PhantomJS -x^2 is equal to -(x^2)
-
 # Launching node
 # 
-ok 605 - node break
-ok 606 - node ::foo
-ok 607 - node ::foo::
-ok 608 - node goto
-ok 609 - node goto foo
-ok 610 - node nil
-ok 611 - node while
-ok 612 - node while do
-ok 613 - node while =
-ok 614 - node while 1 do
-ok 615 - node while 1 do end
-ok 616 - node while 1 do local a end
-ok 617 - node while 1 do local a local b end
-ok 618 - node while 1 do local a; local b; end
-ok 619 - node while 1 do 2 end
-ok 620 - node while 1 do "foo" end
-ok 621 - node while true do end
-ok 622 - node while 1 do while
-ok 623 - node while 1 end
-ok 624 - node while 1 2 do
-ok 625 - node while 1 = 2 do
-ok 626 - node while 1 do return end
-ok 627 - node while 1 do return return end
-ok 628 - node while 1 do do end end
-ok 629 - node while 1 do do return end end
-ok 630 - node while 1 do break end
-ok 631 - node while 1 do do break end end
-ok 632 - node do
-ok 633 - node end
-ok 634 - node do end
-ok 635 - node do 1 end
-ok 636 - node do "foo" end
-ok 637 - node do local a, b end
-ok 638 - node do local a local b end
-ok 639 - node do local a; local b; end
-ok 640 - node do local a = 1 end
-ok 641 - node do do end end
-ok 642 - node do do end; end
-ok 643 - node do do do end end end
-ok 644 - node do do do end; end; end
-ok 645 - node do do do return end end end
-ok 646 - node do end do
-ok 647 - node do end end
-ok 648 - node do return end
-ok 649 - node do return return end
-ok 650 - node local foo = 1 do foo = 2 end
-ok 651 - node do local foo = 1 end foo = 2
-ok 652 - node do local foo = 1 end do foo = 2 end
-ok 653 - node local foo do foo = 1 do foo = 2 end end
-ok 654 - node local function foo() end foo()
-ok 655 - node local a = { a }
-ok 656 - node local b = { b, b.a, b[a], b:a() }
-ok 657 - node local b = {} local a = { b, b.a, b[a], b:a() }
-ok 658 - node local c local a = { b[c] }
-ok 659 - node local a = function() end a()
-ok 660 - node local a, b = 1, a
-ok 661 - node local a, b = 1, function() b = 2 end
-ok 662 - node local a (a):b():c()
-ok 663 - node local a, b for i, a, b in c do end
-ok 664 - node local a, b, c for i, a, b in c do end
-ok 665 - node a = -10
-ok 666 - node a = -"foo"
-ok 667 - node a = -a
-ok 668 - node a = -nil
-ok 669 - node a = -true
-ok 670 - node a = -{}
-ok 671 - node a = -function() end
-ok 672 - node a = -a()
-ok 673 - node a = -(a)
-ok 674 - node a = -
-ok 675 - node a = not 10
-ok 676 - node a = not "foo"
-ok 677 - node a = not a
-ok 678 - node a = not nil
-ok 679 - node a = not true
-ok 680 - node a = not {}
-ok 681 - node a = not function() end
-ok 682 - node a = not a()
-ok 683 - node a = not (a)
-ok 684 - node a = not
-ok 685 - node a = 1 + 2; a = 1 - 2
-ok 686 - node a = 1 * 2; a = 1 / 2
-ok 687 - node a = 1 ^ 2; a = 1 .. 2
-ok 688 - node a = 1 +
-ok 689 - node a = 1 ..
-ok 690 - node a = 1 * /
-ok 691 - node a = 1 + -2; a = 1 - -2
-ok 692 - node a = 1 * -
-ok 693 - node a = 1 * not 2; a = 1 / not 2
-ok 694 - node a = 1 / not
-ok 695 - node a = 1 + 2 - 3 * 4 / 5 ^ 6
-ok 696 - node a = ((1 + 2) - 3) * (4 / (5 ^ 6))
-ok 697 - node a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))
-ok 698 - node a = ((1
-ok 699 - node a = ((1 + 2)
-ok 700 - node a = 1)
-ok 701 - node a = a + b - c
-ok 702 - node a = "foo" + "bar"
-ok 703 - node a = "foo".."bar".."baz"
-ok 704 - node a = true + false - nil
-ok 705 - node a = {} * {}
-ok 706 - node a = function() end / function() end
-ok 707 - node a = a() ^ b()
-ok 708 - node a = 1 == 2; a = 1 ~= 2
-ok 709 - node a = 1 < 2; a = 1 <= 2
-ok 710 - node a = 1 > 2; a = 1 >= 2
-ok 711 - node a = 1 < 2 < 3
-ok 712 - node a = 1 >= 2 >= 3
-ok 713 - node a = 1 ==
-ok 714 - node a = `
-ok 715 - node a = ~
-ok 716 - node a = ~= 2
-ok 717 - node a = "foo" == "bar"
-ok 718 - node a = "foo" > "bar"
-ok 719 - node a = a ~= b
-ok 720 - node a = true == false
-ok 721 - node a = 1 and 2; a = 1 or 2
-ok 722 - node a = 1 and
-ok 723 - node a = or 1
-ok 724 - node a = 1 and 2 and 3
-ok 725 - node a = 1 or 2 or 3
-ok 726 - node a = 1 and 2 or 3
-ok 727 - node a = a and b or c
-ok 728 - node a = a() and (b)() or c.d
-ok 729 - node a = "foo" and "bar"
-ok 730 - node a = true or false
-ok 731 - node a = {} and {} or {}
-ok 732 - node a = (1) and ("foo") or (nil)
-ok 733 - node a = function() end == function() end
-ok 734 - node a = function() end or function() end
-ok 735 - node a = (((1 or false) and true) or false) == true
-ok 736 - node a = (((nil and true) or false) and true) == false
-ok 737 - node a = not ((true or false) and nil)
-ok 738 - node a = true or false  and nil
-ok 739 - node a = 2^-2 == 1/4 and -2^- -2 == - - -4
-ok 740 - node a = -3-1-5 == 0+0-9
-ok 741 - node a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0
-ok 742 - node a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"
-ok 743 - node a = not nil and 2 and not(2>3 or 3<2)
-ok 744 - node a = not(2+1 > 3*1) and "a".."b" > "a"
-ok 745 - node repeat
-ok 746 - node repeat until
-ok 747 - node repeat until 0
-ok 748 - node repeat until false
-ok 749 - node repeat until local
-ok 750 - node repeat end
-ok 751 - node repeat 1
-ok 752 - node repeat =
-ok 753 - node repeat local a until 1
-ok 754 - node repeat local a local b until 0
-ok 755 - node repeat local a; local b; until 0
-ok 756 - node repeat 2 until 1
-ok 757 - node repeat "foo" until 1
-ok 758 - node repeat return until 0
-ok 759 - node repeat return return until 0
-ok 760 - node repeat break until 0
-ok 761 - node repeat do end until 0
-ok 762 - node repeat do return end until 0
-ok 763 - node repeat do break end until 0
-ok 764 - node a
-ok 765 - node a = 1
-ok 766 - node a = .1
-ok 767 - node a = 1.1
-ok 768 - node a = 10.1
-ok 769 - node a = 1e
-ok 770 - node a = 1e1
-ok 771 - node a = 1E1
-ok 772 - node a = 1e+9
-ok 773 - node a = 1e-1
-ok 774 - node a = 0x
-ok 775 - node a = 0xf
-ok 776 - node a = 0xf.
-ok 777 - node a = 0xf.3
-ok 778 - node a = 0xfp
-ok 779 - node a = 0xfp1
-ok 780 - node a = 0xfp+1
-ok 781 - node a = 0xfp-1
-ok 782 - node a = 0xFP+9
-ok 783 - node a = 1 .. 3 .. -2
-ok 784 - node a = 1 .. "bar"
-ok 785 - node a = "bar
-ok 786 - node a = 'bar'
-ok 787 - node a = "bar"
-ok 788 - node a = [=aa
-ok 789 - node a = nil
-ok 790 - node a = true
-ok 791 - node a = false
-ok 792 - node a = ...
-ok 793 - node function
-ok 794 - node function 1
-ok 795 - node function end
-ok 796 - node function a
-ok 797 - node function a end
-ok 798 - node function a( end
-ok 799 - node function a() end
-ok 800 - node function a(1
-ok 801 - node function a("foo"
-ok 802 - node function a(p
-ok 803 - node function a(p,)
-ok 804 - node function a(p q
-ok 805 - node function a(p) end
-ok 806 - node function a(p,q,) end
-ok 807 - node function a(p,q,r) end
-ok 808 - node function a(p,q,1
-ok 809 - node function a(p) do
-ok 810 - node function a(p) 1 end
-ok 811 - node function a(p) return end
-ok 812 - node function a(p) return return end
-ok 813 - node function a(p) do end end
-ok 814 - node function a.(
-ok 815 - node function a.1
-ok 816 - node function a.b() end
-ok 817 - node function a.b,
-ok 818 - node function a.b.(
-ok 819 - node function a.b.c.d() end
-ok 820 - node function a:
-ok 821 - node function a:1
-ok 822 - node function a:b() end
-ok 823 - node function a:b:
-ok 824 - node function a:b.
-ok 825 - node function a.b.c:d() end
-ok 826 - node function a(...) end
-ok 827 - node function a(...,
-ok 828 - node function a(p,...) end
-ok 829 - node function a(...,p) end
-ok 830 - node function a(p,q,r,...) end
-ok 831 - node function a() local a local b end
-ok 832 - node function a() local a; local b; end
-ok 833 - node function a() end; function a() end;
-ok 834 - node for
-ok 835 - node for do
-ok 836 - node for end
-ok 837 - node for 1
-ok 838 - node for a
-ok 839 - node for true
-ok 840 - node for a, in
-ok 841 - node for a in
-ok 842 - node for a do
-ok 843 - node for a in do
-ok 844 - node for a in b do
-ok 845 - node for a in b end
-ok 846 - node for a in b, do
-ok 847 - node for a in b do end
-ok 848 - node for a in b do local a local b end
-ok 849 - node for a in b do local a; local b; end
-ok 850 - node for a in b do 1 end
-ok 851 - node for a in b do "foo" end
-ok 852 - node for a b in
-ok 853 - node for a, b, c in p do end
-ok 854 - node for a, b, c in p, q, r do end
-ok 855 - node for a in 1 do end
-ok 856 - node for a in true do end
-ok 857 - node for a in "foo" do end
-ok 858 - node for a in b do break end
-ok 859 - node for a in b do return end
-ok 860 - node for a in b do return return end
-ok 861 - node for a in b do do end end
-ok 862 - node for a in b do do break end end
-ok 863 - node for a in b do do return end end
-ok 864 - node for =
-ok 865 - node for a =
-ok 866 - node for a, b =
-ok 867 - node for a = do
-ok 868 - node for a = 1, do
-ok 869 - node for a = p, q, do
-ok 870 - node for a = p q do
-ok 871 - node for a = b do end
-ok 872 - node for a = 1, 2, 3, 4 do end
-ok 873 - node for a = p, q do end
-ok 874 - node for a = 1, 2 do end
-ok 875 - node for a = 1, 2 do local a local b end
-ok 876 - node for a = 1, 2 do local a; local b; end
-ok 877 - node for a = 1, 2 do 3 end
-ok 878 - node for a = 1, 2 do "foo" end
-ok 879 - node for a = p, q, r do end
-ok 880 - node for a = 1, 2, 3 do end
-ok 881 - node for a = p, q do break end
-ok 882 - node for a = 1, 2 do return end
-ok 883 - node for a = 1, 2 do return return end
-ok 884 - node for a = p, q do do end end
-ok 885 - node for a = p, q do do break end end
-ok 886 - node for a = p, q do do return end end
-ok 887 - node a
-ok 888 - node a,
-ok 889 - node a,b,c
-ok 890 - node a,b =
-ok 891 - node a = 1
-ok 892 - node a = 1,2,3
-ok 893 - node a,b,c = 1
-ok 894 - node a,b,c = 1,2,3
-ok 895 - node a.b = 1
-ok 896 - node a.b.c = 1
-ok 897 - node a[b] = 1
-ok 898 - node a[b][c] = 1
-ok 899 - node a.b[c] = 1
-ok 900 - node a[b].c = 1
-ok 901 - node a[b], a[c] = 1
-ok 902 - node 0 =
-ok 903 - node "foo" =
-ok 904 - node true =
-ok 905 - node (a) =
-ok 906 - node {} =
-ok 907 - node a:b() =
-ok 908 - node a() =
-ok 909 - node a.b:c() =
-ok 910 - node a[b]() =
-ok 911 - node a = a b
-ok 912 - node a = 1 2
-ok 913 - node a = a = 1
-ok 914 - node return return
-ok 915 - node return 1
-ok 916 - node return local
-ok 917 - node return "foo"
-ok 918 - node return 1,
-ok 919 - node return 1,2,3
-ok 920 - node return a,b,c,d
-ok 921 - node return 1,2;
-ok 922 - node a(
-ok 923 - node a()
-ok 924 - node a(1)
-ok 925 - node a(1,)
-ok 926 - node a(1,2,3)
-ok 927 - node 1()
-ok 928 - node a()()
-ok 929 - node a.b()
-ok 930 - node a[b]()
-ok 931 - node a.1
-ok 932 - node a.b
-ok 933 - node a[b]
-ok 934 - node a.b.(
-ok 935 - node a.b.c()
-ok 936 - node a[b][c]()
-ok 937 - node a[b].c()
-ok 938 - node a.b[c]()
-ok 939 - node a:b()
-ok 940 - node a:b
-ok 941 - node a:1
-ok 942 - node a.b:c()
-ok 943 - node a[b]:c()
-ok 944 - node a:b:
-ok 945 - node a:b():c()
-ok 946 - node a:b().c[d]:e()
-ok 947 - node a:b()[c].d:e()
-ok 948 - node (a)()
-ok 949 - node ()()
-ok 950 - node (1)()
-ok 951 - node ("foo")()
-ok 952 - node (true)()
-ok 953 - node (a)()()
-ok 954 - node (a.b)()
-ok 955 - node (a[b])()
-ok 956 - node (a).b()
-ok 957 - node (a)[b]()
-ok 958 - node (a):b()
-ok 959 - node (a).b[c]:d()
-ok 960 - node (a)[b].c:d()
-ok 961 - node (a):b():c()
-ok 962 - node (a):b().c[d]:e()
-ok 963 - node (a):b()[c].d:e()
-ok 964 - node a"foo"
-ok 965 - node a[[foo]]
-ok 966 - node a.b"foo"
-ok 967 - node a[b]"foo"
-ok 968 - node a:b"foo"
-ok 969 - node a{}
-ok 970 - node a.b{}
-ok 971 - node a[b]{}
-ok 972 - node a:b{}
-ok 973 - node a()"foo"
-ok 974 - node a"foo"()
-ok 975 - node a"foo".b()
-ok 976 - node a"foo"[b]()
-ok 977 - node a"foo":c()
-ok 978 - node a"foo""bar"
-ok 979 - node a"foo"{}
-ok 980 - node (a):b"foo".c[d]:e"bar"
-ok 981 - node (a):b"foo"[c].d:e"bar"
-ok 982 - node a(){}
-ok 983 - node a{}()
-ok 984 - node a{}.b()
-ok 985 - node a{}[b]()
-ok 986 - node a{}:c()
-ok 987 - node a{}"foo"
-ok 988 - node a{}{}
-ok 989 - node (a):b{}.c[d]:e{}
-ok 990 - node (a):b{}[c].d:e{}
-ok 991 - node a = "bar\nbaz"
-ok 992 - node a = "bar\rbaz"
-ok 993 - node a = "bar\n\r\t\tbaz"
-ok 994 - node a = "bar\80baz\800\0foo"
-ok 995 - node a = "bar\z    baz"
-ok 996 - node a = "bar\f\v\bbaz"
-ok 997 - node a = "bar\f\vbaz"
-ok 998 - node a = '\\'
-ok 999 - node a = '\''
-ok 1000 - node a = '\123'
-ok 1001 - node a = '\x23'
-ok 1002 - node a = '\xx'
-ok 1003 - node a = [[bar\f\v\bbaz]]
-ok 1004 - node a = [[\]]
-ok 1005 - node local
-ok 1006 - node local;
-ok 1007 - node local =
-ok 1008 - node local end
-ok 1009 - node local a
-ok 1010 - node local a;
-ok 1011 - node local a, b, c
-ok 1012 - node local a; local b local c;
-ok 1013 - node local a = 1
-ok 1014 - node local a local b = a
-ok 1015 - node local a, b = 1, 2
-ok 1016 - node local a, b, c = 1, 2, 3
-ok 1017 - node local a, b, c = 1
-ok 1018 - node local a = 1, 2, 3
-ok 1019 - node local a, local
-ok 1020 - node local 1
-ok 1021 - node local "foo"
-ok 1022 - node local a = local
-ok 1023 - node local a, b, =
-ok 1024 - node local a, b = 1, local
-ok 1025 - node local a, b = , local
-ok 1026 - node local function
-ok 1027 - node local function 1
-ok 1028 - node local function end
-ok 1029 - node local function a
-ok 1030 - node local function a end
-ok 1031 - node local function a( end
-ok 1032 - node local function a() end
-ok 1033 - node local function a(1
-ok 1034 - node local function a("foo"
-ok 1035 - node local function a(p
-ok 1036 - node local function a(p,)
-ok 1037 - node local function a(p q
-ok 1038 - node local function a(p) end
-ok 1039 - node local function a(p,q,) end
-ok 1040 - node local function a(p,q,r) end
-ok 1041 - node local function a(p,q,1
-ok 1042 - node local function a(p) do
-ok 1043 - node local function a(p) 1 end
-ok 1044 - node local function a(p) return end
-ok 1045 - node local function a(p) return return end
-ok 1046 - node local function a(p) do end end
-ok 1047 - node local function a.
-ok 1048 - node local function a:
-ok 1049 - node local function a(...) end
-ok 1050 - node local function a(...,
-ok 1051 - node local function a(p,...) end
-ok 1052 - node local function a(p,q,r,...) end
-ok 1053 - node local function a() local a local b end
-ok 1054 - node local function a() local a; local b; end
-ok 1055 - node local function a() end; local function a() end;
-ok 1056 - node luaparse is an object
-ok 1057 - node luaparse.parse() is a function
-ok 1058 - node luaparse.write() is a function
-ok 1059 - node luaparse.end() is a function
-ok 1060 - node should ignore comments if told to
-ok 1061 - node should produce empty tree on empty input
-ok 1062 - node should support waiting on input
-ok 1063 - node should not scope by default
-ok 1064 - node a = {
-ok 1065 - node a = {}
-ok 1066 - node a = {,}
-ok 1067 - node a = {;}
-ok 1068 - node a = {,,}
-ok 1069 - node a = {;;}
-ok 1070 - node a = {{
-ok 1071 - node a = {{{}}}
-ok 1072 - node a = {{},{},{{}},}
-ok 1073 - node a = { 1 }
-ok 1074 - node a = { 1, }
-ok 1075 - node a = { 1; }
-ok 1076 - node a = { 1, 2 }
-ok 1077 - node a = { a, b, c, }
-ok 1078 - node a = { true; false, nil; }
-ok 1079 - node a = { a.b, a[b]; a:c(), }
-ok 1080 - node a = { 1 + 2, a > b, "a" or "b" }
-ok 1081 - node a = { a=1, }
-ok 1082 - node a = { a=1, b="foo", c=nil }
-ok 1083 - node a = { a
-ok 1084 - node a = { a=
-ok 1085 - node a = { a=,
-ok 1086 - node a = { a=;
-ok 1087 - node a = { 1, a="foo"
-ok 1088 - node a = { 1, a="foo"; b={}, d=true; }
-ok 1089 - node a = { [
-ok 1090 - node a = { [1
-ok 1091 - node a = { [1]
-ok 1092 - node a = { [a]=
-ok 1093 - node a = { ["foo"]="bar" }
-ok 1094 - node a = { [1]=a, [2]=b, }
-ok 1095 - node a = { true, a=1; ["foo"]="bar", }
-ok 1096 - node a = { [] }
-ok 1097 - node a = { a= }
-ok 1098 - node -- comment
-ok 1099 - node -- comment\n-- comment
-ok 1100 - node --coment
-ok 1101 - node -- comment\nbreak
-ok 1102 - node break--comment
-ok 1103 - node --[[comment]]
-ok 1104 - node if true--[[comment]]then end
-ok 1105 - node --[=[comment]=]break
-ok 1106 - node --[===[comment\n--[=[sub]=]--\n]===]break
-ok 1107 - node --[[comment\nline two]]
-ok 1108 - node --[[\ncomment\nline two\n]]
-ok 1109 - node --[==\nbreak --]]
-ok 1110 - node if true -- comment\nthen end
-ok 1111 - node 2^3^2 is equal to 2^(3^2)
-ok 1112 - node 2^3*4 is equal to (2^3)*4
-ok 1113 - node 2^2^3 is equal to 2^(2^3)
-ok 1114 - node 2^2^3^4 is equal to 2^(2^(3^4))
-ok 1115 - node 2^2^3^4+1 is equal to 2^(2^(3^4))+1
-ok 1116 - node 1*2/3 is equal to (1*2)/3
-ok 1117 - node 1 + 1 * 2 > 3 is equal to ( 1 + ( 1 * 2 ) ) > 3
-ok 1118 - node 1 < 2 and 2 < 1 is equal to (1 < 2) and (2 < 1)
-ok 1119 - node 1 / 2 + 4 * 2 > 8 is equal to ((1 / 2) + (4 * 2)) > 8
-ok 1120 - node 2 < 1 == true is equal to (2 < 1) == true
-ok 1121 - node 2 < 1 + 1 == true is equal to (2 < (1 + 1)) == true
-ok 1122 - node not 1 + 1 is equal to (not 1) + 1
-ok 1123 - node not not 1 + 1 is equal to (not (not (1)) + 1)
-ok 1124 - node 1 + 1 is equal to 1 + (1)
-ok 1125 - node -x^2 is equal to -(x^2)
-ok 1126 - node a =
-ok 1127 - node a = [[foo]]
-ok 1128 - node a = {}
-ok 1129 - node a = (a)
-ok 1130 - node a = (nil)
-ok 1131 - node a = (true)
-ok 1132 - node a = (1)
-ok 1133 - node a = ("foo")
-ok 1134 - node a = ([[foo]])
-ok 1135 - node a = ({})
-ok 1136 - node a = a.b
-ok 1137 - node a = a.b.
-ok 1138 - node a = a.b.c
-ok 1139 - node a = a:b
-ok 1140 - node a = a[]
-ok 1141 - node a = a[b]
-ok 1142 - node a = a[1]
-ok 1143 - node a = a["foo"]
-ok 1144 - node a = a[b][c]
-ok 1145 - node a = a.b[c]
-ok 1146 - node a = a[b].c
-ok 1147 - node a = (a)[b]
-ok 1148 - node a = (a).c
-ok 1149 - node a = ()
-ok 1150 - node a = a()
-ok 1151 - node a = a.b()
-ok 1152 - node a = a[b]()
-ok 1153 - node a = a:b()
-ok 1154 - node a = (a)()
-ok 1155 - node a = (a).b()
-ok 1156 - node a = (a)[b]()
-ok 1157 - node a = (a):b()
-ok 1158 - node a = a"foo"
-ok 1159 - node a = a{}
-ok 1160 - node a = function
-ok 1161 - node a = function 1
-ok 1162 - node a = function a
-ok 1163 - node a = function end
-ok 1164 - node a = function(
-ok 1165 - node a = function() end
-ok 1166 - node a = function(1
-ok 1167 - node a = function(p) end
-ok 1168 - node a = function(p,)
-ok 1169 - node a = function(p q
-ok 1170 - node a = function(p,q,r) end
-ok 1171 - node a = function(p,q,1
-ok 1172 - node a = function(...) end
-ok 1173 - node a = function(...,
-ok 1174 - node a = function(p,...) end
-ok 1175 - node a = function(p,q,r,...) end
-ok 1176 - node a = {'-'}
-ok 1177 - node a = {'not'}
-ok 1178 - node a = {not true}
-ok 1179 - node if
-ok 1180 - node elseif
-ok 1181 - node else
-ok 1182 - node then
-ok 1183 - node if then
-ok 1184 - node if 1
-ok 1185 - node if 1 then
-ok 1186 - node if 1 else
-ok 1187 - node if 1 then else
-ok 1188 - node if 1 then elseif
-ok 1189 - node if 1 then end
-ok 1190 - node if 1 then local a end
-ok 1191 - node if 1 then local a local b end
-ok 1192 - node if 1 then local a; local b; end
-ok 1193 - node if 1 then else end
-ok 1194 - node if 1 then local a else local b end
-ok 1195 - node if 1 then local a; else local b; end
-ok 1196 - node if 1 then elseif 2
-ok 1197 - node if 1 then elseif 2 then
-ok 1198 - node if 1 then elseif 2 then end
-ok 1199 - node if 1 then local a elseif 2 then local b end
-ok 1200 - node if 1 then local a; elseif 2 then local b; end
-ok 1201 - node if 1 then elseif 2 then else end
-ok 1202 - node if 1 then else if 2 then end end
-ok 1203 - node if 1 then else if 2 then end
-ok 1204 - node if 1 then return end
-ok 1205 - node if 1 then return return end
-ok 1206 - node if 1 then end; if 1 then end;
-ok 1207 - node if then end
-ok 1208 - node if 1 then elseif then end
+TAP version 13
+ok 1 - node a =
+ok 2 - node a = [[foo]]
+ok 3 - node a = {}
+ok 4 - node a = (a)
+ok 5 - node a = (nil)
+ok 6 - node a = (true)
+ok 7 - node a = (1)
+ok 8 - node a = ("foo")
+ok 9 - node a = ([[foo]])
+ok 10 - node a = ({})
+ok 11 - node a = a.b
+ok 12 - node a = a.b.
+ok 13 - node a = a.b.c
+ok 14 - node a = a:b
+ok 15 - node a = a[]
+ok 16 - node a = a[b]
+ok 17 - node a = a[1]
+ok 18 - node a = a["foo"]
+ok 19 - node a = a[b][c]
+ok 20 - node a = a.b[c]
+ok 21 - node a = a[b].c
+ok 22 - node a = (a)[b]
+ok 23 - node a = (a).c
+ok 24 - node a = ()
+ok 25 - node a = a()
+ok 26 - node a = a.b()
+ok 27 - node a = a[b]()
+ok 28 - node a = a:b()
+ok 29 - node a = (a)()
+ok 30 - node a = (a).b()
+ok 31 - node a = (a)[b]()
+ok 32 - node a = (a):b()
+ok 33 - node a = a"foo"
+ok 34 - node a = a{}
+ok 35 - node a = function
+ok 36 - node a = function 1
+ok 37 - node a = function a
+ok 38 - node a = function end
+ok 39 - node a = function(
+ok 40 - node a = function() end
+ok 41 - node a = function(1
+ok 42 - node a = function(p) end
+ok 43 - node a = function(p,)
+ok 44 - node a = function(p q
+ok 45 - node a = function(p,q,r) end
+ok 46 - node a = function(p,q,1
+ok 47 - node a = function(...) end
+ok 48 - node a = function(...,
+ok 49 - node a = function(p,...) end
+ok 50 - node a = function(p,q,r,...) end
+ok 51 - node a = {'-'}
+ok 52 - node a = {'not'}
+ok 53 - node a = {not true}
+ok 54 - node a
+ok 55 - node a,
+ok 56 - node a,b,c
+ok 57 - node a,b =
+ok 58 - node a = 1
+ok 59 - node a = 1,2,3
+ok 60 - node a,b,c = 1
+ok 61 - node a,b,c = 1,2,3
+ok 62 - node a.b = 1
+ok 63 - node a.b.c = 1
+ok 64 - node a[b] = 1
+ok 65 - node a[b][c] = 1
+ok 66 - node a.b[c] = 1
+ok 67 - node a[b].c = 1
+ok 68 - node a[b], a[c] = 1
+ok 69 - node 0 =
+ok 70 - node "foo" =
+ok 71 - node true =
+ok 72 - node (a) =
+ok 73 - node {} =
+ok 74 - node a:b() =
+ok 75 - node a() =
+ok 76 - node a.b:c() =
+ok 77 - node a[b]() =
+ok 78 - node a = a b
+ok 79 - node a = 1 2
+ok 80 - node a = a = 1
+ok 81 - node -- comment
+ok 82 - node -- comment\n-- comment
+ok 83 - node --coment
+ok 84 - node -- comment\nbreak
+ok 85 - node break--comment
+ok 86 - node --[[comment]]
+ok 87 - node if true--[[comment]]then end
+ok 88 - node --[=[comment]=]break
+ok 89 - node --[===[comment\n--[=[sub]=]--\n]===]break
+ok 90 - node --[[comment\nline two]]
+ok 91 - node --[[\ncomment\nline two\n]]
+ok 92 - node --[==\nbreak --]]
+ok 93 - node if true -- comment\nthen end
+ok 94 - node a(
+ok 95 - node a()
+ok 96 - node a(1)
+ok 97 - node a(1,)
+ok 98 - node a(1,2,3)
+ok 99 - node 1()
+ok 100 - node a()()
+ok 101 - node a.b()
+ok 102 - node a[b]()
+ok 103 - node a.1
+ok 104 - node a.b
+ok 105 - node a[b]
+ok 106 - node a.b.(
+ok 107 - node a.b.c()
+ok 108 - node a[b][c]()
+ok 109 - node a[b].c()
+ok 110 - node a.b[c]()
+ok 111 - node a:b()
+ok 112 - node a:b
+ok 113 - node a:1
+ok 114 - node a.b:c()
+ok 115 - node a[b]:c()
+ok 116 - node a:b:
+ok 117 - node a:b():c()
+ok 118 - node a:b().c[d]:e()
+ok 119 - node a:b()[c].d:e()
+ok 120 - node (a)()
+ok 121 - node ()()
+ok 122 - node (1)()
+ok 123 - node ("foo")()
+ok 124 - node (true)()
+ok 125 - node (a)()()
+ok 126 - node (a.b)()
+ok 127 - node (a[b])()
+ok 128 - node (a).b()
+ok 129 - node (a)[b]()
+ok 130 - node (a):b()
+ok 131 - node (a).b[c]:d()
+ok 132 - node (a)[b].c:d()
+ok 133 - node (a):b():c()
+ok 134 - node (a):b().c[d]:e()
+ok 135 - node (a):b()[c].d:e()
+ok 136 - node a"foo"
+ok 137 - node a[[foo]]
+ok 138 - node a.b"foo"
+ok 139 - node a[b]"foo"
+ok 140 - node a:b"foo"
+ok 141 - node a{}
+ok 142 - node a.b{}
+ok 143 - node a[b]{}
+ok 144 - node a:b{}
+ok 145 - node a()"foo"
+ok 146 - node a"foo"()
+ok 147 - node a"foo".b()
+ok 148 - node a"foo"[b]()
+ok 149 - node a"foo":c()
+ok 150 - node a"foo""bar"
+ok 151 - node a"foo"{}
+ok 152 - node (a):b"foo".c[d]:e"bar"
+ok 153 - node (a):b"foo"[c].d:e"bar"
+ok 154 - node a(){}
+ok 155 - node a{}()
+ok 156 - node a{}.b()
+ok 157 - node a{}[b]()
+ok 158 - node a{}:c()
+ok 159 - node a{}"foo"
+ok 160 - node a{}{}
+ok 161 - node (a):b{}.c[d]:e{}
+ok 162 - node (a):b{}[c].d:e{}
+ok 163 - node function
+ok 164 - node function 1
+ok 165 - node function end
+ok 166 - node function a
+ok 167 - node function a end
+ok 168 - node function a( end
+ok 169 - node function a() end
+ok 170 - node function a(1
+ok 171 - node function a("foo"
+ok 172 - node function a(p
+ok 173 - node function a(p,)
+ok 174 - node function a(p q
+ok 175 - node function a(p) end
+ok 176 - node function a(p,q,) end
+ok 177 - node function a(p,q,r) end
+ok 178 - node function a(p,q,1
+ok 179 - node function a(p) do
+ok 180 - node function a(p) 1 end
+ok 181 - node function a(p) return end
+ok 182 - node function a(p) return return end
+ok 183 - node function a(p) do end end
+ok 184 - node function a.(
+ok 185 - node function a.1
+ok 186 - node function a.b() end
+ok 187 - node function a.b,
+ok 188 - node function a.b.(
+ok 189 - node function a.b.c.d() end
+ok 190 - node function a:
+ok 191 - node function a:1
+ok 192 - node function a:b() end
+ok 193 - node function a:b:
+ok 194 - node function a:b.
+ok 195 - node function a.b.c:d() end
+ok 196 - node function a(...) end
+ok 197 - node function a(...,
+ok 198 - node function a(p,...) end
+ok 199 - node function a(...,p) end
+ok 200 - node function a(p,q,r,...) end
+ok 201 - node function a() local a local b end
+ok 202 - node function a() local a; local b; end
+ok 203 - node function a() end; function a() end;
+ok 204 - node for
+ok 205 - node for do
+ok 206 - node for end
+ok 207 - node for 1
+ok 208 - node for a
+ok 209 - node for true
+ok 210 - node for a, in
+ok 211 - node for a in
+ok 212 - node for a do
+ok 213 - node for a in do
+ok 214 - node for a in b do
+ok 215 - node for a in b end
+ok 216 - node for a in b, do
+ok 217 - node for a in b do end
+ok 218 - node for a in b do local a local b end
+ok 219 - node for a in b do local a; local b; end
+ok 220 - node for a in b do 1 end
+ok 221 - node for a in b do "foo" end
+ok 222 - node for a b in
+ok 223 - node for a, b, c in p do end
+ok 224 - node for a, b, c in p, q, r do end
+ok 225 - node for a in 1 do end
+ok 226 - node for a in true do end
+ok 227 - node for a in "foo" do end
+ok 228 - node for a in b do break end
+ok 229 - node for a in b do return end
+ok 230 - node for a in b do return return end
+ok 231 - node for a in b do do end end
+ok 232 - node for a in b do do break end end
+ok 233 - node for a in b do do return end end
+ok 234 - node for =
+ok 235 - node for a =
+ok 236 - node for a, b =
+ok 237 - node for a = do
+ok 238 - node for a = 1, do
+ok 239 - node for a = p, q, do
+ok 240 - node for a = p q do
+ok 241 - node for a = b do end
+ok 242 - node for a = 1, 2, 3, 4 do end
+ok 243 - node for a = p, q do end
+ok 244 - node for a = 1, 2 do end
+ok 245 - node for a = 1, 2 do local a local b end
+ok 246 - node for a = 1, 2 do local a; local b; end
+ok 247 - node for a = 1, 2 do 3 end
+ok 248 - node for a = 1, 2 do "foo" end
+ok 249 - node for a = p, q, r do end
+ok 250 - node for a = 1, 2, 3 do end
+ok 251 - node for a = p, q do break end
+ok 252 - node for a = 1, 2 do return end
+ok 253 - node for a = 1, 2 do return return end
+ok 254 - node for a = p, q do do end end
+ok 255 - node for a = p, q do do break end end
+ok 256 - node for a = p, q do do return end end
+ok 257 - node while
+ok 258 - node while do
+ok 259 - node while =
+ok 260 - node while 1 do
+ok 261 - node while 1 do end
+ok 262 - node while 1 do local a end
+ok 263 - node while 1 do local a local b end
+ok 264 - node while 1 do local a; local b; end
+ok 265 - node while 1 do 2 end
+ok 266 - node while 1 do "foo" end
+ok 267 - node while true do end
+ok 268 - node while 1 do while
+ok 269 - node while 1 end
+ok 270 - node while 1 2 do
+ok 271 - node while 1 = 2 do
+ok 272 - node while 1 do return end
+ok 273 - node while 1 do return return end
+ok 274 - node while 1 do do end end
+ok 275 - node while 1 do do return end end
+ok 276 - node while 1 do break end
+ok 277 - node while 1 do do break end end
+ok 278 - node repeat
+ok 279 - node repeat until
+ok 280 - node repeat until 0
+ok 281 - node repeat until false
+ok 282 - node repeat until local
+ok 283 - node repeat end
+ok 284 - node repeat 1
+ok 285 - node repeat =
+ok 286 - node repeat local a until 1
+ok 287 - node repeat local a local b until 0
+ok 288 - node repeat local a; local b; until 0
+ok 289 - node repeat 2 until 1
+ok 290 - node repeat "foo" until 1
+ok 291 - node repeat return until 0
+ok 292 - node repeat return return until 0
+ok 293 - node repeat break until 0
+ok 294 - node repeat do end until 0
+ok 295 - node repeat do return end until 0
+ok 296 - node repeat do break end until 0
+ok 297 - node break
+ok 298 - node ::foo
+ok 299 - node ::foo::
+ok 300 - node goto
+ok 301 - node goto foo
+ok 302 - node nil
+ok 303 - node a
+ok 304 - node a = 1
+ok 305 - node a = .1
+ok 306 - node a = 1.1
+ok 307 - node a = 10.1
+ok 308 - node a = 1e
+ok 309 - node a = 1e1
+ok 310 - node a = 1E1
+ok 311 - node a = 1e+9
+ok 312 - node a = 1e-1
+ok 313 - node a = 0x
+ok 314 - node a = 0xf
+ok 315 - node a = 0xf.
+ok 316 - node a = 0xf.3
+ok 317 - node a = 0xfp
+ok 318 - node a = 0xfp1
+ok 319 - node a = 0xfp+1
+ok 320 - node a = 0xfp-1
+ok 321 - node a = 0xFP+9
+ok 322 - node a = 1 .. 3 .. -2
+ok 323 - node a = 1 .. "bar"
+ok 324 - node a = "bar
+ok 325 - node a = 'bar'
+ok 326 - node a = "bar"
+ok 327 - node a = [=aa
+ok 328 - node a = nil
+ok 329 - node a = true
+ok 330 - node a = false
+ok 331 - node a = ...
+ok 332 - node a = -10
+ok 333 - node a = -"foo"
+ok 334 - node a = -a
+ok 335 - node a = -nil
+ok 336 - node a = -true
+ok 337 - node a = -{}
+ok 338 - node a = -function() end
+ok 339 - node a = -a()
+ok 340 - node a = -(a)
+ok 341 - node a = -
+ok 342 - node a = not 10
+ok 343 - node a = not "foo"
+ok 344 - node a = not a
+ok 345 - node a = not nil
+ok 346 - node a = not true
+ok 347 - node a = not {}
+ok 348 - node a = not function() end
+ok 349 - node a = not a()
+ok 350 - node a = not (a)
+ok 351 - node a = not
+ok 352 - node a = 1 + 2; a = 1 - 2
+ok 353 - node a = 1 * 2; a = 1 / 2
+ok 354 - node a = 1 ^ 2; a = 1 .. 2
+ok 355 - node a = 1 +
+ok 356 - node a = 1 ..
+ok 357 - node a = 1 * /
+ok 358 - node a = 1 + -2; a = 1 - -2
+ok 359 - node a = 1 * -
+ok 360 - node a = 1 * not 2; a = 1 / not 2
+ok 361 - node a = 1 / not
+ok 362 - node a = 1 + 2 - 3 * 4 / 5 ^ 6
+ok 363 - node a = ((1 + 2) - 3) * (4 / (5 ^ 6))
+ok 364 - node a = (1 + (2 - (3 * (4 / (5 ^ ((6)))))))
+ok 365 - node a = ((1
+ok 366 - node a = ((1 + 2)
+ok 367 - node a = 1)
+ok 368 - node a = a + b - c
+ok 369 - node a = "foo" + "bar"
+ok 370 - node a = "foo".."bar".."baz"
+ok 371 - node a = true + false - nil
+ok 372 - node a = {} * {}
+ok 373 - node a = function() end / function() end
+ok 374 - node a = a() ^ b()
+ok 375 - node a = 1 == 2; a = 1 ~= 2
+ok 376 - node a = 1 < 2; a = 1 <= 2
+ok 377 - node a = 1 > 2; a = 1 >= 2
+ok 378 - node a = 1 < 2 < 3
+ok 379 - node a = 1 >= 2 >= 3
+ok 380 - node a = 1 ==
+ok 381 - node a = `
+ok 382 - node a = ~
+ok 383 - node a = ~= 2
+ok 384 - node a = "foo" == "bar"
+ok 385 - node a = "foo" > "bar"
+ok 386 - node a = a ~= b
+ok 387 - node a = true == false
+ok 388 - node a = 1 and 2; a = 1 or 2
+ok 389 - node a = 1 and
+ok 390 - node a = or 1
+ok 391 - node a = 1 and 2 and 3
+ok 392 - node a = 1 or 2 or 3
+ok 393 - node a = 1 and 2 or 3
+ok 394 - node a = a and b or c
+ok 395 - node a = a() and (b)() or c.d
+ok 396 - node a = "foo" and "bar"
+ok 397 - node a = true or false
+ok 398 - node a = {} and {} or {}
+ok 399 - node a = (1) and ("foo") or (nil)
+ok 400 - node a = function() end == function() end
+ok 401 - node a = function() end or function() end
+ok 402 - node a = (((1 or false) and true) or false) == true
+ok 403 - node a = (((nil and true) or false) and true) == false
+ok 404 - node a = not ((true or false) and nil)
+ok 405 - node a = true or false  and nil
+ok 406 - node a = 2^-2 == 1/4 and -2^- -2 == - - -4
+ok 407 - node a = -3-1-5 == 0+0-9
+ok 408 - node a = -2^2 == -4 and (-2)^2 == 4 and 2*2-3-1 == 0
+ok 409 - node a = 2*1+3/3 == 3 and 1+2 .. 3*1 == "33"
+ok 410 - node a = not nil and 2 and not(2>3 or 3<2)
+ok 411 - node a = not(2+1 > 3*1) and "a".."b" > "a"
+ok 412 - node return return
+ok 413 - node return 1
+ok 414 - node return local
+ok 415 - node return "foo"
+ok 416 - node return 1,
+ok 417 - node return 1,2,3
+ok 418 - node return a,b,c,d
+ok 419 - node return 1,2;
+ok 420 - node local
+ok 421 - node local;
+ok 422 - node local =
+ok 423 - node local end
+ok 424 - node local a
+ok 425 - node local a;
+ok 426 - node local a, b, c
+ok 427 - node local a; local b local c;
+ok 428 - node local a = 1
+ok 429 - node local a local b = a
+ok 430 - node local a, b = 1, 2
+ok 431 - node local a, b, c = 1, 2, 3
+ok 432 - node local a, b, c = 1
+ok 433 - node local a = 1, 2, 3
+ok 434 - node local a, local
+ok 435 - node local 1
+ok 436 - node local "foo"
+ok 437 - node local a = local
+ok 438 - node local a, b, =
+ok 439 - node local a, b = 1, local
+ok 440 - node local a, b = , local
+ok 441 - node local function
+ok 442 - node local function 1
+ok 443 - node local function end
+ok 444 - node local function a
+ok 445 - node local function a end
+ok 446 - node local function a( end
+ok 447 - node local function a() end
+ok 448 - node local function a(1
+ok 449 - node local function a("foo"
+ok 450 - node local function a(p
+ok 451 - node local function a(p,)
+ok 452 - node local function a(p q
+ok 453 - node local function a(p) end
+ok 454 - node local function a(p,q,) end
+ok 455 - node local function a(p,q,r) end
+ok 456 - node local function a(p,q,1
+ok 457 - node local function a(p) do
+ok 458 - node local function a(p) 1 end
+ok 459 - node local function a(p) return end
+ok 460 - node local function a(p) return return end
+ok 461 - node local function a(p) do end end
+ok 462 - node local function a.
+ok 463 - node local function a:
+ok 464 - node local function a(...) end
+ok 465 - node local function a(...,
+ok 466 - node local function a(p,...) end
+ok 467 - node local function a(p,q,r,...) end
+ok 468 - node local function a() local a local b end
+ok 469 - node local function a() local a; local b; end
+ok 470 - node local function a() end; local function a() end;
+ok 471 - node a = "bar\nbaz"
+ok 472 - node a = "bar\rbaz"
+ok 473 - node a = "bar\n\r\t\tbaz"
+ok 474 - node a = "bar\80baz\800\0foo"
+ok 475 - node a = "bar\z    baz"
+ok 476 - node a = "bar\f\v\bbaz"
+ok 477 - node a = "bar\f\vbaz"
+ok 478 - node a = '\\'
+ok 479 - node a = '\''
+ok 480 - node a = '\123'
+ok 481 - node a = '\x23'
+ok 482 - node a = '\xx'
+ok 483 - node a = [[bar\f\v\bbaz]]
+ok 484 - node a = [[\]]
+ok 485 - node do
+ok 486 - node end
+ok 487 - node do end
+ok 488 - node do 1 end
+ok 489 - node do "foo" end
+ok 490 - node do local a, b end
+ok 491 - node do local a local b end
+ok 492 - node do local a; local b; end
+ok 493 - node do local a = 1 end
+ok 494 - node do do end end
+ok 495 - node do do end; end
+ok 496 - node do do do end end end
+ok 497 - node do do do end; end; end
+ok 498 - node do do do return end end end
+ok 499 - node do end do
+ok 500 - node do end end
+ok 501 - node do return end
+ok 502 - node do return return end
+ok 503 - node a = {
+ok 504 - node a = {}
+ok 505 - node a = {,}
+ok 506 - node a = {;}
+ok 507 - node a = {,,}
+ok 508 - node a = {;;}
+ok 509 - node a = {{
+ok 510 - node a = {{{}}}
+ok 511 - node a = {{},{},{{}},}
+ok 512 - node a = { 1 }
+ok 513 - node a = { 1, }
+ok 514 - node a = { 1; }
+ok 515 - node a = { 1, 2 }
+ok 516 - node a = { a, b, c, }
+ok 517 - node a = { true; false, nil; }
+ok 518 - node a = { a.b, a[b]; a:c(), }
+ok 519 - node a = { 1 + 2, a > b, "a" or "b" }
+ok 520 - node a = { a=1, }
+ok 521 - node a = { a=1, b="foo", c=nil }
+ok 522 - node a = { a
+ok 523 - node a = { a=
+ok 524 - node a = { a=,
+ok 525 - node a = { a=;
+ok 526 - node a = { 1, a="foo"
+ok 527 - node a = { 1, a="foo"; b={}, d=true; }
+ok 528 - node a = { [
+ok 529 - node a = { [1
+ok 530 - node a = { [1]
+ok 531 - node a = { [a]=
+ok 532 - node a = { ["foo"]="bar" }
+ok 533 - node a = { [1]=a, [2]=b, }
+ok 534 - node a = { true, a=1; ["foo"]="bar", }
+ok 535 - node a = { [] }
+ok 536 - node a = { a= }
+ok 537 - node luaparse is an object
+ok 538 - node luaparse.parse() is a function
+ok 539 - node luaparse.write() is a function
+ok 540 - node luaparse.end() is a function
+ok 541 - node should ignore comments if told to
+ok 542 - node should produce empty tree on empty input
+ok 543 - node should support waiting on input
+ok 544 - node should not scope by default
+ok 545 - node if
+ok 546 - node elseif
+ok 547 - node else
+ok 548 - node then
+ok 549 - node if then
+ok 550 - node if 1
+ok 551 - node if 1 then
+ok 552 - node if 1 else
+ok 553 - node if 1 then else
+ok 554 - node if 1 then elseif
+ok 555 - node if 1 then end
+ok 556 - node if 1 then local a end
+ok 557 - node if 1 then local a local b end
+ok 558 - node if 1 then local a; local b; end
+ok 559 - node if 1 then else end
+ok 560 - node if 1 then local a else local b end
+ok 561 - node if 1 then local a; else local b; end
+ok 562 - node if 1 then elseif 2
+ok 563 - node if 1 then elseif 2 then
+ok 564 - node if 1 then elseif 2 then end
+ok 565 - node if 1 then local a elseif 2 then local b end
+ok 566 - node if 1 then local a; elseif 2 then local b; end
+ok 567 - node if 1 then elseif 2 then else end
+ok 568 - node if 1 then else if 2 then end end
+ok 569 - node if 1 then else if 2 then end
+ok 570 - node if 1 then return end
+ok 571 - node if 1 then return return end
+ok 572 - node if 1 then end; if 1 then end;
+ok 573 - node if then end
+ok 574 - node if 1 then elseif then end
+ok 575 - node 2^3^2 is equal to 2^(3^2)
+ok 576 - node 2^3*4 is equal to (2^3)*4
+ok 577 - node 2^2^3 is equal to 2^(2^3)
+ok 578 - node 2^2^3^4 is equal to 2^(2^(3^4))
+ok 579 - node 2^2^3^4+1 is equal to 2^(2^(3^4))+1
+ok 580 - node 1*2/3 is equal to (1*2)/3
+ok 581 - node 1 + 1 * 2 > 3 is equal to ( 1 + ( 1 * 2 ) ) > 3
+ok 582 - node 1 < 2 and 2 < 1 is equal to (1 < 2) and (2 < 1)
+ok 583 - node 1 / 2 + 4 * 2 > 8 is equal to ((1 / 2) + (4 * 2)) > 8
+ok 584 - node 2 < 1 == true is equal to (2 < 1) == true
+ok 585 - node 2 < 1 + 1 == true is equal to (2 < (1 + 1)) == true
+ok 586 - node not 1 + 1 is equal to (not 1) + 1
+ok 587 - node not not 1 + 1 is equal to (not (not (1)) + 1)
+ok 588 - node 1 + 1 is equal to 1 + (1)
+ok 589 - node -x^2 is equal to -(x^2)
+ok 590 - node local foo = 1 do foo = 2 end
+ok 591 - node do local foo = 1 end foo = 2
+ok 592 - node do local foo = 1 end do foo = 2 end
+ok 593 - node local foo do foo = 1 do foo = 2 end end
+ok 594 - node local function foo() end foo()
+ok 595 - node local a = { a }
+ok 596 - node local b = { b, b.a, b[a], b:a() }
+ok 597 - node local b = {} local a = { b, b.a, b[a], b:a() }
+ok 598 - node local c local a = { b[c] }
+ok 599 - node local a = function() end a()
+ok 600 - node local a, b = 1, a
+ok 601 - node local a, b = 1, function() b = 2 end
+ok 602 - node local a (a):b():c()
+ok 603 - node local a, b for i, a, b in c do end
+ok 604 - node local a, b, c for i, a, b in c do end
 
 
-1..1208
-# tests 1208
-# pass  1208
+1..604
+# tests 604
+# pass  604
 
 # ok
     </div>
