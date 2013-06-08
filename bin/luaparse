@@ -4,6 +4,7 @@
 'use strict';
 
 var fs = require('fs')
+  , util = require('util')
   , luaparse = require('../')
   , args = process.argv.splice(2)
   , stdin = process.stdin
@@ -34,7 +35,7 @@ function usage() {
 
 if (isTTY && !args.length) {
   usage();
-  process.exit(1);
+  process.exit(0);
 }
 
 for (var i = 0, l = args.length; i < l; i++) {
@@ -61,15 +62,15 @@ for (var i = 0, l = args.length; i < l; i++) {
         continue;
       case 'v': case 'version':
         console.log("luaparse v%s", luaparse.version);
-        process.exit(1);
+        process.exit(0);
         break;
       case 'h': case 'help':
         usage();
-        process.exit(1);
+        process.exit(0);
         break;
       default:
         if (!quiet) console.log("Unknown option: %s", match[0]);
-        process.exit(1);
+        process.exit(2);
     }
   }
   // Default to autodetecting code or file.
@@ -79,13 +80,22 @@ for (var i = 0, l = args.length; i < l; i++) {
 }
 
 function done() {
+  var success = true;
   snippets.forEach(function(snippet) {
-    var ast = luaparse.parse(snippet, options);
+    var message, ast;
+    try {
+      ast = luaparse.parse(snippet, options);
+      message = beautify ? JSON.stringify(ast, null, '  ')
+        : JSON.stringify(ast);
+    } catch(e) {
+      message = util.format("%s: %s", snippet, e.message);
+      success = false;
+    }
 
-    if (quiet) return;
-    if (beautify) console.log(JSON.stringify(ast, null, '  '));
-    else console.log(JSON.stringify(ast));
+    if (!quiet) console.log(message);
   });
+
+  if (!success) process.exit(1);
 }
 
 if (stdin.isTTY) done();
