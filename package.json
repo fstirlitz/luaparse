@@ -18,16 +18,12 @@
       "url": "https://github.com/oxyc/luaparse/blob/master/LICENSE"
     }
   ],
-  "main": "./index",
-  "bin": {
-    "luaparse": "./bin/luaparse"
-  },
+  "main": "luaparse.js",
+  "bin": "bin/luaparse",
+  "man": "docs/luaparse.1",
   "scripts": {
     "test": "make test",
     "quality-assurance": "make qa"
-  },
-  "engines": {
-    "node": ">=0.8.0"
   },
   "keywords": [
     "lua",
@@ -35,9 +31,6 @@
     "parsing"
   ],
   "devDependencies": {
-    "mocha": "~1.8.2",
-    "expect.js": "~0.2.0",
-    "mocha-istanbul": "git://github.com/oxyc/mocha-istanbul.git#json",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.6",
     "grunt-contrib-concat": "~0.1.3",

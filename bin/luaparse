@@ -18,17 +18,17 @@ function usage() {
   console.log([
       "Usage: luaparse [option]... [file|code]..."
     , "\nOptions:"
-    , "  -c|--code [code]"
-    , "  -f|--file [file]"
-    , "  -b|--beautify"
-    , "  -q|--quiet"
-    , "  --[no]-comments"
-    , "  --[no]-scope"
+    , "  -c|--code [code]   parse code snippet"
+    , "  -f|--file [file]   parse from file"
+    , "  -b|--beautify      output an indenteted AST"
+    , "  --[no]-comments    ignore comments. defaults to false"
+    , "  --[no]-scope       ignore variable scope. defaults to true"
+    , "  -q|--quiet         suppress output"
     , "  -h|--help"
     , "  -v|--version"
     , "\nExamples:"
     , "  luaparse --no-comments -c \"locale foo = \\\"bar\\\""
-    , "  luaparse foo.lua"
+    , "  luaparse foo.lua bar.lua"
   ].join("\n"));
 }
 
