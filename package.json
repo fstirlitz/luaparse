@@ -47,5 +47,16 @@
     "falafel": "~0.2.0",
     "spec": "git://github.com/kitcambridge/spec.git#gh-pages",
     "testem": "~0.2.96"
+  },
+  "testling": {
+    "html" : "test/index.html#testling",
+    "browsers": [
+      "ie/6..latest",
+      "firefox/latest",
+      "chrome/latest",
+      "safari/latest",
+      "opera/latest",
+      "iphone/latest"
+    ]
   }
 }
