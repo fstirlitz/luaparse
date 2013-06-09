@@ -12,4 +12,4 @@ before_install:
   - "PACKAGE=v0.3.2; wget https://github.com/280north/narwhal/archive/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip"
   - "PACKAGE=narwhal-0.3.2; sudo ln -s /opt/$PACKAGE/bin/narwhal /usr/bin/narwhal"
   # If the enviroment stores rt.jar in a different directory, find it and symlink the directory
-  - "PREFIX=/usr/lib/jvm; if [ ! -d $PREFIX/java-6-openjdk ]; then for d in $PREFIX/*; do if [ -e $d/jre/lib/rt.jar ]; then sudo ln -s $d $PREFIX/java-6-openjdk; break; done"
+  - "PREFIX=/usr/lib/jvm; if [ ! -d $PREFIX/java-6-openjdk ]; then for d in $PREFIX/*; do if [ -e $d/jre/lib/rt.jar ]; then sudo ln -s $d $PREFIX/java-6-openjdk; break; fi; done; fi"
