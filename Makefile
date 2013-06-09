@@ -41,10 +41,10 @@ test-node:
 	@node test/runner.js --console
 
 test:
-	@$(LIB)/testem/testem.js ci
+	@$(BIN)/testem ci
 
 testem-engines:
-	@$(LIB)/testem/testem.js -l PhantomJS,node,narwhal,ringo,rhino,rhino1.7R5
+	@$(BIN)/testem -l PhantomJS,node,narwhal,ringo,rhino,rhino1.7R5
 
 # Scaffold all test files in the scaffolding dir.
 scaffold-tests:
