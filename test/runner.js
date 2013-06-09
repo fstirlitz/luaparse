@@ -197,6 +197,7 @@
 
   if (isTestem) testSuite.on('all', testemReporter);
 
+  if (isTestling) console.log('TAP version 13');
   testSuite.on('all', reporter);
 
   // Add all tests. In browsers the specs are expected to exist already.
