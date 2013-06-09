@@ -22,8 +22,7 @@
   "bin": "bin/luaparse",
   "man": "docs/luaparse.1",
   "scripts": {
-    "test": "make test",
-    "quality-assurance": "make qa"
+    "test": "make qa"
   },
   "keywords": [
     "lua",
