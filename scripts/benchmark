@@ -36,10 +36,18 @@ files.forEach(function(file) {
 });
 
 Object.keys(suites).forEach(function(file) {
-  var source = suites[file];
-  suite.add(file, function() {
-    luaparse.parse(source);
-  }, { minSamples: minSamples, minTime: minTime });
+  var source = suites[file]
+    , settingsSets = {
+      'defaults': { },
+      'scope: true': { scope: true },
+      'comments: false': { comments: false },
+    };
+
+  Object.keys(settingsSets).forEach(function(set) {
+    suite.add(file + ' ' + set, function() {
+      luaparse.parse(source, settingsSets[set]);
+    }, { minSamples: minSamples, minTime: minTime });
+  });
 });
 
 suite.on('cycle', function(event) {
