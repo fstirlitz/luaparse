@@ -46,7 +46,7 @@
       , 'while'
     ]
     , output = (function() {
-      if (typeof console !== 'undefined' && console.log) return function(value) { console.log(value); };
+      if (isTestling || (typeof console !== 'undefined' && console.log)) return function(value) { console.log(value); };
       // In browsers, the global `print` function prints the current page.
       else if (typeof print === 'function' && !isBrowser) return print;
       else return function(value) { };
