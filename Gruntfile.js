@@ -43,7 +43,7 @@ module.exports = function (grunt) {
     jshint: {
       options: { jshintrc: '.jshintrc' },
       browser: {
-        options: { browser: true, globals: { define: true } },
+        options: { browser: true, globals: { define: true, global: true, module: true } },
         src: [
           'luaparse.js',
           'examples/**/*.js',

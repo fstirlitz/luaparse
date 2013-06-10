@@ -114,7 +114,7 @@ complexity-analysis:
 		luaparse.js
 
 coverage-analysis: coverage
-	@$(BIN)/istanbul check-coverage --statements -3 --branches -8 --functions -0 \
+	@$(BIN)/istanbul check-coverage --statements -3 --branches -10 --functions -0 \
 		docs/coverage/coverage.json
 
 qa:
