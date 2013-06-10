@@ -1,13 +1,35 @@
-/*global exports:true require:true define:true console:true */
+/*global exports:true module:true require:true define:true global:true */
 
 (function (root, name, factory) {
   'use strict';
 
-  if (typeof exports !== 'undefined') {
-    factory(exports);
-  } else if (typeof define === 'function' && define.amd) {
+  var freeExports = typeof exports === 'object' && exports
+    // While CommonJS defines `module` as an object, component define it as a
+    // function
+    , freeModule = (typeof module === 'object' || typeof module === 'function') &&
+        module && module.exports === freeExports && module;
+
+  // Detect free variable `global`, from Node.js or Browserified code, and use
+  // it as `root`
+  var freeGlobal = typeof global === 'object' && global;
+  if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)
+    root = freeGlobal;
+
+  // Some AMD build optimizers, like r.js, check for specific condition
+  // patterns like the following:
+  if (typeof define === 'function' && define.amd) {
     define(['exports'], factory);
-  } else {
+  }
+  // check for `exports` after `define` in case a build optimizer adds an
+  // `exports` object
+  else if (freeExports && !freeExports.nodeType) {
+    // in Node.js or RingoJS v0.8.0+
+    if (freeModule) factory(freeModule.exports);
+    // in Narwhal or RingoJS v0.7.0-
+    else factory(freeExports);
+  }
+  // in a browser or Rhino
+  else {
     factory((root[name] = {}));
   }
 }(this, 'luaparse', function (exports) {
