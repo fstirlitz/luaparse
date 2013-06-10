@@ -30,16 +30,127 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="comment">/*global exports:true require:true define:true console:true */</span>
+            <div class="content"><div class='highlight'><pre><span class="comment">/*global exports:true module:true require:true define:true global:true */</span>
 
 (<span class="function"><span class="keyword">function</span> <span class="params">(root, name, factory)</span> {</span>
   <span class="string">'use strict'</span>;
 
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> exports !== <span class="string">'undefined'</span>) {
-    factory(exports);
-  } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">'function'</span> &amp;&amp; define.amd) {
+  <span class="keyword">var</span> freeExports = <span class="string">'object'</span> === <span class="keyword">typeof</span> exports &amp;&amp; exports</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>While CommonJS defines <code>module</code> as an object, component define it as a
+function</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    , freeModule = (<span class="keyword">typeof</span> module === <span class="string">'object'</span> || <span class="keyword">typeof</span> module === <span class="string">'function'</span>) &amp;&amp;
+        module &amp;&amp; module.exports === freeExports &amp;&amp; module;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Detect free variable <code>global</code>, from Node.js or Browserified code, and use
+it as <code>root</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> freeGlobal = <span class="string">'object'</span> === <span class="keyword">typeof</span> global &amp;&amp; global;
+  <span class="keyword">if</span> (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)
+    root = freeGlobal;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Some AMD build optimizers, like r.js, check for specific condition
+patterns like the following:</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">if</span> (<span class="string">'function'</span> === <span class="keyword">typeof</span> define &amp;&amp; define.amd) {
     define([<span class="string">'exports'</span>], factory);
-  } <span class="keyword">else</span> {
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>check for <code>exports</code> after <code>define</code> in case a build optimizer adds an
+<code>exports</code> object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">else</span> <span class="keyword">if</span> (freeExports &amp;&amp; !freeExports.nodeType) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>in Node.js or RingoJS v0.8.0+</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (freeModule) factory(freeModule.exports);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>in Narwhal or RingoJS v0.7.0-</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">else</span> factory(freeExports);
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>in a browser or Rhino</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">else</span> {
     factory((root[name] = {}));
   }
 }(<span class="keyword">this</span>, <span class="string">'luaparse'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(exports)</span> {</span>
@@ -52,11 +163,11 @@
         </li>
         
         
-        <li id="section-2">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Options can be set either globally on the parser object through
 defaultOptions, or during the parse call.</p>
@@ -68,11 +179,11 @@ defaultOptions, or during the parse call.</p>
         </li>
         
         
-        <li id="section-3">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Explicitly tell the parser when the input ends.</p>
 
@@ -83,11 +194,11 @@ defaultOptions, or during the parse call.</p>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Store comments as an array in the chunk object.</p>
 
@@ -98,11 +209,11 @@ defaultOptions, or during the parse call.</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Track identifier scopes by adding an isLocal attribute to each
 identifier-node.</p>
@@ -115,11 +226,11 @@ identifier-node.</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>The available tokens expressed as enum flags so they can be checked with
 bitwise operations.</p>
@@ -133,11 +244,11 @@ bitwise operations.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>As this parser is a bit different from luas own, the error messages
 will be different in some situations.</p>
@@ -155,11 +266,11 @@ will be different in some situations.</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <h3>Abstract Syntax Tree</h3>
 <p>The default AST structure is inspired by the Mozilla Parser API but can
@@ -418,11 +529,11 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h2>Helpers</h2>
 
@@ -431,20 +542,20 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> slice = Array.prototype.slice
     , toString = Object.prototype.toString
-    , indexOf = <span class="function"><span class="keyword">function</span> <span class="title">indexOf</span><span class="params">(element)</span> {</span>
-      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, length = <span class="keyword">this</span>.length; i &lt; length; i++) {
-        <span class="keyword">if</span> (<span class="keyword">this</span>[i] === element) <span class="keyword">return</span> i;
+    , indexOf = <span class="function"><span class="keyword">function</span> <span class="title">indexOf</span><span class="params">(array, element)</span> {</span>
+      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, length = array.length; i &lt; length; i++) {
+        <span class="keyword">if</span> (array[i] === element) <span class="keyword">return</span> i;
       }
       <span class="keyword">return</span> -<span class="number">1</span>;
     };</pre></div></div>
@@ -452,11 +563,11 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>A sprintf implementation using %index (beginning at 1) to input
 arguments in the format string.</p>
@@ -477,11 +588,11 @@ sprintf(&#39;Unexpected %2 in %1.&#39;, &#39;token&#39;, &#39;function&#39;);</c
         </li>
         
         
-        <li id="section-12">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Returns a new object with the properties from all objectes passed as
 arguments. Last argument takes precedence.</p>
@@ -507,11 +618,11 @@ arguments. Last argument takes precedence.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <h3>Error functions</h3>
 <h4>Raise an exception.</h4>
@@ -548,11 +659,11 @@ raise(token, &quot;expected %1 near %2&quot;, &#39;[&#39;, token.value);</code><
         </li>
         
         
-        <li id="section-14">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap for-h4">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <h4>Raise an unexpected token error.</h4>
 <p>Example:</p>
@@ -568,11 +679,11 @@ raiseUnexpectedToken(&#39;&lt;name&gt;&#39;, token);</code></pre>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap for-h4">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <h4>Raise a general unexpected error</h4>
 <p>Usage should pass either a token object or a symbol string which was
@@ -607,11 +718,11 @@ unexpected(token);</code></pre>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <h2>Lexer</h2>
 
@@ -620,11 +731,11 @@ unexpected(token);</code></pre>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>The lexer, or the tokenizer reads the input string character by character
 and derives a token left-right. To be as efficient as possible the lexer
@@ -657,11 +768,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Skip comments beginning with --</p>
 
@@ -686,11 +797,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Memorize the range index where the token begins.</p>
 
@@ -706,11 +817,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>0-9</p>
 
@@ -725,11 +836,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>If the dot is followed by a digit it&#39;s a float.</p>
 
@@ -767,11 +878,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Check for a multiline string, they begin with [= or [[</p>
 
@@ -783,11 +894,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>* / ^ % , { } ] ( ) ; # - +</p>
 
@@ -804,11 +915,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Whitespace has no semantic meaning in lua so simply skip ahead while
 tracking the encounted newlines. Newlines are also tracked in all
@@ -833,11 +944,11 @@ token functions where multiline values are allowed.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Identifiers, keywords, booleans and nil all look the same syntax wise. We
 simply go through them one by one and defaulting to an identifier if no
@@ -851,11 +962,11 @@ previous case matched.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Slicing the input string is prefered before string concatenation in a
 loop for performance reasons.</p>
@@ -868,11 +979,11 @@ loop for performance reasons.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Decide on the token type and possibly cast the value.</p>
 
@@ -902,11 +1013,11 @@ loop for performance reasons.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Once a punctuator reaches this function it should already have been
 validated so we simply return it as a token.</p>
@@ -927,11 +1038,11 @@ validated so we simply return it as a token.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>A vararg literal consists of three dots.</p>
 
@@ -951,11 +1062,11 @@ validated so we simply return it as a token.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Find the string literal by matching the delimiter marks used.</p>
 
@@ -978,11 +1089,11 @@ validated so we simply return it as a token.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>EOF or <code>\n</code> terminates a string literal. If we haven&#39;t found the
 ending delimiter by now, raise an exception.</p>
@@ -1008,11 +1119,11 @@ ending delimiter by now, raise an exception.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Expect a multiline string literal and return it as a regular string
 literal, if it doesn&#39;t validate into a valid multiline string, throw an
@@ -1026,11 +1137,11 @@ exception.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Fail if it&#39;s not a multiline literal.</p>
 
@@ -1050,11 +1161,11 @@ exception.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Numeric literals will be returned as floating-point numbers instead of
 strings. The raw value should be retrieved from slicing the input string
@@ -1082,11 +1193,11 @@ later on in the process.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Lua hexadecimals have an optional fraction part and an optional binary
 exoponent part. These are not included in JavaScript so we will compute
@@ -1110,11 +1221,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>A minimum of one hex digit is required.</p>
 
@@ -1128,11 +1239,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Convert the hexadecimal digit to base 10.</p>
 
@@ -1143,11 +1254,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Fraction part i optional.</p>
 
@@ -1162,11 +1273,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Empty fraction parts should default to 0, others should be converted
 0.x form so we can use summation at the end.</p>
@@ -1180,11 +1291,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Binary exponents are optional</p>
 
@@ -1196,11 +1307,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Sign part is optional and defaults to 1 (positive).</p>
 
@@ -1214,11 +1325,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>The binary exponent sign requires a decimal digit.</p>
 
@@ -1233,11 +1344,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>Calculate the binary exponent of the number.</p>
 
@@ -1252,11 +1363,11 @@ Number := ( Digit + Fraction ) * BinaryExp</code></pre>
         </li>
         
         
-        <li id="section-44">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>Decimal numbers are exactly the same in Lua and in JavaScript, because of
 this we check where the token ends and then parse it with native
@@ -1270,11 +1381,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-45">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>Fraction part is optional</p>
 
@@ -1286,11 +1397,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-46">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>Fraction part defaults to 0</p>
 
@@ -1302,11 +1413,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Exponent part is optional.</p>
 
@@ -1318,11 +1429,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <p>Sign part is optional.</p>
 
@@ -1333,11 +1444,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-56">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
               <p>An exponent is required to contain at least one decimal digit.</p>
 
@@ -1355,11 +1466,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-57">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-57">&#182;</a>
               </div>
               <p>Translate escape sequences to the actual characters.</p>
 
@@ -1372,11 +1483,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-58">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-58">&#182;</a>
               </div>
               <p>Lua allow the following escape sequences.
 We don&#39;t escape the bell sequence.</p>
@@ -1393,11 +1504,11 @@ We don&#39;t escape the bell sequence.</p>
         </li>
         
         
-        <li id="section-52">
+        <li id="section-59">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
               <p>Skips the following span of white-space.</p>
 
@@ -1408,11 +1519,11 @@ We don&#39;t escape the bell sequence.</p>
         </li>
         
         
-        <li id="section-53">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
               <p>Byte representation should for now be returned as is.</p>
 
@@ -1423,11 +1534,11 @@ We don&#39;t escape the bell sequence.</p>
         </li>
         
         
-        <li id="section-54">
+        <li id="section-61">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
               <p>\xXX, where XX is a sequence of exactly two hexadecimal digits</p>
 
@@ -1440,11 +1551,11 @@ We don&#39;t escape the bell sequence.</p>
         </li>
         
         
-        <li id="section-55">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <p>Return it as is, without translating the byte.</p>
 
@@ -1458,11 +1569,11 @@ We don&#39;t escape the bell sequence.</p>
         </li>
         
         
-        <li id="section-56">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>\ddd, where ddd is a sequence of up to three decimal digits.</p>
 
@@ -1476,11 +1587,11 @@ We don&#39;t escape the bell sequence.</p>
         </li>
         
         
-        <li id="section-57">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>Simply return the \ as is, it&#39;s not escaping any sequence.</p>
 
@@ -1493,11 +1604,11 @@ We don&#39;t escape the bell sequence.</p>
         </li>
         
         
-        <li id="section-58">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>Comments begin with -- after which it will be decided if they are
 multiline comments or not.</p>
@@ -1521,11 +1632,11 @@ literals so we reuse the functionality.</p>
         </li>
         
         
-        <li id="section-59">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>This wasn&#39;t a multiline comment after all.</p>
 
@@ -1538,11 +1649,11 @@ literals so we reuse the functionality.</p>
         </li>
         
         
-        <li id="section-60">
+        <li id="section-67">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-60">&#182;</a>
+                <a class="pilcrow" href="#section-67">&#182;</a>
               </div>
               <p>Scan until next line as long as it&#39;s not a multiline comment.</p>
 
@@ -1568,11 +1679,11 @@ literals so we reuse the functionality.</p>
         </li>
         
         
-        <li id="section-61">
+        <li id="section-68">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-61">&#182;</a>
+                <a class="pilcrow" href="#section-68">&#182;</a>
               </div>
               <p>Read a multiline string by calculating the depth of <code>=</code> characters and
 then appending until an equal depth is found.</p>
@@ -1590,11 +1701,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-62">
+        <li id="section-69">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-69">&#182;</a>
               </div>
               <p>Calculate the depth of the comment.</p>
 
@@ -1605,11 +1716,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-63">
+        <li id="section-70">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
               <p>Exit, this is not a long string afterall.</p>
 
@@ -1622,11 +1733,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-64">
+        <li id="section-71">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
+                <a class="pilcrow" href="#section-71">&#182;</a>
               </div>
               <p>If the first character is a newline, ignore it and begin on next line.</p>
 
@@ -1644,11 +1755,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-65">
+        <li id="section-72">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-65">&#182;</a>
+                <a class="pilcrow" href="#section-72">&#182;</a>
               </div>
               <p>We have to keep track of newlines as <code>skipWhiteSpace()</code> does not get
 to scan this part.</p>
@@ -1663,11 +1774,11 @@ to scan this part.</p>
         </li>
         
         
-        <li id="section-66">
+        <li id="section-73">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
               <p>Once the delimiter is found, iterate through the depth count and see
 if it matches.</p>
@@ -1685,11 +1796,11 @@ if it matches.</p>
         </li>
         
         
-        <li id="section-67">
+        <li id="section-74">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-74">&#182;</a>
               </div>
               <p>We reached the end of the multiline string. Get out now.</p>
 
@@ -1706,11 +1817,11 @@ if it matches.</p>
         </li>
         
         
-        <li id="section-68">
+        <li id="section-75">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-75">&#182;</a>
               </div>
               <h2>Lex functions and helpers.</h2>
 <p>Read the next token.</p>
@@ -1727,11 +1838,11 @@ reading in the new lookahead token.</p>
         </li>
         
         
-        <li id="section-69">
+        <li id="section-76">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
+                <a class="pilcrow" href="#section-76">&#182;</a>
               </div>
               <p>Consume a token if its value matches. Once consumed or not, return the
 success of the operation.</p>
@@ -1749,11 +1860,11 @@ success of the operation.</p>
         </li>
         
         
-        <li id="section-70">
+        <li id="section-77">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-70">&#182;</a>
+                <a class="pilcrow" href="#section-77">&#182;</a>
               </div>
               <p>Expect the next token value to match. If not, throw an exception.</p>
 
@@ -1767,11 +1878,11 @@ success of the operation.</p>
         </li>
         
         
-        <li id="section-71">
+        <li id="section-78">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-71">&#182;</a>
+                <a class="pilcrow" href="#section-78">&#182;</a>
               </div>
               <h3>Validation functions</h3>
 
@@ -1796,11 +1907,11 @@ success of the operation.</p>
         </li>
         
         
-        <li id="section-72">
+        <li id="section-79">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-72">&#182;</a>
+                <a class="pilcrow" href="#section-79">&#182;</a>
               </div>
               <p>From <a href="http://www.lua.org/manual/5.2/manual.html#8.1">Lua 5.2</a> onwards
 identifiers cannot use locale-dependet letters.</p>
@@ -1818,11 +1929,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-73">
+        <li id="section-80">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-73">&#182;</a>
+                <a class="pilcrow" href="#section-80">&#182;</a>
               </div>
               <p><a href="http://www.lua.org/manual/5.2/manual.html#3.1">3.1 Lexical Conventions</a></p>
 <p><code>true</code>, <code>false</code> and <code>nil</code> will not be considered keywords, but literals.</p>
@@ -1856,11 +1967,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-74">
+        <li id="section-81">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-74">&#182;</a>
+                <a class="pilcrow" href="#section-81">&#182;</a>
               </div>
               <p>@TODO this needs to be rethought.</p>
 
@@ -1879,11 +1990,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-75">
+        <li id="section-82">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-75">&#182;</a>
+                <a class="pilcrow" href="#section-82">&#182;</a>
               </div>
               <p>Check if the token syntactically closes a block.</p>
 
@@ -1904,11 +2015,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-76">
+        <li id="section-83">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-76">&#182;</a>
+                <a class="pilcrow" href="#section-83">&#182;</a>
               </div>
               <h2>Scope</h2>
 
@@ -1917,11 +2028,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-77">
+        <li id="section-84">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-77">&#182;</a>
+                <a class="pilcrow" href="#section-84">&#182;</a>
               </div>
               <p>Store each block scope as a an array of identifier names. Each scope is
 stored in an FILO-array.</p>
@@ -1933,11 +2044,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-78">
+        <li id="section-85">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-78">&#182;</a>
+                <a class="pilcrow" href="#section-85">&#182;</a>
               </div>
               <p>The current scope index</p>
 
@@ -1948,11 +2059,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-79">
+        <li id="section-86">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-79">&#182;</a>
+                <a class="pilcrow" href="#section-86">&#182;</a>
               </div>
               <p>A list of all global identifier nodes.</p>
 
@@ -1963,11 +2074,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-80">
+        <li id="section-87">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-80">&#182;</a>
+                <a class="pilcrow" href="#section-87">&#182;</a>
               </div>
               <p>A list of all global identifiers names used for faster lookup.
 @TODO benchmark, with exposing the globals this entire implementation
@@ -1980,11 +2091,11 @@ should probably change.</p>
         </li>
         
         
-        <li id="section-81">
+        <li id="section-88">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-81">&#182;</a>
+                <a class="pilcrow" href="#section-88">&#182;</a>
               </div>
               <p>Create a new scope inheriting all declarations from the previous scope.</p>
 
@@ -1997,11 +2108,11 @@ should probably change.</p>
         </li>
         
         
-        <li id="section-82">
+        <li id="section-89">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-82">&#182;</a>
+                <a class="pilcrow" href="#section-89">&#182;</a>
               </div>
               <p>Exit and remove the current scope.</p>
 
@@ -2015,29 +2126,29 @@ should probably change.</p>
         </li>
         
         
-        <li id="section-83">
+        <li id="section-90">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-83">&#182;</a>
+                <a class="pilcrow" href="#section-90">&#182;</a>
               </div>
               <p>Add identifier name to the current scope if it doesnt already exist.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">scopeIdentifierName</span><span class="params">(name)</span> {</span>
-    <span class="keyword">if</span> (-<span class="number">1</span> !== indexOf.call(scopes[scopeDepth], name)) <span class="keyword">return</span>;
+    <span class="keyword">if</span> (-<span class="number">1</span> !== indexOf(scopes[scopeDepth], name)) <span class="keyword">return</span>;
     scopes[scopeDepth].push(name);
   }</pre></div></div>
             
         </li>
         
         
-        <li id="section-84">
+        <li id="section-91">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-84">&#182;</a>
+                <a class="pilcrow" href="#section-91">&#182;</a>
               </div>
               <p>Add identifier to the current scope</p>
 
@@ -2051,11 +2162,11 @@ should probably change.</p>
         </li>
         
         
-        <li id="section-85">
+        <li id="section-92">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-85">&#182;</a>
+                <a class="pilcrow" href="#section-92">&#182;</a>
               </div>
               <p>Attach scope information to node. If the node is global, store it in the
 globals array so we can return the information to the user.</p>
@@ -2063,7 +2174,7 @@ globals array so we can return the information to the user.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">attachScope</span><span class="params">(node, isLocal)</span> {</span>
-    <span class="keyword">if</span> (!isLocal &amp;&amp; -<span class="number">1</span> === indexOf.call(globalNames, node.name)) {
+    <span class="keyword">if</span> (!isLocal &amp;&amp; -<span class="number">1</span> === indexOf(globalNames, node.name)) {
       globalNames.push(node.name);
       globals.push(node);
     }
@@ -2074,28 +2185,28 @@ globals array so we can return the information to the user.</p>
         </li>
         
         
-        <li id="section-86">
+        <li id="section-93">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-86">&#182;</a>
+                <a class="pilcrow" href="#section-93">&#182;</a>
               </div>
               <p>Is the identifier name available in this scope.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">scopeHasName</span><span class="params">(name)</span> {</span>
-    <span class="keyword">return</span> (-<span class="number">1</span> !== indexOf.call(scopes[scopeDepth], name));
+    <span class="keyword">return</span> (-<span class="number">1</span> !== indexOf(scopes[scopeDepth], name));
   }</pre></div></div>
             
         </li>
         
         
-        <li id="section-87">
+        <li id="section-94">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-87">&#182;</a>
+                <a class="pilcrow" href="#section-94">&#182;</a>
               </div>
               <h2>Parse functions</h2>
 
@@ -2104,11 +2215,11 @@ globals array so we can return the information to the user.</p>
         </li>
         
         
-        <li id="section-88">
+        <li id="section-95">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-88">&#182;</a>
+                <a class="pilcrow" href="#section-95">&#182;</a>
               </div>
               <p>Chunk is the main program object. Syntactically it&#39;s the same as a block.</p>
 <pre><code>chunk ::= block</code></pre>
@@ -2125,11 +2236,11 @@ globals array so we can return the information to the user.</p>
         </li>
         
         
-        <li id="section-89">
+        <li id="section-96">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-89">&#182;</a>
+                <a class="pilcrow" href="#section-96">&#182;</a>
               </div>
               <p>A block contains a list of statements with an optional return statement
 as its last statement.</p>
@@ -2144,11 +2255,11 @@ as its last statement.</p>
         </li>
         
         
-        <li id="section-90">
+        <li id="section-97">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-90">&#182;</a>
+                <a class="pilcrow" href="#section-97">&#182;</a>
               </div>
               <p>Each block creates a new scope.</p>
 
@@ -2161,11 +2272,11 @@ as its last statement.</p>
         </li>
         
         
-        <li id="section-91">
+        <li id="section-98">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-91">&#182;</a>
+                <a class="pilcrow" href="#section-98">&#182;</a>
               </div>
               <p>Return has to be the last statement in a block.</p>
 
@@ -2180,11 +2291,11 @@ as its last statement.</p>
         </li>
         
         
-        <li id="section-92">
+        <li id="section-99">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-92">&#182;</a>
+                <a class="pilcrow" href="#section-99">&#182;</a>
               </div>
               <p>Statements are only added if they are returned, this allows us to
 ignore some statements, such as EmptyStatement.</p>
@@ -2199,11 +2310,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-93">
+        <li id="section-100">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-93">&#182;</a>
+                <a class="pilcrow" href="#section-100">&#182;</a>
               </div>
               <p>Doesn&#39;t really need an ast node</p>
 
@@ -2215,11 +2326,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-94">
+        <li id="section-101">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-94">&#182;</a>
+                <a class="pilcrow" href="#section-101">&#182;</a>
               </div>
               <p>There are two types of statements, simple and compound.</p>
 <pre><code>statement ::= break | goto | do | while | repeat | return
@@ -2253,11 +2364,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-95">
+        <li id="section-102">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-95">&#182;</a>
+                <a class="pilcrow" href="#section-102">&#182;</a>
               </div>
               <p>When a <code>;</code> is encounted, simply eat it without storing it.</p>
 
@@ -2271,11 +2382,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-96">
+        <li id="section-103">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-96">&#182;</a>
+                <a class="pilcrow" href="#section-103">&#182;</a>
               </div>
               <h2>Statements</h2>
 <pre><code>label ::= &#39;::&#39; Name &#39;::&#39;</code></pre>
@@ -2298,11 +2409,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-97">
+        <li id="section-104">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-97">&#182;</a>
+                <a class="pilcrow" href="#section-104">&#182;</a>
               </div>
               <pre><code>break ::= &#39;break&#39;</code></pre>
 
@@ -2315,11 +2426,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-98">
+        <li id="section-105">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-98">&#182;</a>
+                <a class="pilcrow" href="#section-105">&#182;</a>
               </div>
               <pre><code>goto ::= &#39;goto&#39; Name</code></pre>
 
@@ -2336,11 +2447,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-99">
+        <li id="section-106">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-99">&#182;</a>
+                <a class="pilcrow" href="#section-106">&#182;</a>
               </div>
               <pre><code>do ::= &#39;do&#39; block &#39;end&#39;</code></pre>
 
@@ -2355,11 +2466,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-100">
+        <li id="section-107">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-100">&#182;</a>
+                <a class="pilcrow" href="#section-107">&#182;</a>
               </div>
               <pre><code>while ::= &#39;while&#39; exp &#39;do&#39; block &#39;end&#39;</code></pre>
 
@@ -2376,11 +2487,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-101">
+        <li id="section-108">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-101">&#182;</a>
+                <a class="pilcrow" href="#section-108">&#182;</a>
               </div>
               <pre><code>repeat ::= &#39;repeat&#39; block &#39;until&#39; exp</code></pre>
 
@@ -2396,11 +2507,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-102">
+        <li id="section-109">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-102">&#182;</a>
+                <a class="pilcrow" href="#section-109">&#182;</a>
               </div>
               <pre><code>retstat ::= &#39;return&#39; [exp {&#39;,&#39; exp}] [&#39;;&#39;]</code></pre>
 
@@ -2424,11 +2535,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-103">
+        <li id="section-110">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-103">&#182;</a>
+                <a class="pilcrow" href="#section-110">&#182;</a>
               </div>
               <pre><code>if ::= &#39;if&#39; exp &#39;then&#39; block {elif} [&#39;else&#39; block] &#39;end&#39;
 elif ::= &#39;elseif&#39; exp &#39;then&#39; block</code></pre>
@@ -2464,11 +2575,11 @@ elif ::= &#39;elseif&#39; exp &#39;then&#39; block</code></pre>
         </li>
         
         
-        <li id="section-104">
+        <li id="section-111">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-104">&#182;</a>
+                <a class="pilcrow" href="#section-111">&#182;</a>
               </div>
               <p>There are two types of for statements, generic and numeric.</p>
 <pre><code>for ::= Name &#39;=&#39; exp &#39;,&#39; exp [&#39;,&#39; exp] &#39;do&#39; block &#39;end&#39;
@@ -2485,11 +2596,11 @@ explist ::= exp {&#39;,&#39; exp}</code></pre>
         </li>
         
         
-        <li id="section-105">
+        <li id="section-112">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-105">&#182;</a>
+                <a class="pilcrow" href="#section-112">&#182;</a>
               </div>
               <p>The start-identifier is local.</p>
 
@@ -2500,11 +2611,11 @@ explist ::= exp {&#39;,&#39; exp}</code></pre>
         </li>
         
         
-        <li id="section-106">
+        <li id="section-113">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-106">&#182;</a>
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               <p>If the first expression is followed by a <code>=</code> punctuator, this is a
 Numeric For Statement.</p>
@@ -2516,11 +2627,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-107">
+        <li id="section-114">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-107">&#182;</a>
+                <a class="pilcrow" href="#section-114">&#182;</a>
               </div>
               <p>Start expression</p>
 
@@ -2532,11 +2643,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-108">
+        <li id="section-115">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-108">&#182;</a>
+                <a class="pilcrow" href="#section-115">&#182;</a>
               </div>
               <p>End expression</p>
 
@@ -2547,11 +2658,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-109">
+        <li id="section-116">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-109">&#182;</a>
+                <a class="pilcrow" href="#section-116">&#182;</a>
               </div>
               <p>Optional step expression</p>
 
@@ -2563,31 +2674,32 @@ Numeric For Statement.</p>
       body = parseBlock();
       expect(<span class="string">'end'</span>);
 
-      <span class="keyword">return</span> ast.forNumericStatement(variable, start, end, step, body);</pre></div></div>
+      <span class="keyword">return</span> ast.forNumericStatement(variable, start, end, step, body);
+    }</pre></div></div>
             
         </li>
         
         
-        <li id="section-110">
+        <li id="section-117">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-110">&#182;</a>
+                <a class="pilcrow" href="#section-117">&#182;</a>
               </div>
               <p>If not, it&#39;s a Generic For Statement</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    } <span class="keyword">else</span> {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">else</span> {</pre></div></div>
             
         </li>
         
         
-        <li id="section-111">
+        <li id="section-118">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-111">&#182;</a>
+                <a class="pilcrow" href="#section-118">&#182;</a>
               </div>
               <p>The namelist can contain one or more identifiers.</p>
 
@@ -2600,11 +2712,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-112">
+        <li id="section-119">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-112">&#182;</a>
+                <a class="pilcrow" href="#section-119">&#182;</a>
               </div>
               <p>Each variable in the namelist is locally scoped.</p>
 
@@ -2619,11 +2731,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-113">
+        <li id="section-120">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-113">&#182;</a>
+                <a class="pilcrow" href="#section-120">&#182;</a>
               </div>
               <p>One or more expressions in the explist.</p>
 
@@ -2645,11 +2757,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-114">
+        <li id="section-121">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-114">&#182;</a>
+                <a class="pilcrow" href="#section-121">&#182;</a>
               </div>
               <p>Local statements can either be variable assignments or function
 definitions. If a function definition is found, it will be delegated to
@@ -2684,11 +2796,11 @@ child.</p>
         </li>
         
         
-        <li id="section-115">
+        <li id="section-122">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-115">&#182;</a>
+                <a class="pilcrow" href="#section-122">&#182;</a>
               </div>
               <p>Declarations doesn&#39;t exist before the statement has been evaluated.
 Therefore assignments can&#39;t use their declarator. And the identifiers
@@ -2711,11 +2823,11 @@ shouldn&#39;t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-116">
+        <li id="section-123">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-116">&#182;</a>
+                <a class="pilcrow" href="#section-123">&#182;</a>
               </div>
               <p>MemberExpressions are not allowed in local function statements.</p>
 
@@ -2730,11 +2842,11 @@ shouldn&#39;t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-117">
+        <li id="section-124">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-117">&#182;</a>
+                <a class="pilcrow" href="#section-124">&#182;</a>
               </div>
               <pre><code>assignment ::= varlist &#39;=&#39; explist
 varlist ::= prefixexp {&#39;,&#39; prefixexp}
@@ -2750,11 +2862,11 @@ callexp ::= prefixexp args | prefixexp &#39;:&#39; Name args</code></pre>
         </li>
         
         
-        <li id="section-118">
+        <li id="section-125">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-118">&#182;</a>
+                <a class="pilcrow" href="#section-125">&#182;</a>
               </div>
               <p>Keep a reference to the previous token for better error messages in case
 of invalid statement</p>
@@ -2789,11 +2901,11 @@ of invalid statement</p>
         </li>
         
         
-        <li id="section-119">
+        <li id="section-126">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-119">&#182;</a>
+                <a class="pilcrow" href="#section-126">&#182;</a>
               </div>
               <p>The prefix expression was neither part of an assignment or a
 callstatement, however as it was valid it&#39;s been consumed, so raise
@@ -2807,11 +2919,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-120">
+        <li id="section-127">
             <div class="annotation">
               
               <div class="pilwrap for-h3">
-                <a class="pilcrow" href="#section-120">&#182;</a>
+                <a class="pilcrow" href="#section-127">&#182;</a>
               </div>
               <h3>Non-statements</h3>
 <pre><code>Identifier ::= Name</code></pre>
@@ -2828,11 +2940,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-121">
+        <li id="section-128">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-121">&#182;</a>
+                <a class="pilcrow" href="#section-128">&#182;</a>
               </div>
               <p>Parse the functions parameters and body block. The name should already
 have been parsed and passed to this declaration function. By separating
@@ -2851,11 +2963,11 @@ parlist ::= Name {&#39;,&#39; Name} | [&#39;,&#39; &#39;...&#39;] | &#39;...&#39
         </li>
         
         
-        <li id="section-122">
+        <li id="section-129">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-122">&#182;</a>
+                <a class="pilcrow" href="#section-129">&#182;</a>
               </div>
               <p>The declaration has arguments</p>
 
@@ -2866,11 +2978,11 @@ parlist ::= Name {&#39;,&#39; Name} | [&#39;,&#39; &#39;...&#39;] | &#39;...&#39
         </li>
         
         
-        <li id="section-123">
+        <li id="section-130">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-123">&#182;</a>
+                <a class="pilcrow" href="#section-130">&#182;</a>
               </div>
               <p>Arguments are a comma separated list of identifiers, optionally ending
 with a vararg.</p>
@@ -2884,11 +2996,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-124">
+        <li id="section-131">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-124">&#182;</a>
+                <a class="pilcrow" href="#section-131">&#182;</a>
               </div>
               <p>Function parameters are local.</p>
 
@@ -2899,22 +3011,23 @@ with a vararg.</p>
           parameters.push(parameter);
 
           <span class="keyword">if</span> (consume(<span class="string">','</span>)) <span class="keyword">continue</span>;
-          <span class="keyword">else</span> <span class="keyword">if</span> (consume(<span class="string">')'</span>)) <span class="keyword">break</span>;</pre></div></div>
+          <span class="keyword">else</span> <span class="keyword">if</span> (consume(<span class="string">')'</span>)) <span class="keyword">break</span>;
+        }</pre></div></div>
             
         </li>
         
         
-        <li id="section-125">
+        <li id="section-132">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-125">&#182;</a>
+                <a class="pilcrow" href="#section-132">&#182;</a>
               </div>
               <p>No arguments are allowed after a vararg.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        } <span class="keyword">else</span> <span class="keyword">if</span> (VarargLiteral === token.type) {
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">else</span> <span class="keyword">if</span> (VarargLiteral === token.type) {
           parameters.push(parsePrimaryExpression());
           expect(<span class="string">')'</span>);
           <span class="keyword">break</span>;
@@ -2934,11 +3047,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-126">
+        <li id="section-133">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-126">&#182;</a>
+                <a class="pilcrow" href="#section-133">&#182;</a>
               </div>
               <p>Parse the function name as identifiers and member expressions.</p>
 <pre><code>Name {&#39;.&#39; Name} [&#39;:&#39; Name]</code></pre>
@@ -2968,11 +3081,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-127">
+        <li id="section-134">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-127">&#182;</a>
+                <a class="pilcrow" href="#section-134">&#182;</a>
               </div>
               <pre><code>tableconstructor ::= &#39;{&#39; [fieldlist] &#39;}&#39;
 fieldlist ::= field {fieldsep field} fieldsep
@@ -3018,11 +3131,11 @@ fieldsep ::= &#39;,&#39; | &#39;;&#39;</code></pre>
         </li>
         
         
-        <li id="section-128">
+        <li id="section-135">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-128">&#182;</a>
+                <a class="pilcrow" href="#section-135">&#182;</a>
               </div>
               <h2>Expression parser</h2>
 
@@ -3031,11 +3144,11 @@ fieldsep ::= &#39;,&#39; | &#39;;&#39;</code></pre>
         </li>
         
         
-        <li id="section-129">
+        <li id="section-136">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-129">&#182;</a>
+                <a class="pilcrow" href="#section-136">&#182;</a>
               </div>
               <p>Expressions are evaluated and always return a value. If nothing is
 matched null will be returned.</p>
@@ -3057,11 +3170,11 @@ prefixexp ::= (Name | &#39;(&#39; exp &#39;)&#39; ) { &#39;[&#39; exp &#39;]&#39
         </li>
         
         
-        <li id="section-130">
+        <li id="section-137">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-130">&#182;</a>
+                <a class="pilcrow" href="#section-137">&#182;</a>
               </div>
               <p>Parse an expression expecting it to be valid.</p>
 
@@ -3076,11 +3189,11 @@ prefixexp ::= (Name | &#39;(&#39; exp &#39;)&#39; ) { &#39;[&#39; exp &#39;]&#39
         </li>
         
         
-        <li id="section-131">
+        <li id="section-138">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-131">&#182;</a>
+                <a class="pilcrow" href="#section-138">&#182;</a>
               </div>
               <p>Return the precedence priority of the operator.</p>
 <p>As unary <code>-</code> can&#39;t be distinguished from binary <code>-</code>, unary precedence
@@ -3114,11 +3227,11 @@ the expensive CompareICStub which took ~8% of the parse time.</p>
         </li>
         
         
-        <li id="section-132">
+        <li id="section-139">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-132">&#182;</a>
+                <a class="pilcrow" href="#section-139">&#182;</a>
               </div>
               <p>Implement an operator-precedence parser to handle binary operator
 precedence.</p>
@@ -3135,11 +3248,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-133">
+        <li id="section-140">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-133">&#182;</a>
+                <a class="pilcrow" href="#section-140">&#182;</a>
               </div>
               <p>The left-hand side in binary operations.</p>
 
@@ -3150,11 +3263,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-134">
+        <li id="section-141">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-134">&#182;</a>
+                <a class="pilcrow" href="#section-141">&#182;</a>
               </div>
               <p>UnaryExpression</p>
 
@@ -3171,11 +3284,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-135">
+        <li id="section-142">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-135">&#182;</a>
+                <a class="pilcrow" href="#section-142">&#182;</a>
               </div>
               <p>PrimaryExpression</p>
 
@@ -3186,11 +3299,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-136">
+        <li id="section-143">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-136">&#182;</a>
+                <a class="pilcrow" href="#section-143">&#182;</a>
               </div>
               <p>PrefixExpression</p>
 
@@ -3204,11 +3317,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-137">
+        <li id="section-144">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-137">&#182;</a>
+                <a class="pilcrow" href="#section-144">&#182;</a>
               </div>
               <p>This is not a valid left hand expression.</p>
 
@@ -3228,11 +3341,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-138">
+        <li id="section-145">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-138">&#182;</a>
+                <a class="pilcrow" href="#section-145">&#182;</a>
               </div>
               <p>Right-hand precedence operators</p>
 
@@ -3250,11 +3363,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-139">
+        <li id="section-146">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-139">&#182;</a>
+                <a class="pilcrow" href="#section-146">&#182;</a>
               </div>
               <pre><code>prefixexp ::= prefix {suffix}
 prefix ::= Name | &#39;(&#39; exp &#39;)&#39;
@@ -3270,11 +3383,11 @@ args ::= &#39;(&#39; [explist] &#39;)&#39; | tableconstructor | String</code></p
         </li>
         
         
-        <li id="section-140">
+        <li id="section-147">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-140">&#182;</a>
+                <a class="pilcrow" href="#section-147">&#182;</a>
               </div>
               <p>Keep track of the scope, if a parent is local so are the children.</p>
 
@@ -3285,11 +3398,11 @@ args ::= &#39;(&#39; [explist] &#39;)&#39; | tableconstructor | String</code></p
         </li>
         
         
-        <li id="section-141">
+        <li id="section-148">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-141">&#182;</a>
+                <a class="pilcrow" href="#section-148">&#182;</a>
               </div>
               <p>The prefix</p>
 
@@ -3302,11 +3415,11 @@ args ::= &#39;(&#39; [explist] &#39;)&#39; | tableconstructor | String</code></p
         </li>
         
         
-        <li id="section-142">
+        <li id="section-149">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-142">&#182;</a>
+                <a class="pilcrow" href="#section-149">&#182;</a>
               </div>
               <p>Set the parent scope.</p>
 
@@ -3324,11 +3437,11 @@ args ::= &#39;(&#39; [explist] &#39;)&#39; | tableconstructor | String</code></p
         </li>
         
         
-        <li id="section-143">
+        <li id="section-150">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-143">&#182;</a>
+                <a class="pilcrow" href="#section-150">&#182;</a>
               </div>
               <p>The suffix</p>
 
@@ -3351,11 +3464,11 @@ args ::= &#39;(&#39; [explist] &#39;)&#39; | tableconstructor | String</code></p
         </li>
         
         
-        <li id="section-144">
+        <li id="section-151">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-144">&#182;</a>
+                <a class="pilcrow" href="#section-151">&#182;</a>
               </div>
               <p>Inherit the scope</p>
 
@@ -3373,11 +3486,11 @@ args ::= &#39;(&#39; [explist] &#39;)&#39; | tableconstructor | String</code></p
         </li>
         
         
-        <li id="section-145">
+        <li id="section-152">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-145">&#182;</a>
+                <a class="pilcrow" href="#section-152">&#182;</a>
               </div>
               <p>Once a : is found, this has to be a callexpression, otherwise
 throw an error.</p>
@@ -3405,11 +3518,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-146">
+        <li id="section-153">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-146">&#182;</a>
+                <a class="pilcrow" href="#section-153">&#182;</a>
               </div>
               <pre><code>args ::= &#39;(&#39; [explist] &#39;)&#39; | tableconstructor | String</code></pre>
 
@@ -3424,11 +3537,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-147">
+        <li id="section-154">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-147">&#182;</a>
+                <a class="pilcrow" href="#section-154">&#182;</a>
               </div>
               <p>List of expressions</p>
 
@@ -3450,7 +3563,6 @@ throw an error.</p>
           <span class="keyword">var</span> table = parseTableConstructor();
           <span class="keyword">return</span> ast.tableCallExpression(base, table);
       }
-
     } <span class="keyword">else</span> <span class="keyword">if</span> (StringLiteral === token.type) {
       <span class="keyword">return</span> ast.stringCallExpression(base, parsePrimaryExpression());
     }
@@ -3461,11 +3573,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-148">
+        <li id="section-155">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-148">&#182;</a>
+                <a class="pilcrow" href="#section-155">&#182;</a>
               </div>
               <pre><code>primary ::= String | Numeric | nil | true | false
      | functiondef | tableconstructor | &#39;...&#39;</code></pre>
@@ -3491,11 +3603,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-149">
+        <li id="section-156">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-149">&#182;</a>
+                <a class="pilcrow" href="#section-156">&#182;</a>
               </div>
               <h2>Parser</h2>
 
@@ -3504,11 +3616,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-150">
+        <li id="section-157">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-150">&#182;</a>
+                <a class="pilcrow" href="#section-157">&#182;</a>
               </div>
               <p>Export the main parser.</p>
 <ul>
@@ -3537,11 +3649,11 @@ parser.parse(&#39;i = 0&#39;);</code></pre>
         </li>
         
         
-        <li id="section-151">
+        <li id="section-158">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-151">&#182;</a>
+                <a class="pilcrow" href="#section-158">&#182;</a>
               </div>
               <p>Rewind the lexer</p>
 
@@ -3555,11 +3667,11 @@ parser.parse(&#39;i = 0&#39;);</code></pre>
         </li>
         
         
-        <li id="section-152">
+        <li id="section-159">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-152">&#182;</a>
+                <a class="pilcrow" href="#section-159">&#182;</a>
               </div>
               <p>When tracking identifier scope, initialize with an empty scope.</p>
 
@@ -3578,11 +3690,11 @@ parser.parse(&#39;i = 0&#39;);</code></pre>
         </li>
         
         
-        <li id="section-153">
+        <li id="section-160">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-153">&#182;</a>
+                <a class="pilcrow" href="#section-160">&#182;</a>
               </div>
               <p>Write to the source code buffer without beginning the parse.</p>
 
@@ -3599,11 +3711,11 @@ parser.parse(&#39;i = 0&#39;);</code></pre>
         </li>
         
         
-        <li id="section-154">
+        <li id="section-161">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-154">&#182;</a>
+                <a class="pilcrow" href="#section-161">&#182;</a>
               </div>
               <p>Send an EOF and begin parsing.</p>
 
@@ -3619,11 +3731,11 @@ parser.parse(&#39;i = 0&#39;);</code></pre>
         </li>
         
         
-        <li id="section-155">
+        <li id="section-162">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-155">&#182;</a>
+                <a class="pilcrow" href="#section-162">&#182;</a>
               </div>
               <p>Initialize with a lookahead token.</p>
 

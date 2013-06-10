@@ -183,16 +183,16 @@
     <h1>Code coverage report for <span class="entity">luaparse/luaparse.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">99.62% <small>(786 / 789)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">99.62% <small>(792 / 795)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">98.32% <small>(467 / 475)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">97.97% <small>(482 / 492)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
         Functions: <span class="metric">100% <small>(100 / 100)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">99.57% <small>(688 / 691)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">99.57% <small>(693 / 696)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
     </h2>
     <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">luaparse/</a> &#187; luaparse.js</div>
@@ -2026,15 +2026,58 @@
 1825
 1826
 1827
-1828</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+1828
+1829
+1830
+1831
+1832
+1833
+1834
+1835
+1836
+1837
+1838
+1839
+1840
+1841
+1842
+1843
+1844
+1845
+1846
+1847
+1848
+1849</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2915,7 +2958,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">109</span>
 <span class="cline-any cline-yes">13</span>
 <span class="cline-any cline-yes">13</span>
@@ -3475,6 +3517,7 @@
 <span class="cline-any cline-yes">56</span>
 <span class="cline-any cline-yes">25</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">34</span>
 <span class="cline-any cline-yes">13</span>
 <span class="cline-any cline-yes">13</span>
@@ -3757,7 +3800,6 @@
 <span class="cline-any cline-yes">18</span>
 <span class="cline-any cline-yes">18</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">21</span>
 <span class="cline-any cline-yes">19</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3853,16 +3895,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global exports:true require:true define:true console:true */
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global exports:true module:true require:true define:true global:true */
 &nbsp;
 (function (root, name, factory) {
   'use strict';
 &nbsp;
-  <span class="missing-if-branch" title="else path not taken"" >E</span>if (typeof exports !== 'undefined') {
-    factory(exports);
-  } else <span class="cstat-no" title="statement not covered" >if (typeof define === 'function' &amp;&amp; define.amd) {</span>
+  var freeExports = 'object' === typeof exports &amp;&amp; exports
+    // While CommonJS defines `module` as an object, component define it as a
+    // function
+    , freeModule = (typeof module === 'object' || <span class="branch-1 cbranch-no" title="branch not covered" >typeof module === 'function')</span> &amp;&amp;
+        module &amp;&amp; module.exports === freeExports &amp;&amp; module;
+&nbsp;
+  // Detect free variable `global`, from Node.js or Browserified code, and use
+  // it as `root`
+  var freeGlobal = 'object' === typeof global &amp;&amp; global;
+  <span class="missing-if-branch" title="else path not taken"" >E</span>if (freeGlobal.global === freeGlobal || <span class="branch-1 cbranch-no" title="branch not covered" >freeGlobal.window === freeGlobal)</span>
+    root = freeGlobal;
+&nbsp;
+  // Some AMD build optimizers, like r.js, check for specific condition
+  // patterns like the following:
+  <span class="missing-if-branch" title="if path not taken"" >I</span>if ('function' === typeof define &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >define.amd)</span> {
 <span class="cstat-no" title="statement not covered" >    define(['exports'], factory);</span>
-  } else {
+  }
+  // check for `exports` after `define` in case a build optimizer adds an
+  // `exports` object
+  else <span class="missing-if-branch" title="else path not taken"" >E</span>if (freeExports &amp;&amp; !freeExports.nodeType) {
+    // in Node.js or RingoJS v0.8.0+
+    <span class="missing-if-branch" title="else path not taken"" >E</span>if (freeModule) factory(freeModule.exports);
+    // in Narwhal or RingoJS v0.7.0-
+    else <span class="cstat-no" title="statement not covered" >factory(freeExports);</span>
+  }
+  // in a browser or Rhino
+  else {
 <span class="cstat-no" title="statement not covered" >    factory((root[name] = {}));</span>
   }
 }(this, 'luaparse', function (exports) {
@@ -4160,9 +4224,9 @@
 &nbsp;
   var slice = Array.prototype.slice
     , toString = Object.prototype.toString
-    , indexOf = function indexOf(element) {
-      for (var i = 0, length = this.length; i &lt; length; i++) {
-        if (this[i] === element) return i;
+    , indexOf = function indexOf(array, element) {
+      for (var i = 0, length = array.length; i &lt; length; i++) {
+        if (array[i] === element) return i;
       }
       return -1;
     };
@@ -4742,7 +4806,6 @@
 &nbsp;
       // Once the delimiter is found, iterate through the depth count and see
       // if it matches.
-&nbsp;
       if (']' === character) {
         terminator = true;
         for (var i = 0; i &lt; level; i++) {
@@ -4900,7 +4963,7 @@
 &nbsp;
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
-    if (-1 !== indexOf.call(scopes[scopeDepth], name)) return;
+    if (-1 !== indexOf(scopes[scopeDepth], name)) return;
     scopes[scopeDepth].push(name);
   }
 &nbsp;
@@ -4913,7 +4976,7 @@
   // Attach scope information to node. If the node is global, store it in the
   // globals array so we can return the information to the user.
   function attachScope(node, isLocal) {
-    if (!isLocal &amp;&amp; -1 === indexOf.call(globalNames, node.name)) {
+    if (!isLocal &amp;&amp; -1 === indexOf(globalNames, node.name)) {
       globalNames.push(node.name);
       globals.push(node);
     }
@@ -4923,7 +4986,7 @@
 &nbsp;
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return (-1 !== indexOf.call(scopes[scopeDepth], name));
+    return (-1 !== indexOf(scopes[scopeDepth], name));
   }
 &nbsp;
 &nbsp;
@@ -5140,9 +5203,9 @@
       expect('end');
 &nbsp;
       return ast.forNumericStatement(variable, start, end, step, body);
-&nbsp;
+    }
     // If not, it's a Generic For Statement
-    } else {
+    else {
       // The namelist can contain one or more identifiers.
       var variables = [variable];
       while (consume(',')) {
@@ -5301,8 +5364,9 @@
 &nbsp;
           if (consume(',')) continue;
           else if (consume(')')) break;
+        }
         // No arguments are allowed after a vararg.
-        } else if (VarargLiteral === token.type) {
+        else if (VarargLiteral === token.type) {
           parameters.push(parsePrimaryExpression());
           expect(')');
           break;
@@ -5584,7 +5648,6 @@
           var table = parseTableConstructor();
           return ast.tableCallExpression(base, table);
       }
-&nbsp;
     } else if (StringLiteral === token.type) {
       return ast.stringCallExpression(base, parsePrimaryExpression());
     }
@@ -5685,7 +5748,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 08 2013 16:07:30 GMT+0300 (EEST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 11 2013 01:08:27 GMT+0300 (EEST)</div>
 </div>
 
 <script src="../prettify.js"></script>

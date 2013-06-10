@@ -1,13 +1,35 @@
-/*global exports:true require:true define:true console:true */
+/*global exports:true module:true require:true define:true global:true */
 
 (function (root, name, factory) {
   'use strict';
 
-  if (typeof exports !== 'undefined') {
-    factory(exports);
-  } else if (typeof define === 'function' && define.amd) {
+  var freeExports = 'object' === typeof exports && exports
+    // While CommonJS defines `module` as an object, component define it as a
+    // function
+    , freeModule = (typeof module === 'object' || typeof module === 'function') &&
+        module && module.exports === freeExports && module;
+
+  // Detect free variable `global`, from Node.js or Browserified code, and use
+  // it as `root`
+  var freeGlobal = 'object' === typeof global && global;
+  if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)
+    root = freeGlobal;
+
+  // Some AMD build optimizers, like r.js, check for specific condition
+  // patterns like the following:
+  if ('function' === typeof define && define.amd) {
     define(['exports'], factory);
-  } else {
+  }
+  // check for `exports` after `define` in case a build optimizer adds an
+  // `exports` object
+  else if (freeExports && !freeExports.nodeType) {
+    // in Node.js or RingoJS v0.8.0+
+    if (freeModule) factory(freeModule.exports);
+    // in Narwhal or RingoJS v0.7.0-
+    else factory(freeExports);
+  }
+  // in a browser or Rhino
+  else {
     factory((root[name] = {}));
   }
 }(this, 'luaparse', function (exports) {
@@ -305,9 +327,9 @@
 
   var slice = Array.prototype.slice
     , toString = Object.prototype.toString
-    , indexOf = function indexOf(element) {
-      for (var i = 0, length = this.length; i < length; i++) {
-        if (this[i] === element) return i;
+    , indexOf = function indexOf(array, element) {
+      for (var i = 0, length = array.length; i < length; i++) {
+        if (array[i] === element) return i;
       }
       return -1;
     };
@@ -887,7 +909,6 @@
 
       // Once the delimiter is found, iterate through the depth count and see
       // if it matches.
-
       if (']' === character) {
         terminator = true;
         for (var i = 0; i < level; i++) {
@@ -1045,7 +1066,7 @@
 
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
-    if (-1 !== indexOf.call(scopes[scopeDepth], name)) return;
+    if (-1 !== indexOf(scopes[scopeDepth], name)) return;
     scopes[scopeDepth].push(name);
   }
 
@@ -1058,7 +1079,7 @@
   // Attach scope information to node. If the node is global, store it in the
   // globals array so we can return the information to the user.
   function attachScope(node, isLocal) {
-    if (!isLocal && -1 === indexOf.call(globalNames, node.name)) {
+    if (!isLocal && -1 === indexOf(globalNames, node.name)) {
       globalNames.push(node.name);
       globals.push(node);
     }
@@ -1068,7 +1089,7 @@
 
   // Is the identifier name available in this scope.
   function scopeHasName(name) {
-    return (-1 !== indexOf.call(scopes[scopeDepth], name));
+    return (-1 !== indexOf(scopes[scopeDepth], name));
   }
 
 
@@ -1285,9 +1306,9 @@
       expect('end');
 
       return ast.forNumericStatement(variable, start, end, step, body);
-
+    }
     // If not, it's a Generic For Statement
-    } else {
+    else {
       // The namelist can contain one or more identifiers.
       var variables = [variable];
       while (consume(',')) {
@@ -1446,8 +1467,9 @@
 
           if (consume(',')) continue;
           else if (consume(')')) break;
+        }
         // No arguments are allowed after a vararg.
-        } else if (VarargLiteral === token.type) {
+        else if (VarargLiteral === token.type) {
           parameters.push(parsePrimaryExpression());
           expect(')');
           break;
@@ -1729,7 +1751,6 @@
           var table = parseTableConstructor();
           return ast.tableCallExpression(base, table);
       }
-
     } else if (StringLiteral === token.type) {
       return ast.stringCallExpression(base, parsePrimaryExpression());
     }

@@ -6,6 +6,7 @@
     , isBrowser = 'window' in root && root.window == root && typeof root.navigator !== 'undefined'
     , isEngine = !isBrowser && !isModule && typeof root.load === 'function'
     , isTestem = isBrowser && root.location.hash === '#testem'
+    , isTestling = isBrowser && root.location.hash === '#testling'
     // Use the console reporter
     , isConsole = typeof process == 'object' && process.argv && process.argv.indexOf('--console') >= 0;
 
@@ -45,7 +46,7 @@
       , 'while'
     ]
     , output = (function() {
-      if (typeof console !== 'undefined' && console.log) return console.log;
+      if (isTestling || (typeof console !== 'undefined' && console.log)) return function(value) { console.log(value); };
       // In browsers, the global `print` function prints the current page.
       else if (typeof print === 'function' && !isBrowser) return print;
       else return function(value) { };
@@ -189,12 +190,14 @@
   }());
 
   // Use the appropiate reporter depending on enviroment.
-  var reporter = isBrowser ? Newton.createReport('suite') :
+  var reporter = isTestling ? Newton.createTAP(output) :
+    isBrowser ? Newton.createReport('suite') :
     isConsole ? consoleReporter :
     Newton.createTAP(output);
 
   if (isTestem) testSuite.on('all', testemReporter);
 
+  if (isTestling) console.log('TAP version 13');
   testSuite.on('all', reporter);
 
   // Add all tests. In browsers the specs are expected to exist already.
