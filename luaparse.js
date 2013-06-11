@@ -495,14 +495,14 @@
       , range: [index, index]
     };
 
-    var character = input.charCodeAt(index)
+    var charCode = input.charCodeAt(index)
       , next = input.charCodeAt(index + 1);
 
     // Memorize the range index where the token begins.
     tokenStart = index;
-    if (isIdentifierStart(character)) return scanIdentifierOrKeyword();
+    if (isIdentifierStart(charCode)) return scanIdentifierOrKeyword();
 
-    switch (character) {
+    switch (charCode) {
       case 39: case 34: // '"
         return scanStringLiteral();
 
@@ -560,10 +560,10 @@
 
   function skipWhiteSpace() {
     while (index < length) {
-      var character = input.charCodeAt(index);
-      if (isWhiteSpace(character)) {
+      var charCode = input.charCodeAt(index);
+      if (isWhiteSpace(charCode)) {
         index++;
-      } else if (isLineTerminator(character)) {
+      } else if (isLineTerminator(charCode)) {
         line++;
         lineStart = ++index;
       } else {
@@ -639,20 +639,20 @@
     var delimiter = input.charCodeAt(index++)
       , stringStart = index
       , string = ''
-      , character;
+      , charCode;
 
     while (index < length) {
-      character = input.charCodeAt(index++);
-      if (delimiter === character) break;
-      if (92 === character) { // \
+      charCode = input.charCodeAt(index++);
+      if (delimiter === charCode) break;
+      if (92 === charCode) { // \
         string += input.slice(stringStart, index - 1) + readEscapeSequence();
         stringStart = index;
       }
       // EOF or `\n` terminates a string literal. If we haven't found the
       // ending delimiter by now, raise an exception.
-      else if (index >= length || isLineTerminator(character)) {
+      else if (index >= length || isLineTerminator(charCode)) {
         string += input.slice(stringStart, index - 1);
-        raise({}, errors.unfinishedString, string + String.fromCharCode(character));
+        raise({}, errors.unfinishedString, string + String.fromCharCode(charCode));
       }
     }
     string += input.slice(stringStart, index - 1);
@@ -958,31 +958,31 @@
 
   // ### Validation functions
 
-  function isWhiteSpace(character) {
-    return 9 === character || 32 === character || 0xB === character || 0xC === character;
+  function isWhiteSpace(charCode) {
+    return 9 === charCode || 32 === charCode || 0xB === charCode || 0xC === charCode;
   }
 
-  function isLineTerminator(character) {
-    return 10 === character || 13 === character;
+  function isLineTerminator(charCode) {
+    return 10 === charCode || 13 === charCode;
   }
 
-  function isDecDigit(character) {
-    return character >= 48 && character <= 57;
+  function isDecDigit(charCode) {
+    return charCode >= 48 && charCode <= 57;
   }
 
-  function isHexDigit(character) {
-    return (character >= 48 && character <= 57) || (character >= 97 && character <= 102) || (character >= 65 && character <= 70);
+  function isHexDigit(charCode) {
+    return (charCode >= 48 && charCode <= 57) || (charCode >= 97 && charCode <= 102) || (charCode >= 65 && charCode <= 70);
   }
 
   // From [Lua 5.2](http://www.lua.org/manual/5.2/manual.html#8.1) onwards
   // identifiers cannot use locale-dependet letters.
 
-  function isIdentifierStart(character) {
-    return (character >= 65 && character <= 90) || (character >= 97 && character <= 122) || 95 === character;
+  function isIdentifierStart(charCode) {
+    return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode;
   }
 
-  function isIdentifierPart(character) {
-    return (character >= 65 && character <= 90) || (character >= 97 && character <= 122) || 95 === character || (character >= 48 && character <= 57);
+  function isIdentifierPart(charCode) {
+    return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode || (charCode >= 48 && charCode <= 57);
   }
 
   // [3.1 Lexical Conventions](http://www.lua.org/manual/5.2/manual.html#3.1)
@@ -1587,23 +1587,23 @@
   // the expensive CompareICStub which took ~8% of the parse time.
 
   function binaryPrecedence(operator) {
-    var character = operator.charCodeAt(0)
+    var charCode = operator.charCodeAt(0)
       , length = operator.length;
 
     if (1 === length) {
-      switch (character) {
+      switch (charCode) {
         case 94: return 10; // ^
         case 42: case 47: case 37: return 7; // * / %
         case 43: case 45: return 6; // + -
         case 60: case 62: return 3; // < >
       }
     } else if (2 === length) {
-      switch (character) {
+      switch (charCode) {
         case 46: return 5; // ..
         case 60: case 62: case 61: case 126: return 3; // <= >= == ~=
         case 111: return 1; // or
       }
-    } else if (97 === character && 'and' === operator) return 2;
+    } else if (97 === charCode && 'and' === operator) return 2;
     return 0;
   }
 
