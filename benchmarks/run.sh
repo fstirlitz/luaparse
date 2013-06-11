@@ -4,9 +4,11 @@ DEST="$DIR/bench-luaparse"
 GIT_FLAGS="--git-dir=$DEST/.git --work-tree=$DEST/"
 
 # Variables
+D8=$(which d8 2>/dev/null)
 processor="/opt/v8/tools/linux-tick-processor"
-minTime=1
-samples=10
+[[ "$D8" ]] && processor="$(realpath $(dirname $(readlink $D8))/../../tools/)/linux-tick-processor"
+minTime=0
+samples=5
 js=0
 profile=0
 verbose=0
@@ -53,36 +55,14 @@ g() {
   git $GIT_FLAGS "$@" > /dev/null 2>&1
 }
 
-# Node Benchmark, we have our custom wrapper so we can benchmark any commit.
-printNodeScript() {
+runNodeBenchmark() {
   local file=$1
   local commit=$2
-  echo "
-    var Benchmark = require('./node_modules/benchmark/benchmark.js')
-      , fs = require('fs')
-      , script = fs.readFileSync('./benchmarks/lib/ParseLua.lua', 'utf8')
-      , luaparse = require('$file')
-      , bench;
-
-     bench = Benchmark({
-        fn: function() {
-        luaparse.parse(script);
-      }
-      , onComplete: function(e) {
-        var target = e.target
-          , variance = target.stats.variance * 1000 * 1000
-          , stats = [
-              target.stats.mean * 1000
-            , Math.sqrt(variance)
-            , variance
-          ];
-        console.log('$commit\t' + stats.join('\t'));
-      }
-      , minTime: $minTime
-      , minSamples: $samples
-    });
-    bench.run();
-  "
+  echo "Commit $commit:"
+  $REMOTE/scripts/benchmark -v \
+    --luaparse="$file" --samples="$samples" --minTime="$minTime" \
+    "benchmarks/lib/ParseLua.lua"
+  echo
 }
 
 # Profile luaparse together with D8.
@@ -115,7 +95,6 @@ profileCommit() {
 }
 
 # Main benchmark loop
-
 benchmark() {
   local commit=$(git rev-parse $1)
   commit=${commit:0:6}
@@ -126,7 +105,7 @@ benchmark() {
 
     if ((js)); then
       log "Benchmarking commit $commit"
-      node -e "$(printNodeScript "$DEST/index" "$commit")"
+      runNodeBenchmark "$DEST/index" "$commit"
       [[ $? -ne 0 ]] && die "Benchmark failed"
     fi
 
@@ -137,7 +116,6 @@ benchmark() {
 }
 
 # Initialize
-
 main() {
   # Clone a copy where we can benchmark
   [[ ! -d $DEST/.git ]] && git clone $REMOTE $DEST > /dev/null 2>&1

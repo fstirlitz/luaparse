@@ -14,12 +14,6 @@ var Benchmark = require('benchmark')
   , minSamples = 5
   , minTime = 0;
 
-if (!files.length) {
-  console.log("Usage:\n\tbenchmark [snippet|file]...");
-  console.log("Flags:\n\t-v|--verbose\n\t--samples=\n\t--minTime=");
-  process.exit(1);
-}
-
 files.forEach(function(file) {
   if (/^-v|--verbose/.test(file)) return verbose = true;
   if (/^--samples=/.test(file)) {
@@ -30,10 +24,20 @@ files.forEach(function(file) {
     minTime = file.replace(/^--minTime=/, '');
     return;
   }
+  if (/^--luaparse=/.test(file)) {
+    luaparse = require(file.replace(/^--luaparse=/, ''));
+    return;
+  }
 
   if (!fs.existsSync(file)) suites[path.basename(file)] = file;
   else suites[file] = fs.readFileSync(file, 'utf8');
 });
+
+if (!files.length || !Object.keys(suites).length) {
+  console.log("Usage:\n\tbenchmark [snippet|file]...");
+  console.log("Flags:\n\t-v|--verbose\n\t--samples=\n\t--minTime=");
+  process.exit(1);
+}
 
 Object.keys(suites).forEach(function(file) {
   var source = suites[file]
