@@ -15,11 +15,14 @@ build:
 lint:
 	@$(BIN)/grunt lint
 
+.PHONY: build lint all
+
 # Install and internal updates
 # ----------------------------
 
 install:
 	@npm install
+	@bower install
 
 # This is required if mocha, expect or benchmark is updated.
 update:
@@ -33,6 +36,8 @@ version-bump:
 	@git add package.json bower.json luaparse.js
 	@git commit -m "Version $(VERSION)"
 	@git tag -a "v$(VERSION)" -m "v$(VERSION)"
+
+.PHONY: install update version-bump
 
 # Tests
 # -----
@@ -57,6 +62,8 @@ scaffold-test:
 	@./scripts/scaffold-test --name=$(FILE) \
 		test/scaffolding/$(FILE) \
 		> test/spec/$(FILE).js
+
+.PHONY: test-node test testem-engines scaffold-tests scaffold-test
 
 # Documentation
 # -------------
@@ -84,12 +91,16 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 		| cat docs/layout/head.html - docs/layout/foot.html \
 		> $@
 
+.PHONY: docs docco docs-test docs-index
+
 # Coverage
 # --------
 
 coverage:
 	@rm -rf html-report docs/coverage
 	@$(BIN)/istanbul cover --report html --dir docs/coverage test/runner.js >/dev/null
+
+.PHONY: coverage
 
 # Benchmark
 # ---------
@@ -103,15 +114,15 @@ profile:
 benchmark-previous:
 	@bash benchmarks/run.sh --js HEAD HEAD~1
 
+.PHONY: benchmark profile benchmark-previous
+
 # Quality Assurance
 # -----------------
 
 complexity-analysis:
 	@echo "===================== Complexity analysis ============================"
 	@./scripts/complexity 10
-	@node $(LIB)/complexity-report/src/cli.js \
-		-lws --maxcc 15 \
-		luaparse.js
+	@$(BIN)/cr -lws --maxcc 15 luaparse.js
 
 coverage-analysis: coverage
 	@$(BIN)/istanbul check-coverage --statements -3 --branches -10 --functions -0 \
@@ -121,7 +132,7 @@ qa:
 	@$(MAKE) -s test lint complexity-analysis coverage-analysis
 
 clean:
-	@rm -f docs/*.html docs/*.1
+	@rm -f docs/*.html
 	@rm -rf lib-cov coverage html-report docs/coverage/
 
-.PHONY: test test-md coverage test-all docs
+.PHONY: complexity-analysis coverage-analysis qa clean
