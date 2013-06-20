@@ -22,13 +22,15 @@ function usage() {
     , "  -c|--code [code]   parse code snippet"
     , "  -f|--file [file]   parse from file"
     , "  -b|--beautify      output an indenteted AST"
-    , "  --[no]-comments    ignore comments. defaults to false"
-    , "  --[no]-scope       ignore variable scope. defaults to true"
+    , "  --[no]-comments    store comments. defaults to true"
+    , "  --[no]-scope       store variable scope. defaults to false"
+    , "  --[no]-locations   store location data on syntax nodes. defaults to false"
+    , "  --[no]-ranges      store start and end character locations. defaults to false"
     , "  -q|--quiet         suppress output"
     , "  -h|--help"
     , "  -v|--version"
     , "\nExamples:"
-    , "  luaparse --no-comments -c \"locale foo = \\\"bar\\\""
+    , "  luaparse --no-comments -c \"locale foo = \\\"bar\\\"\""
     , "  luaparse foo.lua bar.lua"
   ].join("\n"));
 }
@@ -57,7 +59,7 @@ for (var i = 0, l = args.length; i < l; i++) {
       case 'f': case 'file':
         snippets.push(fs.readFileSync(args[++i], 'utf-8'));
         continue;
-      case 'comments': case 'scope':
+      case 'comments': case 'scope': case 'locations': case 'ranges':
         options[flag] = bool;
         continue;
       case 'v': case 'version':

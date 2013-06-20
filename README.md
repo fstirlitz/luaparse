@@ -2,8 +2,6 @@
 
 A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 
-*Still in development*
-
 ## Installation
 
 Install through `bower install luaparse` or `npm install luaparse`.
@@ -52,6 +50,9 @@ The available options are:
 - `wait: false` Explicitly tell the parser when the input ends.
 - `comments: true` Store comments as an array in the chunk object.
 - `scope: false` Track identifier scopes.
+- `locations: false` Store location information on each syntax node.
+- `ranges: false` Store the start and end character locations on each syntax
+  node.
 
 The default options are also exposed through `luaparse.defaultOptions` where
 they can be overriden globally.
@@ -148,18 +149,20 @@ $ luaparse --help
 Usage: luaparse [option]... [file|code]...
 
 Options:
-  -c|--code [code]    parse code snippet
-  -f|--file [file]    parse from file
-  -b|--beautify       output an indented AST
-  --[no]-comments     ignore comments. defaults to false
-  --[no]-scope        ignore variable scope. defaults to true
-  -q|--quiet          suppress output
+  -c|--code [code]   parse code snippet
+  -f|--file [file]   parse from file
+  -b|--beautify      output an indenteted AST
+  --[no]-comments    store comments. defaults to true
+  --[no]-scope       store variable scope. defaults to false
+  --[no]-locations   store location data on syntax nodes. defaults to false
+  --[no]-ranges      store start and end character locations. defaults to false
+  -q|--quiet         suppress output
   -h|--help
   -v|--version
 
 Examples:
-  luaparse --no-comments -c "locale foo = \"bar\"
-  luaparse foo.lua
+  luaparse --no-comments -c "locale foo = \"bar\""
+  luaparse foo.lua bar.lua
 ```
 
 Example usage
@@ -169,13 +172,6 @@ $ luaparse "i = 0"
 
 {"type":"Chunk","body":[{"type":"AssignmentStatement","variables":[{"type":"Identifier","name":"i"}],"init":[{"type":"NumericLiteral","value":0,"raw":"0"}]}],"comments":[]}
 ```
-
-## Todo
-
-#### 0.1.0
-
-- Tolerant error handling
-- Location tracking
 
 ## Support
 
