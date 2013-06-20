@@ -159,6 +159,7 @@ Options:
   -q|--quiet         suppress output
   -h|--help
   -v|--version
+  --verbose
 
 Examples:
   luaparse --no-comments -c "locale foo = \"bar\""

@@ -11,6 +11,7 @@ var fs = require('fs')
   , isTTY = stdin.isTTY
   , beautify = false
   , quiet = false
+  , verbose = false
   , input = ''
   , options = {}
   , snippets = [];
@@ -29,6 +30,7 @@ function usage() {
     , "  -q|--quiet         suppress output"
     , "  -h|--help"
     , "  -v|--version"
+    , "  --verbose"
     , "\nExamples:"
     , "  luaparse --no-comments -c \"locale foo = \\\"bar\\\"\""
     , "  luaparse foo.lua bar.lua"
@@ -53,11 +55,14 @@ for (var i = 0, l = args.length; i < l; i++) {
       case 'q': case 'quiet':
         quiet = true;
         continue;
+      case 'v': case 'verbose':
+        verbose = true;
+        continue;
       case 'c': case 'code':
-        snippets.push(args[++i]);
+        snippets.push({ name: args[++i], code: args[i] });
         continue;
       case 'f': case 'file':
-        snippets.push(fs.readFileSync(args[++i], 'utf-8'));
+        snippets.push({ name: args[++i], code: fs.readFileSync(args[i], 'utf-8') });
         continue;
       case 'comments': case 'scope': case 'locations': case 'ranges':
         options[flag] = bool;
@@ -76,7 +81,9 @@ for (var i = 0, l = args.length; i < l; i++) {
     }
   }
   // Default to autodetecting code or file.
-  snippet = fs.existsSync(arg) ? fs.readFileSync(arg, 'utf-8') : arg;
+  snippet = fs.existsSync(arg) ?
+    { name: arg, code: fs.readFileSync(arg, 'utf-8') } :
+    { name: arg, code: arg };
 
   snippets.push(snippet);
 }
@@ -86,11 +93,12 @@ function done() {
   snippets.forEach(function(snippet) {
     var message, ast;
     try {
-      ast = luaparse.parse(snippet, options);
+      ast = luaparse.parse(snippet.code, options);
       message = beautify ? JSON.stringify(ast, null, '  ')
         : JSON.stringify(ast);
     } catch(e) {
-      message = util.format("%s: %s", snippet, e.message);
+      message = util.format("%s: %s", snippet.name, e.message);
+      if (verbose) console.log(e.stack);
       success = false;
     }
 
