@@ -55,7 +55,7 @@ for (var i = 0, l = args.length; i < l; i++) {
       case 'q': case 'quiet':
         quiet = true;
         continue;
-      case 'v': case 'verbose':
+      case 'verbose':
         verbose = true;
         continue;
       case 'c': case 'code':
