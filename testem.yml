@@ -6,15 +6,15 @@ launchers:
     protocol: tap
 
   narwhal:
-    command: narwhal test/runner.js 2>&1
+    command: export NARWHAL_OPTIMIZATION=-1; narwhal test/runner.js 2>&1
     protocol: tap
 
   ringo:
-    command: ringo test/runner.js 2>&1
+    command: ringo -o -1 test/runner.js 2>&1
     protocol: tap
 
   rhino:
-    command: cd test; rhino runner.js 2>&1
+    command: cd test; rhino -opt -1 runner.js 2>&1
     protocol: tap
 
   rhino1.7R5:
