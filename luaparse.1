@@ -5,9 +5,9 @@ luaparse - Lua parser
 .SH SYNOPSIS
 
 .B luaparse
-[-v|--version] [-h|--help] [-b|--beautify] [-q|--quiet]
+[-v|--version] [-h|--help] [-b|--beautify] [-q|--quiet] [--verbose]
 .RS
-[--[no]-comments] [--[no]-scope]
+[--[no]-comments] [--[no]-scope] [--[no]-locations] [--[no]-ranges]
 .br
 [-c|--code
 .I snippet
@@ -47,13 +47,22 @@ parse Lua program from file
 output an indented AST
 .B
 .IP "--[no]-comments"
-ignore comments while parsing. defaults to false
+store comments while parsing. defaults to true
 .B
 .IP "--[no]-scope"
-ignore variable scope tracking while parsing. defaults to true
+store variable scope tracking while parsing. defaults to false
+.B
+.IP "--[no]-locations"
+store location information on each syntax nodes. defaults to false
+.B
+.IP "--[no]-ranges"
+store the start and end character locations on each syntax node. defaults to false
 .B
 .IP "-q, --quiet"
 suppress output
+.B
+.IP "--verbose"
+output additional information
 .SH EXAMPLES
 
 .B

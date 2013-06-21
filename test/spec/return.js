@@ -17,10 +17,52 @@
               {
                 "type": "NumericLiteral",
                 "value": 1,
-                "raw": "1"
+                "raw": "1",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 7
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  7,
+                  8
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
         ],
         "comments": [],
         "globals": []
@@ -35,10 +77,52 @@
               {
                 "type": "StringLiteral",
                 "value": "foo",
-                "raw": "\"foo\""
+                "raw": "\"foo\"",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 7
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  7,
+                  12
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              0,
+              12
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 12
+          }
+        },
+        "range": [
+          0,
+          12
         ],
         "comments": [],
         "globals": []
@@ -53,20 +137,90 @@
               {
                 "type": "NumericLiteral",
                 "value": 1,
-                "raw": "1"
+                "raw": "1",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 7
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  7,
+                  8
+                ]
               },
               {
                 "type": "NumericLiteral",
                 "value": 2,
-                "raw": "2"
+                "raw": "2",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  9,
+                  10
+                ]
               },
               {
                 "type": "NumericLiteral",
                 "value": 3,
-                "raw": "3"
+                "raw": "3",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              0,
+              12
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 12
+          }
+        },
+        "range": [
+          0,
+          12
         ],
         "comments": [],
         "globals": []
@@ -80,46 +234,186 @@
               {
                 "type": "Identifier",
                 "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 7
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  7,
+                  8
+                ],
                 "isLocal": false
               },
               {
                 "type": "Identifier",
                 "name": "b",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  9,
+                  10
+                ],
                 "isLocal": false
               },
               {
                 "type": "Identifier",
                 "name": "c",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": false
               },
               {
                 "type": "Identifier",
                 "name": "d",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
+                },
+                "range": [
+                  13,
+                  14
+                ],
                 "isLocal": false
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 14
+              }
+            },
+            "range": [
+              0,
+              14
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 14
+          }
+        },
+        "range": [
+          0,
+          14
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 7
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              7,
+              8
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "c",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 11
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              11,
+              12
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "d",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 13
+              },
+              "end": {
+                "line": 1,
+                "column": 14
+              }
+            },
+            "range": [
+              13,
+              14
+            ],
             "isLocal": false
           }
         ]
@@ -133,15 +427,71 @@
               {
                 "type": "NumericLiteral",
                 "value": 1,
-                "raw": "1"
+                "raw": "1",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 7
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  7,
+                  8
+                ]
               },
               {
                 "type": "NumericLiteral",
                 "value": 2,
-                "raw": "2"
+                "raw": "2",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  9,
+                  10
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 11
+              }
+            },
+            "range": [
+              0,
+              11
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 11
+          }
+        },
+        "range": [
+          0,
+          11
         ],
         "comments": [],
         "globals": []

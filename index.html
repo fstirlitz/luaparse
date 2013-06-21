@@ -43,7 +43,6 @@
     <div class="container">
 <h1>luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.png" alt="Build Status"></a></h1>
 <p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.</p>
-<p><em>Still in development</em></p>
 <h2>Installation</h2>
 <p>Install through <code>bower install luaparse</code> or <code>npm install luaparse</code>.</p>
 <h2>Usage</h2>
@@ -71,6 +70,9 @@ console.log(JSON.stringify(ast));
 <li><code>wait: false</code> Explicitly tell the parser when the input ends.</li>
 <li><code>comments: true</code> Store comments as an array in the chunk object.</li>
 <li><code>scope: false</code> Track identifier scopes.</li>
+<li><code>locations: false</code> Store location information on each syntax node.</li>
+<li><code>ranges: false</code> Store the start and end character locations on each syntax
+node.</li>
 </ul>
 <p>The default options are also exposed through <code>luaparse.defaultOptions</code> where
 they can be overriden globally.</p>
@@ -138,28 +140,25 @@ $ luaparse --help
 Usage: luaparse [option]... [file|code]...
 
 Options:
-  -c|--code [code]    parse code snippet
-  -f|--file [file]    parse from file
-  -b|--beautify       output an indented AST
-  --[no]-comments     ignore comments. defaults to false
-  --[no]-scope        ignore variable scope. defaults to true
-  -q|--quiet          suppress output
+  -c|--code [code]   parse code snippet
+  -f|--file [file]   parse from file
+  -b|--beautify      output an indenteted AST
+  --[no]-comments    store comments. defaults to true
+  --[no]-scope       store variable scope. defaults to false
+  --[no]-locations   store location data on syntax nodes. defaults to false
+  --[no]-ranges      store start and end character locations. defaults to false
+  -q|--quiet         suppress output
   -h|--help
   -v|--version
+  --verbose
 
 Examples:
-  luaparse --no-comments -c &quot;locale foo = \&quot;bar\&quot;
-  luaparse foo.lua</code></pre>
+  luaparse --no-comments -c &quot;locale foo = \&quot;bar\&quot;&quot;
+  luaparse foo.lua bar.lua</code></pre>
 <p>Example usage</p>
 <pre><code class="lang-bash">$ luaparse &quot;i = 0&quot;
 
 {&quot;type&quot;:&quot;Chunk&quot;,&quot;body&quot;:[{&quot;type&quot;:&quot;AssignmentStatement&quot;,&quot;variables&quot;:[{&quot;type&quot;:&quot;Identifier&quot;,&quot;name&quot;:&quot;i&quot;}],&quot;init&quot;:[{&quot;type&quot;:&quot;NumericLiteral&quot;,&quot;value&quot;:0,&quot;raw&quot;:&quot;0&quot;}]}],&quot;comments&quot;:[]}</code></pre>
-<h2>Todo</h2>
-<h4>0.1.0</h4>
-<ul>
-<li>Tolerant error handling</li>
-<li>Location tracking</li>
-</ul>
 <h2>Support</h2>
 <p>Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+,
 Node 0.4.0+, RingoJS 0.8-0.9, Narwhal 0.3.2, Rhino 1.7R4-1.7R5.</p>

@@ -24,7 +24,7 @@
   var Spec = load('Spec', './lib/spec')
     , Newton = load('Newton', './lib/newton')
     , luaparse = load('luaparse', '../luaparse')
-    , options = { scope: true }
+    , options = { scope: true, locations: true, ranges: true }
     , specs = [
         'assignments'
       , 'comments'
@@ -233,6 +233,7 @@
       ],
       "comments": []
     }, 'should support waiting on input');
+
     // Bump coverage for scopes.
     this.deepEqual(luaparse.parse('function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end'), {
       "type": "Chunk",
@@ -351,7 +352,151 @@
       ],
       "comments": []
     }, 'should not scope by default');
-    this.done(8);
+
+    // Bump coverage for ranges and locations
+
+    this.deepEqual(luaparse.parse('--comment\nif 1 then elseif 2 then else end'), {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "IfStatement",
+          "clauses": [
+            {
+              "type": "IfClause",
+              "condition": {
+                "type": "NumericLiteral",
+                "value": 1,
+                "raw": "1"
+              },
+              "body": []
+            },
+            {
+              "type": "ElseifClause",
+              "condition": {
+                "type": "NumericLiteral",
+                "value": 2,
+                "raw": "2"
+              },
+              "body": []
+            },
+            {
+              "type": "ElseClause",
+              "body": []
+            }
+          ]
+        }
+      ],
+      "comments": [
+        {
+          "type": "Comment",
+          "value": "comment",
+          "raw": "--comment"
+        }
+      ]
+    }, 'should not track locations or ranges by default');
+
+    this.deepEqual(luaparse.parse('foo = 1', { ranges: true }), {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "foo",
+              "range": [
+                0,
+                3
+              ]
+            }
+          ],
+          "init": [
+            {
+              "type": "NumericLiteral",
+              "value": 1,
+              "raw": "1",
+              "range": [
+                6,
+                7
+              ]
+            }
+          ],
+          "range": [
+            0,
+            7
+          ]
+        }
+      ],
+      "range": [
+        0,
+        7
+      ],
+      "comments": []
+    }, 'should be able to track only ranges');
+
+    this.deepEqual(luaparse.parse('foo = 1', { locations: true }), {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "foo",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3
+                }
+              }
+            }
+          ],
+          "init": [
+            {
+              "type": "NumericLiteral",
+              "value": 1,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 6
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 7
+            }
+          }
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 7
+        }
+      },
+      "comments": []
+    }, 'should be able to track only locations');
+    this.done(11);
   });
 
   testSuite.addTest('Precedence', function() {

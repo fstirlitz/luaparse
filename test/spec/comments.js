@@ -10,11 +10,39 @@
       "-- comment": {
         "type": "Chunk",
         "body": [],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 10
+          },
+          "end": {
+            "line": 1,
+            "column": 10
+          }
+        },
+        "range": [
+          10,
+          10
+        ],
         "comments": [
           {
             "type": "Comment",
             "value": " comment",
-            "raw": "-- comment"
+            "raw": "-- comment",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              0,
+              10
+            ]
           }
         ],
         "globals": []
@@ -22,16 +50,58 @@
       "-- comment\n-- comment": {
         "type": "Chunk",
         "body": [],
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 10
+          },
+          "end": {
+            "line": 2,
+            "column": 10
+          }
+        },
+        "range": [
+          21,
+          21
+        ],
         "comments": [
           {
             "type": "Comment",
             "value": " comment",
-            "raw": "-- comment"
+            "raw": "-- comment",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              0,
+              10
+            ]
           },
           {
             "type": "Comment",
             "value": " comment",
-            "raw": "-- comment"
+            "raw": "-- comment",
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 10
+              }
+            },
+            "range": [
+              11,
+              21
+            ]
           }
         ],
         "globals": []
@@ -39,11 +109,39 @@
       "--coment": {
         "type": "Chunk",
         "body": [],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 8
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          8,
+          8
+        ],
         "comments": [
           {
             "type": "Comment",
             "value": "coment",
-            "raw": "--coment"
+            "raw": "--coment",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
           }
         ],
         "globals": []
@@ -52,14 +150,56 @@
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement"
+            "type": "BreakStatement",
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 5
+              }
+            },
+            "range": [
+              11,
+              16
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 5
+          }
+        },
+        "range": [
+          11,
+          16
         ],
         "comments": [
           {
             "type": "Comment",
             "value": " comment",
-            "raw": "-- comment"
+            "raw": "-- comment",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              0,
+              10
+            ]
           }
         ],
         "globals": []
@@ -68,14 +208,56 @@
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement"
+            "type": "BreakStatement",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5
+          }
+        },
+        "range": [
+          0,
+          5
         ],
         "comments": [
           {
             "type": "Comment",
             "value": "comment",
-            "raw": "--comment"
+            "raw": "--comment",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 5
+              },
+              "end": {
+                "line": 1,
+                "column": 14
+              }
+            },
+            "range": [
+              5,
+              14
+            ]
           }
         ],
         "globals": []
@@ -83,11 +265,39 @@
       "--[[comment]]": {
         "type": "Chunk",
         "body": [],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 13
+          },
+          "end": {
+            "line": 1,
+            "column": 13
+          }
+        },
+        "range": [
+          13,
+          13
+        ],
         "comments": [
           {
             "type": "Comment",
             "value": "comment",
-            "raw": "--[[comment]]"
+            "raw": "--[[comment]]",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 13
+              }
+            },
+            "range": [
+              0,
+              13
+            ]
           }
         ],
         "globals": []
@@ -103,18 +313,88 @@
                 "condition": {
                   "type": "BooleanLiteral",
                   "value": true,
-                  "raw": "true"
+                  "raw": "true",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    3,
+                    7
+                  ]
                 },
-                "body": []
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 28
+                  }
+                },
+                "range": [
+                  0,
+                  28
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 28
+              }
+            },
+            "range": [
+              0,
+              28
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 28
+          }
+        },
+        "range": [
+          0,
+          28
         ],
         "comments": [
           {
             "type": "Comment",
             "value": "comment",
-            "raw": "--[[comment]]"
+            "raw": "--[[comment]]",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 7
+              },
+              "end": {
+                "line": 1,
+                "column": 20
+              }
+            },
+            "range": [
+              7,
+              20
+            ]
           }
         ],
         "globals": []
@@ -123,14 +403,56 @@
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement"
+            "type": "BreakStatement",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 15
+              },
+              "end": {
+                "line": 1,
+                "column": 20
+              }
+            },
+            "range": [
+              15,
+              20
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 15
+          },
+          "end": {
+            "line": 1,
+            "column": 20
+          }
+        },
+        "range": [
+          15,
+          20
         ],
         "comments": [
           {
             "type": "Comment",
             "value": "comment",
-            "raw": "--[=[comment]=]"
+            "raw": "--[=[comment]=]",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 15
+              }
+            },
+            "range": [
+              0,
+              15
+            ]
           }
         ],
         "globals": []
@@ -139,14 +461,56 @@
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement"
+            "type": "BreakStatement",
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 5
+              },
+              "end": {
+                "line": 3,
+                "column": 10
+              }
+            },
+            "range": [
+              34,
+              39
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 5
+          },
+          "end": {
+            "line": 3,
+            "column": 10
+          }
+        },
+        "range": [
+          34,
+          39
         ],
         "comments": [
           {
             "type": "Comment",
             "value": "comment\n--[=[sub]=]--\n",
-            "raw": "--[===[comment\n--[=[sub]=]--\n]===]"
+            "raw": "--[===[comment\n--[=[sub]=]--\n]===]",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 3,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              34
+            ]
           }
         ],
         "globals": []
@@ -154,11 +518,39 @@
       "--[[comment\nline two]]": {
         "type": "Chunk",
         "body": [],
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 10
+          },
+          "end": {
+            "line": 2,
+            "column": 10
+          }
+        },
+        "range": [
+          22,
+          22
+        ],
         "comments": [
           {
             "type": "Comment",
             "value": "comment\nline two",
-            "raw": "--[[comment\nline two]]"
+            "raw": "--[[comment\nline two]]",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 10
+              }
+            },
+            "range": [
+              0,
+              22
+            ]
           }
         ],
         "globals": []
@@ -166,11 +558,39 @@
       "--[[\ncomment\nline two\n]]": {
         "type": "Chunk",
         "body": [],
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 2
+          },
+          "end": {
+            "line": 4,
+            "column": 2
+          }
+        },
+        "range": [
+          24,
+          24
+        ],
         "comments": [
           {
             "type": "Comment",
             "value": "comment\nline two\n",
-            "raw": "--[[\ncomment\nline two\n]]"
+            "raw": "--[[\ncomment\nline two\n]]",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 4,
+                "column": 2
+              }
+            },
+            "range": [
+              0,
+              24
+            ]
           }
         ],
         "globals": []
@@ -179,19 +599,75 @@
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement"
+            "type": "BreakStatement",
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 5
+              }
+            },
+            "range": [
+              6,
+              11
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 5
+          }
+        },
+        "range": [
+          6,
+          11
         ],
         "comments": [
           {
             "type": "Comment",
             "value": "[==",
-            "raw": "--[=="
+            "raw": "--[==",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
           },
           {
             "type": "Comment",
             "value": "]]",
-            "raw": "--]]"
+            "raw": "--]]",
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 6
+              },
+              "end": {
+                "line": 2,
+                "column": 10
+              }
+            },
+            "range": [
+              12,
+              16
+            ]
           }
         ],
         "globals": []
@@ -207,18 +683,88 @@
                 "condition": {
                   "type": "BooleanLiteral",
                   "value": true,
-                  "raw": "true"
+                  "raw": "true",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    3,
+                    7
+                  ]
                 },
-                "body": []
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  27
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              27
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          27
         ],
         "comments": [
           {
             "type": "Comment",
             "value": " comment",
-            "raw": "-- comment"
+            "raw": "-- comment",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 8
+              },
+              "end": {
+                "line": 1,
+                "column": 18
+              }
+            },
+            "range": [
+              8,
+              18
+            ]
           }
         ],
         "globals": []
