@@ -24,7 +24,7 @@
   var Spec = load('Spec', './lib/spec')
     , Newton = load('Newton', './lib/newton')
     , luaparse = load('luaparse', '../luaparse')
-    , options = { scope: true }
+    , options = { scope: true, locations: true, ranges: true }
     , specs = [
         'assignments'
       , 'comments'
@@ -233,6 +233,7 @@
       ],
       "comments": []
     }, 'should support waiting on input');
+
     // Bump coverage for scopes.
     this.deepEqual(luaparse.parse('function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end'), {
       "type": "Chunk",

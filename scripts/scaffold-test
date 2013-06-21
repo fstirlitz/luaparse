@@ -5,7 +5,7 @@
 
 var fs = require('fs')
   , luaparse = require('../')
-  , options = { scope: true }
+  , options = { scope: true, locations: true, ranges: true }
   , indent = '  '
   , verbose = true
   , testName
@@ -65,15 +65,24 @@ function scaffoldTest() {
 
   // Iterate over all snippets and generate their tests.
   snippets.forEach(function(snippet) {
-    // Skip lines beginning with //
+    var result;
+    // Lines containing ^//{...}$ are luaparse options, use them.
+    if (result = /^\/\/\s*(\{[\s\S]+\})\s*$/.exec(snippet)) {
+      options = JSON.parse(result[1]);
+      return;
+    }
+    // Skip lines beginning with `//` and that are not option objects.
     if (/^\/\//.test(snippet)) return;
 
     // Convert to real escape sequences.
-    snippet = snippet.replace(/\\n/g, '\n')
-      .replace(/\\r/g, '\r')
-      .replace(/\\t/g, '\t')
-      .replace(/\\f/g, '\f')
-      .replace(/\\v/g, '\v');
+    snippet = snippet
+      .replace(/([^\\])\\n/g, '$1\n')
+      .replace(/([^\\])\\r/g, '$1\r')
+      .replace(/([^\\])\\t/g, '$1\t')
+      .replace(/([^\\])\\f/g, '$1\f')
+      .replace(/([^\\])\\v/g, '$1\v')
+      .replace(/([^\\])\\b/g, '$1\b')
+      .replace(/\\\\([\S])/g, '\\$1');
 
     // Generate the assertion.
     var result = scaffoldTestAssertion(snippet);

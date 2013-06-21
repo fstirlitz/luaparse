@@ -1,5 +1,4 @@
 DOCS := docs/*.md
-REPORTER ?= spec
 PROCESSOR ?= "/opt/v8/tools/linux-tick-processor"
 LIB := ./node_modules
 BIN := $(LIB)/.bin
@@ -73,11 +72,6 @@ docs: docco coverage docs-test docs-md
 docco:
 	@$(BIN)/docco luaparse.js
 
-docs-test:
-	@$(MAKE) -s test REPORTER=doc \
-		| cat docs/layout/head.html - docs/layout/foot.html \
-		> docs/tests.html
-
 docs-index:
 	@$(BIN)/marked README.md --gfm \
 		| cat docs/layout/head.html - docs/layout/foot.html \
@@ -125,7 +119,7 @@ complexity-analysis:
 	@$(BIN)/cr -lws --maxcc 15 luaparse.js
 
 coverage-analysis: coverage
-	@$(BIN)/istanbul check-coverage --statements -3 --branches -10 --functions -0 \
+	@$(BIN)/istanbul check-coverage --statements -4 --branches -11 --functions -0 \
 		docs/coverage/coverage.json
 
 qa:
