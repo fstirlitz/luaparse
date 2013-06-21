@@ -11,8 +11,36 @@
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement"
+            "type": "BreakStatement",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5
+          }
+        },
+        "range": [
+          0,
+          5
         ],
         "comments": [],
         "globals": []
@@ -26,9 +54,51 @@
             "label": {
               "type": "Identifier",
               "name": "foo",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 2
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                2,
+                5
+              ],
               "isLocal": true
-            }
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
         ],
         "comments": [],
         "globals": []
@@ -42,9 +112,51 @@
             "label": {
               "type": "Identifier",
               "name": "foo",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 5
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                5,
+                8
+              ],
               "isLabel": false
-            }
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
         ],
         "comments": [],
         "globals": []

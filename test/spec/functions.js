@@ -21,18 +21,74 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
             "parameters": [],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              0,
+              16
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 16
+          }
+        },
+        "range": [
+          0,
+          16
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -50,6 +106,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -57,17 +127,73 @@
               {
                 "type": "Identifier",
                 "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": true
               }
             ],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 17
+              }
+            },
+            "range": [
+              0,
+              17
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 17
+          }
+        },
+        "range": [
+          0,
+          17
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -81,6 +207,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -88,27 +228,111 @@
               {
                 "type": "Identifier",
                 "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": true
               },
               {
                 "type": "Identifier",
                 "name": "q",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
+                },
+                "range": [
+                  13,
+                  14
+                ],
                 "isLocal": true
               },
               {
                 "type": "Identifier",
                 "name": "r",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 15
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  15,
+                  16
+                ],
                 "isLocal": true
               }
             ],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 21
+              }
+            },
+            "range": [
+              0,
+              21
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 21
+          }
+        },
+        "range": [
+          0,
+          21
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -124,6 +348,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -131,22 +369,92 @@
               {
                 "type": "Identifier",
                 "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": true
               }
             ],
             "body": [
               {
                 "type": "ReturnStatement",
-                "arguments": []
+                "arguments": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  14,
+                  20
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 24
+              }
+            },
+            "range": [
+              0,
+              24
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 24
+          }
+        },
+        "range": [
+          0,
+          24
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -160,6 +468,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -167,22 +489,92 @@
               {
                 "type": "Identifier",
                 "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": true
               }
             ],
             "body": [
               {
                 "type": "DoStatement",
-                "body": []
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  14,
+                  20
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 24
+              }
+            },
+            "range": [
+              0,
+              24
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 24
+          }
+        },
+        "range": [
+          0,
+          24
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -200,29 +592,127 @@
               "identifier": {
                 "type": "Identifier",
                 "name": "b",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": false
               },
               "base": {
                 "type": "Identifier",
                 "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  9,
+                  10
+                ],
                 "isLocal": false
-              }
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 12
+                }
+              },
+              "range": [
+                9,
+                12
+              ]
             },
             "isLocal": false,
             "parameters": [],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 18
+              }
+            },
+            "range": [
+              0,
+              18
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 18
+          }
+        },
+        "range": [
+          0,
+          18
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 11
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              11,
+              12
+            ],
             "isLocal": false
           }
         ]
@@ -240,6 +730,20 @@
               "identifier": {
                 "type": "Identifier",
                 "name": "d",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 15
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  15,
+                  16
+                ],
                 "isLocal": false
               },
               "base": {
@@ -248,6 +752,20 @@
                 "identifier": {
                   "type": "Identifier",
                   "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 13
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 14
+                    }
+                  },
+                  "range": [
+                    13,
+                    14
+                  ],
                   "isLocal": false
                 },
                 "base": {
@@ -256,41 +774,195 @@
                   "identifier": {
                     "type": "Identifier",
                     "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 11
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 12
+                      }
+                    },
+                    "range": [
+                      11,
+                      12
+                    ],
                     "isLocal": false
                   },
                   "base": {
                     "type": "Identifier",
                     "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 9
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 10
+                      }
+                    },
+                    "range": [
+                      9,
+                      10
+                    ],
                     "isLocal": false
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 16
+                    }
+                  },
+                  "range": [
+                    9,
+                    16
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
                   }
+                },
+                "range": [
+                  9,
+                  16
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16
                 }
-              }
+              },
+              "range": [
+                9,
+                16
+              ]
             },
             "isLocal": false,
             "parameters": [],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 22
+              }
+            },
+            "range": [
+              0,
+              22
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 22
+          }
+        },
+        "range": [
+          0,
+          22
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 11
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              11,
+              12
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "c",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 13
+              },
+              "end": {
+                "line": 1,
+                "column": 14
+              }
+            },
+            "range": [
+              13,
+              14
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "d",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 15
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              15,
+              16
+            ],
             "isLocal": false
           }
         ]
@@ -308,29 +980,127 @@
               "identifier": {
                 "type": "Identifier",
                 "name": "b",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": false
               },
               "base": {
                 "type": "Identifier",
                 "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  9,
+                  10
+                ],
                 "isLocal": false
-              }
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 12
+                }
+              },
+              "range": [
+                9,
+                12
+              ]
             },
             "isLocal": false,
             "parameters": [],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 18
+              }
+            },
+            "range": [
+              0,
+              18
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 18
+          }
+        },
+        "range": [
+          0,
+          18
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 11
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              11,
+              12
+            ],
             "isLocal": false
           }
         ]
@@ -348,6 +1118,20 @@
               "identifier": {
                 "type": "Identifier",
                 "name": "d",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 15
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  15,
+                  16
+                ],
                 "isLocal": false
               },
               "base": {
@@ -356,6 +1140,20 @@
                 "identifier": {
                   "type": "Identifier",
                   "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 13
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 14
+                    }
+                  },
+                  "range": [
+                    13,
+                    14
+                  ],
                   "isLocal": false
                 },
                 "base": {
@@ -364,41 +1162,195 @@
                   "identifier": {
                     "type": "Identifier",
                     "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 11
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 12
+                      }
+                    },
+                    "range": [
+                      11,
+                      12
+                    ],
                     "isLocal": false
                   },
                   "base": {
                     "type": "Identifier",
                     "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 9
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 10
+                      }
+                    },
+                    "range": [
+                      9,
+                      10
+                    ],
                     "isLocal": false
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 16
+                    }
+                  },
+                  "range": [
+                    9,
+                    16
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
                   }
+                },
+                "range": [
+                  9,
+                  16
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16
                 }
-              }
+              },
+              "range": [
+                9,
+                16
+              ]
             },
             "isLocal": false,
             "parameters": [],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 22
+              }
+            },
+            "range": [
+              0,
+              22
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 22
+          }
+        },
+        "range": [
+          0,
+          22
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 11
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              11,
+              12
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "c",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 13
+              },
+              "end": {
+                "line": 1,
+                "column": 14
+              }
+            },
+            "range": [
+              13,
+              14
+            ],
             "isLocal": false
           },
           {
             "type": "Identifier",
             "name": "d",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 15
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              15,
+              16
+            ],
             "isLocal": false
           }
         ]
@@ -411,6 +1363,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -418,17 +1384,73 @@
               {
                 "type": "VarargLiteral",
                 "value": "...",
-                "raw": "..."
+                "raw": "...",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
+                },
+                "range": [
+                  11,
+                  14
+                ]
               }
             ],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 19
+              }
+            },
+            "range": [
+              0,
+              19
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 19
+          }
+        },
+        "range": [
+          0,
+          19
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -442,6 +1464,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -449,22 +1485,92 @@
               {
                 "type": "Identifier",
                 "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": true
               },
               {
                 "type": "VarargLiteral",
                 "value": "...",
-                "raw": "..."
+                "raw": "...",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  13,
+                  16
+                ]
               }
             ],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 21
+              }
+            },
+            "range": [
+              0,
+              21
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 21
+          }
+        },
+        "range": [
+          0,
+          21
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -478,6 +1584,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -485,32 +1605,130 @@
               {
                 "type": "Identifier",
                 "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
                 "isLocal": true
               },
               {
                 "type": "Identifier",
                 "name": "q",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
+                },
+                "range": [
+                  13,
+                  14
+                ],
                 "isLocal": true
               },
               {
                 "type": "Identifier",
                 "name": "r",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 15
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  15,
+                  16
+                ],
                 "isLocal": true
               },
               {
                 "type": "VarargLiteral",
                 "value": "...",
-                "raw": "..."
+                "raw": "...",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 17
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  17,
+                  20
+                ]
               }
             ],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 25
+              }
+            },
+            "range": [
+              0,
+              25
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 25
+          }
+        },
+        "range": [
+          0,
+          25
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -523,6 +1741,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -534,10 +1766,38 @@
                   {
                     "type": "Identifier",
                     "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 19
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 20
+                      }
+                    },
+                    "range": [
+                      19,
+                      20
+                    ],
                     "isLocal": true
                   }
                 ],
-                "init": []
+                "init": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  13,
+                  20
+                ]
               },
               {
                 "type": "LocalStatement",
@@ -545,19 +1805,89 @@
                   {
                     "type": "Identifier",
                     "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 27
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 28
+                      }
+                    },
+                    "range": [
+                      27,
+                      28
+                    ],
                     "isLocal": true
                   }
                 ],
-                "init": []
+                "init": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 21
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 28
+                  }
+                },
+                "range": [
+                  21,
+                  28
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 32
+              }
+            },
+            "range": [
+              0,
+              32
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 32
+          }
+        },
+        "range": [
+          0,
+          32
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -570,6 +1900,20 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
@@ -581,10 +1925,38 @@
                   {
                     "type": "Identifier",
                     "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 19
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 20
+                      }
+                    },
+                    "range": [
+                      19,
+                      20
+                    ],
                     "isLocal": true
                   }
                 ],
-                "init": []
+                "init": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  13,
+                  20
+                ]
               },
               {
                 "type": "LocalStatement",
@@ -592,19 +1964,89 @@
                   {
                     "type": "Identifier",
                     "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 28
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 29
+                      }
+                    },
+                    "range": [
+                      28,
+                      29
+                    ],
                     "isLocal": true
                   }
                 ],
-                "init": []
+                "init": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 22
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 29
+                  }
+                },
+                "range": [
+                  22,
+                  29
+                ]
               }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 34
+              }
+            },
+            "range": [
+              0,
+              34
             ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 34
+          }
+        },
+        "range": [
+          0,
+          34
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
@@ -617,29 +2059,113 @@
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
               "isLocal": false
             },
             "isLocal": false,
             "parameters": [],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              0,
+              16
+            ]
           },
           {
             "type": "FunctionDeclaration",
             "identifier": {
               "type": "Identifier",
               "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 27
+                },
+                "end": {
+                  "line": 1,
+                  "column": 28
+                }
+              },
+              "range": [
+                27,
+                28
+              ],
               "isLocal": false
             },
             "isLocal": false,
             "parameters": [],
-            "body": []
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 18
+              },
+              "end": {
+                "line": 1,
+                "column": 34
+              }
+            },
+            "range": [
+              18,
+              34
+            ]
           }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 35
+          }
+        },
+        "range": [
+          0,
+          35
         ],
         "comments": [],
         "globals": [
           {
             "type": "Identifier",
             "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
             "isLocal": false
           }
         ]
