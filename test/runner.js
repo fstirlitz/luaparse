@@ -33,6 +33,8 @@
       , 'escapesequences'
       , 'expressions'
       , 'for'
+      , 'stringcalls'
+      , 'tablecalls'
       , 'functioncalls'
       , 'functions'
       , 'literals'
