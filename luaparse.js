@@ -64,6 +64,12 @@
     , NumericLiteral = 16, Punctuator = 32, BooleanLiteral = 64
     , NilLiteral = 128, VarargLiteral = 256;
 
+  exports.tokenTypes = { EOF: EOF, StringLiteral: StringLiteral
+    , Keyword: Keyword, Identifier: Identifier, NumericLiteral: NumericLiteral
+    , Punctuator: Punctuator, BooleanLiteral: BooleanLiteral
+    , NilLiteral: NilLiteral, VarargLiteral: VarargLiteral
+  };
+
   // As this parser is a bit different from luas own, the error messages
   // will be different in some situations.
 

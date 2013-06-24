@@ -133,6 +133,30 @@ events.on('Identifier', function(node) { console.log(node); });
 luaparse.parse('i = "foo"');
 ```
 
+### Lexer
+
+The lexer used by luaparse can be used independently of the recursive descent
+parser. The lex function is exposed as `luaparse.lex()` and it will return the
+next token up until `EOF` is reached..
+
+Each token consists of:
+
+- `type` expressed as an enum flag which can be matched with `luaparse.tokenTypes`.
+- `value`
+- `line`, `lineStart`
+- `range` can be used to slice out raw values, eg. `foo = "bar"` will return a
+`StringLiteral` token with the value `bar`. Slicing out the range on the other
+hand will return `"bar"`.
+
+```js
+var parser = luaparse.parse('foo = "bar"');
+parser.lex(); // { type: 8, value: "foo", line: 1, lineStart: 0, range: [0, 3] }
+parser.lex(); // { type: 32, value: "=", line: 1, lineStart: 0, range: [4, 5]}
+parser.lex(); // { type: 2, value: "bar", line: 1, lineStart: 0, range: [6, 11] }
+parser.lex(); // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11] }
+parser.lex(); // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11] }
+```
+
 ## Examples
 
 Have a look in the [examples directory](https://github.com/oxyc/luaparse/tree/master/examples)
