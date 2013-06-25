@@ -117,7 +117,7 @@ can easily be overriden to customize the structure or to inject custom logic.</p
 you for example wanted to trigger an event on node creations you could use the
 following:</p>
 <pre><code class="lang-js">var luaparse = require(&#39;luaparse&#39;),
-  events = new (require(&#39;events&#39;).EventEmitter);
+    events = new (require(&#39;events&#39;).EventEmitter);
 
 Object.keys(luaparse.ast).forEach(function(type) {
   var original = luaparse.ast[type];
@@ -132,7 +132,7 @@ luaparse.parse(&#39;i = &quot;foo&quot;&#39;);</code></pre>
 <h3>Lexer</h3>
 <p>The lexer used by luaparse can be used independently of the recursive descent
 parser. The lex function is exposed as <code>luaparse.lex()</code> and it will return the
-next token up until <code>EOF</code> is reached..</p>
+next token up until <code>EOF</code> is reached.</p>
 <p>Each token consists of:</p>
 <ul>
 <li><code>type</code> expressed as an enum flag which can be matched with <code>luaparse.tokenTypes</code>.</li>
@@ -152,7 +152,7 @@ parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 
 <p>Have a look in the <a href="https://github.com/oxyc/luaparse/tree/master/examples">examples directory</a>
 of the repository for some code examples or check them out <a href="http://oxyc.github.io/luaparse/examples.html">live</a>.</p>
 <h2>luaparse(1)</h2>
-<p>The <code>luaparse</code> exectuable can be used in your shell by installing <code>luaparse</code> globally using npm:</p>
+<p>The <code>luaparse</code> executable can be used in your shell by installing <code>luaparse</code> globally using npm:</p>
 <pre><code class="lang-bash">$ npm install -g luaparse
 $ luaparse --help
 
@@ -215,7 +215,7 @@ To simply check that all code has coverage you can run <code>make coverage-analy
 will be generated.</p>
 <h2>Projects using luaparse</h2>
 <ul>
-<li><a href="http://mths.be/luamin">luamin</a>, a lua minifier written by Mathias Bynens.</li>
+<li><a href="http://mths.be/luamin">luamin</a>, a Lua minifier written by Mathias Bynens.</li>
 <li><a href="https://github.com/ajaxorg/ace">Ace</a>, an online code editor.</li>
 </ul>
 <h2>Acknowledgements</h2>
