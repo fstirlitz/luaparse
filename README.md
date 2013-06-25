@@ -119,7 +119,7 @@ following:
 
 ```js
 var luaparse = require('luaparse'),
-  events = new (require('events').EventEmitter);
+    events = new (require('events').EventEmitter);
 
 Object.keys(luaparse.ast).forEach(function(type) {
   var original = luaparse.ast[type];
@@ -137,7 +137,7 @@ luaparse.parse('i = "foo"');
 
 The lexer used by luaparse can be used independently of the recursive descent
 parser. The lex function is exposed as `luaparse.lex()` and it will return the
-next token up until `EOF` is reached..
+next token up until `EOF` is reached.
 
 Each token consists of:
 
@@ -164,7 +164,7 @@ of the repository for some code examples or check them out [live](http://oxyc.gi
 
 ## luaparse(1)
 
-The `luaparse` exectuable can be used in your shell by installing `luaparse` globally using npm:
+The `luaparse` executable can be used in your shell by installing `luaparse` globally using npm:
 
 ```bash
 $ npm install -g luaparse
@@ -243,7 +243,7 @@ will be generated.
 
 ## Projects using luaparse
 
-- [luamin](http://mths.be/luamin), a lua minifier written by Mathias Bynens.
+- [luamin](http://mths.be/luamin), a Lua minifier written by Mathias Bynens.
 - [Ace](https://github.com/ajaxorg/ace), an online code editor.
 
 ## Acknowledgements
