@@ -12,75 +12,56 @@
 
   <!-- Library -->
   <script>
-    (function () {
-      var Spec = this.Spec, Newton = this.Newton, parameters;
-      if (!Spec || !Newton) {
-        return;
+    (function (root) {
+      var parameters = root.Newton.parseQuery(root.location.search);
+      root.useRequire = false;
+
+      if (root.location.hash === '#testem') {
+        root.document.write('<script src="/testem.js"><\/script>');
       }
-      parameters = Newton.parseQuery(this.location.search);
-      if (this.location.hash === '#testem') {
-        this.document.write('<script src="/testem.js"><\/script>');
+      if (root.Spec.hasKey(parameters, 'amd')) {
+        root.document.write('<script src="../components/requirejs/require.js"><\/script>');
+        root.useRequire = true;
       }
-      if (Spec.hasKey(parameters, 'amd')) {
-        this.document.write('<script src="../components/requirejs/require.js"><\/script>');
-      }
-    }).call(this);
+    }(this));
   </script>
   <script>
-    var testSuite = {};
     (function (root) {
-      var specs = [
-            'spec/assignments'
-          , 'spec/comments'
-          , 'spec/conditional'
-          , 'spec/do'
-          , 'spec/escapesequences'
-          , 'spec/expressions'
-          , 'spec/for'
-          , 'spec/stringcalls'
-          , 'spec/tablecalls'
-          , 'spec/functioncalls'
-          , 'spec/functions'
-          , 'spec/literals'
-          , 'spec/local'
-          , 'spec/operators'
-          , 'spec/repeat'
-          , 'spec/return'
-          , 'spec/scope'
-          , 'spec/statements'
-          , 'spec/tableconstructors'
-          , 'spec/while'
-        ];
-
-      if (typeof require == 'function' && typeof define == 'function') {
+      if (root.useRequire) {
         require({
           // Thwart aggressive resource caching.
           'urlArgs': 'async=' + (+new Date())
-        }, ['../luaparse'].concat(specs), function (luaparse) {
+        }, ['../luaparse'], function (luaparse) {
           // Remember whether luaparse exposed a global.
           var notExposed = typeof root.luaparse === 'undefined';
           // The runner relies on the global.
           root.luaparse = luaparse;
 
-          require(['runner'], function(testSuite) {
-            testSuite.addTest('Asynchronous Module Definition', function (test) {
+          require(['runner'], function(runner) {
+            runner.addTest('Asynchronous Module Definition', function (test) {
               setTimeout(function () {
                 test.equal(typeof luaparse.parse, 'function', 'Luaparse should be exported as an asynchronous module').done(2);
               }, 1500);
               test.ok(notExposed, 'Luaparse should not expose itself as a global when loaded as a module');
             });
-            testSuite.run();
+            runner.run();
           });
         });
       } else {
         root.document.write('<script src="../luaparse.js"><\/script>');
-        Spec.forEach(specs, function(spec) {
+        root.document.write('<script src="runner.js"><\/script>');
+      }
+    }(this));
+  </script>
+  <script>
+    // Runner contains the spec files so the injection is done in a new
+    // <script> element.
+    (function(root) {
+      if (!useRequire) {
+        Spec.forEach(root.specs, function(spec) {
           root.document.write('<script src="' + spec + '.js"><\/script>');
         });
-        root.document.write('<script src="runner.js"><\/script>');
-        root.onload = function () {
-          luaparse.testSuite.run();
-        };
+        root.onload = root.run;
       }
     }(this));
   </script>

@@ -6,18 +6,15 @@
     , isBrowser = 'window' in root && root.window == root && typeof root.navigator !== 'undefined'
     , isEngine = !isBrowser && !isModule && typeof root.load === 'function'
     , isTestem = isBrowser && root.location.hash === '#testem'
-    , isTestling = isBrowser && root.location.hash === '#testling'
     // Use the console reporter
     , isConsole = typeof process == 'object' && process.argv && process.argv.indexOf('--console') >= 0;
 
-  var load = function load(module, path) {
-    if (root.testSuite && root.testSuite[module]) return root.testSuite[module];
-    if (root[module]) return root[module];
+  var load = function load(mod, path) {
+    if (root[mod]) return root[mod];
     if (isModule) return require(path);
     if (isEngine) {
       root.load(path.replace(/\.js$/, '') + '.js');
-      if (root.testSuite && root.testSuite[module]) return root.testSuite[module];
-      return root[module];
+      return root[mod];
     }
   };
 
@@ -25,37 +22,36 @@
     , Newton = load('Newton', './lib/newton')
     , luaparse = load('luaparse', '../luaparse')
     , options = { scope: true, locations: true, ranges: true }
-    , specs = [
-        'assignments'
-      , 'comments'
-      , 'conditional'
-      , 'do'
-      , 'escapesequences'
-      , 'expressions'
-      , 'for'
-      , 'stringcalls'
-      , 'tablecalls'
-      , 'functioncalls'
-      , 'functions'
-      , 'literals'
-      , 'local'
-      , 'operators'
-      , 'repeat'
-      , 'return'
-      , 'scope'
-      , 'statements'
-      , 'tableconstructors'
-      , 'while'
+    , specs = root.specs = [
+        './spec/assignments'
+      , './spec/comments'
+      , './spec/conditional'
+      , './spec/do'
+      , './spec/escapesequences'
+      , './spec/expressions'
+      , './spec/for'
+      , './spec/functioncalls'
+      , './spec/functions'
+      , './spec/literals'
+      , './spec/local'
+      , './spec/misc'
+      , './spec/operators'
+      , './spec/repeat'
+      , './spec/return'
+      , './spec/scope'
+      , './spec/statements'
+      , './spec/tableconstructors'
+      , './spec/while'
     ]
+    // Print function used for Spec reporters.
     , output = (function() {
-      if (isTestling || (typeof console !== 'undefined' && console.log)) return function(value) { console.log(value); };
+      if (typeof console !== 'undefined' && console.log) return function(value) { console.log(value); };
       // In browsers, the global `print` function prints the current page.
       else if (typeof print === 'function' && !isBrowser) return print;
       else return function(value) { };
     }())
-
     // Create the test suite.
-    , testSuite = luaparse.testSuite = new Spec.Suite('Luaparse Unit Tests');
+    , suite = new Spec.Suite('Luaparse Unit Tests');
 
   function escapeString(string) {
     return string.replace(/\n/g, '\\n')
@@ -92,17 +88,22 @@
 
   // Create a test, and delegate to appropiate test function.
   function addTest(testName, tests) {
-    testSuite.addTest(testName, function() {
+    suite.addTest(testName, function() {
       var count = 0;
       for (var source in tests) if (tests.hasOwnProperty(source)) {
         var expected = tests[source];
         if (typeof expected === 'string') this.parseError(source, expected, options);
+        else if (typeof expected.result === 'object')
+          this.deepEqual(luaparse.parse(source, expected.options || options), expected.result, expected.name || escapeString(source));
         else this.parses(source, expected, options);
+
         count++;
       }
       this.done(count);
     });
   }
+
+  // Reporters ----------------------------------------------------------------
 
   // Beautify console output Mocha-style.
   var consoleReporter = (function() {
@@ -192,41 +193,23 @@
   }());
 
   // Use the appropiate reporter depending on enviroment.
-  var reporter = isTestling ? Newton.createTAP(output) :
-    isBrowser ? Newton.createReport('suite') :
+  var reporter = isBrowser ? Newton.createReport('suite') :
     isConsole ? consoleReporter :
     Newton.createTAP(output);
 
-  if (isTestem) testSuite.on('all', testemReporter);
+  if (isTestem) suite.on('all', testemReporter);
 
-  if (isTestling) console.log('TAP version 13');
-  testSuite.on('all', reporter);
+  suite.on('all', reporter);
 
-  // Add all tests. In browsers the specs are expected to exist already.
-  Spec.forEach(specs, function(spec) {
-    var tests = load(spec, './spec/' + spec);
-    for (var testName in tests) if (tests.hasOwnProperty(testName)) {
-      addTest(testName, tests[testName]);
-    }
-  });
+  // Additional tests ---------------------------------------------------------
 
-  // Tests
-  testSuite.addTest('API', function() {
+  suite.addTest('API', function() {
     this.equal(typeof luaparse, 'object', 'luaparse is an object');
     this.equal(typeof luaparse.parse, 'function', 'luaparse.parse() is a function');
     this.equal(typeof luaparse.write, 'function', 'luaparse.write() is a function');
     this.equal(typeof luaparse.end, 'function', 'luaparse.end() is a function');
-    this.deepEqual(luaparse.parse('--comment', { comments:false }), {
-      "type": "Chunk",
-      "body": []
-    }, 'should ignore comments if told to');
-    this.deepEqual(luaparse.parse(''), {
-      "type": "Chunk",
-      "body": [],
-      "comments": []
-    }, 'should produce empty tree on empty input');
     var parse = luaparse.parse({ wait: true });
-    this.deepEqual(luaparse.end('break'), {
+    this.deepEqual(parse.end('break'), {
       "type": "Chunk",
       "body": [
         {
@@ -236,272 +219,10 @@
       "comments": []
     }, 'should support waiting on input');
 
-    // Bump coverage for scopes.
-    this.deepEqual(luaparse.parse('function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end'), {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "FunctionDeclaration",
-          "identifier": {
-            "type": "MemberExpression",
-            "indexer": ":",
-            "identifier": {
-              "type": "Identifier",
-              "name": "baz"
-            },
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "bar"
-              },
-              "base": {
-                "type": "Identifier",
-                "name": "foo"
-              }
-            }
-          },
-          "isLocal": false,
-          "parameters": [
-            {
-              "type": "Identifier",
-              "name": "a"
-            }
-          ],
-          "body": [
-            {
-              "type": "GotoStatement",
-              "label": {
-                "type": "Identifier",
-                "name": "foo"
-              }
-            }
-          ]
-        },
-        {
-          "type": "FunctionDeclaration",
-          "identifier": {
-            "type": "Identifier",
-            "name": "a"
-          },
-          "isLocal": true,
-          "parameters": [],
-          "body": [
-            {
-              "type": "LocalStatement",
-              "variables": [
-                {
-                  "type": "Identifier",
-                  "name": "a"
-                },
-                {
-                  "type": "Identifier",
-                  "name": "b"
-                }
-              ],
-              "init": []
-            },
-            {
-              "type": "LabelStatement",
-              "label": {
-                "type": "Identifier",
-                "name": "c"
-              }
-            },
-            {
-              "type": "ForGenericStatement",
-              "variables": [
-                {
-                  "type": "Identifier",
-                  "name": "a"
-                },
-                {
-                  "type": "Identifier",
-                  "name": "b"
-                }
-              ],
-              "iterators": [
-                {
-                  "type": "CallExpression",
-                  "base": {
-                    "type": "MemberExpression",
-                    "indexer": ":",
-                    "identifier": {
-                      "type": "Identifier",
-                      "name": "e"
-                    },
-                    "base": {
-                      "type": "MemberExpression",
-                      "indexer": ".",
-                      "identifier": {
-                        "type": "Identifier",
-                        "name": "d"
-                      },
-                      "base": {
-                        "type": "Identifier",
-                        "name": "c"
-                      }
-                    }
-                  },
-                  "arguments": []
-                }
-              ],
-              "body": []
-            }
-          ]
-        }
-      ],
-      "comments": []
-    }, 'should not scope by default');
-
-    // Bump coverage for ranges and locations
-
-    this.deepEqual(luaparse.parse('--comment\nif 1 then elseif 2 then else end'), {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1"
-              },
-              "body": []
-            },
-            {
-              "type": "ElseifClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 2,
-                "raw": "2"
-              },
-              "body": []
-            },
-            {
-              "type": "ElseClause",
-              "body": []
-            }
-          ]
-        }
-      ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": "comment",
-          "raw": "--comment"
-        }
-      ]
-    }, 'should not track locations or ranges by default');
-
-    this.deepEqual(luaparse.parse('foo = 1', { ranges: true }), {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "foo",
-              "range": [
-                0,
-                3
-              ]
-            }
-          ],
-          "init": [
-            {
-              "type": "NumericLiteral",
-              "value": 1,
-              "raw": "1",
-              "range": [
-                6,
-                7
-              ]
-            }
-          ],
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "range": [
-        0,
-        7
-      ],
-      "comments": []
-    }, 'should be able to track only ranges');
-
-    this.deepEqual(luaparse.parse('foo = 1', { locations: true }), {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "AssignmentStatement",
-          "variables": [
-            {
-              "type": "Identifier",
-              "name": "foo",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 3
-                }
-              }
-            }
-          ],
-          "init": [
-            {
-              "type": "NumericLiteral",
-              "value": 1,
-              "raw": "1",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 6
-                },
-                "end": {
-                  "line": 1,
-                  "column": 7
-                }
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          }
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "comments": []
-    }, 'should be able to track only locations');
-    this.done(11);
+    this.done(5);
   });
 
-  testSuite.addTest('Precedence', function() {
+  suite.addTest('Precedence', function() {
     this.equalPrecedence('2^3^2', '2^(3^2)');
     this.equalPrecedence('2^3*4', '(2^3)*4');
     this.equalPrecedence('2^2^3', '2^(2^3)');
@@ -520,11 +241,29 @@
     this.done(15);
   });
 
-  testSuite.shuffle();
-
   if (isLoader) {
-    define(function () { return testSuite; });
-  } else if (!isBrowser && (!isModule || (typeof module === 'object' && module === require.main))) {
-    testSuite.run();
+    define(specs, function () {
+      Spec.forEach(arguments, function(test) {
+        addTest(test.name, test.spec);
+      });
+      suite.shuffle();
+      return suite;
+    });
+  } else if (isBrowser || (!isModule || (typeof module === 'object' && module === require.main))) {
+    var run = root.run = function() {
+      // Add all tests. In a browser the tests are expected to be loaded
+      // therefore this function is exposed as a wrapper around the test suites
+      // `run()` so that it can run on load.
+      Spec.forEach(specs, function(spec) {
+        var name = spec.replace(/^[\s\S]*\/([^\/]+)$/, '$1')
+          , tests = load(name, spec);
+
+        addTest(tests.name, tests.spec);
+      });
+      suite.shuffle();
+      suite.run();
+    };
+
+    if (!isBrowser) run();
   }
 }(this));

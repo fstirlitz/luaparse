@@ -129,6 +129,25 @@ Object.keys(luaparse.ast).forEach(function(type) {
 });
 events.on(&#39;Identifier&#39;, function(node) { console.log(node); });
 luaparse.parse(&#39;i = &quot;foo&quot;&#39;);</code></pre>
+<h3>Lexer</h3>
+<p>The lexer used by luaparse can be used independently of the recursive descent
+parser. The lex function is exposed as <code>luaparse.lex()</code> and it will return the
+next token up until <code>EOF</code> is reached..</p>
+<p>Each token consists of:</p>
+<ul>
+<li><code>type</code> expressed as an enum flag which can be matched with <code>luaparse.tokenTypes</code>.</li>
+<li><code>value</code></li>
+<li><code>line</code>, <code>lineStart</code></li>
+<li><code>range</code> can be used to slice out raw values, eg. <code>foo = &quot;bar&quot;</code> will return a
+<code>StringLiteral</code> token with the value <code>bar</code>. Slicing out the range on the other
+hand will return <code>&quot;bar&quot;</code>.</li>
+</ul>
+<pre><code class="lang-js">var parser = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);
+parser.lex(); // { type: 8, value: &quot;foo&quot;, line: 1, lineStart: 0, range: [0, 3] }
+parser.lex(); // { type: 32, value: &quot;=&quot;, line: 1, lineStart: 0, range: [4, 5]}
+parser.lex(); // { type: 2, value: &quot;bar&quot;, line: 1, lineStart: 0, range: [6, 11] }
+parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }
+parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }</code></pre>
 <h2>Examples</h2>
 <p>Have a look in the <a href="https://github.com/oxyc/luaparse/tree/master/examples">examples directory</a>
 of the repository for some code examples or check them out <a href="http://oxyc.github.io/luaparse/examples.html">live</a>.</p>
