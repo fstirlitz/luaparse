@@ -64,7 +64,6 @@ function scaffoldTest() {
 
   // Iterate over all snippets and generate their tests.
   snippets.forEach(function(snippet) {
-    var result;
     // Lines containing ^//{...}$ are luaparse options, use them.
     if (result = /^\/\/\s*(\{[\s\S]+\})\s*$/.exec(snippet)) {
       options = JSON.parse(result[1]);

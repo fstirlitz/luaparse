@@ -56,9 +56,10 @@ module.exports = function (grunt) {
           'package.json',
           'bower.json',
           '.bowerrc',
+          'component.json',
           'Gruntfile.js',
-          'scripts/make-test',
-          'scripts/pre-commit',
+          'index.js',
+          'scripts/*',
           'bin/*'
         ]
       },

@@ -1,0 +1,10 @@
+{
+  "name": "luaparse",
+  "description": "A Lua parser in JavaScript",
+  "version": "0.1.3",
+  "repo": "oxyc/luaparse",
+  "keywords": ["lua", "parser", "parsing"],
+  "scripts": ["luaparse.js"],
+  "dependencies": {},
+  "license": "MIT"
+}
