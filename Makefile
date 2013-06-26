@@ -9,10 +9,10 @@ all: build
 # ----------
 
 build:
-	@$(BIN)/grunt build
+	grunt build
 
 lint:
-	@$(BIN)/grunt lint
+	grunt lint
 
 .PHONY: build lint all
 

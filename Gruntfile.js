@@ -41,9 +41,9 @@ module.exports = function (grunt) {
     },
 
     jshint: {
-      options: { jshintrc: '.jshintrc' },
+      options: readOptionalJSON('.jshintrc'),
       browser: {
-        options: { browser: true, globals: { define: true, global: true, module: true } },
+        options: { browser: true, predef: { define: true, global: true, module: true } },
         src: [
           'luaparse.js',
           'examples/**/*.js',
