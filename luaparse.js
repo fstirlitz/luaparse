@@ -1666,12 +1666,14 @@
         value = parseExpectedExpression();
         fields.push(finishNode(ast.tableKey(key, value)));
       } else if (Identifier === token.type) {
-        key = parseExpectedExpression();
-        if (consume('=')) {
+        if (lookahead.value === '=') {
+          key = parseIdentifier();
+          next();
           value = parseExpectedExpression();
           fields.push(finishNode(ast.tableKeyString(key, value)));
         } else {
-          fields.push(finishNode(ast.tableValue(key)));
+          value = parseExpectedExpression();
+          fields.push(finishNode(ast.tableValue(value)));
         }
       } else {
         if (null == (value = parseExpression())) {
@@ -1684,7 +1686,7 @@
         next();
         continue;
       }
-      if ('}' === token.value) break;
+      break;
     }
     expect('}');
     return finishNode(ast.tableConstructorExpression(fields));
@@ -1848,15 +1850,12 @@
             pushLocation(marker);
             next();
             identifier = parseIdentifier();
-            // Inherit the scope
-            if (options.scope) attachScope(identifier, isLocal);
             base = finishNode(ast.memberExpression(base, '.', identifier));
             break;
           case ':':
             pushLocation(marker);
             next();
             identifier = parseIdentifier();
-            if (options.scope) attachScope(identifier, isLocal);
             base = finishNode(ast.memberExpression(base, ':', identifier));
             // Once a : is found, this has to be a CallExpression, otherwise
             // throw an error.
