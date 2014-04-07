@@ -1103,8 +1103,7 @@
                       "range": [
                         17,
                         18
-                      ],
-                      "isLocal": false
+                      ]
                     },
                     "base": {
                       "type": "Identifier",
@@ -1250,8 +1249,7 @@
                         "range": [
                           28,
                           29
-                        ],
-                        "isLocal": false
+                        ]
                       },
                       "base": {
                         "type": "Identifier",
@@ -1392,16 +1390,16 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 17
+              "column": 22
             },
             "end": {
               "line": 1,
-              "column": 18
+              "column": 23
             }
           },
           "range": [
-            17,
-            18
+            22,
+            23
           ],
           "isLocal": false
         }
@@ -1552,8 +1550,7 @@
                       "range": [
                         30,
                         31
-                      ],
-                      "isLocal": true
+                      ]
                     },
                     "base": {
                       "type": "Identifier",
@@ -1699,8 +1696,7 @@
                         "range": [
                           41,
                           42
-                        ],
-                        "isLocal": true
+                        ]
                       },
                       "base": {
                         "type": "Identifier",
@@ -2587,8 +2583,7 @@
                 "range": [
                   16,
                   17
-                ],
-                "isLocal": true
+                ]
               },
               "base": {
                 "type": "CallExpression",
@@ -2611,8 +2606,7 @@
                     "range": [
                       12,
                       13
-                    ],
-                    "isLocal": true
+                    ]
                   },
                   "base": {
                     "type": "Identifier",

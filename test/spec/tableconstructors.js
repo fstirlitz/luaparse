@@ -1619,8 +1619,7 @@
                       "range": [
                         8,
                         9
-                      ],
-                      "isLocal": false
+                      ]
                     },
                     "base": {
                       "type": "Identifier",
@@ -1766,8 +1765,7 @@
                         "range": [
                           19,
                           20
-                        ],
-                        "isLocal": false
+                        ]
                       },
                       "base": {
                         "type": "Identifier",
@@ -1908,35 +1906,16 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 8
+              "column": 13
             },
             "end": {
               "line": 1,
-              "column": 9
+              "column": 14
             }
           },
           "range": [
-            8,
-            9
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 19
-            },
-            "end": {
-              "line": 1,
-              "column": 20
-            }
-          },
-          "range": [
-            19,
-            20
+            13,
+            14
           ],
           "isLocal": false
         }
@@ -2328,8 +2307,7 @@
                     "range": [
                       6,
                       7
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "NumericLiteral",
@@ -2483,8 +2461,7 @@
                     "range": [
                       6,
                       7
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "NumericLiteral",
@@ -2538,8 +2515,7 @@
                     "range": [
                       11,
                       12
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "StringLiteral",
@@ -2593,8 +2569,7 @@
                     "range": [
                       20,
                       21
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "NilLiteral",
@@ -2697,44 +2672,6 @@
             1
           ],
           "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 11
-            },
-            "end": {
-              "line": 1,
-              "column": 12
-            }
-          },
-          "range": [
-            11,
-            12
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 20
-            },
-            "end": {
-              "line": 1,
-              "column": 21
-            }
-          },
-          "range": [
-            20,
-            21
-          ],
-          "isLocal": false
         }
       ]
     },
@@ -2827,8 +2764,7 @@
                     "range": [
                       9,
                       10
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "StringLiteral",
@@ -2882,8 +2818,7 @@
                     "range": [
                       18,
                       19
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "TableConstructorExpression",
@@ -2936,8 +2871,7 @@
                     "range": [
                       24,
                       25
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "BooleanLiteral",
@@ -3038,44 +2972,6 @@
           "range": [
             0,
             1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 18
-            },
-            "end": {
-              "line": 1,
-              "column": 19
-            }
-          },
-          "range": [
-            18,
-            19
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "d",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 24
-            },
-            "end": {
-              "line": 1,
-              "column": 25
-            }
-          },
-          "range": [
-            24,
-            25
           ],
           "isLocal": false
         }
@@ -3553,8 +3449,7 @@
                     "range": [
                       12,
                       13
-                    ],
-                    "isLocal": false
+                    ]
                   },
                   "value": {
                     "type": "NumericLiteral",
