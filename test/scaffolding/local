@@ -50,3 +50,4 @@ local function a(p,q,r,...) end
 local function a() local a local b end
 local function a() local a; local b; end
 local function a() end; local function a() end;
+local a = { b = { z = 1 } }
