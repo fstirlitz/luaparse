@@ -6,7 +6,7 @@ launchers:
     protocol: tap
 
   narwhal:
-    command: export NARWHAL_OPTIMIZATION=-1; narwhal test/runner.js 2>&1
+    command: export NARWHAL_OPTIMIZATION=-1; narwhal test/runner.js
     protocol: tap
 
   ringo:
