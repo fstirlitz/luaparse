@@ -6,7 +6,7 @@ launchers:
     protocol: tap
 
   narwhal:
-    command: export NARWHAL_OPTIMIZATION=-1; narwhal test/runner.js 2>&1
+    command: export NARWHAL_OPTIMIZATION=-1; narwhal test/runner.js
     protocol: tap
 
   ringo:
@@ -14,11 +14,11 @@ launchers:
     protocol: tap
 
   rhino:
-    command: cd test; rhino -opt -1 runner.js 2>&1
+    command: cd test; rhino -opt -1 runner.js
     protocol: tap
 
   rhino1.7R5:
-    command: cd test; java -jar /opt/rhino/build/rhino1_7R5pre/js.jar runner.js 2>&1
+    command: cd test; java -jar /opt/rhino/build/rhino1_7R5pre/js.jar runner.js
     protocol: tap
 
 launch_in_ci: [PhantomJS, node, narwhal, ringo, rhino]
