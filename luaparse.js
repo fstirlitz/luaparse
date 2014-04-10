@@ -1636,19 +1636,17 @@
     if (trackLocations) marker = createLocationMarker();
     base = parseIdentifier();
 
-    if (options.scope) attachScope(base, false);
+    if (options.scope) attachScope(base, scopeHasName(base.name));
 
     while (consume('.')) {
       pushLocation(marker);
       name = parseIdentifier();
-      if (options.scope) attachScope(name, false);
       base = finishNode(ast.memberExpression(base, '.', name));
     }
 
     if (consume(':')) {
       pushLocation(marker);
       name = parseIdentifier();
-      if (options.scope) attachScope(name, false);
       base = finishNode(ast.memberExpression(base, ':', name));
     }
 
