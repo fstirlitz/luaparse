@@ -1820,9 +1820,7 @@
   //     args ::= '(' [explist] ')' | tableconstructor | String
 
   function parsePrefixExpression() {
-    var base, name, marker
-      // Keep track of the scope, if a parent is local so are the children.
-      , isLocal;
+    var base, name, marker;
 
     if (trackLocations) marker = createLocationMarker();
 
@@ -1831,11 +1829,10 @@
       name = token.value;
       base = parseIdentifier();
       // Set the parent scope.
-      if (options.scope) attachScope(base, isLocal = scopeHasName(name));
+      if (options.scope) attachScope(base, scopeHasName(name));
     } else if (consume('(')) {
       base = parseExpectedExpression();
       expect(')');
-      if (options.scope) isLocal = base.isLocal;
     } else {
       return null;
     }
