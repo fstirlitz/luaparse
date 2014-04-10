@@ -674,8 +674,7 @@
                 "range": [
                   2,
                   3
-                ],
-                "isLocal": false
+                ]
               },
               "base": {
                 "type": "Identifier",
@@ -783,25 +782,6 @@
             1
           ],
           "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
         }
       ]
     },
@@ -830,8 +810,7 @@
                 "range": [
                   4,
                   5
-                ],
-                "isLocal": false
+                ]
               },
               "base": {
                 "type": "MemberExpression",
@@ -852,8 +831,7 @@
                   "range": [
                     2,
                     3
-                  ],
-                  "isLocal": false
+                  ]
                 },
                 "base": {
                   "type": "Identifier",
@@ -974,44 +952,6 @@
           "range": [
             0,
             1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 4
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            4,
-            5
           ],
           "isLocal": false
         }
@@ -1409,8 +1349,7 @@
                   "range": [
                     2,
                     3
-                  ],
-                  "isLocal": false
+                  ]
                 },
                 "base": {
                   "type": "Identifier",
@@ -1555,25 +1494,6 @@
         },
         {
           "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
           "name": "c",
           "loc": {
             "start": {
@@ -1618,8 +1538,7 @@
                 "range": [
                   5,
                   6
-                ],
-                "isLocal": false
+                ]
               },
               "base": {
                 "type": "IndexExpression",
@@ -1780,25 +1699,6 @@
           "range": [
             2,
             3
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 5
-            },
-            "end": {
-              "line": 1,
-              "column": 6
-            }
-          },
-          "range": [
-            5,
-            6
           ],
           "isLocal": false
         }

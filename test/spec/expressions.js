@@ -962,8 +962,7 @@
                 "range": [
                   6,
                   7
-                ],
-                "isLocal": false
+                ]
               },
               "base": {
                 "type": "Identifier",
@@ -1050,25 +1049,6 @@
             1
           ],
           "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 6
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            6,
-            7
-          ],
-          "isLocal": false
         }
       ]
     },
@@ -1119,8 +1099,7 @@
                 "range": [
                   8,
                   9
-                ],
-                "isLocal": false
+                ]
               },
               "base": {
                 "type": "MemberExpression",
@@ -1141,8 +1120,7 @@
                   "range": [
                     6,
                     7
-                  ],
-                  "isLocal": false
+                  ]
                 },
                 "base": {
                   "type": "Identifier",
@@ -1242,44 +1220,6 @@
           "range": [
             0,
             1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 6
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            6,
-            7
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 8
-            },
-            "end": {
-              "line": 1,
-              "column": 9
-            }
-          },
-          "range": [
-            8,
-            9
           ],
           "isLocal": false
         }

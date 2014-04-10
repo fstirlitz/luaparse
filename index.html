@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Luaparse</title>
-    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
     <style>
       .hero-unit .nav-pills a {
         font-size: 70%;
@@ -41,11 +40,11 @@
       </div>
     </div>
     <div class="container">
-<h1>luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.png" alt="Build Status"></a></h1>
+<h1 id="luaparse-build-status-https-travis-ci-org-oxyc-luaparse-png-https-travis-ci-org-oxyc-luaparse-">luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.png" alt="Build Status"></a></h1>
 <p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.</p>
-<h2>Installation</h2>
+<h2 id="installation">Installation</h2>
 <p>Install through <code>bower install luaparse</code> or <code>npm install luaparse</code>.</p>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <p>CommonJS</p>
 <pre><code class="lang-js">var parser = require(&#39;luaparse&#39;);
 var ast = parser.parse(&#39;i = 0&#39;);
@@ -61,7 +60,7 @@ console.log(JSON.stringify(ast));</code></pre>
 var ast = luaparse.parse(&#39;i = 0&#39;);
 console.log(JSON.stringify(ast));
 &lt;/script&gt;</code></pre>
-<h2>Parser Interface</h2>
+<h2 id="parser-interface">Parser Interface</h2>
 <p>Basic usage:</p>
 <pre><code class="lang-js">luaparse.parse(code, options);</code></pre>
 <p>The output of the parser is an Abstract Syntax Tree (AST) formatted in JSON.</p>
@@ -84,7 +83,7 @@ parser.write(&#39;bar&#39;);
 var ast = parser.end(&#39;&quot;&#39;);</code></pre>
 <p>This would be identical to:</p>
 <pre><code class="lang-js">var ast = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
-<h3>AST format</h3>
+<h3 id="ast-format">AST format</h3>
 <p>If the following code is executed:</p>
 <pre><code class="lang-js">luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
 <p>then the returned value will be:</p>
@@ -110,7 +109,7 @@ var ast = parser.end(&#39;&quot;&#39;);</code></pre>
   ],
   &quot;comments&quot;: []
 }</code></pre>
-<h3>Custom AST</h3>
+<h3 id="custom-ast">Custom AST</h3>
 <p>The default AST structure is somewhat inspired by the Mozilla Parser API but
 can easily be overriden to customize the structure or to inject custom logic.</p>
 <p><code>luaparse.ast</code> is an object containing all functions used to create the AST, if
@@ -129,7 +128,7 @@ Object.keys(luaparse.ast).forEach(function(type) {
 });
 events.on(&#39;Identifier&#39;, function(node) { console.log(node); });
 luaparse.parse(&#39;i = &quot;foo&quot;&#39;);</code></pre>
-<h3>Lexer</h3>
+<h3 id="lexer">Lexer</h3>
 <p>The lexer used by luaparse can be used independently of the recursive descent
 parser. The lex function is exposed as <code>luaparse.lex()</code> and it will return the
 next token up until <code>EOF</code> is reached.</p>
@@ -148,10 +147,10 @@ parser.lex(); // { type: 32, value: &quot;=&quot;, line: 1, lineStart: 0, range:
 parser.lex(); // { type: 2, value: &quot;bar&quot;, line: 1, lineStart: 0, range: [6, 11] }
 parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }
 parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }</code></pre>
-<h2>Examples</h2>
+<h2 id="examples">Examples</h2>
 <p>Have a look in the <a href="https://github.com/oxyc/luaparse/tree/master/examples">examples directory</a>
 of the repository for some code examples or check them out <a href="http://oxyc.github.io/luaparse/examples.html">live</a>.</p>
-<h2>luaparse(1)</h2>
+<h2 id="luaparse-1-">luaparse(1)</h2>
 <p>The <code>luaparse</code> executable can be used in your shell by installing <code>luaparse</code> globally using npm:</p>
 <pre><code class="lang-bash">$ npm install -g luaparse
 $ luaparse --help
@@ -178,10 +177,10 @@ Examples:
 <pre><code class="lang-bash">$ luaparse &quot;i = 0&quot;
 
 {&quot;type&quot;:&quot;Chunk&quot;,&quot;body&quot;:[{&quot;type&quot;:&quot;AssignmentStatement&quot;,&quot;variables&quot;:[{&quot;type&quot;:&quot;Identifier&quot;,&quot;name&quot;:&quot;i&quot;}],&quot;init&quot;:[{&quot;type&quot;:&quot;NumericLiteral&quot;,&quot;value&quot;:0,&quot;raw&quot;:&quot;0&quot;}]}],&quot;comments&quot;:[]}</code></pre>
-<h2>Support</h2>
+<h2 id="support">Support</h2>
 <p>Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+,
 Node 0.4.0+, RingoJS 0.8-0.9, Narwhal 0.3.2, Rhino 1.7R4-1.7R5.</p>
-<h2>Quality Assurance</h2>
+<h2 id="quality-assurance">Quality Assurance</h2>
 <p><em>TL;DR simply run <code>make qa</code>. This will run all quality assurance scripts but
 assumes you have it set up correctly.</em></p>
 <p>Begin by cloning the repository and installing the development dependencies
@@ -192,7 +191,7 @@ test runner, and because of this it&#39;s very easy to run the tests using
 different javascript engines or even on locally installed browsers. Currently
 the default runner uses <a href="http://phantomjs.org/">PhantomJS</a> and node so when
 using <code>make test</code> or <code>npm test</code> you should have PhantomJS installed.</p>
-<h3>Test runners</h3>
+<h3 id="test-runners">Test runners</h3>
 <ul>
 <li><code>make test</code> uses PhantomJS and node.</li>
 <li><code>make testem-engines</code> uses PhantomJS, node, narwhal, ringo, rhino and rhino
@@ -202,7 +201,7 @@ easier on the eyes while practicing TDD.</li>
 <li>By installing <code>testem</code> globally you can also run the tests in a locally
 installed browser.</li>
 </ul>
-<h3>Other quality assurance measures</h3>
+<h3 id="other-quality-assurance-measures">Other quality assurance measures</h3>
 <ul>
 <li>You can check the function complexity using <a href="https://github.com/philbooth/complexityReport.js">complexity-report</a>
 using <code>make complexity-analysis</code></li>
@@ -210,20 +209,20 @@ using <code>make complexity-analysis</code></li>
 To simply check that all code has coverage you can run <code>make coverage-analysis</code>.</li>
 <li><code>make lint</code>, <code>make benchmark</code>, <code>make profile</code>.</li>
 </ul>
-<h3>Documentation</h3>
+<h3 id="documentation">Documentation</h3>
 <p>By running <code>make docs</code> all <a href="http://oxyc.github.io/luaparse/">documentation</a>
 will be generated.</p>
-<h2>Projects using luaparse</h2>
+<h2 id="projects-using-luaparse">Projects using luaparse</h2>
 <ul>
 <li><a href="http://mths.be/luamin">luamin</a>, a Lua minifier written by Mathias Bynens.</li>
 <li><a href="https://github.com/ajaxorg/ace">Ace</a>, an online code editor.</li>
 </ul>
-<h2>Acknowledgements</h2>
+<h2 id="acknowledgements">Acknowledgements</h2>
 <ul>
 <li>Initial tests are scaffolded from <a href="http://yueliang.luaforge.net/">yueliang</a> and then manually checked for error.</li>
 <li>Much of the code is based on <a href="https://github.com/stravant/LuaMinify">LuaMinify</a>, the <a href="http://www.lua.org">Lua</a> source and <a href="http://esprima.org">Esprima</a>. All awesome projects.</li>
 </ul>
-<h2>License</h2>
+<h2 id="license">License</h2>
 <p>MIT</p>
 
     </div>

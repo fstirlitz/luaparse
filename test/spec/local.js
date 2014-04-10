@@ -2260,6 +2260,194 @@
       ],
       "comments": [],
       "globals": []
+    },
+    "local a = { b = { z = 1 } }": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "LocalStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 6
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                6,
+                7
+              ],
+              "isLocal": true
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableKeyString",
+                  "key": {
+                    "type": "Identifier",
+                    "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 12
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 13
+                      }
+                    },
+                    "range": [
+                      12,
+                      13
+                    ]
+                  },
+                  "value": {
+                    "type": "TableConstructorExpression",
+                    "fields": [
+                      {
+                        "type": "TableKeyString",
+                        "key": {
+                          "type": "Identifier",
+                          "name": "z",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 18
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 19
+                            }
+                          },
+                          "range": [
+                            18,
+                            19
+                          ]
+                        },
+                        "value": {
+                          "type": "NumericLiteral",
+                          "value": 1,
+                          "raw": "1",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 22
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 23
+                            }
+                          },
+                          "range": [
+                            22,
+                            23
+                          ]
+                        },
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 18
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 23
+                          }
+                        },
+                        "range": [
+                          18,
+                          23
+                        ]
+                      }
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 16
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 25
+                      }
+                    },
+                    "range": [
+                      16,
+                      25
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 12
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 25
+                    }
+                  },
+                  "range": [
+                    12,
+                    25
+                  ]
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 10
+                },
+                "end": {
+                  "line": 1,
+                  "column": 27
+                }
+              },
+              "range": [
+                10,
+                27
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 27
+            }
+          },
+          "range": [
+            0,
+            27
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 27
+        }
+      },
+      "range": [
+        0,
+        27
+      ],
+      "comments": [],
+      "globals": []
     }
   };
 }));
