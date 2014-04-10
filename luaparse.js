@@ -1214,7 +1214,9 @@
   function parseChunk() {
     next();
     markLocation();
+    if (options.scope) createScope();
     var body = parseBlock();
+    if (options.scope) exitScope();
     if (EOF !== token.type) unexpected(token);
     // If the body is empty no previousToken exists when finishNode runs.
     if (trackLocations && !body.length) previousToken = token;
@@ -1230,9 +1232,6 @@
     var block = []
       , statement;
 
-    // Each block creates a new scope.
-    if (options.scope) createScope();
-
     while (!isBlockFollow(token)) {
       // Return has to be the last statement in a block.
       if ('return' === token.value) {
@@ -1245,7 +1244,6 @@
       if (statement) block.push(statement);
     }
 
-    if (options.scope) exitScope();
     // Doesn't really need an ast node
     return block;
   }
@@ -1324,7 +1322,9 @@
   //     do ::= 'do' block 'end'
 
   function parseDoStatement() {
+    if (options.scope) createScope();
     var body = parseBlock();
+    if (options.scope) exitScope();
     expect('end');
     return finishNode(ast.doStatement(body));
   }
@@ -1334,7 +1334,9 @@
   function parseWhileStatement() {
     var condition = parseExpectedExpression();
     expect('do');
+    if (options.scope) createScope();
     var body = parseBlock();
+    if (options.scope) exitScope();
     expect('end');
     return finishNode(ast.whileStatement(condition, body));
   }
@@ -1342,9 +1344,11 @@
   //     repeat ::= 'repeat' block 'until' exp
 
   function parseRepeatStatement() {
+    if (options.scope) createScope();
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
+    if (options.scope) exitScope();
     return finishNode(ast.repeatStatement(condition, body));
   }
 
@@ -1382,7 +1386,9 @@
     }
     condition = parseExpectedExpression();
     expect('then');
+    if (options.scope) createScope();
     body = parseBlock();
+    if (options.scope) exitScope();
     clauses.push(finishNode(ast.ifClause(condition, body)));
 
     if (trackLocations) marker = createLocationMarker();
@@ -1390,7 +1396,9 @@
       pushLocation(marker);
       condition = parseExpectedExpression();
       expect('then');
+      if (options.scope) createScope();
       body = parseBlock();
+      if (options.scope) exitScope();
       clauses.push(finishNode(ast.elseifClause(condition, body)));
       if (trackLocations) marker = createLocationMarker();
     }
@@ -1401,7 +1409,9 @@
         marker = new Marker(previousToken);
         locations.push(marker);
       }
+      if (options.scope) createScope();
       body = parseBlock();
+      if (options.scope) exitScope();
       clauses.push(finishNode(ast.elseClause(body)));
     }
 
@@ -1421,7 +1431,11 @@
       , body;
 
     // The start-identifier is local.
-    if (options.scope) scopeIdentifier(variable);
+
+    if (options.scope) {
+      createScope();
+      scopeIdentifier(variable);
+    }
 
     // If the first expression is followed by a `=` punctuator, this is a
     // Numeric For Statement.
@@ -1437,6 +1451,7 @@
       expect('do');
       body = parseBlock();
       expect('end');
+      if (options.scope) exitScope();
 
       return finishNode(ast.forNumericStatement(variable, start, end, step, body));
     }
@@ -1462,6 +1477,7 @@
       expect('do');
       body = parseBlock();
       expect('end');
+      if (options.scope) exitScope();
 
       return finishNode(ast.forGenericStatement(variables, iterators, body));
     }
@@ -1510,7 +1526,11 @@
     }
     if (consume('function')) {
       name = parseIdentifier();
-      if (options.scope) scopeIdentifier(name);
+
+      if (options.scope) {
+        scopeIdentifier(name);
+        createScope();
+      }
 
       // MemberExpressions are not allowed in local function statements.
       return parseFunctionDeclaration(name, true);
@@ -1621,6 +1641,7 @@
 
     var body = parseBlock();
     expect('end');
+    if (options.scope) exitScope();
 
     isLocal = isLocal || false;
     return finishNode(ast.functionStatement(name, parameters, isLocal, body));
@@ -1636,7 +1657,10 @@
     if (trackLocations) marker = createLocationMarker();
     base = parseIdentifier();
 
-    if (options.scope) attachScope(base, scopeHasName(base.name));
+    if (options.scope) {
+      attachScope(base, scopeHasName(base.name));
+      createScope();
+    }
 
     while (consume('.')) {
       pushLocation(marker);
@@ -1648,6 +1672,7 @@
       pushLocation(marker);
       name = parseIdentifier();
       base = finishNode(ast.memberExpression(base, ':', name));
+      if (options.scope) scopeIdentifierName('self');
     }
 
     return base;
@@ -1935,6 +1960,7 @@
     } else if (Keyword === type && 'function' === value) {
       pushLocation(marker);
       next();
+      if (options.scope) createScope();
       return parseFunctionDeclaration(null);
     } else if (consume('{')) {
       pushLocation(marker);
