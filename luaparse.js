@@ -1,30 +1,38 @@
-/*global exports:true module:true require:true define:true global:true */
+/* global exports:true, module:true, require:true, define:true, global:true */
 
 (function (root, name, factory) {
+  /* jshint eqeqeq:false */
   'use strict';
 
-  var freeExports = typeof exports === 'object' && exports
-    // While CommonJS defines `module` as an object, component define it as a
-    // function
-    , freeModule = (typeof module === 'object' || typeof module === 'function') &&
-        module && module.exports === freeExports && module;
+  // Used to determine if values are of the language type `Object`
+  var objectTypes = {
+        'function': true
+      , 'object': true
+    }
+    // Detect free variable `exports`
+    , freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports
+    // Detect free variable `module`
+    , freeModule = objectTypes[typeof module] && module && !module.nodeType && module
+    // Detect the popular CommonJS extension `module.exports`
+    , moduleExports = freeModule && freeModule.exports === freeExports && freeExports
+    // Detect free variable `global`, from Node.js or Browserified code, and
+    // use it as `window`
+    , freeGlobal = objectTypes[typeof global] && global;
 
-  // Detect free variable `global`, from Node.js or Browserified code, and use
-  // it as `root`
-  var freeGlobal = typeof global === 'object' && global;
-  if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)
+  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) {
     root = freeGlobal;
+  }
 
   // Some AMD build optimizers, like r.js, check for specific condition
   // patterns like the following:
-  if (typeof define === 'function' && define.amd) {
+  if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
     define(['exports'], factory);
   }
   // check for `exports` after `define` in case a build optimizer adds an
   // `exports` object
-  else if (freeExports && !freeExports.nodeType) {
+  else if (freeExports && freeModule) {
     // in Node.js or RingoJS v0.8.0+
-    if (freeModule) factory(freeModule.exports);
+    if (moduleExports) factory(freeModule.exports);
     // in Narwhal or RingoJS v0.7.0-
     else factory(freeExports);
   }
