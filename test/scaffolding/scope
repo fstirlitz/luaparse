@@ -13,3 +13,7 @@ local a, b = 1, function() b = 2 end
 local a (a):b():c()
 local a, b for i, a, b in c do end
 local a, b, c for i, a, b in c do end
+local a = {} function a:b() return self end self = nil
+repeat local a = true until a
+local a = function (b) end b = 0
+for a = 1, 5 do end a = 0
