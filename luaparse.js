@@ -26,7 +26,11 @@
   // Some AMD build optimizers, like r.js, check for specific condition
   // patterns like the following:
   if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+    // defined as an anonymous module.
     define(['exports'], factory);
+    // In case the source has been processed and wrapped in a define module use
+    // the supplied `exports` object.
+    if (freeExports && moduleExports) factory(freeModule.exports);
   }
   // check for `exports` after `define` in case a build optimizer adds an
   // `exports` object
