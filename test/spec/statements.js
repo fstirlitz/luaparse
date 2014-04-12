@@ -135,8 +135,7 @@
             "range": [
               5,
               8
-            ],
-            "isLabel": false
+            ]
           },
           "loc": {
             "start": {
