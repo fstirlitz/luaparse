@@ -1,4 +1,4 @@
-test_page: test/index.html
+test_page: test/index.html#testem
 
 launchers:
   node:

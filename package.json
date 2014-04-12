@@ -31,17 +31,17 @@
   ],
   "devDependencies": {
     "benchmark": "~1.0.0",
-    "complexity-report": "~0.10.3",
-    "docco": "~0.6.2",
-    "grunt": "~0.4.1",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-uglify": "~0.2.2",
+    "complexity-report": "~0.10.5",
+    "docco": "~0.6.3",
+    "grunt": "~0.4.4",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "~0.4.0",
     "grunt-lint-bash": "~0.1.0",
-    "grunt-lint-inline": "~0.2.0",
-    "istanbul": "~0.1.37",
-    "marked": "~0.2.9",
+    "grunt-lint-inline": "~0.4.0",
+    "istanbul": "~0.2.7",
+    "marked": "~0.3.2",
     "spec": "git://github.com/kitcambridge/spec.git#gh-pages",
-    "testem": "~0.3.7"
+    "testem": "~0.6.9"
   }
 }
