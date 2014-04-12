@@ -63,6 +63,13 @@
     // Store the start and end character locations on each syntax node as
     // `range: [start, end]`.
     , ranges: false
+    // A callback which will be invoked when a syntax node has been completed.
+    // The node which has been created will be passed as the only parameter.
+    , onCreateNode: null
+    // A callback which will be invoked when a new scope is created.
+    , onCreateScope: null
+    // A callback which will be invoked when the current scope is destroyed.
+    , onDestroyScope: null
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -360,9 +367,9 @@
       if (options.locations) node.loc = location.loc;
       if (options.ranges) node.range = location.range;
     }
+    if (options.onCreateNode) options.onCreateNode(node);
     return node;
   }
-
 
 
   // Helpers
@@ -933,6 +940,7 @@
       if (options.ranges) {
         node.range = [tokenStart, index];
       }
+      if (options.onCreateNode) options.onCreateNode(node);
       comments.push(node);
     }
   }
@@ -1117,13 +1125,16 @@
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
-    scopes.push(Array.apply(null, scopes[scopeDepth++]));
+    var scope = Array.apply(null, scopes[scopeDepth++]);
+    scopes.push(scope);
+    if (options.onCreateScope) options.onCreateScope();
   }
 
   // Exit and remove the current scope.
-  function exitScope() {
-    scopes.pop();
+  function destroyScope() {
+    var scope = scopes.pop();
     scopeDepth--;
+    if (options.onDestroyScope) options.onDestroyScope();
   }
 
   // Add identifier name to the current scope if it doesnt already exist.
@@ -1216,7 +1227,7 @@
     markLocation();
     if (options.scope) createScope();
     var body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     if (EOF !== token.type) unexpected(token);
     // If the body is empty no previousToken exists when finishNode runs.
     if (trackLocations && !body.length) previousToken = token;
@@ -1324,7 +1335,7 @@
   function parseDoStatement() {
     if (options.scope) createScope();
     var body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.doStatement(body));
   }
@@ -1336,7 +1347,7 @@
     expect('do');
     if (options.scope) createScope();
     var body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.whileStatement(condition, body));
   }
@@ -1348,7 +1359,7 @@
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     return finishNode(ast.repeatStatement(condition, body));
   }
 
@@ -1388,7 +1399,7 @@
     expect('then');
     if (options.scope) createScope();
     body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     clauses.push(finishNode(ast.ifClause(condition, body)));
 
     if (trackLocations) marker = createLocationMarker();
@@ -1398,7 +1409,7 @@
       expect('then');
       if (options.scope) createScope();
       body = parseBlock();
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseifClause(condition, body)));
       if (trackLocations) marker = createLocationMarker();
     }
@@ -1411,7 +1422,7 @@
       }
       if (options.scope) createScope();
       body = parseBlock();
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseClause(body)));
     }
 
@@ -1451,7 +1462,7 @@
       expect('do');
       body = parseBlock();
       expect('end');
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
 
       return finishNode(ast.forNumericStatement(variable, start, end, step, body));
     }
@@ -1477,7 +1488,7 @@
       expect('do');
       body = parseBlock();
       expect('end');
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
 
       return finishNode(ast.forGenericStatement(variables, iterators, body));
     }
@@ -1641,7 +1652,7 @@
 
     var body = parseBlock();
     expect('end');
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
 
     isLocal = isLocal || false;
     return finishNode(ast.functionStatement(name, parameters, isLocal, body));
@@ -1976,6 +1987,15 @@
   //   - `wait` Hold parsing until end() is called. Defaults to false
   //   - `comments` Store comments. Defaults to true.
   //   - `scope` Track identifier scope. Defaults to false.
+  //   - `locations` Store location information. Defaults to false.
+  //   - `ranges` Store the start and end character locations. Defaults to
+  //     false.
+  //   - `onCreateNode` Callback which will be invoked when a syntax node is
+  //     created.
+  //   - `onCreateScope` Callback which will be invoked when a new scope is
+  //     created.
+  //   - `onDestroyScope` Callback which will be invoked when the current scope
+  //     is destroyed.
   //
   // Example:
   //

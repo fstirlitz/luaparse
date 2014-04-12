@@ -53,6 +53,13 @@ The available options are:
 - `locations: false` Store location information on each syntax node.
 - `ranges: false` Store the start and end character locations on each syntax
   node.
+- `onCreateNode: null` A callback which will be invoked when a syntax node
+  has been completed. The node which has been created will be passed as the
+  only parameter.
+- `onCreateScope: null` A callback which will be invoked when a new scope is
+  created.
+- `onDestroyScope: null` A callback which will be invoked when the current
+  scope is destroyed.
 
 The default options are also exposed through `luaparse.defaultOptions` where
 they can be overriden globally.
@@ -132,6 +139,12 @@ Object.keys(luaparse.ast).forEach(function(type) {
 events.on('Identifier', function(node) { console.log(node); });
 luaparse.parse('i = "foo"');
 ```
+
+_this is only an example to illustrate what is possible and this particular
+example might not suit your needs as the end location of the node has not been
+determined yet. If you desire events you should use the `onCreateNode` callback
+instead)._
+
 
 ### Lexer
 
