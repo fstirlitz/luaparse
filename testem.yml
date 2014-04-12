@@ -18,9 +18,33 @@ launchers:
     protocol: tap
 
   rhino1.7R5:
-    command: cd test; java -jar /opt/rhino/build/rhino1_7R5pre/js.jar -opt -1 runner.js
+    command: cd test; rhino-1.7r5-pre -opt -1 runner.js
     protocol: tap
 
-launch_in_ci: [PhantomJS, node, narwhal, ringo, rhino]
+  nashorn:
+    command: nashorn test/runner.js
+    protocol: tap
 
-launch_in_dev: [Firefox, Chrome, PhantomJS, node, narwhal, ringo, rhino, rhino1.7R5]
+  d8:
+    command: cd test; d8 runner.js
+    protocol: tap
+
+launch_in_ci:
+  - PhantomJS
+  - node
+  - narwhal
+  - ringo
+  - rhino
+
+launch_in_dev:
+  - Opera
+  - Firefox
+  - Chrome
+  - PhantomJS
+  - node
+  - narwhal
+  - ringo
+  - rhino
+  - rhino1.7R5
+  - nashorn
+  - d8
