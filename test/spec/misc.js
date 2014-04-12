@@ -35,7 +35,7 @@
   exports.name = 'misc';
   exports.options = { };
   exports.spec = {
-    'function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end': {
+    'function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end do while a do end repeat until 0 end for a = 1, 1 do end a = function() end': {
       options: { },
       name: 'should not scope by default',
       result: {
@@ -148,6 +148,65 @@
                     "arguments": []
                   }
                 ],
+                "body": []
+              }
+            ]
+          },
+          {
+            "type": "DoStatement",
+            "body": [
+              {
+                "type": "WhileStatement",
+                "condition": {
+                  "type": "Identifier",
+                  "name": "a"
+                },
+                "body": []
+              },
+              {
+                "type": "RepeatStatement",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 0,
+                  "raw": "0"
+                },
+                "body": []
+              }
+            ]
+          },
+          {
+            "type": "ForNumericStatement",
+            "variable": {
+              "type": "Identifier",
+              "name": "a"
+            },
+            "start": {
+              "type": "NumericLiteral",
+              "value": 1,
+              "raw": "1"
+            },
+            "end": {
+              "type": "NumericLiteral",
+              "value": 1,
+              "raw": "1"
+            },
+            "step": null,
+            "body": []
+          },
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a"
+              }
+            ],
+            "init": [
+              {
+                "type": "FunctionDeclaration",
+                "identifier": null,
+                "isLocal": false,
+                "parameters": [],
                 "body": []
               }
             ]
