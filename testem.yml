@@ -22,7 +22,7 @@ launchers:
     protocol: tap
 
   nashorn:
-    command: nashorn test/runner.js
+    command: cd test; nashorn runner.js
     protocol: tap
 
   d8:
