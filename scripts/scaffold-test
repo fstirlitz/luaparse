@@ -171,9 +171,9 @@ args.forEach(function(arg, index) {
 console.log(scaffoldFile());
 
 if (verbose && notifications.length) {
-  console.log("\nNotices: \n-----------------------------");
+  console.warn("\nNotices: \n-----------------------------");
   notifications.forEach(function(notice) {
-    console.log(notice);
+    console.warn(notice);
   });
 }
 
