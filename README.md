@@ -162,7 +162,7 @@ Each token consists of:
 hand will return `"bar"`.
 
 ```js
-var parser = luaparse.parse('foo = "bar"');
+var parser = luaparse.parse('foo = "bar"', { wait: true });
 parser.lex(); // { type: 8, value: "foo", line: 1, lineStart: 0, range: [0, 3] }
 parser.lex(); // { type: 32, value: "=", line: 1, lineStart: 0, range: [4, 5]}
 parser.lex(); // { type: 2, value: "bar", line: 1, lineStart: 0, range: [6, 11] }
