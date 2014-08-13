@@ -1506,7 +1506,7 @@
   // child.
   //
   //     local ::= 'local' 'function' Name funcdecl
-  //        | 'local' Name {',' Name} ['=' exp {',' exp}
+  //        | 'local' Name {',' Name} ['=' exp {',' exp}]
 
   function parseLocalStatement() {
     var name;
@@ -1562,7 +1562,8 @@
   }
 
   //     assignment ::= varlist '=' explist
-  //     varlist ::= prefixexp {',' prefixexp}
+  //     var ::= Name | prefixexp '[' exp ']' | prefixexp '.' Name
+  //     varlist ::= var {',' var}
   //     explist ::= exp {',' exp}
   //
   //     call ::= callexp
