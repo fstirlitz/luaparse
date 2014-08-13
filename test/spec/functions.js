@@ -349,7 +349,7 @@
     },
     "function a(p,q,1": "[1:15] <name> or '...' expected near '1'",
     "function a(p) do": "[1:16] 'end' expected near '<eof>'",
-    "function a(p) 1 end": "[1:14] Unexpected number '1' near 'end'",
+    "function a(p) 1 end": "[1:14] unexpected number '1' near 'end'",
     "function a(p) return end": {
       "type": "Chunk",
       "body": [

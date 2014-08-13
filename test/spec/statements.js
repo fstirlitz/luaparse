@@ -170,6 +170,6 @@
       "comments": [],
       "globals": []
     },
-    "nil": "[1:0] Unexpected symbol 'nil' near '<eof>'"
+    "nil": "[1:0] unexpected symbol 'nil' near '<eof>'"
   };
 }));

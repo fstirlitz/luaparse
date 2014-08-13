@@ -451,8 +451,8 @@
       "comments": [],
       "globals": []
     },
-    "while 1 do 2 end": "[1:11] Unexpected number '2' near 'end'",
-    "while 1 do \"foo\" end": "[1:11] Unexpected string 'foo' near 'end'",
+    "while 1 do 2 end": "[1:11] unexpected number '2' near 'end'",
+    "while 1 do \"foo\" end": "[1:11] unexpected string 'foo' near 'end'",
     "while true do end": {
       "type": "Chunk",
       "body": [

@@ -83,7 +83,21 @@
   };
 
   Spec.Test.prototype.equalPrecedence = function (source, expected, options) {
-    return this.deepEqual(luaparse.parse('a = ' + source, options), luaparse.parse('a = ' + expected, options), source + ' is equal to ' + expected);
+    function normalise(node) {
+      if (!node || typeof node !== 'object')
+        return node;
+      node.inParens = null;
+      for (var key in node) {
+        normalise(node[key]);
+      }
+      return node;
+    }
+
+    return this.deepEqual(
+      normalise(luaparse.parse('a = ' + source, options)),
+      normalise(luaparse.parse('a = ' + expected, options)),
+      source + ' is equal to ' + expected
+    );
   };
 
   // Create a test, and delegate to appropiate test function.

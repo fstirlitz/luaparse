@@ -2625,7 +2625,8 @@
                       9,
                       10
                     ],
-                    "isLocal": true
+                    "isLocal": true,
+                    "inParens": true
                   },
                   "loc": {
                     "start": {

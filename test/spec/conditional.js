@@ -18,9 +18,9 @@
   exports.name = 'conditional';
   exports.spec = {
     "if": "[1:2] <expression> expected near '<eof>'",
-    "elseif": "[1:0] Unexpected keyword 'elseif' near '<eof>'",
-    "else": "[1:0] Unexpected keyword 'else' near '<eof>'",
-    "then": "[1:0] Unexpected keyword 'then' near '<eof>'",
+    "elseif": "[1:0] unexpected keyword 'elseif' near '<eof>'",
+    "else": "[1:0] unexpected keyword 'else' near '<eof>'",
+    "then": "[1:0] unexpected keyword 'then' near '<eof>'",
     "if then": "[1:3] <expression> expected near 'then'",
     "if 1": "[1:4] 'then' expected near '<eof>'",
     "if 1 then": "[1:9] 'end' expected near '<eof>'",

@@ -17,7 +17,7 @@
 
   exports.name = 'return';
   exports.spec = {
-    "return return": "[1:7] Unexpected keyword 'return' near '<eof>'",
+    "return return": "[1:7] unexpected keyword 'return' near '<eof>'",
     "return 1": {
       "type": "Chunk",
       "body": [
@@ -77,7 +77,7 @@
       "comments": [],
       "globals": []
     },
-    "return local": "[1:7] Unexpected keyword 'local' near '<eof>'",
+    "return local": "[1:7] unexpected keyword 'local' near '<eof>'",
     "return \"foo\"": {
       "type": "Chunk",
       "body": [
