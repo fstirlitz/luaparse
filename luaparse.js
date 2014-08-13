@@ -93,11 +93,12 @@
   // will be different in some situations.
 
   var errors = exports.errors = {
-      unexpected: 'Unexpected %1 \'%2\' near \'%3\''
+      unexpected: 'unexpected %1 \'%2\' near \'%3\''
     , expected: '\'%1\' expected near \'%2\''
     , expectedToken: '%1 expected near \'%2\''
     , unfinishedString: 'unfinished string near \'%1\''
     , malformedNumber: 'malformed number near \'%1\''
+    , invalidVar: 'invalid left-hand side of assignment near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -1553,6 +1554,13 @@
     }
   }
 
+  function validateVar(node) {
+    // @TODO we need something not dependent on the exact AST used. see also isCallExpression()
+    if (node.inParens || (['Identifier', 'MemberExpression', 'IndexExpression'].indexOf(node.type) === -1)) {
+      raise(token, errors.invalidVar, token.value);
+    }
+  }
+
   //     assignment ::= varlist '=' explist
   //     varlist ::= prefixexp {',' prefixexp}
   //     explist ::= exp {',' exp}
@@ -1575,9 +1583,11 @@
         , init = []
         , exp;
 
+      validateVar(expression);
       while (consume(',')) {
         exp = parsePrefixExpression();
         if (null == exp) raiseUnexpectedToken('<expression>', token);
+        validateVar(exp);
         variables.push(exp);
       }
       expect('=');
@@ -1872,6 +1882,7 @@
     } else if (consume('(')) {
       base = parseExpectedExpression();
       expect(')');
+      base.inParens = true; // XXX: quick and dirty. needed for validateVar
     } else {
       return null;
     }
