@@ -1,4 +1,4 @@
-# luaparse [![Build Status](https://travis-ci.org/oxyc/luaparse.png)](https://travis-ci.org/oxyc/luaparse)
+# luaparse [![Build Status](https://travis-ci.org/oxyc/luaparse.svg)](https://travis-ci.org/oxyc/luaparse)
 
 A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
 
