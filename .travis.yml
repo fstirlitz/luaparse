@@ -23,7 +23,7 @@ deploy:
     tags: true
     all_branches: true
 after_deploy:
-  - ssh-add .travis/deploy_key
-  - git checkout gh-pages
+  - eval `ssh-agent -s` && ssh-add .travis/deploy_key
+  - git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && cd gh-pages
   - make && git add . && git commit --message 'build documentation'
-  - git push gh-pages
+  - git push origin gh-pages
