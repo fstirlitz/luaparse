@@ -19,6 +19,12 @@
     }
   ],
   "main": "luaparse.js",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "luaparse.js",
+    "bin/luaparse"
+  ],
   "bin": "bin/luaparse",
   "man": "docs/luaparse.1",
   "scripts": {
