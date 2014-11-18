@@ -276,6 +276,16 @@
     this.done(15);
   });
 
+  suite.addTest('EOL sequences', function() {
+    var options = { locations: true }
+      , baseline = luaparse.parse('foo = 1\nbar = 1', options);
+
+    this.deepEqual(baseline, luaparse.parse('foo = 1\rbar = 1', options), 'carriage return');
+    this.deepEqual(baseline, luaparse.parse('foo = 1\n\rbar = 1', options), 'newline followed by carriage return');
+    this.deepEqual(baseline, luaparse.parse('foo = 1\r\nbar = 1', options), 'carriage return followed by newline');
+    this.done(3);
+  });
+
   if (isLoader) {
     define(specs, function () {
       Spec.forEach(arguments, function(test) {

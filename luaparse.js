@@ -621,18 +621,31 @@
   }
 
   // Whitespace has no semantic meaning in lua so simply skip ahead while
-  // tracking the encounted newlines. Newlines are also tracked in all
-  // token functions where multiline values are allowed.
+  // tracking the encounted newlines. Any kind of eol sequence is counted as a
+  // single line.
+
+  function consumeEOL() {
+    var charCode = input.charCodeAt(index)
+      , peekCharCode = input.charCodeAt(index + 1);
+
+    if (isLineTerminator(charCode)) {
+      // Count \n\r and \r\n as one newline.
+      if (10 === charCode && 13 === peekCharCode) index++;
+      if (13 === charCode && 10 === peekCharCode) index++;
+      line++;
+      lineStart = ++index;
+
+      return true;
+    }
+    return false;
+  }
 
   function skipWhiteSpace() {
     while (index < length) {
       var charCode = input.charCodeAt(index);
       if (isWhiteSpace(charCode)) {
         index++;
-      } else if (isLineTerminator(charCode)) {
-        line++;
-        lineStart = ++index;
-      } else {
+      } else if (!consumeEOL()) {
         break;
       }
     }
@@ -969,21 +982,15 @@
     index += level + 1;
 
     // If the first character is a newline, ignore it and begin on next line.
-    if (isLineTerminator(input.charCodeAt(index))) {
-      line++;
-      lineStart = index++;
-    }
+    if (isLineTerminator(input.charCodeAt(index))) consumeEOL();
 
     stringStart = index;
     while (index < length) {
-      character = input.charAt(index++);
+      // To keep track of line numbers run the `consumeEOL()` which increments
+      // its counter.
+      if (isLineTerminator(input.charCodeAt(index))) consumeEOL();
 
-      // We have to keep track of newlines as `skipWhiteSpace()` does not get
-      // to scan this part.
-      if (isLineTerminator(character.charCodeAt(0))) {
-        line++;
-        lineStart = index;
-      }
+      character = input.charAt(index++);
 
       // Once the delimiter is found, iterate through the depth count and see
       // if it matches.
