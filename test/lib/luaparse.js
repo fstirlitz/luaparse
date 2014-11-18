@@ -1,1 +1,1 @@
-../../lib/luaparse.js
+../../luaparse.js
