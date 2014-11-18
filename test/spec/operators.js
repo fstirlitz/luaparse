@@ -1085,7 +1085,7 @@
     },
     "a = ((1": "[1:7] ')' expected near '<eof>'",
     "a = ((1 + 2)": "[1:12] ')' expected near '<eof>'",
-    "a = 1)": "[1:5] Unexpected symbol ')' near '<eof>'",
+    "a = 1)": "[1:5] unexpected symbol ')' near '<eof>'",
     "a = a + b - c": {
       "type": "Chunk",
       "body": [
@@ -2770,7 +2770,7 @@
       ]
     },
     "a = 1 ==": "[1:8] <expression> expected near '<eof>'",
-    "a = `": "[1:5] Unexpected symbol '`' near '='",
+    "a = `": "[1:5] unexpected symbol '`' near '='",
     "a = ~": "[1:5] '=' expected near '~'",
     "a = ~= 2": "[1:4] <expression> expected near '~='",
     "a = a ~= b": {
@@ -3326,7 +3326,8 @@
                   "range": [
                     5,
                     6
-                  ]
+                  ],
+                  "inParens": true
                 },
                 "right": {
                   "type": "StringLiteral",
@@ -3345,7 +3346,8 @@
                   "range": [
                     13,
                     18
-                  ]
+                  ],
+                  "inParens": true
                 },
                 "loc": {
                   "start": {
@@ -3379,7 +3381,8 @@
                 "range": [
                   24,
                   27
-                ]
+                ],
+                "inParens": true
               },
               "loc": {
                 "start": {

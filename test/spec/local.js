@@ -1365,7 +1365,7 @@
     },
     "local function a(p,q,1": "[1:21] <name> or '...' expected near '1'",
     "local function a(p) do": "[1:22] 'end' expected near '<eof>'",
-    "local function a(p) 1 end": "[1:20] Unexpected number '1' near 'end'",
+    "local function a(p) 1 end": "[1:20] unexpected number '1' near 'end'",
     "local function a(p) return end": {
       "type": "Chunk",
       "body": [

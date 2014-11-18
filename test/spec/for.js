@@ -491,8 +491,8 @@
         }
       ]
     },
-    "for a in b do 1 end": "[1:14] Unexpected number '1' near 'end'",
-    "for a in b do \"foo\" end": "[1:14] Unexpected string 'foo' near 'end'",
+    "for a in b do 1 end": "[1:14] unexpected number '1' near 'end'",
+    "for a in b do \"foo\" end": "[1:14] unexpected string 'foo' near 'end'",
     "for a b in": "[1:6] 'in' expected near 'b'",
     "for a, b, c in p do end": {
       "type": "Chunk",
@@ -2322,8 +2322,8 @@
       "comments": [],
       "globals": []
     },
-    "for a = 1, 2 do 3 end": "[1:16] Unexpected number '3' near 'end'",
-    "for a = 1, 2 do \"foo\" end": "[1:16] Unexpected string 'foo' near 'end'",
+    "for a = 1, 2 do 3 end": "[1:16] unexpected number '3' near 'end'",
+    "for a = 1, 2 do \"foo\" end": "[1:16] unexpected string 'foo' near 'end'",
     "for a = p, q, r do end": {
       "type": "Chunk",
       "body": [

@@ -26,7 +26,11 @@
   // Some AMD build optimizers, like r.js, check for specific condition
   // patterns like the following:
   if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+    // defined as an anonymous module.
     define(['exports'], factory);
+    // In case the source has been processed and wrapped in a define module use
+    // the supplied `exports` object.
+    if (freeExports && moduleExports) factory(freeModule.exports);
   }
   // check for `exports` after `define` in case a build optimizer adds an
   // `exports` object
@@ -43,7 +47,7 @@
 }(this, 'luaparse', function (exports) {
   'use strict';
 
-  exports.version = '0.1.6';
+  exports.version = '0.1.15';
 
   var input, options, length;
 
@@ -63,6 +67,13 @@
     // Store the start and end character locations on each syntax node as
     // `range: [start, end]`.
     , ranges: false
+    // A callback which will be invoked when a syntax node has been completed.
+    // The node which has been created will be passed as the only parameter.
+    , onCreateNode: null
+    // A callback which will be invoked when a new scope is created.
+    , onCreateScope: null
+    // A callback which will be invoked when the current scope is destroyed.
+    , onDestroyScope: null
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -82,11 +93,12 @@
   // will be different in some situations.
 
   var errors = exports.errors = {
-      unexpected: 'Unexpected %1 \'%2\' near \'%3\''
+      unexpected: 'unexpected %1 \'%2\' near \'%3\''
     , expected: '\'%1\' expected near \'%2\''
     , expectedToken: '%1 expected near \'%2\''
     , unfinishedString: 'unfinished string near \'%1\''
     , malformedNumber: 'malformed number near \'%1\''
+    , invalidVar: 'invalid left-hand side of assignment near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -360,9 +372,9 @@
       if (options.locations) node.loc = location.loc;
       if (options.ranges) node.range = location.range;
     }
+    if (options.onCreateNode) options.onCreateNode(node);
     return node;
   }
-
 
 
   // Helpers
@@ -609,18 +621,31 @@
   }
 
   // Whitespace has no semantic meaning in lua so simply skip ahead while
-  // tracking the encounted newlines. Newlines are also tracked in all
-  // token functions where multiline values are allowed.
+  // tracking the encounted newlines. Any kind of eol sequence is counted as a
+  // single line.
+
+  function consumeEOL() {
+    var charCode = input.charCodeAt(index)
+      , peekCharCode = input.charCodeAt(index + 1);
+
+    if (isLineTerminator(charCode)) {
+      // Count \n\r and \r\n as one newline.
+      if (10 === charCode && 13 === peekCharCode) index++;
+      if (13 === charCode && 10 === peekCharCode) index++;
+      line++;
+      lineStart = ++index;
+
+      return true;
+    }
+    return false;
+  }
 
   function skipWhiteSpace() {
     while (index < length) {
       var charCode = input.charCodeAt(index);
       if (isWhiteSpace(charCode)) {
         index++;
-      } else if (isLineTerminator(charCode)) {
-        line++;
-        lineStart = ++index;
-      } else {
+      } else if (!consumeEOL()) {
         break;
       }
     }
@@ -933,6 +958,7 @@
       if (options.ranges) {
         node.range = [tokenStart, index];
       }
+      if (options.onCreateNode) options.onCreateNode(node);
       comments.push(node);
     }
   }
@@ -956,21 +982,15 @@
     index += level + 1;
 
     // If the first character is a newline, ignore it and begin on next line.
-    if (isLineTerminator(input.charCodeAt(index))) {
-      line++;
-      lineStart = index++;
-    }
+    if (isLineTerminator(input.charCodeAt(index))) consumeEOL();
 
     stringStart = index;
     while (index < length) {
-      character = input.charAt(index++);
+      // To keep track of line numbers run the `consumeEOL()` which increments
+      // its counter.
+      if (isLineTerminator(input.charCodeAt(index))) consumeEOL();
 
-      // We have to keep track of newlines as `skipWhiteSpace()` does not get
-      // to scan this part.
-      if (isLineTerminator(character.charCodeAt(0))) {
-        line++;
-        lineStart = index;
-      }
+      character = input.charAt(index++);
 
       // Once the delimiter is found, iterate through the depth count and see
       // if it matches.
@@ -1117,13 +1137,16 @@
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
-    scopes.push(Array.apply(null, scopes[scopeDepth++]));
+    var scope = Array.apply(null, scopes[scopeDepth++]);
+    scopes.push(scope);
+    if (options.onCreateScope) options.onCreateScope();
   }
 
   // Exit and remove the current scope.
-  function exitScope() {
-    scopes.pop();
+  function destroyScope() {
+    var scope = scopes.pop();
     scopeDepth--;
+    if (options.onDestroyScope) options.onDestroyScope();
   }
 
   // Add identifier name to the current scope if it doesnt already exist.
@@ -1216,7 +1239,7 @@
     markLocation();
     if (options.scope) createScope();
     var body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     if (EOF !== token.type) unexpected(token);
     // If the body is empty no previousToken exists when finishNode runs.
     if (trackLocations && !body.length) previousToken = token;
@@ -1315,7 +1338,6 @@
     var name = token.value
       , label = parseIdentifier();
 
-    if (options.scope) label.isLabel = scopeHasName('::' + name + '::');
     return finishNode(ast.gotoStatement(label));
   }
 
@@ -1324,7 +1346,7 @@
   function parseDoStatement() {
     if (options.scope) createScope();
     var body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.doStatement(body));
   }
@@ -1336,7 +1358,7 @@
     expect('do');
     if (options.scope) createScope();
     var body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.whileStatement(condition, body));
   }
@@ -1348,7 +1370,7 @@
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     return finishNode(ast.repeatStatement(condition, body));
   }
 
@@ -1388,7 +1410,7 @@
     expect('then');
     if (options.scope) createScope();
     body = parseBlock();
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
     clauses.push(finishNode(ast.ifClause(condition, body)));
 
     if (trackLocations) marker = createLocationMarker();
@@ -1398,7 +1420,7 @@
       expect('then');
       if (options.scope) createScope();
       body = parseBlock();
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseifClause(condition, body)));
       if (trackLocations) marker = createLocationMarker();
     }
@@ -1411,7 +1433,7 @@
       }
       if (options.scope) createScope();
       body = parseBlock();
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseClause(body)));
     }
 
@@ -1451,7 +1473,7 @@
       expect('do');
       body = parseBlock();
       expect('end');
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
 
       return finishNode(ast.forNumericStatement(variable, start, end, step, body));
     }
@@ -1477,7 +1499,7 @@
       expect('do');
       body = parseBlock();
       expect('end');
-      if (options.scope) exitScope();
+      if (options.scope) destroyScope();
 
       return finishNode(ast.forGenericStatement(variables, iterators, body));
     }
@@ -1491,7 +1513,7 @@
   // child.
   //
   //     local ::= 'local' 'function' Name funcdecl
-  //        | 'local' Name {',' Name} ['=' exp {',' exp}
+  //        | 'local' Name {',' Name} ['=' exp {',' exp}]
 
   function parseLocalStatement() {
     var name;
@@ -1539,8 +1561,16 @@
     }
   }
 
+  function validateVar(node) {
+    // @TODO we need something not dependent on the exact AST used. see also isCallExpression()
+    if (node.inParens || (['Identifier', 'MemberExpression', 'IndexExpression'].indexOf(node.type) === -1)) {
+      raise(token, errors.invalidVar, token.value);
+    }
+  }
+
   //     assignment ::= varlist '=' explist
-  //     varlist ::= prefixexp {',' prefixexp}
+  //     var ::= Name | prefixexp '[' exp ']' | prefixexp '.' Name
+  //     varlist ::= var {',' var}
   //     explist ::= exp {',' exp}
   //
   //     call ::= callexp
@@ -1561,9 +1591,11 @@
         , init = []
         , exp;
 
+      validateVar(expression);
       while (consume(',')) {
         exp = parsePrefixExpression();
         if (null == exp) raiseUnexpectedToken('<expression>', token);
+        validateVar(exp);
         variables.push(exp);
       }
       expect('=');
@@ -1641,7 +1673,7 @@
 
     var body = parseBlock();
     expect('end');
-    if (options.scope) exitScope();
+    if (options.scope) destroyScope();
 
     isLocal = isLocal || false;
     return finishNode(ast.functionStatement(name, parameters, isLocal, body));
@@ -1858,6 +1890,7 @@
     } else if (consume('(')) {
       base = parseExpectedExpression();
       expect(')');
+      base.inParens = true; // XXX: quick and dirty. needed for validateVar
     } else {
       return null;
     }
@@ -1976,6 +2009,15 @@
   //   - `wait` Hold parsing until end() is called. Defaults to false
   //   - `comments` Store comments. Defaults to true.
   //   - `scope` Track identifier scope. Defaults to false.
+  //   - `locations` Store location information. Defaults to false.
+  //   - `ranges` Store the start and end character locations. Defaults to
+  //     false.
+  //   - `onCreateNode` Callback which will be invoked when a syntax node is
+  //     created.
+  //   - `onCreateScope` Callback which will be invoked when a new scope is
+  //     created.
+  //   - `onDestroyScope` Callback which will be invoked when the current scope
+  //     is destroyed.
   //
   // Example:
   //

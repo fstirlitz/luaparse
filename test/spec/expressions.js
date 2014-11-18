@@ -261,7 +261,8 @@
                 5,
                 6
               ],
-              "isLocal": false
+              "isLocal": false,
+              "inParens": true
             }
           ],
           "loc": {
@@ -361,7 +362,8 @@
               "range": [
                 5,
                 8
-              ]
+              ],
+              "inParens": true
             }
           ],
           "loc": {
@@ -461,7 +463,8 @@
               "range": [
                 5,
                 9
-              ]
+              ],
+              "inParens": true
             }
           ],
           "loc": {
@@ -561,7 +564,8 @@
               "range": [
                 5,
                 6
-              ]
+              ],
+              "inParens": true
             }
           ],
           "loc": {
@@ -661,7 +665,8 @@
               "range": [
                 5,
                 10
-              ]
+              ],
+              "inParens": true
             }
           ],
           "loc": {
@@ -761,7 +766,8 @@
               "range": [
                 5,
                 12
-              ]
+              ],
+              "inParens": true
             }
           ],
           "loc": {
@@ -860,7 +866,8 @@
               "range": [
                 5,
                 7
-              ]
+              ],
+              "inParens": true
             }
           ],
           "loc": {

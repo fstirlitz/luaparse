@@ -83,7 +83,21 @@
   };
 
   Spec.Test.prototype.equalPrecedence = function (source, expected, options) {
-    return this.deepEqual(luaparse.parse('a = ' + source, options), luaparse.parse('a = ' + expected, options), source + ' is equal to ' + expected);
+    function normalise(node) {
+      if (!node || typeof node !== 'object')
+        return node;
+      node.inParens = null;
+      for (var key in node) {
+        normalise(node[key]);
+      }
+      return node;
+    }
+
+    return this.deepEqual(
+      normalise(luaparse.parse('a = ' + source, options)),
+      normalise(luaparse.parse('a = ' + expected, options)),
+      source + ' is equal to ' + expected
+    );
   };
 
   // Create a test, and delegate to appropiate test function.
@@ -219,7 +233,28 @@
       "comments": []
     }, 'should support waiting on input');
 
-    this.done(5);
+    var nodes = []
+      , createdScopes = 0
+      , destroyedScopes = 0;
+
+    parse = luaparse.parse('do local a = 1 b = 1 end -- comment', {
+        scope: true
+      , locations: true
+      , ranges: true
+      , onCreateNode: function(node) { nodes.push(node); }
+      , onCreateScope: function() { createdScopes++; }
+      , onDestroyScope: function() { destroyedScopes++; }
+    });
+    this.equal(createdScopes, 2, 'should invoke onCreateScope callback');
+    this.equal(createdScopes, destroyedScopes, 'should invoke onDestroyScope callback');
+    this.equal(nodes.length, 9, 'should invoke onCreateNode callback');
+    this.deepEqual(
+        nodes[0]
+      , {"type": "Identifier", "name": "a", "loc": {"start": {"line": 1, "column": 9}, "end": {"line": 1, "column": 10}}, "range": [9, 10], "isLocal": true}
+      , 'should invoke onCreateNode callback with syntax node parameter'
+    );
+
+    this.done(9);
   });
 
   suite.addTest('Precedence', function() {
@@ -239,6 +274,16 @@
     this.equalPrecedence('1 + #1', '1 + (#1)');
     this.equalPrecedence('-x^2', '-(x^2)');
     this.done(15);
+  });
+
+  suite.addTest('EOL sequences', function() {
+    var options = { locations: true }
+      , baseline = luaparse.parse('foo = 1\nbar = 1', options);
+
+    this.deepEqual(baseline, luaparse.parse('foo = 1\rbar = 1', options), 'carriage return');
+    this.deepEqual(baseline, luaparse.parse('foo = 1\n\rbar = 1', options), 'newline followed by carriage return');
+    this.deepEqual(baseline, luaparse.parse('foo = 1\r\nbar = 1', options), 'carriage return followed by newline');
+    this.done(3);
   });
 
   if (isLoader) {

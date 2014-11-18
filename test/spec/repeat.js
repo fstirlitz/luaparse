@@ -137,8 +137,8 @@
     },
     "repeat until local": "[1:13] <expression> expected near 'local'",
     "repeat end": "[1:7] 'until' expected near 'end'",
-    "repeat 1": "[1:7] Unexpected number '1' near '<eof>'",
-    "repeat =": "[1:7] Unexpected symbol '=' near '<eof>'",
+    "repeat 1": "[1:7] unexpected number '1' near '<eof>'",
+    "repeat =": "[1:7] unexpected symbol '=' near '<eof>'",
     "repeat local a until 1": {
       "type": "Chunk",
       "body": [
@@ -511,8 +511,8 @@
       "comments": [],
       "globals": []
     },
-    "repeat 2 until 1": "[1:7] Unexpected number '2' near 'until'",
-    "repeat \"foo\" until 1": "[1:7] Unexpected string 'foo' near 'until'",
+    "repeat 2 until 1": "[1:7] unexpected number '2' near 'until'",
+    "repeat \"foo\" until 1": "[1:7] unexpected string 'foo' near 'until'",
     "repeat return until 0": {
       "type": "Chunk",
       "body": [

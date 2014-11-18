@@ -17,7 +17,7 @@
 
   exports.name = 'literals';
   exports.spec = {
-    "a": "[1:0] Unexpected identifier 'a' near '<eof>'",
+    "a": "[1:0] unexpected identifier 'a' near '<eof>'",
     "a = 1": {
       "type": "Chunk",
       "body": [

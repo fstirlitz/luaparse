@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="container">
-<h1 id="luaparse-build-status-https-travis-ci-org-oxyc-luaparse-png-https-travis-ci-org-oxyc-luaparse-">luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.png" alt="Build Status"></a></h1>
+<h1 id="luaparse-build-status-https-travis-ci-org-oxyc-luaparse-svg-https-travis-ci-org-oxyc-luaparse-">luaparse <a href="https://travis-ci.org/oxyc/luaparse"><img src="https://travis-ci.org/oxyc/luaparse.svg" alt="Build Status"></a></h1>
 <p>A Lua parser written in JavaScript, for my bachelor&#39;s thesis at Arcada.</p>
 <h2 id="installation">Installation</h2>
 <p>Install through <code>bower install luaparse</code> or <code>npm install luaparse</code>.</p>
@@ -76,6 +76,13 @@ console.log(JSON.stringify(ast));
 <li><code>locations: false</code> Store location information on each syntax node.</li>
 <li><code>ranges: false</code> Store the start and end character locations on each syntax
 node.</li>
+<li><code>onCreateNode: null</code> A callback which will be invoked when a syntax node
+has been completed. The node which has been created will be passed as the
+only parameter.</li>
+<li><code>onCreateScope: null</code> A callback which will be invoked when a new scope is
+created.</li>
+<li><code>onDestroyScope: null</code> A callback which will be invoked when the current
+scope is destroyed.</li>
 </ul>
 <p>The default options are also exposed through <code>luaparse.defaultOptions</code> where
 they can be overriden globally.</p>
@@ -137,6 +144,10 @@ Object.keys(luaparse.ast).forEach(function(type) {
 events.on(&#39;Identifier&#39;, function(node) { console.log(node); });
 luaparse.parse(&#39;i = &quot;foo&quot;&#39;);
 </code></pre>
+<p><em>this is only an example to illustrate what is possible and this particular
+example might not suit your needs as the end location of the node has not been
+determined yet. If you desire events you should use the <code>onCreateNode</code> callback
+instead).</em></p>
 <h3 id="lexer">Lexer</h3>
 <p>The lexer used by luaparse can be used independently of the recursive descent
 parser. The lex function is exposed as <code>luaparse.lex()</code> and it will return the
@@ -150,7 +161,7 @@ next token up until <code>EOF</code> is reached.</p>
 <code>StringLiteral</code> token with the value <code>bar</code>. Slicing out the range on the other
 hand will return <code>&quot;bar&quot;</code>.</li>
 </ul>
-<pre><code class="lang-js">var parser = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);
+<pre><code class="lang-js">var parser = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;, { wait: true });
 parser.lex(); // { type: 8, value: &quot;foo&quot;, line: 1, lineStart: 0, range: [0, 3] }
 parser.lex(); // { type: 32, value: &quot;=&quot;, line: 1, lineStart: 0, range: [4, 5]}
 parser.lex(); // { type: 2, value: &quot;bar&quot;, line: 1, lineStart: 0, range: [6, 11] }

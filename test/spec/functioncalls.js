@@ -382,7 +382,7 @@
         }
       ]
     },
-    "1()": "[1:0] Unexpected number '1' near '('",
+    "1()": "[1:0] unexpected number '1' near '('",
     "a()()": {
       "type": "Chunk",
       "body": [
@@ -777,9 +777,9 @@
         }
       ]
     },
-    "a.1": "[1:0] Unexpected identifier 'a' near '<eof>'",
-    "a.b": "[1:0] Unexpected identifier 'a' near '<eof>'",
-    "a[b]": "[1:0] Unexpected identifier 'a' near '<eof>'",
+    "a.1": "[1:0] unexpected identifier 'a' near '<eof>'",
+    "a.b": "[1:0] unexpected identifier 'a' near '<eof>'",
+    "a[b]": "[1:0] unexpected identifier 'a' near '<eof>'",
     "a.b.(": "[1:4] <name> expected near '('",
     "a.b.c()": {
       "type": "Chunk",
@@ -2221,7 +2221,8 @@
                 1,
                 2
               ],
-              "isLocal": false
+              "isLocal": false,
+              "inParens": true
             },
             "arguments": [],
             "loc": {
@@ -2288,7 +2289,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         }
       ]
     },
@@ -2317,7 +2319,8 @@
               "range": [
                 1,
                 6
-              ]
+              ],
+              "inParens": true
             },
             "arguments": [],
             "loc": {
@@ -2394,7 +2397,8 @@
                   1,
                   2
                 ],
-                "isLocal": false
+                "isLocal": false,
+                "inParens": true
               },
               "arguments": [],
               "loc": {
@@ -2477,7 +2481,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         }
       ]
     },
@@ -2526,7 +2531,8 @@
                   1,
                   2
                 ],
-                "isLocal": false
+                "isLocal": false,
+                "inParens": true
               },
               "loc": {
                 "start": {
@@ -2608,7 +2614,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         }
       ]
     },
@@ -2638,7 +2645,8 @@
                   1,
                   2
                 ],
-                "isLocal": false
+                "isLocal": false,
+                "inParens": true
               },
               "index": {
                 "type": "Identifier",
@@ -2739,7 +2747,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         },
         {
           "type": "Identifier",
@@ -2807,7 +2816,8 @@
                   1,
                   2
                 ],
-                "isLocal": false
+                "isLocal": false,
+                "inParens": true
               },
               "loc": {
                 "start": {
@@ -2889,7 +2899,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         }
       ]
     },
@@ -4755,7 +4766,8 @@
                           1,
                           2
                         ],
-                        "isLocal": false
+                        "isLocal": false,
+                        "inParens": true
                       },
                       "loc": {
                         "start": {
@@ -4953,7 +4965,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         },
         {
           "type": "Identifier",
@@ -5067,7 +5080,8 @@
                           1,
                           2
                         ],
-                        "isLocal": false
+                        "isLocal": false,
+                        "inParens": true
                       },
                       "loc": {
                         "start": {
@@ -5265,7 +5279,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         },
         {
           "type": "Identifier",
@@ -7026,7 +7041,8 @@
                           1,
                           2
                         ],
-                        "isLocal": false
+                        "isLocal": false,
+                        "inParens": true
                       },
                       "loc": {
                         "start": {
@@ -7222,7 +7238,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         },
         {
           "type": "Identifier",
@@ -7336,7 +7353,8 @@
                           1,
                           2
                         ],
-                        "isLocal": false
+                        "isLocal": false,
+                        "inParens": true
                       },
                       "loc": {
                         "start": {
@@ -7532,7 +7550,8 @@
             1,
             2
           ],
-          "isLocal": false
+          "isLocal": false,
+          "inParens": true
         },
         {
           "type": "Identifier",
