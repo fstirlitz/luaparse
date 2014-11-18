@@ -14,3 +14,15 @@ before_install:
   - "PACKAGE=narwhal-0.3.2; sudo ln -s /opt/$PACKAGE/bin/narwhal /usr/local/bin/narwhal && sudo chmod +x /usr/local/bin/narwhal"
   # If the enviroment stores rt.jar in a different directory, find it and symlink the directory
   - "PREFIX=/usr/lib/jvm; if [ ! -d $PREFIX/java-6-openjdk ]; then for d in $PREFIX/java-6-openjdk-*; do if [ -e $d/jre/lib/rt.jar ]; then sudo ln -s $d $PREFIX/java-6-openjdk; break; fi; done; fi"
+deploy:
+  provider: npm
+  email: "public@oxy.fi"
+  api_key:
+    secure: c1xVoKfBO4ZGplOkwugeWs9qtC2NQAXLS6ntUAhdk+aeFrxQBMR5oUQ721IM8V9hYhuNv8qJZowoJNyzGNr/43uh9ZSCohddX6OIyVc1Lu84JEQAt1W/WgKF8j0d/p9+WFD3EZOyvf4eotAjamJbsXkGN4GlsD0f2TKOKlt0/YY=
+  on:
+    tags: true
+after_deploy:
+  - ssh-add .travis/deploy_key
+  - git checkout gh-pages
+  - make && git add . && git commit --message 'build documentation'
+  - git push gh-pages
