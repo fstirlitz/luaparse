@@ -39,6 +39,7 @@ after_success:
   - chmod 600 .travis/deploy_key
   - eval `ssh-agent -s` && ssh-add .travis/deploy_key
   - git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && pushd gh-pages
-  - make && git add . && git commit --message 'build documentation'
+  - make
+  - git add . && git commit --author 'Oskar Schöldström <public@oxy.fi>' --message 'build documentation'
   - git push origin gh-pages
   - popd
