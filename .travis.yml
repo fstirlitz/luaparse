@@ -21,7 +21,7 @@ deploy:
     secure: c1xVoKfBO4ZGplOkwugeWs9qtC2NQAXLS6ntUAhdk+aeFrxQBMR5oUQ721IM8V9hYhuNv8qJZowoJNyzGNr/43uh9ZSCohddX6OIyVc1Lu84JEQAt1W/WgKF8j0d/p9+WFD3EZOyvf4eotAjamJbsXkGN4GlsD0f2TKOKlt0/YY=
   on:
     tags: true
-    branch: master
+    all_branches: true
 after_deploy:
   - ssh-add .travis/deploy_key
   - git checkout gh-pages
