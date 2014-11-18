@@ -14,16 +14,28 @@ before_install:
   - PACKAGE=narwhal-0.3.2; sudo ln -s /opt/$PACKAGE/bin/narwhal /usr/local/bin/narwhal && sudo chmod +x /usr/local/bin/narwhal
   #  If the enviroment stores rt.jar in a different directory, find it and symlink the directory
   - PREFIX=/usr/lib/jvm; if [ ! -d $PREFIX/java-6-openjdk ]; then for d in $PREFIX/java-6-openjdk-*; do if [ -e $d/jre/lib/rt.jar ]; then sudo ln -s $d $PREFIX/java-6-openjdk; break; fi; done; fi
+before_deploy:
+  - make build
 deploy:
-  provider: npm
-  email: public@oxy.fi
-  api_key:
-    secure: c1xVoKfBO4ZGplOkwugeWs9qtC2NQAXLS6ntUAhdk+aeFrxQBMR5oUQ721IM8V9hYhuNv8qJZowoJNyzGNr/43uh9ZSCohddX6OIyVc1Lu84JEQAt1W/WgKF8j0d/p9+WFD3EZOyvf4eotAjamJbsXkGN4GlsD0f2TKOKlt0/YY=
-  on:
-    tags: true
-    all_branches: true
-after_deploy:
-  - openssl aes-256-cbc -K $encrypted_ce12c8d20fd6_key -iv $encrypted_ce12c8d20fd6_iv -in deploy_key.enc -out .travis/deploy_key -d
+  - provider: npm
+    email: public@oxy.fi
+    api_key:
+      secure: c1xVoKfBO4ZGplOkwugeWs9qtC2NQAXLS6ntUAhdk+aeFrxQBMR5oUQ721IM8V9hYhuNv8qJZowoJNyzGNr/43uh9ZSCohddX6OIyVc1Lu84JEQAt1W/WgKF8j0d/p9+WFD3EZOyvf4eotAjamJbsXkGN4GlsD0f2TKOKlt0/YY=
+    on:
+      tags: true
+      all_branches: true
+  - provider: releases
+    api_key:
+      secure: GGN5c5EDpUwBduAiXefBvQjcKH8HKRvMaAHLEIvIm547sR7YUz/vynkNd7uInPG8ZCD73GHxZVxOk335TsHg7XR6Tz+mm3PmyMmqHcCMqSG+hR+s++oCiC2R04q/yM0LsaWlKPr/xzSg6dZynJsW0hy7AinXlK4g4B3kI5wtGls=
+    file:
+      - dist/luaparse.js
+      - dist/luaparse.min.js
+    skip_cleanup: true
+    on:
+      tags: true
+      all_branches: true
+after_success:
+  - openssl aes-256-cbc -K $encrypted_ce12c8d20fd6_key -iv $encrypted_ce12c8d20fd6_iv -in .travis/deploy_key.enc -out .travis/deploy_key -d
   - chmod 600 .travis/deploy_key
   - eval `ssh-agent -s` && ssh-add .travis/deploy_key
   - git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && cd gh-pages
