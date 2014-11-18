@@ -1,28 +1,30 @@
 language: node_js
 node_js:
-  - "0.10"
+  - '0.10'
 before_install:
-  - "npm install -g grunt-cli"
+  - npm install -g grunt-cli
   # Narwhal uses hardcoded path to openjdk v6 so we use that version.
-  - "sudo apt-get update -qq"
-  - "sudo apt-get install -qq openjdk-6-jre"
-  - "PACKAGE=Rhino1_7R4_RELEASE; wget https://github.com/mozilla/rhino/archive/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip"
-  - "PACKAGE=Rhino1_7R4_RELEASE; echo -e '#!/bin/sh\\njava -jar /opt/Rhino1_7R4_RELEASE/js.jar $@' | sudo tee /usr/local/bin/rhino && sudo chmod +x /usr/local/bin/rhino"
-  - "PACKAGE=ringojs-0.9; wget http://ringojs.org/downloads/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip"
-  - "PACKAGE=ringojs-0.9; sudo ln -s /opt/$PACKAGE/bin/ringo /usr/local/bin/ringo && sudo chmod +x /usr/local/bin/ringo"
-  - "PACKAGE=v0.3.2; wget https://github.com/280north/narwhal/archive/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip"
-  - "PACKAGE=narwhal-0.3.2; sudo ln -s /opt/$PACKAGE/bin/narwhal /usr/local/bin/narwhal && sudo chmod +x /usr/local/bin/narwhal"
-  # If the enviroment stores rt.jar in a different directory, find it and symlink the directory
-  - "PREFIX=/usr/lib/jvm; if [ ! -d $PREFIX/java-6-openjdk ]; then for d in $PREFIX/java-6-openjdk-*; do if [ -e $d/jre/lib/rt.jar ]; then sudo ln -s $d $PREFIX/java-6-openjdk; break; fi; done; fi"
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq openjdk-6-jre
+  - PACKAGE=Rhino1_7R4_RELEASE; wget https://github.com/mozilla/rhino/archive/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip
+  - PACKAGE=Rhino1_7R4_RELEASE; echo -e '#!/bin/sh\njava -jar /opt/Rhino1_7R4_RELEASE/js.jar $@' | sudo tee /usr/local/bin/rhino && sudo chmod +x /usr/local/bin/rhino
+  - PACKAGE=ringojs-0.9; wget http://ringojs.org/downloads/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip
+  - PACKAGE=ringojs-0.9; sudo ln -s /opt/$PACKAGE/bin/ringo /usr/local/bin/ringo && sudo chmod +x /usr/local/bin/ringo
+  - PACKAGE=v0.3.2; wget https://github.com/280north/narwhal/archive/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip
+  - PACKAGE=narwhal-0.3.2; sudo ln -s /opt/$PACKAGE/bin/narwhal /usr/local/bin/narwhal && sudo chmod +x /usr/local/bin/narwhal
+  #  If the enviroment stores rt.jar in a different directory, find it and symlink the directory
+  - PREFIX=/usr/lib/jvm; if [ ! -d $PREFIX/java-6-openjdk ]; then for d in $PREFIX/java-6-openjdk-*; do if [ -e $d/jre/lib/rt.jar ]; then sudo ln -s $d $PREFIX/java-6-openjdk; break; fi; done; fi
 deploy:
   provider: npm
-  email: "public@oxy.fi"
+  email: public@oxy.fi
   api_key:
     secure: c1xVoKfBO4ZGplOkwugeWs9qtC2NQAXLS6ntUAhdk+aeFrxQBMR5oUQ721IM8V9hYhuNv8qJZowoJNyzGNr/43uh9ZSCohddX6OIyVc1Lu84JEQAt1W/WgKF8j0d/p9+WFD3EZOyvf4eotAjamJbsXkGN4GlsD0f2TKOKlt0/YY=
   on:
     tags: true
     all_branches: true
 after_deploy:
+  - openssl aes-256-cbc -K $encrypted_ce12c8d20fd6_key -iv $encrypted_ce12c8d20fd6_iv -in deploy_key.enc -out .travis/deploy_key -d
+  - chmod 600 .travis/deploy_key
   - eval `ssh-agent -s` && ssh-add .travis/deploy_key
   - git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && cd gh-pages
   - make && git add . && git commit --message 'build documentation'
