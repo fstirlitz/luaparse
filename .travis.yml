@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - '0.10'
 before_install:
-  - npm install -g grunt-cli
+  - npm install -g grunt-cli bower
   # Narwhal uses hardcoded path to openjdk v6 so we use that version.
   - sudo apt-get update -qq
   - sudo apt-get install -qq openjdk-6-jre
@@ -38,6 +38,7 @@ after_success:
   - openssl aes-256-cbc -K $encrypted_ce12c8d20fd6_key -iv $encrypted_ce12c8d20fd6_iv -in .travis/deploy_key.enc -out .travis/deploy_key -d
   - chmod 600 .travis/deploy_key
   - eval `ssh-agent -s` && ssh-add .travis/deploy_key
-  - git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && cd gh-pages
+  - git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && pushd gh-pages
   - make && git add . && git commit --message 'build documentation'
   - git push origin gh-pages
+  - popd
