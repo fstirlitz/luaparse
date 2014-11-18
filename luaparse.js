@@ -47,7 +47,7 @@
 }(this, 'luaparse', function (exports) {
   'use strict';
 
-  exports.version = '0.1.13';
+  exports.version = '0.1.14';
 
   var input, options, length;
 
