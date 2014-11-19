@@ -1,8 +1,9 @@
 {
   "name": "luaparse",
+  "description": "A Lua parser in JavaScript",
   "version": "0.1.15",
   "main": "./luaparse.js",
-  "dependencies": {},
+  "license": "MIT",
   "ignore": [
     "benchmarks",
     "bin",
@@ -15,11 +16,16 @@
     "Makefile",
     "node_modules",
     "package.json",
+    "component.json",
     "scripts",
     "test",
     "testem.yml",
     ".*"
   ],
+  "keywords": ["ast", "lua", "parser", "parsing"],
+  "author": ["Oskar Schöldström <public@oxy.fi> (http://www.oxy.fi/)"],
+  "homepage": "http://oxyc.github.io/luaparse/",
+  "repository": { "type": "git", "url": "http://github.com/oxyc/luaparse.git" },
   "devDependencies": {
     "requirejs": "~2.1.5",
     "curl": "~0.7.3"

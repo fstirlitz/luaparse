@@ -1,40 +1,23 @@
 {
   "name": "luaparse",
-  "description": "A Lua parser in JavaScript",
   "version": "0.1.15",
+  "description": "A Lua parser in JavaScript",
+  "keywords": ["ast", "lua", "parser", "parsing"],
   "homepage": "http://oxyc.github.io/luaparse/",
   "bugs": "https://github.com/oxyc/luaparse/issues",
-  "author": {
-    "name": "Oskar Schöldström",
-    "email": "public@oxy.fi"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/oxyc/luaparse.git"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/oxyc/luaparse/blob/master/LICENSE"
-    }
-  ],
-  "main": "luaparse.js",
+  "license": "MIT",
+  "author": "Oskar Schöldström <public@oxy.fi> (http://www.oxy.fi/)",
   "files": [
     "README.md",
     "LICENSE",
     "luaparse.js",
     "bin/luaparse"
   ],
-  "bin": "bin/luaparse",
-  "man": "docs/luaparse.1",
-  "scripts": {
-    "test": "make qa"
-  },
-  "keywords": [
-    "lua",
-    "parser",
-    "parsing"
-  ],
+  "main": "luaparse.js",
+  "bin": "./bin/luaparse",
+  "man": "./docs/luaparse.1",
+  "repository": { "type": "git", "url": "http://github.com/oxyc/luaparse.git" },
+  "scripts": { "test": "make qa" },
   "devDependencies": {
     "benchmark": "~1.0.0",
     "complexity-report": "~0.10.5",
