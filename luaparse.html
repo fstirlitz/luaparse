@@ -93,11 +93,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>Detect the popular CommonJS extension <code>module.exports</code></p>
+              <p>Detect free variable <code>global</code>, from Node.js or Browserified code, and
+use it as <code>window</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , moduleExports = freeModule &amp;&amp; freeModule.exports === freeExports &amp;&amp; freeExports</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , freeGlobal = freeExports &amp;&amp; freeModule &amp;&amp; <span class="hljs-keyword">typeof</span> global == <span class="hljs-string">'object'</span> &amp;&amp; global</pre></div></div>
             
         </li>
         
@@ -108,14 +109,13 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>Detect free variable <code>global</code>, from Node.js or Browserified code, and
-use it as <code>window</code></p>
+              <p>Detect the popular CommonJS extension <code>module.exports</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , freeGlobal = objectTypes[<span class="hljs-keyword">typeof</span> global] &amp;&amp; global;
+            <div class="content"><div class='highlight'><pre>    , moduleExports = freeModule &amp;&amp; freeModule.exports === freeExports &amp;&amp; freeExports;
 
-  <span class="hljs-keyword">if</span> (freeGlobal &amp;&amp; (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) {
+  <span class="hljs-keyword">if</span> (freeGlobal &amp;&amp; (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
     root = freeGlobal;
   }</pre></div></div>
             
@@ -4054,7 +4054,7 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
     } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'('</span>)) {
       base = parseExpectedExpression();
       expect(<span class="hljs-string">')'</span>);
-      base.inParens = <span class="hljs-literal">true</span>; <span class="hljs-comment">// XXX: quick and dirty. needed for validateVar</span>
+      base.inParens = <span class="hljs-literal">true</span>; <span class="hljs-comment">// <span class="hljs-label">XXX: quick and dirty. needed for validateVar</span></span>
     } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
     }</pre></div></div>
