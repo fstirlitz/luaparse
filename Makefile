@@ -9,10 +9,10 @@ all: build
 # ----------
 
 build:
-	grunt build
+	gulp build
 
 lint:
-	grunt lint
+	gulp lint
 
 .PHONY: build lint all
 

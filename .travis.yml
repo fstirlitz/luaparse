@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - '0.10'
 before_install:
-  - npm install -g grunt-cli bower
+  - npm install -g bower
   # Narwhal uses hardcoded path to openjdk v6 so we use that version.
   - sudo apt-get update -qq
   - sudo apt-get install -qq openjdk-6-jre

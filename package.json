@@ -2,7 +2,12 @@
   "name": "luaparse",
   "version": "0.1.15",
   "description": "A Lua parser in JavaScript",
-  "keywords": ["ast", "lua", "parser", "parsing"],
+  "keywords": [
+    "ast",
+    "lua",
+    "parser",
+    "parsing"
+  ],
   "homepage": "http://oxyc.github.io/luaparse/",
   "bugs": "https://github.com/oxyc/luaparse/issues",
   "license": "MIT",
@@ -16,18 +21,25 @@
   "main": "luaparse.js",
   "bin": "./bin/luaparse",
   "man": "./docs/luaparse.1",
-  "repository": { "type": "git", "url": "http://github.com/oxyc/luaparse.git" },
-  "scripts": { "test": "make qa" },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/oxyc/luaparse.git"
+  },
+  "scripts": {
+    "test": "make qa"
+  },
   "devDependencies": {
     "benchmark": "~1.0.0",
     "complexity-report": "~0.10.5",
     "docco": "~0.6.3",
-    "grunt": "~0.4.5",
-    "grunt-contrib-concat": "~0.5.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-uglify": "~0.6.0",
-    "grunt-lint-bash": "~0.1.0",
-    "grunt-lint-inline": "~0.4.0",
+    "gulp": "~3.8.10",
+    "gulp-add-src": "^0.2.0",
+    "gulp-filelog": "^0.4.1",
+    "gulp-header": "^1.2.2",
+    "gulp-jshint": "^1.9.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-striphtml": "0.0.1",
+    "gulp-uglify": "^1.0.1",
     "istanbul": "~0.3.2",
     "marked": "~0.3.2",
     "spec": "git://github.com/kitcambridge/spec.git#gh-pages",

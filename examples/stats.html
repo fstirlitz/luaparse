@@ -39,9 +39,8 @@
 <script src="js/walker.js"></script>
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script>
-/*globals walker:true */
-  (function($) {
-    var path = location.href.replace(/([^\/]+)\/([^\/]+)$/, '')
+  (function(window, $, luaparse, walker) {
+    var path = window.location.href.replace(/([^\/]+)\/([^\/]+)$/, '')
       , script = path + 'benchmarks/lib/ParseLua.lua'
       , ast
       , source;
@@ -113,7 +112,7 @@
       $results.append(createTable('Node types', nodes));
       $results.append(createTable('Operators', expressions));
     });
-  }(jQuery));
+  }(this, this.jQuery, this.luaparse, this.walker));
 </script>
 </body>
 </html>
