@@ -119,7 +119,7 @@ complexity-analysis:
 	@$(BIN)/cr -lws --maxcc 15 luaparse.js
 
 coverage-analysis: coverage
-	@$(BIN)/istanbul check-coverage --statements -6 --branches -15 --functions -0 \
+	@$(BIN)/istanbul check-coverage --statements -6 --branches -16 --functions -0 \
 		docs/coverage/coverage.json
 
 qa:

@@ -13,13 +13,13 @@
     , freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports
     // Detect free variable `module`
     , freeModule = objectTypes[typeof module] && module && !module.nodeType && module
-    // Detect the popular CommonJS extension `module.exports`
-    , moduleExports = freeModule && freeModule.exports === freeExports && freeExports
     // Detect free variable `global`, from Node.js or Browserified code, and
     // use it as `window`
-    , freeGlobal = objectTypes[typeof global] && global;
+    , freeGlobal = freeExports && freeModule && typeof global == 'object' && global
+    // Detect the popular CommonJS extension `module.exports`
+    , moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
 
-  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) {
+  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
     root = freeGlobal;
   }
 
