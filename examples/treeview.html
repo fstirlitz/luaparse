@@ -44,8 +44,7 @@ end
 <script src="//yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/treeview/treeview-min.js"></script>
 <script src="//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"></script>
 <script>
-/*globals luaparse: true */
-  (function(ace, YAHOO) {
+  (function(window, document, ace, YAHOO, luaparse) {
     var editor = ace.edit('editor');
     editor.setTheme('ace/theme/solarized_light');
     editor.getSession().setMode('ace/mode/javascript');
@@ -111,7 +110,7 @@ end
       }, 500);
     }
     window.onload = parse;
-  }(window.ace, window.YAHOO));
+  }(this, this.document, this.ace, this.YAHOO, this.luaparse));
 </script>
 </body>
 </html>

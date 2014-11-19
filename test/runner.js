@@ -1,4 +1,4 @@
-/*globals require:true define:true exports:true load:true console:true print:true module:true emit:true process:true */
+/*globals require:true, define:true, exports:true, load:true, console:true, print:true, module:true, emit:true, process:true */
 /*jshint eqeqeq:false */
 (function (root) {
   var isLoader = typeof define === 'function' && !!define.amd
@@ -87,7 +87,7 @@
       if (!node || typeof node !== 'object')
         return node;
       node.inParens = null;
-      for (var key in node) {
+      for (var key in node) if (node.hasOwnProperty(key)) {
         normalise(node[key]);
       }
       return node;

@@ -1,4 +1,4 @@
-/*globals exports:true window:true */
+/*globals exports:true, window:true */
 (function(exports) {
   var hasOwn = Object.prototype.hasOwnProperty
     , isArray = Array.isArray || function (arr) {
