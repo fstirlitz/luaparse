@@ -2969,7 +2969,7 @@
         }
       ]
     },
-    "(1).a = 2                               -- runtime error": {
+    "(1).a = 0": {
       "type": "Chunk",
       "body": [
         {
@@ -3035,8 +3035,8 @@
           "init": [
             {
               "type": "NumericLiteral",
-              "value": 2,
-              "raw": "2",
+              "value": 0,
+              "raw": "0",
               "loc": {
                 "start": {
                   "line": 1,
@@ -3083,27 +3083,7 @@
         0,
         9
       ],
-      "comments": [
-        {
-          "type": "Comment",
-          "value": " runtime error",
-          "raw": "-- runtime error",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 40
-            },
-            "end": {
-              "line": 1,
-              "column": 56
-            }
-          },
-          "range": [
-            40,
-            56
-          ]
-        }
-      ],
+      "comments": [],
       "globals": []
     },
     "0 = 0": "[1:0] unexpected number '0' near '='",
