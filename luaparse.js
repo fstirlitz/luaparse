@@ -615,7 +615,7 @@
 
       case 47: // /
         // Check for integer division op (//)
-        if (47 === next) return scanPunctuator('//')
+        if (47 === next) return scanPunctuator('//');
         return scanPunctuator('/');
 
       // * ^ % , { } ] ( ) ; & # - + |
