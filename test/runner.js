@@ -273,7 +273,10 @@
     this.equalPrecedence('not not 1 + 1', '(not (not (1)) + 1)');
     this.equalPrecedence('1 + #1', '1 + (#1)');
     this.equalPrecedence('-x^2', '-(x^2)');
-    this.done(15);
+    this.equalPrecedence('3~2&1', '3~(2&1)');
+    this.equalPrecedence('3~2|1', '(3~2)|1');
+    this.equalPrecedence('1<<2 ..3', '1<<(2 ..3)');
+    this.done(18);
   });
 
   suite.addTest('EOL sequences', function() {
