@@ -41,4 +41,4 @@ after_success:
   - '[ "$BUILD_DOCS" = "true" ] && git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && cd gh-pages'
   - '[ "$BUILD_DOCS" = "true" ] && make'
   - '[ "$BUILD_DOCS" = "true" ] && git config user.name "Travis" && git config user.email "public@oxy.fi"'
-  - '[ "$BUILD_DOCS" = "true" ] && git add . && git commit --message "build documentation" && git push origin gh-pages'
+  - '[ "$BUILD_DOCS" = "true" ] && git add . && git commit --message "build documentation" && git push origin gh-pages'
