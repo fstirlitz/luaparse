@@ -35,12 +35,10 @@ deploy:
       tags: true
       all_branches: true
 after_success:
-  - openssl aes-256-cbc -K $encrypted_ce12c8d20fd6_key -iv $encrypted_ce12c8d20fd6_iv -in .travis/deploy_key.enc -out .travis/deploy_key -d
-  - chmod 600 .travis/deploy_key
-  - eval `ssh-agent -s` && ssh-add .travis/deploy_key
-  - git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && pushd gh-pages
-  - make
-  - git config user.name "Travis" && git config user.email "public@oxy.fi"
-  - git add . && git commit --message 'build documentation'
-  - git push origin gh-pages
-  - popd
+  - '[ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] && BUILD_DOCS=true || BUILD_DOCS=false'
+  - '[ "$BUILD_DOCS" = "true" ] && openssl aes-256-cbc -K $encrypted_ce12c8d20fd6_key -iv $encrypted_ce12c8d20fd6_iv -in .travis/deploy_key.enc -out .travis/deploy_key -d'
+  - '[ "$BUILD_DOCS" = "true" ] && chmod 600 .travis/deploy_key && eval `ssh-agent -s` && ssh-add .travis/deploy_key'
+  - '[ "$BUILD_DOCS" = "true" ] && git clone --branch gh-pages git@github.com:oxyc/luaparse.git gh-pages && cd gh-pages'
+  - '[ "$BUILD_DOCS" = "true" ] && make'
+  - '[ "$BUILD_DOCS" = "true" ] && git config user.name "Travis" && git config user.email "public@oxy.fi"'
+  - '[ "$BUILD_DOCS" = "true" ] && git add . && git commit --message "build documentation" && git push origin gh-pages'
