@@ -2,7 +2,7 @@
   "name": "luaparse",
   "repository": "oxyc/luaparse",
   "description": "A Lua parser in JavaScript",
-  "version": "0.1.15",
+  "version": "0.2.0",
   "keywords": ["ast", "lua", "parser", "parsing"],
   "main": "luaparse.js",
   "scripts": ["luaparse.js"],
