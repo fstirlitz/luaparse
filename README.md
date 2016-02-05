@@ -173,7 +173,7 @@ parser.lex(); // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11
 ## Examples
 
 Have a look in the [examples directory](https://github.com/oxyc/luaparse/tree/master/examples)
-of the repository for some code examples or check them out [live](http://oxyc.github.io/luaparse/examples.html).
+of the repository for some code examples or check them out [live](https://oxyc.github.io/luaparse/examples.html).
 
 ## luaparse(1)
 
@@ -245,13 +245,13 @@ installed browser.
 
 - You can check the function complexity using [complexity-report](https://github.com/philbooth/complexityReport.js)
 using `make complexity-analysis`
-- Running `make coverage` will generate the [coverage report](http://oxyc.github.io/luaparse/coverage.html).
+- Running `make coverage` will generate the [coverage report](https://oxyc.github.io/luaparse/coverage.html).
 To simply check that all code has coverage you can run `make coverage-analysis`.
 - `make lint`, `make benchmark`, `make profile`.
 
 ### Documentation
 
-By running `make docs` all [documentation](http://oxyc.github.io/luaparse/)
+By running `make docs` all [documentation](https://oxyc.github.io/luaparse/)
 will be generated.
 
 ## Projects using luaparse

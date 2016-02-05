@@ -24,8 +24,8 @@
   ],
   "keywords": ["ast", "lua", "parser", "parsing"],
   "author": ["Oskar Schöldström <public@oxy.fi> (http://www.oxy.fi/)"],
-  "homepage": "http://oxyc.github.io/luaparse/",
-  "repository": { "type": "git", "url": "http://github.com/oxyc/luaparse.git" },
+  "homepage": "https://oxyc.github.io/luaparse/",
+  "repository": { "type": "git", "url": "https://github.com/oxyc/luaparse.git" },
   "devDependencies": {
     "requirejs": "~2.1.5",
     "curl": "~0.7.3"

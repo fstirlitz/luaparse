@@ -8,7 +8,7 @@
     "parser",
     "parsing"
   ],
-  "homepage": "http://oxyc.github.io/luaparse/",
+  "homepage": "https://oxyc.github.io/luaparse/",
   "bugs": "https://github.com/oxyc/luaparse/issues",
   "license": "MIT",
   "author": "Oskar Schöldström <public@oxy.fi> (http://www.oxy.fi/)",
@@ -23,7 +23,7 @@
   "man": "./docs/luaparse.1",
   "repository": {
     "type": "git",
-    "url": "http://github.com/oxyc/luaparse.git"
+    "url": "https://github.com/oxyc/luaparse.git"
   },
   "scripts": {
     "test": "make qa"
