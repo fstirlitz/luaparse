@@ -34,7 +34,7 @@
 
 (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">root, name, factory</span>) </span>{
   <span class="hljs-comment">/* jshint eqeqeq:false */</span>
-<span class="hljs-pi">  'use strict'</span>;</pre></div></div>
+<span class="hljs-meta">  'use strict'</span>;</pre></div></div>
             
         </li>
         
@@ -231,7 +231,7 @@ the supplied <code>exports</code> object.</p>
     factory((root[name] = {}));
   }
 }(<span class="hljs-keyword">this</span>, <span class="hljs-string">'luaparse'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">exports</span>) </span>{
-<span class="hljs-pi">  'use strict'</span>;
+<span class="hljs-meta">  'use strict'</span>;
 
   exports.version = <span class="hljs-string">'0.2.0'</span>;
 
@@ -770,7 +770,7 @@ easily be customized by overriding these functions.</p>
       <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; i++) {
         <span class="hljs-keyword">if</span> (array[i] === element) <span class="hljs-keyword">return</span> i;
       }
-      <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+      <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
     };</pre></div></div>
             
         </li>
@@ -792,7 +792,7 @@ with a matching property.</p>
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; i++) {
       <span class="hljs-keyword">if</span> (array[i][property] === element) <span class="hljs-keyword">return</span> i;
     }
-    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
   }</pre></div></div>
             
         </li>
@@ -1628,7 +1628,7 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'+-'</span>.indexOf(input.charAt(index) || <span class="hljs-literal">null</span>) &gt;= <span class="hljs-number">0</span>)
-        binarySign = (<span class="hljs-string">'+'</span> === input.charAt(index++)) ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>;
+        binarySign = (<span class="hljs-string">'+'</span> === input.charAt(index++)) ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>;
 
       exponentStart = index;</pre></div></div>
             
@@ -2488,7 +2488,7 @@ stored in an FILO-array.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scopeIdentifierName</span>(<span class="hljs-params">name</span>) </span>{
-    <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> !== indexOf(scopes[scopeDepth], name)) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-number">-1</span> !== indexOf(scopes[scopeDepth], name)) <span class="hljs-keyword">return</span>;
     scopes[scopeDepth].push(name);
   }</pre></div></div>
             
@@ -2525,7 +2525,7 @@ globals array so we can return the information to the user.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">attachScope</span>(<span class="hljs-params">node, isLocal</span>) </span>{
-    <span class="hljs-keyword">if</span> (!isLocal &amp;&amp; -<span class="hljs-number">1</span> === indexOfObject(globals, <span class="hljs-string">'name'</span>, node.name))
+    <span class="hljs-keyword">if</span> (!isLocal &amp;&amp; <span class="hljs-number">-1</span> === indexOfObject(globals, <span class="hljs-string">'name'</span>, node.name))
       globals.push(node);
 
     node.isLocal = isLocal;
@@ -2545,7 +2545,7 @@ globals array so we can return the information to the user.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scopeHasName</span>(<span class="hljs-params">name</span>) </span>{
-    <span class="hljs-keyword">return</span> (-<span class="hljs-number">1</span> !== indexOf(scopes[scopeDepth], name));
+    <span class="hljs-keyword">return</span> (<span class="hljs-number">-1</span> !== indexOf(scopes[scopeDepth], name));
   }</pre></div></div>
             
         </li>
@@ -3429,7 +3429,7 @@ shouldn’t be added to the scope until the statement is complete.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (node.inParens || ([<span class="hljs-string">'Identifier'</span>, <span class="hljs-string">'MemberExpression'</span>, <span class="hljs-string">'IndexExpression'</span>].indexOf(node.type) === -<span class="hljs-number">1</span>)) {
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (node.inParens || ([<span class="hljs-string">'Identifier'</span>, <span class="hljs-string">'MemberExpression'</span>, <span class="hljs-string">'IndexExpression'</span>].indexOf(node.type) === <span class="hljs-number">-1</span>)) {
       raise(token, errors.invalidVar, token.value);
     }
   }</pre></div></div>
