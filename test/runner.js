@@ -254,7 +254,11 @@
       , 'should invoke onCreateNode callback with syntax node parameter'
     );
 
-    this.done(9);
+    this.deepEqual(luaparse.parse('#!/usr/bin/lua\nbreak', { locations: true, ranges: true }), {
+      "type": "Chunk", "body": [{"type": "BreakStatement", "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20], "comments": []
+    }, 'should ignore shebangs');
+
+    this.done(10);
   });
 
   suite.addTest('Precedence', function() {
