@@ -4401,10 +4401,7 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
             <div class="content"><div class='highlight'><pre>  exports.end = end;
 
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">end</span>(<span class="hljs-params">_input</span>) </span>{
-    <span class="hljs-keyword">if</span> (<span class="hljs-string">'undefined'</span> !== <span class="hljs-keyword">typeof</span> _input) write(_input);
-
-    length = input.length;
-    trackLocations = options.locations || options.ranges;</pre></div></div>
+    <span class="hljs-keyword">if</span> (<span class="hljs-string">'undefined'</span> !== <span class="hljs-keyword">typeof</span> _input) write(_input);</pre></div></div>
             
         </li>
         
@@ -4414,6 +4411,26 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-192">&#182;</a>
+              </div>
+              <p>Ignore shebangs.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (input &amp;&amp; input.substr(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>) === <span class="hljs-string">'#!'</span>) input = input.replace(<span class="hljs-regexp">/^.*/</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">line</span>) </span>{
+      <span class="hljs-keyword">return</span> line.replace(<span class="hljs-regexp">/./g</span>, <span class="hljs-string">' '</span>);
+    });
+
+    length = input.length;
+    trackLocations = options.locations || options.ranges;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-193">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-193">&#182;</a>
               </div>
               <p>Initialize with a lookahead token.</p>
 

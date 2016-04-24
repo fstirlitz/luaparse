@@ -2081,6 +2081,11 @@
   function end(_input) {
     if ('undefined' !== typeof _input) write(_input);
 
+    // Ignore shebangs.
+    if (input && input.substr(0, 2) === '#!') input = input.replace(/^.*/, function (line) {
+      return line.replace(/./g, ' ');
+    });
+
     length = input.length;
     trackLocations = options.locations || options.ranges;
     // Initialize with a lookahead token.
