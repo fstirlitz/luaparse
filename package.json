@@ -1,6 +1,6 @@
 {
   "name": "luaparse",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A Lua parser in JavaScript",
   "keywords": [
     "ast",
