@@ -2051,7 +2051,7 @@
 
     // Rewind the lexer
     index = 0;
-    line = 1;
+    line = 0;
     lineStart = 0;
     length = input.length;
     // When tracking identifier scope, initialize with an empty scope.
