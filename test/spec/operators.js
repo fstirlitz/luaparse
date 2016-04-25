@@ -135,7 +135,7 @@
         }
       ]
     },
-    "a = -": "[1:5] <expression> expected near '<eof>'",
+    "a = -": "<expression> expected near '<eof>'",
     "a = not 10": {
       "type": "Chunk",
       "body": [
@@ -254,10 +254,10 @@
         }
       ]
     },
-    "a = not": "[1:7] <expression> expected near '<eof>'",
-    "a = 1 +": "[1:7] <expression> expected near '<eof>'",
-    "a = 1 ..": "[1:8] <expression> expected near '<eof>'",
-    "a = 1 * /": "[1:8] <expression> expected near '/'",
+    "a = not": "<expression> expected near '<eof>'",
+    "a = 1 +": "<expression> expected near '<eof>'",
+    "a = 1 ..": "<expression> expected near '<eof>'",
+    "a = 1 * /": "<expression> expected near '/'",
     "a = 1 + -2; a = 1 - -2": {
       "type": "Chunk",
       "body": [
@@ -527,7 +527,7 @@
         }
       ]
     },
-    "a = 1 * -": "[1:9] <expression> expected near '<eof>'",
+    "a = 1 * -": "<expression> expected near '<eof>'",
     "a = 1 * not 2; a = 1 / not 2": {
       "type": "Chunk",
       "body": [
@@ -797,7 +797,7 @@
         }
       ]
     },
-    "a = 1 / not": "[1:11] <expression> expected near '<eof>'",
+    "a = 1 / not": "<expression> expected near '<eof>'",
     "a = 1 + 2 - 3 * 4 / 5 ^ 6": {
       "type": "Chunk",
       "body": [
@@ -1083,9 +1083,9 @@
         }
       ]
     },
-    "a = ((1": "[1:7] ')' expected near '<eof>'",
-    "a = ((1 + 2)": "[1:12] ')' expected near '<eof>'",
-    "a = 1)": "[1:5] unexpected symbol ')' near '<eof>'",
+    "a = ((1": "')' expected near '<eof>'",
+    "a = ((1 + 2)": "')' expected near '<eof>'",
+    "a = 1)": "unexpected symbol ')' near '<eof>'",
     "a = a + b - c": {
       "type": "Chunk",
       "body": [
@@ -2769,10 +2769,10 @@
         }
       ]
     },
-    "a = 1 ==": "[1:8] <expression> expected near '<eof>'",
-    "a = `": "[1:5] unexpected symbol '`' near '='",
-    "a = ~": "[1:5] <expression> expected near '<eof>'",
-    "a = ~= 2": "[1:4] <expression> expected near '~='",
+    "a = 1 ==": "<expression> expected near '<eof>'",
+    "a = `": "unexpected symbol '`' near '='",
+    "a = ~": "<expression> expected near '<eof>'",
+    "a = ~= 2": "<expression> expected near '~='",
     "a = a ~= b": {
       "type": "Chunk",
       "body": [
@@ -3103,8 +3103,8 @@
         }
       ]
     },
-    "a = 1 and": "[1:9] <expression> expected near '<eof>'",
-    "a = or 1": "[1:4] <expression> expected near 'or'",
+    "a = 1 and": "<expression> expected near '<eof>'",
+    "a = or 1": "<expression> expected near 'or'",
     "a = {} and {} or {}": {
       "type": "Chunk",
       "body": [

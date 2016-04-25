@@ -17,10 +17,10 @@
 
   exports.name = 'assignments';
   exports.spec = {
-    "a": "[1:0] unexpected identifier 'a' near '<eof>'",
-    "a,": "[1:2] <expression> expected near '<eof>'",
-    "a,b,c": "[1:5] '=' expected near '<eof>'",
-    "a,b =": "[1:5] <expression> expected near '<eof>'",
+    "a": "unexpected identifier 'a' near '<eof>'",
+    "a,": "<expression> expected near '<eof>'",
+    "a,b,c": "'=' expected near '<eof>'",
+    "a,b =": "<expression> expected near '<eof>'",
     "a = 1": {
       "type": "Chunk",
       "body": [
@@ -3086,17 +3086,17 @@
       "comments": [],
       "globals": []
     },
-    "0 = 0": "[1:0] unexpected number '0' near '='",
-    "\"foo\" = 0": "[1:0] unexpected string 'foo' near '='",
-    "true = 0": "[1:0] unexpected boolean 'true' near '='",
-    "(a) = 0": "[1:4] invalid left-hand side of assignment near '='",
-    "{} = 0": "[1:0] unexpected symbol '{' near '}'",
-    "a:b() = 0": "[1:6] invalid left-hand side of assignment near '='",
-    "a() = 0": "[1:4] invalid left-hand side of assignment near '='",
-    "a.b:c() = 0": "[1:8] invalid left-hand side of assignment near '='",
-    "a[b]() = 0": "[1:7] invalid left-hand side of assignment near '='",
-    "a = a b": "[1:6] unexpected identifier 'b' near '<eof>'",
-    "a = 1 2": "[1:6] unexpected number '2' near '<eof>'",
-    "a = a = 1": "[1:6] unexpected symbol '=' near '1'"
+    "0 = 0": "unexpected number '0' near '='",
+    "\"foo\" = 0": "unexpected string 'foo' near '='",
+    "true = 0": "unexpected boolean 'true' near '='",
+    "(a) = 0": "invalid left-hand side of assignment near '='",
+    "{} = 0": "unexpected symbol '{' near '}'",
+    "a:b() = 0": "invalid left-hand side of assignment near '='",
+    "a() = 0": "invalid left-hand side of assignment near '='",
+    "a.b:c() = 0": "invalid left-hand side of assignment near '='",
+    "a[b]() = 0": "invalid left-hand side of assignment near '='",
+    "a = a b": "unexpected identifier 'b' near '<eof>'",
+    "a = 1 2": "unexpected number '2' near '<eof>'",
+    "a = a = 1": "unexpected symbol '=' near '1'"
   };
 }));

@@ -17,12 +17,12 @@
 
   exports.name = 'functions';
   exports.spec = {
-    "function": "[1:8] <name> expected near '<eof>'",
-    "function 1": "[1:9] <name> expected near '1'",
-    "function end": "[1:9] <name> expected near 'end'",
-    "function a": "[1:10] '(' expected near '<eof>'",
-    "function a end": "[1:11] '(' expected near 'end'",
-    "function a( end": "[1:12] <name> or '...' expected near 'end'",
+    "function": "<name> expected near '<eof>'",
+    "function 1": "<name> expected near '1'",
+    "function end": "<name> expected near 'end'",
+    "function a": "'(' expected near '<eof>'",
+    "function a end": "'(' expected near 'end'",
+    "function a( end": "<name> or '...' expected near 'end'",
     "function a() end": {
       "type": "Chunk",
       "body": [
@@ -103,11 +103,11 @@
         }
       ]
     },
-    "function a(1": "[1:11] <name> or '...' expected near '1'",
-    "function a(\"foo\"": "[1:11] <name> or '...' expected near 'foo'",
-    "function a(p": "[1:12] <name> or '...' expected near '<eof>'",
-    "function a(p,)": "[1:13] <name> or '...' expected near ')'",
-    "function a(p q": "[1:14] <name> or '...' expected near '<eof>'",
+    "function a(1": "<name> or '...' expected near '1'",
+    "function a(\"foo\"": "<name> or '...' expected near 'foo'",
+    "function a(p": "<name> or '...' expected near '<eof>'",
+    "function a(p,)": "<name> or '...' expected near ')'",
+    "function a(p q": "<name> or '...' expected near '<eof>'",
     "function a(p) end": {
       "type": "Chunk",
       "body": [
@@ -208,7 +208,7 @@
         }
       ]
     },
-    "function a(p,q,) end": "[1:15] <name> or '...' expected near ')'",
+    "function a(p,q,) end": "<name> or '...' expected near ')'",
     "function a(p,q,r) end": {
       "type": "Chunk",
       "body": [
@@ -347,9 +347,9 @@
         }
       ]
     },
-    "function a(p,q,1": "[1:15] <name> or '...' expected near '1'",
-    "function a(p) do": "[1:16] 'end' expected near '<eof>'",
-    "function a(p) 1 end": "[1:14] unexpected number '1' near 'end'",
+    "function a(p,q,1": "<name> or '...' expected near '1'",
+    "function a(p) do": "'end' expected near '<eof>'",
+    "function a(p) 1 end": "unexpected number '1' near 'end'",
     "function a(p) return end": {
       "type": "Chunk",
       "body": [
@@ -469,7 +469,7 @@
         }
       ]
     },
-    "function a(p) return return end": "[1:21] 'end' expected near 'return'",
+    "function a(p) return return end": "'end' expected near 'return'",
     "function a(p) do end end": {
       "type": "Chunk",
       "body": [
@@ -589,8 +589,8 @@
         }
       ]
     },
-    "function a.(": "[1:11] <name> expected near '('",
-    "function a.1": "[1:10] '(' expected near '0.1'",
+    "function a.(": "<name> expected near '('",
+    "function a.1": "'(' expected near '0.1'",
     "function a.b() end": {
       "type": "Chunk",
       "body": [
@@ -707,8 +707,8 @@
         }
       ]
     },
-    "function a.b,": "[1:12] '(' expected near ','",
-    "function a.b.(": "[1:13] <name> expected near '('",
+    "function a.b,": "'(' expected near ','",
+    "function a.b.(": "<name> expected near '('",
     "function a.b.c.d() end": {
       "type": "Chunk",
       "body": [
@@ -897,8 +897,8 @@
         }
       ]
     },
-    "function a:": "[1:11] <name> expected near '<eof>'",
-    "function a:1": "[1:11] <name> expected near '1'",
+    "function a:": "<name> expected near '<eof>'",
+    "function a:1": "<name> expected near '1'",
     "function a:b() end": {
       "type": "Chunk",
       "body": [
@@ -1015,8 +1015,8 @@
         }
       ]
     },
-    "function a:b:": "[1:12] '(' expected near ':'",
-    "function a:b.": "[1:12] '(' expected near '.'",
+    "function a:b:": "'(' expected near ':'",
+    "function a:b.": "'(' expected near '.'",
     "function a.b.c:d() end": {
       "type": "Chunk",
       "body": [
@@ -1305,7 +1305,7 @@
         }
       ]
     },
-    "function a(...,": "[1:14] ')' expected near ','",
+    "function a(...,": "')' expected near ','",
     "function a(p,...) end": {
       "type": "Chunk",
       "body": [
@@ -1425,7 +1425,7 @@
         }
       ]
     },
-    "function a(...,p) end": "[1:14] ')' expected near ','",
+    "function a(...,p) end": "')' expected near ','",
     "function a(p,q,r,...) end": {
       "type": "Chunk",
       "body": [

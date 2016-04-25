@@ -17,10 +17,10 @@
 
   exports.name = 'local';
   exports.spec = {
-    "local": "[1:5] <name> expected near '<eof>'",
-    "local;": "[1:5] <name> expected near ';'",
-    "local =": "[1:6] <name> expected near '='",
-    "local end": "[1:6] <name> expected near 'end'",
+    "local": "<name> expected near '<eof>'",
+    "local;": "<name> expected near ';'",
+    "local =": "<name> expected near '='",
+    "local end": "<name> expected near 'end'",
     "local a": {
       "type": "Chunk",
       "body": [
@@ -1086,19 +1086,19 @@
       "comments": [],
       "globals": []
     },
-    "local a, local": "[1:9] <name> expected near 'local'",
-    "local 1": "[1:6] <name> expected near '1'",
-    "local \"foo\"": "[1:6] <name> expected near 'foo'",
-    "local a = local": "[1:10] <expression> expected near 'local'",
-    "local a, b, =": "[1:12] <name> expected near '='",
-    "local a, b = 1, local": "[1:16] <expression> expected near 'local'",
-    "local a, b = , local": "[1:13] <expression> expected near ','",
-    "local function": "[1:14] <name> expected near '<eof>'",
-    "local function 1": "[1:15] <name> expected near '1'",
-    "local function end": "[1:15] <name> expected near 'end'",
-    "local function a": "[1:16] '(' expected near '<eof>'",
-    "local function a end": "[1:17] '(' expected near 'end'",
-    "local function a( end": "[1:18] <name> or '...' expected near 'end'",
+    "local a, local": "<name> expected near 'local'",
+    "local 1": "<name> expected near '1'",
+    "local \"foo\"": "<name> expected near 'foo'",
+    "local a = local": "<expression> expected near 'local'",
+    "local a, b, =": "<name> expected near '='",
+    "local a, b = 1, local": "<expression> expected near 'local'",
+    "local a, b = , local": "<expression> expected near ','",
+    "local function": "<name> expected near '<eof>'",
+    "local function 1": "<name> expected near '1'",
+    "local function end": "<name> expected near 'end'",
+    "local function a": "'(' expected near '<eof>'",
+    "local function a end": "'(' expected near 'end'",
+    "local function a( end": "<name> or '...' expected near 'end'",
     "local function a() end": {
       "type": "Chunk",
       "body": [
@@ -1159,11 +1159,11 @@
       "comments": [],
       "globals": []
     },
-    "local function a(1": "[1:17] <name> or '...' expected near '1'",
-    "local function a(\"foo\"": "[1:17] <name> or '...' expected near 'foo'",
-    "local function a(p": "[1:18] <name> or '...' expected near '<eof>'",
-    "local function a(p,)": "[1:19] <name> or '...' expected near ')'",
-    "local function a(p q": "[1:20] <name> or '...' expected near '<eof>'",
+    "local function a(1": "<name> or '...' expected near '1'",
+    "local function a(\"foo\"": "<name> or '...' expected near 'foo'",
+    "local function a(p": "<name> or '...' expected near '<eof>'",
+    "local function a(p,)": "<name> or '...' expected near ')'",
+    "local function a(p q": "<name> or '...' expected near '<eof>'",
     "local function a(p) end": {
       "type": "Chunk",
       "body": [
@@ -1244,7 +1244,7 @@
       "comments": [],
       "globals": []
     },
-    "local function a(p,q,) end": "[1:21] <name> or '...' expected near ')'",
+    "local function a(p,q,) end": "<name> or '...' expected near ')'",
     "local function a(p,q,r) end": {
       "type": "Chunk",
       "body": [
@@ -1363,9 +1363,9 @@
       "comments": [],
       "globals": []
     },
-    "local function a(p,q,1": "[1:21] <name> or '...' expected near '1'",
-    "local function a(p) do": "[1:22] 'end' expected near '<eof>'",
-    "local function a(p) 1 end": "[1:20] unexpected number '1' near 'end'",
+    "local function a(p,q,1": "<name> or '...' expected near '1'",
+    "local function a(p) do": "'end' expected near '<eof>'",
+    "local function a(p) 1 end": "unexpected number '1' near 'end'",
     "local function a(p) return end": {
       "type": "Chunk",
       "body": [
@@ -1465,7 +1465,7 @@
       "comments": [],
       "globals": []
     },
-    "local function a(p) return return end": "[1:27] 'end' expected near 'return'",
+    "local function a(p) return return end": "'end' expected near 'return'",
     "local function a(p) do end end": {
       "type": "Chunk",
       "body": [
@@ -1565,8 +1565,8 @@
       "comments": [],
       "globals": []
     },
-    "local function a.": "[1:16] '(' expected near '.'",
-    "local function a:": "[1:16] '(' expected near ':'",
+    "local function a.": "'(' expected near '.'",
+    "local function a:": "'(' expected near ':'",
     "local function a(...) end": {
       "type": "Chunk",
       "body": [
@@ -1647,7 +1647,7 @@
       "comments": [],
       "globals": []
     },
-    "local function a(...,": "[1:20] ')' expected near ','",
+    "local function a(...,": "')' expected near ','",
     "local function a(p,...) end": {
       "type": "Chunk",
       "body": [

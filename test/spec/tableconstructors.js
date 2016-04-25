@@ -17,7 +17,7 @@
 
   exports.name = 'tableconstructors';
   exports.spec = {
-    "a = {": "[1:5] '}' expected near '<eof>'",
+    "a = {": "'}' expected near '<eof>'",
     "a = {}": {
       "type": "Chunk",
       "body": [
@@ -117,11 +117,11 @@
         }
       ]
     },
-    "a = {,}": "[1:5] '}' expected near ','",
-    "a = {;}": "[1:5] '}' expected near ';'",
-    "a = {,,}": "[1:5] '}' expected near ','",
-    "a = {;;}": "[1:5] '}' expected near ';'",
-    "a = {{": "[1:6] '}' expected near '<eof>'",
+    "a = {,}": "'}' expected near ','",
+    "a = {;}": "'}' expected near ';'",
+    "a = {,,}": "'}' expected near ','",
+    "a = {;;}": "'}' expected near ';'",
+    "a = {{": "'}' expected near '<eof>'",
     "a = {{{}}}": {
       "type": "Chunk",
       "body": [
@@ -2675,11 +2675,11 @@
         }
       ]
     },
-    "a = { a": "[1:7] '}' expected near '<eof>'",
-    "a = { a=": "[1:8] <expression> expected near '<eof>'",
-    "a = { a=,": "[1:8] <expression> expected near ','",
-    "a = { a=;": "[1:8] <expression> expected near ';'",
-    "a = { 1, a=\"foo\"": "[1:16] '}' expected near '<eof>'",
+    "a = { a": "'}' expected near '<eof>'",
+    "a = { a=": "<expression> expected near '<eof>'",
+    "a = { a=,": "<expression> expected near ','",
+    "a = { a=;": "<expression> expected near ';'",
+    "a = { 1, a=\"foo\"": "'}' expected near '<eof>'",
     "a = { 1, a=\"foo\"; b={}, d=true; }": {
       "type": "Chunk",
       "body": [
@@ -2977,10 +2977,10 @@
         }
       ]
     },
-    "a = { [": "[1:7] <expression> expected near '<eof>'",
-    "a = { [1": "[1:8] ']' expected near '<eof>'",
-    "a = { [1]": "[1:9] '=' expected near '<eof>'",
-    "a = { [a]=": "[1:10] <expression> expected near '<eof>'",
+    "a = { [": "<expression> expected near '<eof>'",
+    "a = { [1": "']' expected near '<eof>'",
+    "a = { [1]": "'=' expected near '<eof>'",
+    "a = { [a]=": "<expression> expected near '<eof>'",
     "a = { [\"foo\"]=\"bar\" }": {
       "type": "Chunk",
       "body": [
@@ -3610,10 +3610,10 @@
         }
       ]
     },
-    "a = { [] }": "[1:7] <expression> expected near ']'",
-    "a = { a= }": "[1:9] <expression> expected near '}'",
-    "a = { a.b=1 }": "[1:9] '}' expected near '='",
-    "a = { a[b[c]]=1 }": "[1:13] '}' expected near '='",
-    "a = { 2 3 4 }": "[1:8] '}' expected near '3'"
+    "a = { [] }": "<expression> expected near ']'",
+    "a = { a= }": "<expression> expected near '}'",
+    "a = { a.b=1 }": "'}' expected near '='",
+    "a = { a[b[c]]=1 }": "'}' expected near '='",
+    "a = { 2 3 4 }": "'}' expected near '3'"
   };
 }));

@@ -17,19 +17,19 @@
 
   exports.name = 'for';
   exports.spec = {
-    "for": "[1:3] <name> expected near '<eof>'",
-    "for do": "[1:4] <name> expected near 'do'",
-    "for end": "[1:4] <name> expected near 'end'",
-    "for 1": "[1:4] <name> expected near '1'",
-    "for a": "[1:5] 'in' expected near '<eof>'",
-    "for true": "[1:4] <name> expected near 'true'",
-    "for a, in": "[1:7] <name> expected near 'in'",
-    "for a in": "[1:8] <expression> expected near '<eof>'",
-    "for a do": "[1:6] 'in' expected near 'do'",
-    "for a in do": "[1:9] <expression> expected near 'do'",
-    "for a in b do": "[1:13] 'end' expected near '<eof>'",
-    "for a in b end": "[1:11] 'do' expected near 'end'",
-    "for a in b, do": "[1:12] <expression> expected near 'do'",
+    "for": "<name> expected near '<eof>'",
+    "for do": "<name> expected near 'do'",
+    "for end": "<name> expected near 'end'",
+    "for 1": "<name> expected near '1'",
+    "for a": "'in' expected near '<eof>'",
+    "for true": "<name> expected near 'true'",
+    "for a, in": "<name> expected near 'in'",
+    "for a in": "<expression> expected near '<eof>'",
+    "for a do": "'in' expected near 'do'",
+    "for a in do": "<expression> expected near 'do'",
+    "for a in b do": "'end' expected near '<eof>'",
+    "for a in b end": "'do' expected near 'end'",
+    "for a in b, do": "<expression> expected near 'do'",
     "for a in b do end": {
       "type": "Chunk",
       "body": [
@@ -491,9 +491,9 @@
         }
       ]
     },
-    "for a in b do 1 end": "[1:14] unexpected number '1' near 'end'",
-    "for a in b do \"foo\" end": "[1:14] unexpected string 'foo' near 'end'",
-    "for a b in": "[1:6] 'in' expected near 'b'",
+    "for a in b do 1 end": "unexpected number '1' near 'end'",
+    "for a in b do \"foo\" end": "unexpected string 'foo' near 'end'",
+    "for a b in": "'in' expected near 'b'",
     "for a, b, c in p do end": {
       "type": "Chunk",
       "body": [
@@ -1330,7 +1330,7 @@
         }
       ]
     },
-    "for a in b do return return end": "[1:21] 'end' expected near 'return'",
+    "for a in b do return return end": "'end' expected near 'return'",
     "for a in b do do end end": {
       "type": "Chunk",
       "body": [
@@ -1728,15 +1728,15 @@
         }
       ]
     },
-    "for =": "[1:4] <name> expected near '='",
-    "for a =": "[1:7] <expression> expected near '<eof>'",
-    "for a, b =": "[1:9] 'in' expected near '='",
-    "for a = do": "[1:8] <expression> expected near 'do'",
-    "for a = 1, do": "[1:11] <expression> expected near 'do'",
-    "for a = p, q, do": "[1:14] <expression> expected near 'do'",
-    "for a = p q do": "[1:10] ',' expected near 'q'",
-    "for a = b do end": "[1:10] ',' expected near 'do'",
-    "for a = 1, 2, 3, 4 do end": "[1:15] 'do' expected near ','",
+    "for =": "<name> expected near '='",
+    "for a =": "<expression> expected near '<eof>'",
+    "for a, b =": "'in' expected near '='",
+    "for a = do": "<expression> expected near 'do'",
+    "for a = 1, do": "<expression> expected near 'do'",
+    "for a = p, q, do": "<expression> expected near 'do'",
+    "for a = p q do": "',' expected near 'q'",
+    "for a = b do end": "',' expected near 'do'",
+    "for a = 1, 2, 3, 4 do end": "'do' expected near ','",
     "for a = p, q do end": {
       "type": "Chunk",
       "body": [
@@ -2322,8 +2322,8 @@
       "comments": [],
       "globals": []
     },
-    "for a = 1, 2 do 3 end": "[1:16] unexpected number '3' near 'end'",
-    "for a = 1, 2 do \"foo\" end": "[1:16] unexpected string 'foo' near 'end'",
+    "for a = 1, 2 do 3 end": "unexpected number '3' near 'end'",
+    "for a = 1, 2 do \"foo\" end": "unexpected string 'foo' near 'end'",
     "for a = p, q, r do end": {
       "type": "Chunk",
       "body": [
@@ -2882,7 +2882,7 @@
       "comments": [],
       "globals": []
     },
-    "for a = 1, 2 do return return end": "[1:23] 'end' expected near 'return'",
+    "for a = 1, 2 do return return end": "'end' expected near 'return'",
     "for a = p, q do do end end": {
       "type": "Chunk",
       "body": [

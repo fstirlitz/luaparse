@@ -17,8 +17,8 @@
 
   exports.name = 'escapesequences';
   exports.spec = {
-    "a = \"bar\nbaz\"": "[1:10] unfinished string near 'bar\n'",
-    "a = \"bar\rbaz\"": "[1:10] unfinished string near 'bar\r'",
+    "a = \"bar\nbaz\"": "unfinished string near 'bar\n'",
+    "a = \"bar\rbaz\"": "unfinished string near 'bar\r'",
     "a = \"bar\\n\\r\\t\tbaz\"": {
       "type": "Chunk",
       "body": [

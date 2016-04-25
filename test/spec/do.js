@@ -17,8 +17,8 @@
 
   exports.name = 'do';
   exports.spec = {
-    "do": "[1:2] 'end' expected near '<eof>'",
-    "end": "[1:0] unexpected keyword 'end' near '<eof>'",
+    "do": "'end' expected near '<eof>'",
+    "end": "unexpected keyword 'end' near '<eof>'",
     "do end": {
       "type": "Chunk",
       "body": [
@@ -58,8 +58,8 @@
       "comments": [],
       "globals": []
     },
-    "do 1 end": "[1:3] unexpected number '1' near 'end'",
-    "do \"foo\" end": "[1:3] unexpected string 'foo' near 'end'",
+    "do 1 end": "unexpected number '1' near 'end'",
+    "do \"foo\" end": "unexpected string 'foo' near 'end'",
     "do local a, b end": {
       "type": "Chunk",
       "body": [
@@ -859,8 +859,8 @@
       "comments": [],
       "globals": []
     },
-    "do end do": "[1:9] 'end' expected near '<eof>'",
-    "do end end": "[1:7] unexpected keyword 'end' near '<eof>'",
+    "do end do": "'end' expected near '<eof>'",
+    "do end end": "unexpected keyword 'end' near '<eof>'",
     "do return end": {
       "type": "Chunk",
       "body": [
@@ -919,6 +919,6 @@
       "comments": [],
       "globals": []
     },
-    "do return return end": "[1:10] 'end' expected near 'return'"
+    "do return return end": "'end' expected near 'return'"
   };
 }));

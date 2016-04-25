@@ -17,10 +17,10 @@
 
   exports.name = 'while';
   exports.spec = {
-    "while": "[1:5] <expression> expected near '<eof>'",
-    "while do": "[1:6] <expression> expected near 'do'",
-    "while =": "[1:6] <expression> expected near '='",
-    "while 1 do": "[1:10] 'end' expected near '<eof>'",
+    "while": "<expression> expected near '<eof>'",
+    "while do": "<expression> expected near 'do'",
+    "while =": "<expression> expected near '='",
+    "while 1 do": "'end' expected near '<eof>'",
     "while 1 do end": {
       "type": "Chunk",
       "body": [
@@ -451,8 +451,8 @@
       "comments": [],
       "globals": []
     },
-    "while 1 do 2 end": "[1:11] unexpected number '2' near 'end'",
-    "while 1 do \"foo\" end": "[1:11] unexpected string 'foo' near 'end'",
+    "while 1 do 2 end": "unexpected number '2' near 'end'",
+    "while 1 do \"foo\" end": "unexpected string 'foo' near 'end'",
     "while true do end": {
       "type": "Chunk",
       "body": [
@@ -511,10 +511,10 @@
       "comments": [],
       "globals": []
     },
-    "while 1 do while": "[1:16] <expression> expected near '<eof>'",
-    "while 1 end": "[1:8] 'do' expected near 'end'",
-    "while 1 2 do": "[1:8] 'do' expected near '2'",
-    "while 1 = 2 do": "[1:8] 'do' expected near '='",
+    "while 1 do while": "<expression> expected near '<eof>'",
+    "while 1 end": "'do' expected near 'end'",
+    "while 1 2 do": "'do' expected near '2'",
+    "while 1 = 2 do": "'do' expected near '='",
     "while 1 do return end": {
       "type": "Chunk",
       "body": [
@@ -592,7 +592,7 @@
       "comments": [],
       "globals": []
     },
-    "while 1 do return return end": "[1:18] 'end' expected near 'return'",
+    "while 1 do return return end": "'end' expected near 'return'",
     "while 1 do do end end": {
       "type": "Chunk",
       "body": [

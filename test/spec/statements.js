@@ -55,7 +55,7 @@
       "comments": [],
       "globals": []
     },
-    "::foo": "[1:5] '::' expected near '<eof>'",
+    "::foo": "'::' expected near '<eof>'",
     "::foo::": {
       "type": "Chunk",
       "body": [
@@ -113,7 +113,7 @@
       "comments": [],
       "globals": []
     },
-    "goto": "[1:4] <name> expected near '<eof>'",
+    "goto": "<name> expected near '<eof>'",
     "goto foo": {
       "type": "Chunk",
       "body": [
@@ -170,6 +170,6 @@
       "comments": [],
       "globals": []
     },
-    "nil": "[1:0] unexpected symbol 'nil' near '<eof>'"
+    "nil": "unexpected symbol 'nil' near '<eof>'"
   };
 }));

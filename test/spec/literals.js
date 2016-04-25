@@ -17,7 +17,7 @@
 
   exports.name = 'literals';
   exports.spec = {
-    "a": "[1:0] unexpected identifier 'a' near '<eof>'",
+    "a": "unexpected identifier 'a' near '<eof>'",
     "a = 1": {
       "type": "Chunk",
       "body": [
@@ -418,7 +418,7 @@
         }
       ]
     },
-    "a = 1e": "[1:7] malformed number near '1e'",
+    "a = 1e": "malformed number near '1e'",
     "a = 1e1": {
       "type": "Chunk",
       "body": [
@@ -819,7 +819,7 @@
         }
       ]
     },
-    "a = 0x": "[1:7] malformed number near '0x'",
+    "a = 0x": "malformed number near '0x'",
     "a = 0xf": {
       "type": "Chunk",
       "body": [
@@ -1120,7 +1120,7 @@
         }
       ]
     },
-    "a = 0xfp": "[1:9] malformed number near '0xfp'",
+    "a = 0xfp": "malformed number near '0xfp'",
     "a = 0xfp1": {
       "type": "Chunk",
       "body": [
@@ -1850,7 +1850,7 @@
         }
       ]
     },
-    "a = \"bar": "[1:9] unfinished string near 'bar'",
+    "a = \"bar": "unfinished string near 'bar'",
     "a = 'bar'": {
       "type": "Chunk",
       "body": [
@@ -2051,7 +2051,7 @@
         }
       ]
     },
-    "a = [=aa": "[1:2] '[' expected near '='",
+    "a = [=aa": "'[' expected near '='",
     "a = nil": {
       "type": "Chunk",
       "body": [

@@ -17,16 +17,16 @@
 
   exports.name = 'conditional';
   exports.spec = {
-    "if": "[1:2] <expression> expected near '<eof>'",
-    "elseif": "[1:0] unexpected keyword 'elseif' near '<eof>'",
-    "else": "[1:0] unexpected keyword 'else' near '<eof>'",
-    "then": "[1:0] unexpected keyword 'then' near '<eof>'",
-    "if then": "[1:3] <expression> expected near 'then'",
-    "if 1": "[1:4] 'then' expected near '<eof>'",
-    "if 1 then": "[1:9] 'end' expected near '<eof>'",
-    "if 1 else": "[1:5] 'then' expected near 'else'",
-    "if 1 then else": "[1:14] 'end' expected near '<eof>'",
-    "if 1 then elseif": "[1:16] <expression> expected near '<eof>'",
+    "if": "<expression> expected near '<eof>'",
+    "elseif": "unexpected keyword 'elseif' near '<eof>'",
+    "else": "unexpected keyword 'else' near '<eof>'",
+    "then": "unexpected keyword 'then' near '<eof>'",
+    "if then": "<expression> expected near 'then'",
+    "if 1": "'then' expected near '<eof>'",
+    "if 1 then": "'end' expected near '<eof>'",
+    "if 1 else": "'then' expected near 'else'",
+    "if 1 then else": "'end' expected near '<eof>'",
+    "if 1 then elseif": "<expression> expected near '<eof>'",
     "if 1 then end": {
       "type": "Chunk",
       "body": [
@@ -978,8 +978,8 @@
       "comments": [],
       "globals": []
     },
-    "if 1 then elseif 2": "[1:18] 'then' expected near '<eof>'",
-    "if 1 then elseif 2 then": "[1:23] 'end' expected near '<eof>'",
+    "if 1 then elseif 2": "'then' expected near '<eof>'",
+    "if 1 then elseif 2 then": "'end' expected near '<eof>'",
     "if 1 then elseif 2 then end": {
       "type": "Chunk",
       "body": [
@@ -1766,7 +1766,7 @@
       "comments": [],
       "globals": []
     },
-    "if 1 then else if 2 then end": "[1:28] 'end' expected near '<eof>'",
+    "if 1 then else if 2 then end": "'end' expected near '<eof>'",
     "if 1 then return end": {
       "type": "Chunk",
       "body": [
@@ -1863,7 +1863,7 @@
       "comments": [],
       "globals": []
     },
-    "if 1 then return return end": "[1:17] 'end' expected near 'return'",
+    "if 1 then return return end": "'end' expected near 'return'",
     "if 1 then end; if 1 then end;": {
       "type": "Chunk",
       "body": [
@@ -1997,7 +1997,7 @@
       "comments": [],
       "globals": []
     },
-    "if then end": "[1:3] <expression> expected near 'then'",
-    "if 1 then elseif then end": "[1:17] <expression> expected near 'then'"
+    "if then end": "<expression> expected near 'then'",
+    "if 1 then elseif then end": "<expression> expected near 'then'"
   };
 }));

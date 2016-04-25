@@ -17,7 +17,7 @@
 
   exports.name = 'functioncalls';
   exports.spec = {
-    "a(": "[1:2] ')' expected near '<eof>'",
+    "a(": "')' expected near '<eof>'",
     "a()": {
       "type": "Chunk",
       "body": [
@@ -228,7 +228,7 @@
         }
       ]
     },
-    "a(1,)": "[1:4] <expression> expected near ')'",
+    "a(1,)": "<expression> expected near ')'",
     "a(1,2,3)": {
       "type": "Chunk",
       "body": [
@@ -382,7 +382,7 @@
         }
       ]
     },
-    "1()": "[1:0] unexpected number '1' near '('",
+    "1()": "unexpected number '1' near '('",
     "a()()": {
       "type": "Chunk",
       "body": [
@@ -777,10 +777,10 @@
         }
       ]
     },
-    "a.1": "[1:0] unexpected identifier 'a' near '<eof>'",
-    "a.b": "[1:0] unexpected identifier 'a' near '<eof>'",
-    "a[b]": "[1:0] unexpected identifier 'a' near '<eof>'",
-    "a.b.(": "[1:4] <name> expected near '('",
+    "a.1": "unexpected identifier 'a' near '<eof>'",
+    "a.b": "unexpected identifier 'a' near '<eof>'",
+    "a[b]": "unexpected identifier 'a' near '<eof>'",
+    "a.b.(": "<name> expected near '('",
     "a.b.c()": {
       "type": "Chunk",
       "body": [
@@ -1656,8 +1656,8 @@
         }
       ]
     },
-    "a:b": "[1:3] function arguments expected near '<eof>'",
-    "a:1": "[1:2] <name> expected near '1'",
+    "a:b": "function arguments expected near '<eof>'",
+    "a:1": "<name> expected near '1'",
     "a.b:c()": {
       "type": "Chunk",
       "body": [
@@ -2011,7 +2011,7 @@
         }
       ]
     },
-    "a:b:": "[1:3] function arguments expected near ':'",
+    "a:b:": "function arguments expected near ':'",
     "a:b():c()": {
       "type": "Chunk",
       "body": [
@@ -2294,7 +2294,7 @@
         }
       ]
     },
-    "()()": "[1:1] <expression> expected near ')'",
+    "()()": "<expression> expected near ')'",
     "(\"foo\")()": {
       "type": "Chunk",
       "body": [
