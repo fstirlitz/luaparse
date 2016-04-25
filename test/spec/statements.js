@@ -24,11 +24,11 @@
           "type": "BreakStatement",
           "loc": {
             "start": {
-              "line": 1,
+              "line": 0,
               "column": 0
             },
             "end": {
-              "line": 1,
+              "line": 0,
               "column": 5
             }
           },
@@ -40,11 +40,11 @@
       ],
       "loc": {
         "start": {
-          "line": 1,
+          "line": 0,
           "column": 0
         },
         "end": {
-          "line": 1,
+          "line": 0,
           "column": 5
         }
       },
@@ -66,11 +66,11 @@
             "name": "foo",
             "loc": {
               "start": {
-                "line": 1,
+                "line": 0,
                 "column": 2
               },
               "end": {
-                "line": 1,
+                "line": 0,
                 "column": 5
               }
             },
@@ -82,11 +82,11 @@
           },
           "loc": {
             "start": {
-              "line": 1,
+              "line": 0,
               "column": 0
             },
             "end": {
-              "line": 1,
+              "line": 0,
               "column": 7
             }
           },
@@ -98,11 +98,11 @@
       ],
       "loc": {
         "start": {
-          "line": 1,
+          "line": 0,
           "column": 0
         },
         "end": {
-          "line": 1,
+          "line": 0,
           "column": 7
         }
       },
@@ -124,11 +124,11 @@
             "name": "foo",
             "loc": {
               "start": {
-                "line": 1,
+                "line": 0,
                 "column": 5
               },
               "end": {
-                "line": 1,
+                "line": 0,
                 "column": 8
               }
             },
@@ -139,11 +139,11 @@
           },
           "loc": {
             "start": {
-              "line": 1,
+              "line": 0,
               "column": 0
             },
             "end": {
-              "line": 1,
+              "line": 0,
               "column": 8
             }
           },
@@ -155,11 +155,11 @@
       ],
       "loc": {
         "start": {
-          "line": 1,
+          "line": 0,
           "column": 0
         },
         "end": {
-          "line": 1,
+          "line": 0,
           "column": 8
         }
       },

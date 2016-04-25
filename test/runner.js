@@ -250,12 +250,12 @@
     this.equal(nodes.length, 9, 'should invoke onCreateNode callback');
     this.deepEqual(
         nodes[0]
-      , {"type": "Identifier", "name": "a", "loc": {"start": {"line": 1, "column": 9}, "end": {"line": 1, "column": 10}}, "range": [9, 10], "isLocal": true}
+      , {"type": "Identifier", "name": "a", "loc": {"start": {"line": 0, "column": 9}, "end": {"line": 0, "column": 10}}, "range": [9, 10], "isLocal": true}
       , 'should invoke onCreateNode callback with syntax node parameter'
     );
 
     this.deepEqual(luaparse.parse('#!/usr/bin/lua\nbreak', { locations: true, ranges: true }), {
-      "type": "Chunk", "body": [{"type": "BreakStatement", "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20], "comments": []
+      "type": "Chunk", "body": [{"type": "BreakStatement", "loc": {"start": {"line": 1, "column": 0}, "end": {"line": 1, "column": 5}}, "range": [15, 20]}], "loc": {"start": {"line": 1, "column": 0}, "end": {"line": 1, "column": 5}}, "range": [15, 20], "comments": []
     }, 'should ignore shebangs');
 
     this.done(10);
