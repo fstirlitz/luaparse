@@ -453,17 +453,16 @@
 
   function raise(token) {
     var message = sprintf.apply(null, slice.call(arguments, 1))
-      , error, col;
+      , error = new SyntaxError(message)
+      , col;
 
     if ('undefined' !== typeof token.line) {
       col = token.range[0] - token.lineStart;
-      error = new SyntaxError(sprintf('[%1:%2] %3', token.line, col, message));
       error.line = token.line;
       error.index = token.range[0];
       error.column = col;
     } else {
       col = index - lineStart + 1;
-      error = new SyntaxError(sprintf('[%1:%2] %3', line, col, message));
       error.index = index;
       error.line = line;
       error.column = col;

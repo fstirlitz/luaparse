@@ -97,7 +97,7 @@ function done() {
       message = beautify ? JSON.stringify(ast, null, '  ')
         : JSON.stringify(ast);
     } catch(e) {
-      message = util.format("%s: %s", snippet.name, e.message);
+      message = util.format("%s: [%d:%d] %s", snippet.name, e.line, e.column, e.message);
       if (verbose) console.log(e.stack);
       success = false;
     }
