@@ -72,15 +72,17 @@ function scaffoldTest() {
     // Skip lines beginning with `//` and that are not option objects.
     if (/^\/\//.test(snippet)) return;
 
-    // Convert to real escape sequences.
-    snippet = snippet
-      .replace(/([^\\])\\n/g, '$1\n')
-      .replace(/([^\\])\\r/g, '$1\r')
-      .replace(/([^\\])\\t/g, '$1\t')
-      .replace(/([^\\])\\f/g, '$1\f')
-      .replace(/([^\\])\\v/g, '$1\v')
-      .replace(/([^\\])\\b/g, '$1\b')
-      .replace(/\\\\([\S])/g, '\\$1');
+    // Interpret "@@" escapes.
+    snippet = snippet.replace(/@(.)@/g, function (m, s) {
+        return ({
+            'n': '\n',
+            'r': '\r',
+            't': '\t',
+            'f': '\f',
+            'v': '\v',
+            'b': '\b'
+        })[s] || s;
+    })
 
     // Generate the assertion.
     var result = scaffoldTestAssertion(snippet);
