@@ -36,7 +36,7 @@
   exports.options = { };
   exports.spec = {
     'function foo.bar:baz(a) goto foo end local function a() local a, b ::c:: for a,b in c.d:e() do end end do while a do end repeat until 0 end for a = 1, 1 do end a = function() end': {
-      options: { },
+      options: { "luaVersion": "5.2" },
       name: 'should not scope by default',
       result: {
         "type": "Chunk",
