@@ -109,6 +109,7 @@
         if (typeof expected === 'string') this.parseError(source, expected, options);
         else if (typeof expected.result === 'object')
           this.deepEqual(luaparse.parse(source, expected.options || options), expected.result, expected.name || escapeString(source));
+        else if (typeof expected.result === 'string') this.parseError(source, expected.result, expected.options || options);
         else this.parses(source, expected, options);
 
         count++;
