@@ -19,7 +19,7 @@
   exports.spec = {
     "a = \"bar\nbaz\"": "[1:10] unfinished string near 'bar\n'",
     "a = \"bar\rbaz\"": "[1:10] unfinished string near 'bar\r'",
-    "a = \"bar\\n\\r\\t\tbaz\"": {
+    "a = \"bar\\a\\n\\r\\t\tbaz\"": {
       "type": "Chunk",
       "body": [
         {
@@ -48,8 +48,8 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\n\r\t\tbaz",
-              "raw": "\"bar\\n\\r\\t\tbaz\"",
+              "value": "bar\u0007\n\r\t\tbaz",
+              "raw": "\"bar\\a\\n\\r\\t\tbaz\"",
               "loc": {
                 "start": {
                   "line": 1,
@@ -57,12 +57,12 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 19
+                  "column": 21
                 }
               },
               "range": [
                 4,
-                19
+                21
               ]
             }
           ],
@@ -73,12 +73,12 @@
             },
             "end": {
               "line": 1,
-              "column": 19
+              "column": 21
             }
           },
           "range": [
             0,
-            19
+            21
           ]
         }
       ],
@@ -89,12 +89,12 @@
         },
         "end": {
           "line": 1,
-          "column": 19
+          "column": 21
         }
       },
       "range": [
         0,
-        19
+        21
       ],
       "comments": [],
       "globals": [
@@ -119,7 +119,7 @@
         }
       ]
     },
-    "a = \"bar\\80baz\\800\\0foo\"": {
+    "a = \"bar\\80baz\\80\\0foo\"": {
       "type": "Chunk",
       "body": [
         {
@@ -148,8 +148,8 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "bar\\80baz\\800\\0foo",
-              "raw": "\"bar\\80baz\\800\\0foo\"",
+              "value": "barPbazP\u0000foo",
+              "raw": "\"bar\\80baz\\80\\0foo\"",
               "loc": {
                 "start": {
                   "line": 1,
@@ -157,12 +157,12 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 24
+                  "column": 23
                 }
               },
               "range": [
                 4,
-                24
+                23
               ]
             }
           ],
@@ -173,12 +173,12 @@
             },
             "end": {
               "line": 1,
-              "column": 24
+              "column": 23
             }
           },
           "range": [
             0,
-            24
+            23
           ]
         }
       ],
@@ -189,12 +189,12 @@
         },
         "end": {
           "line": 1,
-          "column": 24
+          "column": 23
         }
       },
       "range": [
         0,
-        24
+        23
       ],
       "comments": [],
       "globals": [
@@ -248,7 +248,7 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "barbaz",
+              "value": "barz    baz",
               "raw": "\"bar\\z    baz\"",
               "loc": {
                 "start": {
@@ -748,7 +748,7 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "\\123",
+              "value": "{",
               "raw": "'\\123'",
               "loc": {
                 "start": {
@@ -819,6 +819,109 @@
         }
       ]
     },
+    "a = '\\255'": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 1
+                }
+              },
+              "range": [
+                0,
+                1
+              ],
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "ÿ",
+              "raw": "'\\255'",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                4,
+                10
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 10
+            }
+          },
+          "range": [
+            0,
+            10
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 10
+        }
+      },
+      "range": [
+        0,
+        10
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          },
+          "range": [
+            0,
+            1
+          ],
+          "isLocal": false
+        }
+      ]
+    },
+    "a = '\\256'": "[1:10] decimal escape too large near '\\256'",
+    "a = '\\265'": "[1:10] decimal escape too large near '\\265'",
+    "a = '\\355'": "[1:10] decimal escape too large near '\\355'",
     "a = '\\x23'": {
       "type": "Chunk",
       "body": [
@@ -848,7 +951,7 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "\\x23",
+              "value": "x23",
               "raw": "'\\x23'",
               "loc": {
                 "start": {
@@ -948,7 +1051,7 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "\\xx",
+              "value": "xx",
               "raw": "'\\xx'",
               "loc": {
                 "start": {

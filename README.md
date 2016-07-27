@@ -1,6 +1,6 @@
 # luaparse [![Build Status](https://travis-ci.org/oxyc/luaparse.svg)](https://travis-ci.org/oxyc/luaparse)
 
-A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
+A Lua 5.1 parser written in JavaScript, for my bachelor's thesis at Arcada.
 
 ## Installation
 
