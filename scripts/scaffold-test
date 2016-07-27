@@ -6,6 +6,7 @@
 var fs = require('fs')
   , luaparse = require('../')
   , options = { scope: true, locations: true, ranges: true }
+  , defaultOptions = options
   , indent = '  '
   , verbose = true
   , testName
@@ -66,7 +67,7 @@ function scaffoldTest() {
   snippets.forEach(function(snippet) {
     // Lines containing ^//{...}$ are luaparse options, use them.
     if (result = /^\/\/\s*(\{[\s\S]+\})\s*$/.exec(snippet)) {
-      options = JSON.parse(result[1]);
+      options = Object.assign(Object.assign({}, defaultOptions), JSON.parse(result[1]));
       return;
     }
     // Skip lines beginning with `//` and that are not option objects.
@@ -75,6 +76,7 @@ function scaffoldTest() {
     // Interpret "@@" escapes.
     snippet = snippet.replace(/@(.)@/g, function (m, s) {
         return ({
+            'a': String.fromCharCode(7),
             'n': '\n',
             'r': '\r',
             't': '\t',
@@ -82,7 +84,7 @@ function scaffoldTest() {
             'v': '\v',
             'b': '\b'
         })[s] || s;
-    })
+    });
 
     // Generate the assertion.
     var result = scaffoldTestAssertion(snippet);
@@ -92,6 +94,11 @@ function scaffoldTest() {
     // expected result, an object is an assertion, while a string is a thrown
     // error.
     snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
+
+    if (options !== defaultOptions) result = {
+      result: result,
+      options: options
+    };
     output[snippet] = result;
   });
 

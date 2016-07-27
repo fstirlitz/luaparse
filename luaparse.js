@@ -99,6 +99,9 @@
     , unfinishedString: 'unfinished string near \'%1\''
     , malformedNumber: 'malformed number near \'%1\''
     , invalidVar: 'invalid left-hand side of assignment near \'%1\''
+    , decimalEscapeTooLarge: 'decimal escape too large near \'%1\''
+    , invalidEscape: 'invalid escape sequence near \'%1\''
+    , hexadecimalDigitExpected: 'hexadecimal digit expected near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -882,20 +885,25 @@
     return parseFloat(input.slice(tokenStart, index));
   }
 
-
   // Translate escape sequences to the actual characters.
-
   function readEscapeSequence() {
     var sequenceStart = index;
     switch (input.charAt(index)) {
       // Lua allow the following escape sequences.
       // We don't escape the bell sequence.
+      case 'a': index++; return String.fromCharCode(7);
       case 'n': index++; return '\n';
       case 'r': index++; return '\r';
       case 't': index++; return '\t';
       case 'v': index++; return '\x0B';
       case 'b': index++; return '\b';
       case 'f': index++; return '\f';
+      case '\\':
+      case '\'':
+      case '"':
+      case '[':
+      case ']':
+        return input.charAt(index++);
       // Skips the following span of white-space.
       case 'z': index++; skipWhiteSpace(); return '';
       // Byte representation should for now be returned as is.
@@ -904,18 +912,22 @@
         if (isHexDigit(input.charCodeAt(index + 1)) &&
             isHexDigit(input.charCodeAt(index + 2))) {
           index += 3;
-          // Return it as is, without translating the byte.
-          return '\\' + input.slice(sequenceStart, index);
+          return String.fromCharCode(parseInt(input.slice(sequenceStart, index), 16));
         }
-        return '\\' + input.charAt(index++);
+        return raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
       default:
         // \ddd, where ddd is a sequence of up to three decimal digits.
-        if (isDecDigit(input.charCodeAt(index))) {
-          while (isDecDigit(input.charCodeAt(++index)));
-          return '\\' + input.slice(sequenceStart, index);
+        while (isDecDigit(input.charCodeAt(index)) && index - sequenceStart < 3) index++;
+
+        if (index !== sequenceStart) {
+          var ddd = Number(input.slice(sequenceStart, index));
+          if (ddd > 255) {
+            raise({}, errors.decimalEscapeTooLarge, '\\' + ddd);
+          }
+          return String.fromCharCode(ddd);
         }
-        // Simply return the \ as is, it's not escaping any sequence.
-        return input.charAt(index++);
+
+        raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
     }
   }
 
