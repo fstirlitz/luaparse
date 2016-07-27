@@ -100,6 +100,8 @@
     , malformedNumber: 'malformed number near \'%1\''
     , invalidVar: 'invalid left-hand side of assignment near \'%1\''
     , decimalEscapeTooLarge: 'decimal escape too large near \'%1\''
+    , invalidEscape: 'invalid escape sequence near \'%1\''
+    , hexadecimalDigitExpected: 'hexadecimal digit expected near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -896,6 +898,23 @@
       case 'v': index++; return '\x0B';
       case 'b': index++; return '\b';
       case 'f': index++; return '\f';
+      case '\\':
+      case '\'':
+      case '"':
+      case '[':
+      case ']':
+        return input.charAt(index++);
+      // Skips the following span of white-space.
+      case 'z': index++; skipWhiteSpace(); return '';
+      // Byte representation should for now be returned as is.
+      case 'x':
+        // \xXX, where XX is a sequence of exactly two hexadecimal digits
+        if (isHexDigit(input.charCodeAt(index + 1)) &&
+            isHexDigit(input.charCodeAt(index + 2))) {
+          index += 3;
+          return String.fromCharCode(parseInt(input.slice(sequenceStart, index), 16));
+        }
+        return raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
       default:
         // \ddd, where ddd is a sequence of up to three decimal digits.
         while (isDecDigit(input.charCodeAt(index)) && index - sequenceStart < 3) index++;
@@ -908,8 +927,7 @@
           return String.fromCharCode(ddd);
         }
 
-        // Simply return the \ as is, it's not escaping any sequence.
-        return input.charAt(index++);
+        raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
     }
   }
 

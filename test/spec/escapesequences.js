@@ -248,7 +248,7 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "barz    baz",
+              "value": "barbaz",
               "raw": "\"bar\\z    baz\"",
               "loc": {
                 "start": {
@@ -719,6 +719,306 @@
         }
       ]
     },
+    "a = '\\\"'": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 1
+                }
+              },
+              "range": [
+                0,
+                1
+              ],
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "\"",
+              "raw": "'\\\"'",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                4,
+                8
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 8
+            }
+          },
+          "range": [
+            0,
+            8
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 8
+        }
+      },
+      "range": [
+        0,
+        8
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          },
+          "range": [
+            0,
+            1
+          ],
+          "isLocal": false
+        }
+      ]
+    },
+    "a = '\\['": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 1
+                }
+              },
+              "range": [
+                0,
+                1
+              ],
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "[",
+              "raw": "'\\['",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                4,
+                8
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 8
+            }
+          },
+          "range": [
+            0,
+            8
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 8
+        }
+      },
+      "range": [
+        0,
+        8
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          },
+          "range": [
+            0,
+            1
+          ],
+          "isLocal": false
+        }
+      ]
+    },
+    "a = '\\]'": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 1
+                }
+              },
+              "range": [
+                0,
+                1
+              ],
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "]",
+              "raw": "'\\]'",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                4,
+                8
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 8
+            }
+          },
+          "range": [
+            0,
+            8
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 8
+        }
+      },
+      "range": [
+        0,
+        8
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          },
+          "range": [
+            0,
+            1
+          ],
+          "isLocal": false
+        }
+      ]
+    },
     "a = '\\123'": {
       "type": "Chunk",
       "body": [
@@ -951,7 +1251,7 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "x23",
+              "value": "\u0000",
               "raw": "'\\x23'",
               "loc": {
                 "start": {
@@ -1022,7 +1322,7 @@
         }
       ]
     },
-    "a = '\\xx'": {
+    "a = '\\xA2'": {
       "type": "Chunk",
       "body": [
         {
@@ -1051,8 +1351,8 @@
           "init": [
             {
               "type": "StringLiteral",
-              "value": "xx",
-              "raw": "'\\xx'",
+              "value": "\u0000",
+              "raw": "'\\xA2'",
               "loc": {
                 "start": {
                   "line": 1,
@@ -1060,12 +1360,12 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 9
+                  "column": 10
                 }
               },
               "range": [
                 4,
-                9
+                10
               ]
             }
           ],
@@ -1076,12 +1376,12 @@
             },
             "end": {
               "line": 1,
-              "column": 9
+              "column": 10
             }
           },
           "range": [
             0,
-            9
+            10
           ]
         }
       ],
@@ -1092,12 +1392,12 @@
         },
         "end": {
           "line": 1,
-          "column": 9
+          "column": 10
         }
       },
       "range": [
         0,
-        9
+        10
       ],
       "comments": [],
       "globals": [
@@ -1122,6 +1422,10 @@
         }
       ]
     },
+    "a = '\\x'": "[1:7] hexadecimal digit expected near '\\x''",
+    "a = '\\xx'": "[1:7] hexadecimal digit expected near '\\xx'",
+    "a = '\\x0'": "[1:7] hexadecimal digit expected near '\\x0'",
+    "a = '\\x0x'": "[1:7] hexadecimal digit expected near '\\x0'",
     "a = [[bar\\f\\v\\bbaz]]": {
       "type": "Chunk",
       "body": [
@@ -1321,6 +1625,8 @@
           "isLocal": false
         }
       ]
-    }
+    },
+    "a = '\\.'": "[1:7] invalid escape sequence near '\\.'",
+    "a = '\\l'": "[1:7] invalid escape sequence near '\\l'"
   };
 }));
