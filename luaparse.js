@@ -74,6 +74,8 @@
     , onCreateScope: null
     // A callback which will be invoked when the current scope is destroyed.
     , onDestroyScope: null
+    // The version of Lua targeted by the parser (string; allowed values are '5.1', '5.2', '5.3'.)
+    , luaVersion: '5.1'
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -596,16 +598,20 @@
         return scanPunctuator('>');
 
       case 60: // <
-        if (60 === next) return scanPunctuator('<<');
+        if (options.luaVersion === '5.3')
+          if (60 === next) return scanPunctuator('<<');
         if (61 === next) return scanPunctuator('<=');
         return scanPunctuator('<');
 
       case 126: // ~
         if (61 === next) return scanPunctuator('~=');
+        if ((options.luaVersion === '5.1') || (options.luaVersion == '5.2'))
+          break;
         return scanPunctuator('~');
 
       case 58: // :
-        if (58 === next) return scanPunctuator('::');
+        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+          if (58 === next) return scanPunctuator('::');
         return scanPunctuator(':');
 
       case 91: // [
@@ -615,12 +621,19 @@
 
       case 47: // /
         // Check for integer division op (//)
-        if (47 === next) return scanPunctuator('//');
+        if (options.luaVersion === '5.3')
+          if (47 === next) return scanPunctuator('//');
         return scanPunctuator('/');
 
-      // * ^ % , { } ] ( ) ; & # - + |
-      case 42: case 94: case 37: case 44: case 123: case 124: case 125:
-      case 93: case 40: case 41: case 59: case 38: case 35: case 45: case 43:
+      // & |
+      case 38: case 124:
+        if ((options.luaVersion === '5.1') || (options.luaVersion == '5.2'))
+          break;
+        /* fallthrough */
+
+      // * ^ % , { } ] ( ) ; # - +
+      case 42: case 94: case 37: case 44: case 123: case 125:
+      case 93: case 40: case 41: case 59: case 35: case 45: case 43:
         return scanPunctuator(input.charAt(index));
     }
 
@@ -1089,7 +1102,11 @@
       case 3:
         return 'and' === id || 'end' === id || 'for' === id || 'not' === id;
       case 4:
-        return 'else' === id || 'goto' === id || 'then' === id;
+        if ('else' === id || 'then' === id)
+          return true;
+        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+          return ('goto' === id);
+        return false;
       case 5:
         return 'break' === id || 'local' === id || 'until' === id || 'while' === id;
       case 6:
@@ -2060,6 +2077,10 @@
     scopeDepth = 0;
     globals = [];
     locations = [];
+
+    if (!((options.luaVersion === '5.1') || (options.luaVersion === '5.2') || (options.luaVersion === '5.3'))) {
+      throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
+    }
 
     if (options.comments) comments = [];
     if (!options.wait) return end();
