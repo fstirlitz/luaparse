@@ -579,9 +579,8 @@
       case 39: case 34: // '"
         return scanStringLiteral();
 
-      // 0-9
       case 48: case 49: case 50: case 51: case 52: case 53:
-      case 54: case 55: case 56: case 57:
+      case 54: case 55: case 56: case 57: // 0-9
         return scanNumericLiteral();
 
       case 46: // .
@@ -610,7 +609,7 @@
 
       case 126: // ~
         if (61 === next) return scanPunctuator('~=');
-        if ((options.luaVersion === '5.1') || (options.luaVersion == '5.2'))
+        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
           break;
         return scanPunctuator('~');
 
@@ -630,15 +629,14 @@
           if (47 === next) return scanPunctuator('//');
         return scanPunctuator('/');
 
-      // & |
-      case 38: case 124:
-        if ((options.luaVersion === '5.1') || (options.luaVersion == '5.2'))
+      case 38: case 124: // & |
+        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
           break;
-        /* fallthrough */
 
-      // * ^ % , { } ] ( ) ; # - +
+        /* fall through */
       case 42: case 94: case 37: case 44: case 123: case 125:
-      case 93: case 40: case 41: case 59: case 35: case 45: case 43:
+      case 93: case 40: case 41: case 59: case 35: case 45:
+      case 43: // * ^ % , { } ] ( ) ; # - +
         return scanPunctuator(input.charAt(index));
     }
 
