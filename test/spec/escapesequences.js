@@ -1273,7 +1273,7 @@
         "luaVersion": "5.2"
       }
     },
-    "a = \"\\u{1f4a9}\"": {
+    "a = '\\u{1f4a9}'": {
       "result": {
         "type": "Chunk",
         "body": [
@@ -1303,8 +1303,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ð©",
-                "raw": "\"\\u{1f4a9}\"",
+                "value": "ð\u009f\u0092©",
+                "raw": "'\\u{1f4a9}'",
                 "loc": {
                   "start": {
                     "line": 1,
@@ -1381,7 +1381,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{7f}\\u{80}\"": {
+    "a = '\\u{7f}\\u{80}'": {
       "result": {
         "type": "Chunk",
         "body": [
@@ -1411,8 +1411,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "Â",
-                "raw": "\"\\u{7f}\\u{80}\"",
+                "value": "\u007fÂ\u0080",
+                "raw": "'\\u{7f}\\u{80}'",
                 "loc": {
                   "start": {
                     "line": 1,
@@ -1489,7 +1489,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{7ff}\\u{800}\"": {
+    "a = '\\u{7ff}\\u{800}'": {
       "result": {
         "type": "Chunk",
         "body": [
@@ -1519,8 +1519,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ß¿à ",
-                "raw": "\"\\u{7ff}\\u{800}\"",
+                "value": "ß¿à \u0080",
+                "raw": "'\\u{7ff}\\u{800}'",
                 "loc": {
                   "start": {
                     "line": 1,
@@ -1597,7 +1597,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{ffff}\\u{1f4a9}\"": {
+    "a = '\\u{ffff}\\u{1f4a9}'": {
       "result": {
         "type": "Chunk",
         "body": [
@@ -1627,8 +1627,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ï¿¿ð©",
-                "raw": "\"\\u{ffff}\\u{1f4a9}\"",
+                "value": "ï¿¿ð\u009f\u0092©",
+                "raw": "'\\u{ffff}\\u{1f4a9}'",
                 "loc": {
                   "start": {
                     "line": 1,
@@ -1705,7 +1705,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{10ffff}\"": {
+    "a = '\\u{10ffff}'": {
       "result": {
         "type": "Chunk",
         "body": [
@@ -1735,8 +1735,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ô¿¿",
-                "raw": "\"\\u{10ffff}\"",
+                "value": "ô\u008f¿¿",
+                "raw": "'\\u{10ffff}'",
                 "loc": {
                   "start": {
                     "line": 1,
@@ -1813,7 +1813,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{110000}\"": {
+    "a = '\\u{110000}'": {
       "result": "[1:16] UTF-8 value too large near '\\u{110000}'",
       "options": {
         "scope": true,
@@ -1822,7 +1822,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{120000}\"": {
+    "a = '\\u{120000}'": {
       "result": "[1:16] UTF-8 value too large near '\\u{120000}'",
       "options": {
         "scope": true,
@@ -1831,7 +1831,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{000000001f4a9}\"": {
+    "a = '\\u{000000001f4a9}'": {
       "result": {
         "type": "Chunk",
         "body": [
@@ -1861,8 +1861,8 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ð©",
-                "raw": "\"\\u{000000001f4a9}\"",
+                "value": "ð\u009f\u0092©",
+                "raw": "'\\u{000000001f4a9}'",
                 "loc": {
                   "start": {
                     "line": 1,
@@ -1939,17 +1939,8 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{100000001f4a9}\"": {
+    "a = '\\u{100000001f4a9}'": {
       "result": "[1:16] UTF-8 value too large near '\\u{1000000'",
-      "options": {
-        "scope": true,
-        "locations": true,
-        "ranges": true,
-        "luaVersion": "5.3"
-      }
-    },
-    "a = \"\\u{1f4a9\"": {
-      "result": "[1:14] missing '}' near '\\u{1f4a9\"'",
       "options": {
         "scope": true,
         "locations": true,
@@ -1966,7 +1957,16 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\uaa\"": {
+    "a = \"\\u{1f4a9\"": {
+      "result": "[1:14] missing '}' near '\\u{1f4a9\"'",
+      "options": {
+        "scope": true,
+        "locations": true,
+        "ranges": true,
+        "luaVersion": "5.3"
+      }
+    },
+    "a = '\\uaa'": {
       "result": "[1:9] missing '{' near '\\ua'",
       "options": {
         "scope": true,
@@ -1975,7 +1975,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{}\"": {
+    "a = '\\u{}'": {
       "result": "[1:9] hexadecimal digit expected near '\\u{'",
       "options": {
         "scope": true,
@@ -1984,7 +1984,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = \"\\u{0g}\"": {
+    "a = '\\u{0g}'": {
       "result": "[1:11] hexadecimal digit expected near '\\u{0g'",
       "options": {
         "scope": true,

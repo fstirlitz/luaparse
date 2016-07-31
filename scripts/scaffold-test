@@ -53,6 +53,11 @@ function scaffoldFile() {
   firstline = expected.splice(0, 1);
   expected = expected.join('\n');
 
+  /* silence lint warnings */
+  expected = expected.replace(/[\x7f-\x9f]/g, function (c) {
+    return '\\u00' + c.charCodeAt(0).toString(16);
+  });
+
   return intro.replace(/%NAME%/g, testName) +
     firstline + '\n' +
     expected.replace(/^([\s\S])/gm, indent + "$1") +
