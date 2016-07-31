@@ -104,6 +104,8 @@
     , decimalEscapeTooLarge: 'decimal escape too large near \'%1\''
     , invalidEscape: 'invalid escape sequence near \'%1\''
     , hexadecimalDigitExpected: 'hexadecimal digit expected near \'%1\''
+    , braceExpected: 'missing \'%1\' near \'%2\''
+    , tooLargeCodepoint: 'UTF-8 value too large near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -939,6 +941,64 @@
             return String.fromCharCode(parseInt(input.slice(sequenceStart + 1, index), 16));
           }
           raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
+        }
+
+        /* fall through */
+      case 'u':
+        if (options.luaVersion === '5.3') {
+          index++;
+          if (input.charAt(index++) !== '{')
+            raise({}, errors.braceExpected, '{', '\\' + input.slice(sequenceStart, index));
+          if (!isHexDigit(input.charCodeAt(index)))
+            raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
+          while (input.charCodeAt(index) === 0x30) index++;
+          var escStart = index;
+          while (isHexDigit(input.charCodeAt(index))) {
+            index++;
+            if (index - escStart > 6)
+              raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
+          }
+          var b = input.charAt(index++);
+          if (b !== '}')
+            if ((b === '"') || (b === "'"))
+              raise({}, errors.braceExpected, '}', '\\' + input.slice(sequenceStart, index--));
+            else
+              raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
+
+          var codepoint = parseInt(input.slice(escStart, index - 1), 16);
+
+          /* Now we have a codepoint number in a variable; encode it in UTF-8,
+           * interpreting each code unit as a code point number (i.e. encode it in WTF-8)
+           * This is wasteful, but at least it preserves the property that literals
+           * that denote the same byte sequence are interpreted identically, i.e.
+           * "\u{1f4a9}" == "\xf0\x9f\x92\xa9" == "\240\159\146\169"
+           *
+           * I am not pleased with this hack, but no solution seems good here; JavaScript
+           * has no "bytes" type like Python.
+           */
+          if (codepoint < 0x80) {
+            return String.fromCharCode(codepoint);
+          } else if (codepoint < 0x800) {
+            return String.fromCharCode(
+              0xc0 |  (codepoint >>  6)        ,
+              0x80 | ( codepoint        & 0x3f)
+            );
+          } else if (codepoint < 0x10000) {
+            return String.fromCharCode(
+              0xe0 |  (codepoint >> 12)        ,
+              0x80 | ((codepoint >>  6) & 0x3f),
+              0x80 | ( codepoint        & 0x3f)
+            );
+          } else if (codepoint < 0x110000) {
+            return String.fromCharCode(
+              0xf0 |  (codepoint >> 18)        ,
+              0x80 | ((codepoint >> 12) & 0x3f),
+              0x80 | ((codepoint >>  6) & 0x3f),
+              0x80 | ( codepoint        & 0x3f)
+            );
+          } else {
+            return raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
+          }
         }
 
         /* fall through */
