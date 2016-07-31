@@ -1060,7 +1060,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\u0000",
+                "value": "#",
                 "raw": "'\\x23'",
                 "loc": {
                   "start": {

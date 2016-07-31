@@ -936,9 +936,9 @@
           if (isHexDigit(input.charCodeAt(index + 1)) &&
               isHexDigit(input.charCodeAt(index + 2))) {
             index += 3;
-            return String.fromCharCode(parseInt(input.slice(sequenceStart, index), 16));
+            return String.fromCharCode(parseInt(input.slice(sequenceStart + 1, index), 16));
           }
-          return raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
+          raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
         }
 
         /* fall through */
