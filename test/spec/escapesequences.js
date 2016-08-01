@@ -1030,6 +1030,106 @@
         }
       ]
     },
+    "a = '\\z \\x'": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 1
+                }
+              },
+              "range": [
+                0,
+                1
+              ],
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "z x",
+              "raw": "'\\z \\x'",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 1,
+                  "column": 11
+                }
+              },
+              "range": [
+                4,
+                11
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 11
+            }
+          },
+          "range": [
+            0,
+            11
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 11
+        }
+      },
+      "range": [
+        0,
+        11
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          },
+          "range": [
+            0,
+            1
+          ],
+          "isLocal": false
+        }
+      ]
+    },
     "a = '\\x23'": {
       "result": {
         "type": "Chunk",

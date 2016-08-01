@@ -32,7 +32,11 @@ a = 1 and                               -- FAIL
 a = or 1                                -- FAIL
 a = {} and {} or {}
 a = (1) and ("foo") or (nil)
+// { "luaVersion": "5.2" }
+a = 1 // 0                              -- FAIL
+a = p ~ q                               -- FAIL
+a = p & q                               -- FAIL
 // { "luaVersion": "5.3" }
 a = 1 // 0
 a = p ~ q >> r | s
-a = ~ p ~ q
+a = ~ p ~ q / r

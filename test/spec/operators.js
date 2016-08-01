@@ -3598,6 +3598,24 @@
         "luaVersion": "5.3"
       }
     },
+    "a = p ~ q": {
+      "result": "[1:7] unexpected symbol '~' near 'p'",
+      "options": {
+        "scope": true,
+        "locations": true,
+        "ranges": true,
+        "luaVersion": "5.2"
+      }
+    },
+    "a = p & q": {
+      "result": "[1:7] unexpected symbol '&' near 'p'",
+      "options": {
+        "scope": true,
+        "locations": true,
+        "ranges": true,
+        "luaVersion": "5.2"
+      }
+    },
     "a = p ~ q >> r | s": {
       "result": {
         "type": "Chunk",
@@ -3893,7 +3911,7 @@
         "luaVersion": "5.3"
       }
     },
-    "a = ~ p ~ q": {
+    "a = ~ p ~ q / r": {
       "result": {
         "type": "Chunk",
         "body": [
@@ -3962,8 +3980,46 @@
                   ]
                 },
                 "right": {
-                  "type": "Identifier",
-                  "name": "q",
+                  "type": "BinaryExpression",
+                  "operator": "/",
+                  "left": {
+                    "type": "Identifier",
+                    "name": "q",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 11
+                      }
+                    },
+                    "range": [
+                      10,
+                      11
+                    ],
+                    "isLocal": false
+                  },
+                  "right": {
+                    "type": "Identifier",
+                    "name": "r",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 14
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15
+                      }
+                    },
+                    "range": [
+                      14,
+                      15
+                    ],
+                    "isLocal": false
+                  },
                   "loc": {
                     "start": {
                       "line": 1,
@@ -3971,14 +4027,13 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 11
+                      "column": 15
                     }
                   },
                   "range": [
                     10,
-                    11
-                  ],
-                  "isLocal": false
+                    15
+                  ]
                 },
                 "loc": {
                   "start": {
@@ -3987,12 +4042,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 11
+                    "column": 15
                   }
                 },
                 "range": [
                   4,
-                  11
+                  15
                 ]
               }
             ],
@@ -4003,12 +4058,12 @@
               },
               "end": {
                 "line": 1,
-                "column": 11
+                "column": 15
               }
             },
             "range": [
               0,
-              11
+              15
             ]
           }
         ],
@@ -4019,12 +4074,12 @@
           },
           "end": {
             "line": 1,
-            "column": 11
+            "column": 15
           }
         },
         "range": [
           0,
-          11
+          15
         ],
         "comments": [],
         "globals": [
@@ -4082,6 +4137,25 @@
             "range": [
               10,
               11
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "r",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 14
+              },
+              "end": {
+                "line": 1,
+                "column": 15
+              }
+            },
+            "range": [
+              14,
+              15
             ],
             "isLocal": false
           }

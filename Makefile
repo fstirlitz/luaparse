@@ -116,10 +116,10 @@ benchmark-previous:
 complexity-analysis:
 	@echo "===================== Complexity analysis ============================"
 	@./scripts/complexity 10
-	@$(BIN)/cr -lws --maxcc 17 luaparse.js
+	@$(BIN)/cr -lws --maxcc 22 luaparse.js
 
 coverage-analysis: coverage
-	@$(BIN)/istanbul check-coverage --statements -6 --branches -16 --functions -0 \
+	@$(BIN)/istanbul check-coverage --statements -8 --branches -18 --functions -0 \
 		docs/coverage/coverage.json
 
 qa:

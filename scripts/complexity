@@ -18,6 +18,6 @@ cr.run(script, options).functions
   .map(function(fn) { return { name: fn.name, value: fn.complexity.cyclomatic }; })
   .sort(function(a, b) { return b.value - a.value; })
   .forEach(function(fn) {
-    if (fn.value >= threshold) console.log(fn.name + ': ' + fn.value);
+    if (fn.value >= threshold) console.log(fn.name + '(): ' + fn.value);
   });
 
