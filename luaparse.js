@@ -74,6 +74,8 @@
     , onCreateScope: null
     // A callback which will be invoked when the current scope is destroyed.
     , onDestroyScope: null
+    // The version of Lua targeted by the parser (string; allowed values are '5.1', '5.2', '5.3'.)
+    , luaVersion: '5.1'
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -99,6 +101,11 @@
     , unfinishedString: 'unfinished string near \'%1\''
     , malformedNumber: 'malformed number near \'%1\''
     , invalidVar: 'invalid left-hand side of assignment near \'%1\''
+    , decimalEscapeTooLarge: 'decimal escape too large near \'%1\''
+    , invalidEscape: 'invalid escape sequence near \'%1\''
+    , hexadecimalDigitExpected: 'hexadecimal digit expected near \'%1\''
+    , braceExpected: 'missing \'%1\' near \'%2\''
+    , tooLargeCodepoint: 'UTF-8 value too large near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -572,9 +579,8 @@
       case 39: case 34: // '"
         return scanStringLiteral();
 
-      // 0-9
       case 48: case 49: case 50: case 51: case 52: case 53:
-      case 54: case 55: case 56: case 57:
+      case 54: case 55: case 56: case 57: // 0-9
         return scanNumericLiteral();
 
       case 46: // .
@@ -596,16 +602,20 @@
         return scanPunctuator('>');
 
       case 60: // <
-        if (60 === next) return scanPunctuator('<<');
+        if (options.luaVersion === '5.3')
+          if (60 === next) return scanPunctuator('<<');
         if (61 === next) return scanPunctuator('<=');
         return scanPunctuator('<');
 
       case 126: // ~
         if (61 === next) return scanPunctuator('~=');
+        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
+          break;
         return scanPunctuator('~');
 
       case 58: // :
-        if (58 === next) return scanPunctuator('::');
+        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+          if (58 === next) return scanPunctuator('::');
         return scanPunctuator(':');
 
       case 91: // [
@@ -615,12 +625,18 @@
 
       case 47: // /
         // Check for integer division op (//)
-        if (47 === next) return scanPunctuator('//');
+        if (options.luaVersion === '5.3')
+          if (47 === next) return scanPunctuator('//');
         return scanPunctuator('/');
 
-      // * ^ % , { } ] ( ) ; & # - + |
-      case 42: case 94: case 37: case 44: case 123: case 124: case 125:
-      case 93: case 40: case 41: case 59: case 38: case 35: case 45: case 43:
+      case 38: case 124: // & |
+        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
+          break;
+
+        /* fall through */
+      case 42: case 94: case 37: case 44: case 123: case 125:
+      case 93: case 40: case 41: case 59: case 35: case 45:
+      case 43: // * ^ % , { } ] ( ) ; # - +
         return scanPunctuator(input.charAt(index));
     }
 
@@ -882,39 +898,123 @@
     return parseFloat(input.slice(tokenStart, index));
   }
 
+  function readUnicodeEscapeSequence() {
+    var sequenceStart = index++;
+
+    if (input.charAt(index++) !== '{')
+      raise({}, errors.braceExpected, '{', '\\' + input.slice(sequenceStart, index));
+    if (!isHexDigit(input.charCodeAt(index)))
+      raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
+
+    while (input.charCodeAt(index) === 0x30) index++;
+    var escStart = index;
+
+    while (isHexDigit(input.charCodeAt(index))) {
+      index++;
+      if (index - escStart > 6)
+        raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
+    }
+
+    var b = input.charAt(index++);
+    if (b !== '}') {
+      if ((b === '"') || (b === "'"))
+        raise({}, errors.braceExpected, '}', '\\' + input.slice(sequenceStart, index--));
+      else
+        raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
+    }
+
+    var codepoint = parseInt(input.slice(escStart, index - 1), 16);
+
+    /* Now we have a codepoint number in a variable; encode it in UTF-8,
+     * interpreting each code unit as a code point number (i.e. encode it in WTF-8)
+     * This is wasteful, but at least it preserves the property that literals
+     * that denote the same byte sequence are interpreted identically, i.e.
+     * "\u{1f4a9}" == "\xf0\x9f\x92\xa9" == "\240\159\146\169"
+     *
+     * I am not pleased with this hack, but no solution seems good here; JavaScript
+     * has no "bytes" type like Python.
+     */
+    if (codepoint < 0x80) {
+      return String.fromCharCode(codepoint);
+    } else if (codepoint < 0x800) {
+      return String.fromCharCode(
+        0xc0 |  (codepoint >>  6)        ,
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else if (codepoint < 0x10000) {
+      return String.fromCharCode(
+        0xe0 |  (codepoint >> 12)        ,
+        0x80 | ((codepoint >>  6) & 0x3f),
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else if (codepoint < 0x110000) {
+      return String.fromCharCode(
+        0xf0 |  (codepoint >> 18)        ,
+        0x80 | ((codepoint >> 12) & 0x3f),
+        0x80 | ((codepoint >>  6) & 0x3f),
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else {
+      raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
+    }
+  }
 
   // Translate escape sequences to the actual characters.
-
   function readEscapeSequence() {
     var sequenceStart = index;
     switch (input.charAt(index)) {
       // Lua allow the following escape sequences.
-      // We don't escape the bell sequence.
+      case 'a': index++; return '\x07';
       case 'n': index++; return '\n';
       case 'r': index++; return '\r';
       case 't': index++; return '\t';
-      case 'v': index++; return '\x0B';
+      case 'v': index++; return '\x0b';
       case 'b': index++; return '\b';
       case 'f': index++; return '\f';
-      // Skips the following span of white-space.
-      case 'z': index++; skipWhiteSpace(); return '';
-      // Byte representation should for now be returned as is.
-      case 'x':
-        // \xXX, where XX is a sequence of exactly two hexadecimal digits
-        if (isHexDigit(input.charCodeAt(index + 1)) &&
-            isHexDigit(input.charCodeAt(index + 2))) {
-          index += 3;
-          // Return it as is, without translating the byte.
-          return '\\' + input.slice(sequenceStart, index);
-        }
-        return '\\' + input.charAt(index++);
-      default:
+
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
         // \ddd, where ddd is a sequence of up to three decimal digits.
-        if (isDecDigit(input.charCodeAt(index))) {
-          while (isDecDigit(input.charCodeAt(++index)));
-          return '\\' + input.slice(sequenceStart, index);
+        while (isDecDigit(input.charCodeAt(index)) && index - sequenceStart < 3) index++;
+
+        var ddd = parseInt(input.slice(sequenceStart, index), 10);
+        if (ddd > 255) {
+          raise({}, errors.decimalEscapeTooLarge, '\\' + ddd);
         }
-        // Simply return the \ as is, it's not escaping any sequence.
+        return String.fromCharCode(ddd);
+
+      case 'z':
+        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3')) {
+          index++;
+          skipWhiteSpace();
+          return '';
+        }
+
+        /* fall through */
+      case 'x':
+        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3')) {
+          // \xXX, where XX is a sequence of exactly two hexadecimal digits
+          if (isHexDigit(input.charCodeAt(index + 1)) &&
+              isHexDigit(input.charCodeAt(index + 2))) {
+            index += 3;
+            return String.fromCharCode(parseInt(input.slice(sequenceStart + 1, index), 16));
+          }
+          raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
+        }
+
+        /* fall through */
+      case 'u':
+        if (options.luaVersion === '5.3') {
+          return readUnicodeEscapeSequence();
+        }
+
+        /* fall through */
+      default:
+        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+          raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
+
+        /* fall through */
+      case '\\': case '"': case "'":
         return input.charAt(index++);
     }
   }
@@ -1089,7 +1189,11 @@
       case 3:
         return 'and' === id || 'end' === id || 'for' === id || 'not' === id;
       case 4:
-        return 'else' === id || 'goto' === id || 'then' === id;
+        if ('else' === id || 'then' === id)
+          return true;
+        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+          return ('goto' === id);
+        return false;
       case 5:
         return 'break' === id || 'local' === id || 'until' === id || 'while' === id;
       case 6:
@@ -2060,6 +2164,10 @@
     scopeDepth = 0;
     globals = [];
     locations = [];
+
+    if (!((options.luaVersion === '5.1') || (options.luaVersion === '5.2') || (options.luaVersion === '5.3'))) {
+      throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
+    }
 
     if (options.comments) comments = [];
     if (!options.wait) return end();

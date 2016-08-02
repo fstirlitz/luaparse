@@ -375,8 +375,7 @@ The node which has been created will be passed as the only parameter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , onDestroyScope: <span class="hljs-literal">null</span>
-  };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , onDestroyScope: <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -386,6 +385,22 @@ The node which has been created will be passed as the only parameter.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>The version of Lua targeted by the parser (string; allowed values are ‘5.1’, ‘5.2’, ‘5.3’.)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    , luaVersion: <span class="hljs-string">'5.1'</span>
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>The available tokens expressed as enum flags so they can be checked with
 bitwise operations.</p>
@@ -406,11 +421,11 @@ bitwise operations.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>As this parser is a bit different from luas own, the error messages
 will be different in some situations.</p>
@@ -425,16 +440,21 @@ will be different in some situations.</p>
     , unfinishedString: <span class="hljs-string">'unfinished string near \'%1\''</span>
     , malformedNumber: <span class="hljs-string">'malformed number near \'%1\''</span>
     , invalidVar: <span class="hljs-string">'invalid left-hand side of assignment near \'%1\''</span>
+    , decimalEscapeTooLarge: <span class="hljs-string">'decimal escape too large near \'%1\''</span>
+    , invalidEscape: <span class="hljs-string">'invalid escape sequence near \'%1\''</span>
+    , hexadecimalDigitExpected: <span class="hljs-string">'hexadecimal digit expected near \'%1\''</span>
+    , braceExpected: <span class="hljs-string">'missing \'%1\' near \'%2\''</span>
+    , tooLargeCodepoint: <span class="hljs-string">'UTF-8 value too large near \'%1\''</span>
   };</pre></div></div>
             
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <h3 id="abstract-syntax-tree">Abstract Syntax Tree</h3>
 <p>The default AST structure is inspired by the Mozilla Parser API but can
@@ -702,11 +722,11 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Wrap up the node object.</p>
 
@@ -718,11 +738,11 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Pop a <code>Marker</code> off the location-array and attach its location data.</p>
 
@@ -741,11 +761,11 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="helpers">Helpers</h2>
 
@@ -754,11 +774,11 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               
             </div>
@@ -776,11 +796,11 @@ easily be customized by overriding these functions.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Iterate through an array of objects and return the index of an object
 with a matching property.</p>
@@ -798,11 +818,11 @@ with a matching property.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>A sprintf implementation using %index (beginning at 1) to input
 arguments in the format string.</p>
@@ -824,11 +844,11 @@ sprintf(<span class="hljs-string">'Unexpected %2 in %1.'</span>, <span class="hl
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Returns a new object with the properties from all objectes passed as
 arguments. Last argument takes precedence.</p>
@@ -855,11 +875,11 @@ arguments. Last argument takes precedence.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <h3 id="error-functions">Error functions</h3>
 
@@ -868,11 +888,11 @@ arguments. Last argument takes precedence.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <h4 id="raise-an-exception-">Raise an exception.</h4>
 <p>Raise an exception by passing a token, a string format and its paramters.</p>
@@ -909,11 +929,11 @@ raise(token, <span class="hljs-string">"expected %1 near %2"</span>, <span class
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <h4 id="raise-an-unexpected-token-error-">Raise an unexpected token error.</h4>
 <p>Example:</p>
@@ -930,11 +950,11 @@ raiseUnexpectedToken(<span class="hljs-string">'&lt;name&gt;'</span>, token);
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h4 id="raise-a-general-unexpected-error">Raise a general unexpected error</h4>
 <p>Usage should pass either a token object or a symbol string which was
@@ -970,11 +990,11 @@ unexpected(token);
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <h2 id="lexer">Lexer</h2>
 
@@ -983,11 +1003,11 @@ unexpected(token);
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>The lexer, or the tokenizer reads the input string character by character
 and derives a token left-right. To be as efficient as possible the lexer
@@ -1022,11 +1042,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Skip comments beginning with –</p>
 
@@ -1051,11 +1071,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Memorize the range index where the token begins.</p>
 
@@ -1066,23 +1086,10 @@ is always enabled to provide proper debug messages).</p>
 
     <span class="hljs-keyword">switch</span> (charCode) {
       <span class="hljs-keyword">case</span> <span class="hljs-number">39</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">34</span>: <span class="hljs-comment">// '"</span>
-        <span class="hljs-keyword">return</span> scanStringLiteral();</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-41">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
-              </div>
-              <p>0-9</p>
+        <span class="hljs-keyword">return</span> scanStringLiteral();
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-number">48</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">49</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">50</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">51</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">52</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">53</span>:
-      <span class="hljs-keyword">case</span> <span class="hljs-number">54</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">55</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">56</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">57</span>:
+      <span class="hljs-keyword">case</span> <span class="hljs-number">48</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">49</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">50</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">51</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">52</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">53</span>:
+      <span class="hljs-keyword">case</span> <span class="hljs-number">54</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">55</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">56</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">57</span>: <span class="hljs-comment">// 0-9</span>
         <span class="hljs-keyword">return</span> scanNumericLiteral();
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">46</span>: <span class="hljs-comment">// .</span></pre></div></div>
@@ -1117,16 +1124,20 @@ is always enabled to provide proper debug messages).</p>
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&gt;'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">60</span>: <span class="hljs-comment">// &lt;</span>
-        <span class="hljs-keyword">if</span> (<span class="hljs-number">60</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&lt;&lt;'</span>);
+        <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.3'</span>)
+          <span class="hljs-keyword">if</span> (<span class="hljs-number">60</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&lt;&lt;'</span>);
         <span class="hljs-keyword">if</span> (<span class="hljs-number">61</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&lt;='</span>);
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&lt;'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">126</span>: <span class="hljs-comment">// ~</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-number">61</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'~='</span>);
+        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.1'</span>) || (options.luaVersion === <span class="hljs-string">'5.2'</span>))
+          <span class="hljs-keyword">break</span>;
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'~'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">58</span>: <span class="hljs-comment">// :</span>
-        <span class="hljs-keyword">if</span> (<span class="hljs-number">58</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'::'</span>);
+        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))
+          <span class="hljs-keyword">if</span> (<span class="hljs-number">58</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'::'</span>);
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">':'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">91</span>: <span class="hljs-comment">// [</span></pre></div></div>
@@ -1162,26 +1173,18 @@ is always enabled to provide proper debug messages).</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-number">47</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'//'</span>);
-        <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'/'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-45">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
-              </div>
-              <ul>
-<li>^ % , { } ] ( ) ; &amp; # - + |</li>
-</ul>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.3'</span>)
+          <span class="hljs-keyword">if</span> (<span class="hljs-number">47</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'//'</span>);
+        <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'/'</span>);
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-number">42</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">94</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">37</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">44</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">123</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">124</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">125</span>:
-      <span class="hljs-keyword">case</span> <span class="hljs-number">93</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">40</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">41</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">59</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">38</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">35</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">45</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">43</span>:
+      <span class="hljs-keyword">case</span> <span class="hljs-number">38</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">124</span>: <span class="hljs-comment">// &amp; |</span>
+        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.1'</span>) || (options.luaVersion === <span class="hljs-string">'5.2'</span>))
+          <span class="hljs-keyword">break</span>;
+
+        <span class="hljs-comment">/* fall through */</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-number">42</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">94</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">37</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">44</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">123</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">125</span>:
+      <span class="hljs-keyword">case</span> <span class="hljs-number">93</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">40</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">41</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">59</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">35</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">45</span>:
+      <span class="hljs-keyword">case</span> <span class="hljs-number">43</span>: <span class="hljs-comment">// * ^ % , { } ] ( ) ; # - +</span>
         <span class="hljs-keyword">return</span> scanPunctuator(input.charAt(index));
     }
 
@@ -1191,11 +1194,11 @@ is always enabled to provide proper debug messages).</p>
         </li>
         
         
-        <li id="section-46">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Whitespace has no semantic meaning in lua so simply skip ahead while
 tracking the encounted newlines. Any kind of eol sequence is counted as a
@@ -1213,11 +1216,11 @@ single line.</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Count \n\r and \r\n as one newline.</p>
 
@@ -1247,11 +1250,11 @@ single line.</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Identifiers, keywords, booleans and nil all look the same syntax wise. We
 simply go through them one by one and defaulting to an identifier if no
@@ -1266,11 +1269,11 @@ previous case matched.</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Slicing the input string is prefered before string concatenation in a
 loop for performance reasons.</p>
@@ -1283,11 +1286,11 @@ loop for performance reasons.</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Decide on the token type and possibly cast the value.</p>
 
@@ -1317,11 +1320,11 @@ loop for performance reasons.</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>Once a punctuator reaches this function it should already have been
 validated so we simply return it as a token.</p>
@@ -1343,11 +1346,11 @@ validated so we simply return it as a token.</p>
         </li>
         
         
-        <li id="section-52">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>A vararg literal consists of three dots.</p>
 
@@ -1368,11 +1371,11 @@ validated so we simply return it as a token.</p>
         </li>
         
         
-        <li id="section-53">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>Find the string literal by matching the delimiter marks used.</p>
 
@@ -1396,11 +1399,11 @@ validated so we simply return it as a token.</p>
         </li>
         
         
-        <li id="section-54">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-54">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>EOF or <code>\n</code> terminates a string literal. If we haven’t found the
 ending delimiter by now, raise an exception.</p>
@@ -1426,11 +1429,11 @@ ending delimiter by now, raise an exception.</p>
         </li>
         
         
-        <li id="section-55">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-55">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Expect a multiline string literal and return it as a regular string
 literal, if it doesn’t validate into a valid multiline string, throw an
@@ -1445,11 +1448,11 @@ exception.</p>
         </li>
         
         
-        <li id="section-56">
+        <li id="section-55">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-56">&#182;</a>
+                <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
               <p>Fail if it’s not a multiline literal.</p>
 
@@ -1469,11 +1472,11 @@ exception.</p>
         </li>
         
         
-        <li id="section-57">
+        <li id="section-56">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
               <p>Numeric literals will be returned as floating-point numbers instead of
 strings. The raw value should be retrieved from slicing the input string
@@ -1502,11 +1505,11 @@ later on in the process.</p>
         </li>
         
         
-        <li id="section-58">
+        <li id="section-57">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-57">&#182;</a>
               </div>
               <p>Lua hexadecimals have an optional fraction part and an optional binary
 exoponent part. These are not included in JavaScript so we will compute
@@ -1531,11 +1534,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-59">
+        <li id="section-58">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
+                <a class="pilcrow" href="#section-58">&#182;</a>
               </div>
               <p>A minimum of one hex digit is required.</p>
 
@@ -1549,11 +1552,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-60">
+        <li id="section-59">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-60">&#182;</a>
+                <a class="pilcrow" href="#section-59">&#182;</a>
               </div>
               <p>Convert the hexadecimal digit to base 10.</p>
 
@@ -1564,11 +1567,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-61">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-61">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
               <p>Fraction part i optional.</p>
 
@@ -1583,11 +1586,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-62">
+        <li id="section-61">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
               <p>Empty fraction parts should default to 0, others should be converted
 0.x form so we can use summation at the end.</p>
@@ -1601,11 +1604,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-63">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <p>Binary exponents are optional</p>
 
@@ -1617,11 +1620,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-64">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <p>Sign part is optional and defaults to 1 (positive).</p>
 
@@ -1635,11 +1638,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-65">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-65">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>The binary exponent sign requires a decimal digit.</p>
 
@@ -1654,11 +1657,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-66">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <p>Calculate the binary exponent of the number.</p>
 
@@ -1673,11 +1676,11 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
         </li>
         
         
-        <li id="section-67">
+        <li id="section-66">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-66">&#182;</a>
               </div>
               <p>Decimal numbers are exactly the same in Lua and in JavaScript, because of
 this we check where the token ends and then parse it with native
@@ -1692,11 +1695,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-68">
+        <li id="section-67">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-67">&#182;</a>
               </div>
               <p>Fraction part is optional</p>
 
@@ -1708,11 +1711,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-69">
+        <li id="section-68">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
+                <a class="pilcrow" href="#section-68">&#182;</a>
               </div>
               <p>Fraction part defaults to 0</p>
 
@@ -1724,11 +1727,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-70">
+        <li id="section-69">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-70">&#182;</a>
+                <a class="pilcrow" href="#section-69">&#182;</a>
               </div>
               <p>Exponent part is optional.</p>
 
@@ -1740,11 +1743,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-71">
+        <li id="section-70">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-71">&#182;</a>
+                <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
               <p>Sign part is optional.</p>
 
@@ -1755,11 +1758,11 @@ functions.</p>
         </li>
         
         
-        <li id="section-72">
+        <li id="section-71">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-72">&#182;</a>
+                <a class="pilcrow" href="#section-71">&#182;</a>
               </div>
               <p>An exponent is required to contain at least one decimal digit.</p>
 
@@ -1772,7 +1775,85 @@ functions.</p>
     }
 
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(input.slice(tokenStart, index));
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readUnicodeEscapeSequence</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> sequenceStart = index++;
+
+    <span class="hljs-keyword">if</span> (input.charAt(index++) !== <span class="hljs-string">'{'</span>)
+      raise({}, errors.braceExpected, <span class="hljs-string">'{'</span>, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+    <span class="hljs-keyword">if</span> (!isHexDigit(input.charCodeAt(index)))
+      raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+
+    <span class="hljs-keyword">while</span> (input.charCodeAt(index) === <span class="hljs-number">0x30</span>) index++;
+    <span class="hljs-keyword">var</span> escStart = index;
+
+    <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) {
+      index++;
+      <span class="hljs-keyword">if</span> (index - escStart &gt; <span class="hljs-number">6</span>)
+        raise({}, errors.tooLargeCodepoint, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+    }
+
+    <span class="hljs-keyword">var</span> b = input.charAt(index++);
+    <span class="hljs-keyword">if</span> (b !== <span class="hljs-string">'}'</span>) {
+      <span class="hljs-keyword">if</span> ((b === <span class="hljs-string">'"'</span>) || (b === <span class="hljs-string">"'"</span>))
+        raise({}, errors.braceExpected, <span class="hljs-string">'}'</span>, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index--));
+      <span class="hljs-keyword">else</span>
+        raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+    }
+
+    <span class="hljs-keyword">var</span> codepoint = <span class="hljs-built_in">parseInt</span>(input.slice(escStart, index - <span class="hljs-number">1</span>), <span class="hljs-number">16</span>);
+
+    <span class="hljs-comment">/* Now we have a codepoint number in a variable; encode it in UTF-8,
+     * interpreting each code unit as a code point number (i.e. encode it in WTF-8)
+     * This is wasteful, but at least it preserves the property that literals
+     * that denote the same byte sequence are interpreted identically, i.e.
+     * "\u{1f4a9}" == "\xf0\x9f\x92\xa9" == "\240\159\146\169"
+     *
+     * I am not pleased with this hack, but no solution seems good here; JavaScript
+     * has no "bytes" type like Python.
+     */</span>
+    <span class="hljs-keyword">if</span> (codepoint &lt; <span class="hljs-number">0x80</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(codepoint);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (codepoint &lt; <span class="hljs-number">0x800</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(
+        <span class="hljs-number">0xc0</span> |  (codepoint &gt;&gt;  <span class="hljs-number">6</span>)        ,
+        <span class="hljs-number">0x80</span> | ( codepoint        &amp; <span class="hljs-number">0x3f</span>)
+      );
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (codepoint &lt; <span class="hljs-number">0x10000</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(
+        <span class="hljs-number">0xe0</span> |  (codepoint &gt;&gt; <span class="hljs-number">12</span>)        ,
+        <span class="hljs-number">0x80</span> | ((codepoint &gt;&gt;  <span class="hljs-number">6</span>) &amp; <span class="hljs-number">0x3f</span>),
+        <span class="hljs-number">0x80</span> | ( codepoint        &amp; <span class="hljs-number">0x3f</span>)
+      );
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (codepoint &lt; <span class="hljs-number">0x110000</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(
+        <span class="hljs-number">0xf0</span> |  (codepoint &gt;&gt; <span class="hljs-number">18</span>)        ,
+        <span class="hljs-number">0x80</span> | ((codepoint &gt;&gt; <span class="hljs-number">12</span>) &amp; <span class="hljs-number">0x3f</span>),
+        <span class="hljs-number">0x80</span> | ((codepoint &gt;&gt;  <span class="hljs-number">6</span>) &amp; <span class="hljs-number">0x3f</span>),
+        <span class="hljs-number">0x80</span> | ( codepoint        &amp; <span class="hljs-number">0x3f</span>)
+      );
+    } <span class="hljs-keyword">else</span> {
+      raise({}, errors.tooLargeCodepoint, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+    }
   }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              <p>Translate escape sequences to the actual characters.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readEscapeSequence</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> sequenceStart = index;
+    <span class="hljs-keyword">switch</span> (input.charAt(index)) {</pre></div></div>
             
         </li>
         
@@ -1783,14 +1864,20 @@ functions.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
-              <p>Translate escape sequences to the actual characters.</p>
+              <p>Lua allow the following escape sequences.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readEscapeSequence</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> sequenceStart = index;
-    <span class="hljs-keyword">switch</span> (input.charAt(index)) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-string">'a'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\x07'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'n'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\n'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'r'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\r'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'t'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\t'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'v'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\x0b'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'b'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\b'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'f'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\f'</span>;
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'0'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'1'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'2'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'3'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'4'</span>:
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'5'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'6'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'7'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'8'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'9'</span>:</pre></div></div>
             
         </li>
         
@@ -1801,17 +1888,28 @@ functions.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-74">&#182;</a>
               </div>
-              <p>Lua allow the following escape sequences.
-We don’t escape the bell sequence.</p>
+              <p>\ddd, where ddd is a sequence of up to three decimal digits.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-string">'n'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\n'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'r'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\r'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'t'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\t'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'v'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\x0B'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'b'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\b'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'f'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\f'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index)) &amp;&amp; index - sequenceStart &lt; <span class="hljs-number">3</span>) index++;
+
+        <span class="hljs-keyword">var</span> ddd = <span class="hljs-built_in">parseInt</span>(input.slice(sequenceStart, index), <span class="hljs-number">10</span>);
+        <span class="hljs-keyword">if</span> (ddd &gt; <span class="hljs-number">255</span>) {
+          raise({}, errors.decimalEscapeTooLarge, <span class="hljs-string">'\\'</span> + ddd);
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(ddd);
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'z'</span>:
+        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>)) {
+          index++;
+          skipWhiteSpace();
+          <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+        }
+
+        <span class="hljs-comment">/* fall through */</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'x'</span>:
+        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>)) {</pre></div></div>
             
         </li>
         
@@ -1822,11 +1920,34 @@ We don’t escape the bell sequence.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-75">&#182;</a>
               </div>
-              <p>Skips the following span of white-space.</p>
+              <p>\xXX, where XX is a sequence of exactly two hexadecimal digits</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-string">'z'</span>: index++; skipWhiteSpace(); <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (isHexDigit(input.charCodeAt(index + <span class="hljs-number">1</span>)) &amp;&amp;
+              isHexDigit(input.charCodeAt(index + <span class="hljs-number">2</span>))) {
+            index += <span class="hljs-number">3</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(<span class="hljs-built_in">parseInt</span>(input.slice(sequenceStart + <span class="hljs-number">1</span>, index), <span class="hljs-number">16</span>));
+          }
+          raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">2</span>));
+        }
+
+        <span class="hljs-comment">/* fall through */</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'u'</span>:
+        <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.3'</span>) {
+          <span class="hljs-keyword">return</span> readUnicodeEscapeSequence();
+        }
+
+        <span class="hljs-comment">/* fall through */</span>
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))
+          raise({}, errors.invalidEscape, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">1</span>));
+
+        <span class="hljs-comment">/* fall through */</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'\\'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'"'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">"'"</span>:
+        <span class="hljs-keyword">return</span> input.charAt(index++);
+    }
+  }</pre></div></div>
             
         </li>
         
@@ -1836,91 +1957,6 @@ We don’t escape the bell sequence.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-76">&#182;</a>
-              </div>
-              <p>Byte representation should for now be returned as is.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-string">'x'</span>:</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-77">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-77">&#182;</a>
-              </div>
-              <p>\xXX, where XX is a sequence of exactly two hexadecimal digits</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (isHexDigit(input.charCodeAt(index + <span class="hljs-number">1</span>)) &amp;&amp;
-            isHexDigit(input.charCodeAt(index + <span class="hljs-number">2</span>))) {
-          index += <span class="hljs-number">3</span>;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-78">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-78">&#182;</a>
-              </div>
-              <p>Return it as is, without translating the byte.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">return</span> <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index);
-        }
-        <span class="hljs-keyword">return</span> <span class="hljs-string">'\\'</span> + input.charAt(index++);
-      <span class="hljs-keyword">default</span>:</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-79">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-79">&#182;</a>
-              </div>
-              <p>\ddd, where ddd is a sequence of up to three decimal digits.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (isDecDigit(input.charCodeAt(index))) {
-          <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(++index)));
-          <span class="hljs-keyword">return</span> <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index);
-        }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-80">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-80">&#182;</a>
-              </div>
-              <p>Simply return the \ as is, it’s not escaping any sequence.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> input.charAt(index++);
-    }
-  }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-81">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-81">&#182;</a>
               </div>
               <p>Comments begin with – after which it will be decided if they are
 multiline comments or not.</p>
@@ -1947,11 +1983,11 @@ literals so we reuse the functionality.</p>
         </li>
         
         
-        <li id="section-82">
+        <li id="section-77">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-82">&#182;</a>
+                <a class="pilcrow" href="#section-77">&#182;</a>
               </div>
               <p>This wasn’t a multiline comment after all.</p>
 
@@ -1964,11 +2000,11 @@ literals so we reuse the functionality.</p>
         </li>
         
         
-        <li id="section-83">
+        <li id="section-78">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-83">&#182;</a>
+                <a class="pilcrow" href="#section-78">&#182;</a>
               </div>
               <p>Scan until next line as long as it’s not a multiline comment.</p>
 
@@ -1988,11 +2024,11 @@ literals so we reuse the functionality.</p>
         </li>
         
         
-        <li id="section-84">
+        <li id="section-79">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-84">&#182;</a>
+                <a class="pilcrow" href="#section-79">&#182;</a>
               </div>
               <p><code>Marker</code>s depend on tokens available in the parser and as comments are
 intercepted in the lexer all location data is set manually.</p>
@@ -2016,11 +2052,11 @@ intercepted in the lexer all location data is set manually.</p>
         </li>
         
         
-        <li id="section-85">
+        <li id="section-80">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-85">&#182;</a>
+                <a class="pilcrow" href="#section-80">&#182;</a>
               </div>
               <p>Read a multiline string by calculating the depth of <code>=</code> characters and
 then appending until an equal depth is found.</p>
@@ -2039,11 +2075,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-86">
+        <li id="section-81">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-86">&#182;</a>
+                <a class="pilcrow" href="#section-81">&#182;</a>
               </div>
               <p>Calculate the depth of the comment.</p>
 
@@ -2054,11 +2090,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-87">
+        <li id="section-82">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-87">&#182;</a>
+                <a class="pilcrow" href="#section-82">&#182;</a>
               </div>
               <p>Exit, this is not a long string afterall.</p>
 
@@ -2071,11 +2107,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-88">
+        <li id="section-83">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-88">&#182;</a>
+                <a class="pilcrow" href="#section-83">&#182;</a>
               </div>
               <p>If the first character is a newline, ignore it and begin on next line.</p>
 
@@ -2089,11 +2125,11 @@ then appending until an equal depth is found.</p>
         </li>
         
         
-        <li id="section-89">
+        <li id="section-84">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-89">&#182;</a>
+                <a class="pilcrow" href="#section-84">&#182;</a>
               </div>
               <p>To keep track of line numbers run the <code>consumeEOL()</code> which increments
 its counter.</p>
@@ -2107,11 +2143,11 @@ its counter.</p>
         </li>
         
         
-        <li id="section-90">
+        <li id="section-85">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-90">&#182;</a>
+                <a class="pilcrow" href="#section-85">&#182;</a>
               </div>
               <p>Once the delimiter is found, iterate through the depth count and see
 if it matches.</p>
@@ -2129,11 +2165,11 @@ if it matches.</p>
         </li>
         
         
-        <li id="section-91">
+        <li id="section-86">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-91">&#182;</a>
+                <a class="pilcrow" href="#section-86">&#182;</a>
               </div>
               <p>We reached the end of the multiline string. Get out now.</p>
 
@@ -2150,11 +2186,11 @@ if it matches.</p>
         </li>
         
         
-        <li id="section-92">
+        <li id="section-87">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-92">&#182;</a>
+                <a class="pilcrow" href="#section-87">&#182;</a>
               </div>
               <h2 id="lex-functions-and-helpers-">Lex functions and helpers.</h2>
 
@@ -2163,11 +2199,11 @@ if it matches.</p>
         </li>
         
         
-        <li id="section-93">
+        <li id="section-88">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-93">&#182;</a>
+                <a class="pilcrow" href="#section-88">&#182;</a>
               </div>
               <p>Read the next token.</p>
 <p>This is actually done by setting the current token to the lookahead and
@@ -2185,11 +2221,11 @@ reading in the new lookahead token.</p>
         </li>
         
         
-        <li id="section-94">
+        <li id="section-89">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-94">&#182;</a>
+                <a class="pilcrow" href="#section-89">&#182;</a>
               </div>
               <p>Consume a token if its value matches. Once consumed or not, return the
 success of the operation.</p>
@@ -2208,11 +2244,11 @@ success of the operation.</p>
         </li>
         
         
-        <li id="section-95">
+        <li id="section-90">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-95">&#182;</a>
+                <a class="pilcrow" href="#section-90">&#182;</a>
               </div>
               <p>Expect the next token value to match. If not, throw an exception.</p>
 
@@ -2227,11 +2263,11 @@ success of the operation.</p>
         </li>
         
         
-        <li id="section-96">
+        <li id="section-91">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-96">&#182;</a>
+                <a class="pilcrow" href="#section-91">&#182;</a>
               </div>
               <h3 id="validation-functions">Validation functions</h3>
 
@@ -2257,11 +2293,11 @@ success of the operation.</p>
         </li>
         
         
-        <li id="section-97">
+        <li id="section-92">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-97">&#182;</a>
+                <a class="pilcrow" href="#section-92">&#182;</a>
               </div>
               <p>From <a href="http://www.lua.org/manual/5.2/manual.html#8.1">Lua 5.2</a> onwards
 identifiers cannot use locale-dependet letters.</p>
@@ -2280,11 +2316,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-98">
+        <li id="section-93">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-98">&#182;</a>
+                <a class="pilcrow" href="#section-93">&#182;</a>
               </div>
               <p><a href="http://www.lua.org/manual/5.2/manual.html#3.1">3.1 Lexical Conventions</a></p>
 <p><code>true</code>, <code>false</code> and <code>nil</code> will not be considered keywords, but literals.</p>
@@ -2299,7 +2335,11 @@ identifiers cannot use locale-dependet letters.</p>
       <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:
         <span class="hljs-keyword">return</span> <span class="hljs-string">'and'</span> === id || <span class="hljs-string">'end'</span> === id || <span class="hljs-string">'for'</span> === id || <span class="hljs-string">'not'</span> === id;
       <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:
-        <span class="hljs-keyword">return</span> <span class="hljs-string">'else'</span> === id || <span class="hljs-string">'goto'</span> === id || <span class="hljs-string">'then'</span> === id;
+        <span class="hljs-keyword">if</span> (<span class="hljs-string">'else'</span> === id || <span class="hljs-string">'then'</span> === id)
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))
+          <span class="hljs-keyword">return</span> (<span class="hljs-string">'goto'</span> === id);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
       <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:
         <span class="hljs-keyword">return</span> <span class="hljs-string">'break'</span> === id || <span class="hljs-string">'local'</span> === id || <span class="hljs-string">'until'</span> === id || <span class="hljs-string">'while'</span> === id;
       <span class="hljs-keyword">case</span> <span class="hljs-number">6</span>:
@@ -2319,11 +2359,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-99">
+        <li id="section-94">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-99">&#182;</a>
+                <a class="pilcrow" href="#section-94">&#182;</a>
               </div>
               <p>@TODO this needs to be rethought.</p>
 
@@ -2342,11 +2382,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-100">
+        <li id="section-95">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-100">&#182;</a>
+                <a class="pilcrow" href="#section-95">&#182;</a>
               </div>
               <p>Check if the token syntactically closes a block.</p>
 
@@ -2368,11 +2408,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-101">
+        <li id="section-96">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-101">&#182;</a>
+                <a class="pilcrow" href="#section-96">&#182;</a>
               </div>
               <h2 id="scope">Scope</h2>
 
@@ -2381,11 +2421,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-102">
+        <li id="section-97">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-102">&#182;</a>
+                <a class="pilcrow" href="#section-97">&#182;</a>
               </div>
               
             </div>
@@ -2393,11 +2433,11 @@ identifiers cannot use locale-dependet letters.</p>
         </li>
         
         
-        <li id="section-103">
+        <li id="section-98">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-103">&#182;</a>
+                <a class="pilcrow" href="#section-98">&#182;</a>
               </div>
               <p>Store each block scope as a an array of identifier names. Each scope is
 stored in an FILO-array.</p>
@@ -2409,11 +2449,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-104">
+        <li id="section-99">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-104">&#182;</a>
+                <a class="pilcrow" href="#section-99">&#182;</a>
               </div>
               <p>The current scope index</p>
 
@@ -2424,11 +2464,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-105">
+        <li id="section-100">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-105">&#182;</a>
+                <a class="pilcrow" href="#section-100">&#182;</a>
               </div>
               <p>A list of all global identifier nodes.</p>
 
@@ -2439,11 +2479,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-106">
+        <li id="section-101">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-106">&#182;</a>
+                <a class="pilcrow" href="#section-101">&#182;</a>
               </div>
               <p>Create a new scope inheriting all declarations from the previous scope.</p>
 
@@ -2458,11 +2498,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-107">
+        <li id="section-102">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-107">&#182;</a>
+                <a class="pilcrow" href="#section-102">&#182;</a>
               </div>
               <p>Exit and remove the current scope.</p>
 
@@ -2477,11 +2517,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-108">
+        <li id="section-103">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-108">&#182;</a>
+                <a class="pilcrow" href="#section-103">&#182;</a>
               </div>
               <p>Add identifier name to the current scope if it doesnt already exist.</p>
 
@@ -2495,11 +2535,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-109">
+        <li id="section-104">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-109">&#182;</a>
+                <a class="pilcrow" href="#section-104">&#182;</a>
               </div>
               <p>Add identifier to the current scope</p>
 
@@ -2513,11 +2553,11 @@ stored in an FILO-array.</p>
         </li>
         
         
-        <li id="section-110">
+        <li id="section-105">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-110">&#182;</a>
+                <a class="pilcrow" href="#section-105">&#182;</a>
               </div>
               <p>Attach scope information to node. If the node is global, store it in the
 globals array so we can return the information to the user.</p>
@@ -2534,11 +2574,11 @@ globals array so we can return the information to the user.</p>
         </li>
         
         
-        <li id="section-111">
+        <li id="section-106">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-111">&#182;</a>
+                <a class="pilcrow" href="#section-106">&#182;</a>
               </div>
               <p>Is the identifier name available in this scope.</p>
 
@@ -2551,11 +2591,11 @@ globals array so we can return the information to the user.</p>
         </li>
         
         
-        <li id="section-112">
+        <li id="section-107">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-112">&#182;</a>
+                <a class="pilcrow" href="#section-107">&#182;</a>
               </div>
               <h2 id="location-tracking">Location tracking</h2>
 
@@ -2564,11 +2604,11 @@ globals array so we can return the information to the user.</p>
         </li>
         
         
-        <li id="section-113">
+        <li id="section-108">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-113">&#182;</a>
+                <a class="pilcrow" href="#section-108">&#182;</a>
               </div>
               <p>Locations are stored in FILO-array as a <code>Marker</code> object consisting of both
 <code>loc</code> and <code>range</code> data. Once a <code>Marker</code> is popped off the list an end
@@ -2603,11 +2643,11 @@ location is added and the data is attached to a syntax node.</p>
         </li>
         
         
-        <li id="section-114">
+        <li id="section-109">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-114">&#182;</a>
+                <a class="pilcrow" href="#section-109">&#182;</a>
               </div>
               <p>Complete the location data stored in the <code>Marker</code> by adding the location
 of the <em>previous token</em> as an end location.</p>
@@ -2627,11 +2667,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-115">
+        <li id="section-110">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-115">&#182;</a>
+                <a class="pilcrow" href="#section-110">&#182;</a>
               </div>
               <p>Create a new <code>Marker</code> and add it to the FILO-array.</p>
 
@@ -2644,11 +2684,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-116">
+        <li id="section-111">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-116">&#182;</a>
+                <a class="pilcrow" href="#section-111">&#182;</a>
               </div>
               <p>Push an arbitrary <code>Marker</code> object onto the FILO-array.</p>
 
@@ -2661,11 +2701,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-117">
+        <li id="section-112">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-117">&#182;</a>
+                <a class="pilcrow" href="#section-112">&#182;</a>
               </div>
               <h2 id="parse-functions">Parse functions</h2>
 
@@ -2674,11 +2714,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-118">
+        <li id="section-113">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-118">&#182;</a>
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               
             </div>
@@ -2686,11 +2726,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-119">
+        <li id="section-114">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-119">&#182;</a>
+                <a class="pilcrow" href="#section-114">&#182;</a>
               </div>
               <p>Chunk is the main program object. Syntactically it’s the same as a block.</p>
 <pre><code>chunk ::= block
@@ -2709,11 +2749,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-120">
+        <li id="section-115">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-120">&#182;</a>
+                <a class="pilcrow" href="#section-115">&#182;</a>
               </div>
               <p>If the body is empty no previousToken exists when finishNode runs.</p>
 
@@ -2726,11 +2766,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-121">
+        <li id="section-116">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-121">&#182;</a>
+                <a class="pilcrow" href="#section-116">&#182;</a>
               </div>
               <p>A block contains a list of statements with an optional return statement
 as its last statement.</p>
@@ -2748,11 +2788,11 @@ as its last statement.</p>
         </li>
         
         
-        <li id="section-122">
+        <li id="section-117">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-122">&#182;</a>
+                <a class="pilcrow" href="#section-117">&#182;</a>
               </div>
               <p>Return has to be the last statement in a block.</p>
 
@@ -2767,11 +2807,11 @@ as its last statement.</p>
         </li>
         
         
-        <li id="section-123">
+        <li id="section-118">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-123">&#182;</a>
+                <a class="pilcrow" href="#section-118">&#182;</a>
               </div>
               <p>Statements are only added if they are returned, this allows us to
 ignore some statements, such as EmptyStatement.</p>
@@ -2784,11 +2824,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-124">
+        <li id="section-119">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-124">&#182;</a>
+                <a class="pilcrow" href="#section-119">&#182;</a>
               </div>
               <p>Doesn’t really need an ast node</p>
 
@@ -2800,11 +2840,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-125">
+        <li id="section-120">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-125">&#182;</a>
+                <a class="pilcrow" href="#section-120">&#182;</a>
               </div>
               <p>There are two types of statements, simple and compound.</p>
 <pre><code>statement ::= <span class="hljs-keyword">break</span> | goto | <span class="hljs-keyword">do</span> | <span class="hljs-keyword">while</span> | repeat | <span class="hljs-keyword">return</span>
@@ -2840,11 +2880,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-126">
+        <li id="section-121">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-126">&#182;</a>
+                <a class="pilcrow" href="#section-121">&#182;</a>
               </div>
               <p>Assignments memorizes the location and pushes it manually for wrapper
 nodes. Additionally empty <code>;</code> statements should not mark a location.</p>
@@ -2856,11 +2896,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-127">
+        <li id="section-122">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-127">&#182;</a>
+                <a class="pilcrow" href="#section-122">&#182;</a>
               </div>
               <p>When a <code>;</code> is encounted, simply eat it without storing it.</p>
 
@@ -2874,11 +2914,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-128">
+        <li id="section-123">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-128">&#182;</a>
+                <a class="pilcrow" href="#section-123">&#182;</a>
               </div>
               <h2 id="statements">Statements</h2>
 
@@ -2887,11 +2927,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-129">
+        <li id="section-124">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-129">&#182;</a>
+                <a class="pilcrow" href="#section-124">&#182;</a>
               </div>
               <pre><code>label ::= <span class="hljs-string">'::'</span> Name <span class="hljs-string">'::'</span>
 </code></pre>
@@ -2914,11 +2954,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-130">
+        <li id="section-125">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-130">&#182;</a>
+                <a class="pilcrow" href="#section-125">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">break</span> ::= <span class="hljs-string">'break'</span>
 </code></pre>
@@ -2932,11 +2972,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-131">
+        <li id="section-126">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-131">&#182;</a>
+                <a class="pilcrow" href="#section-126">&#182;</a>
               </div>
               <pre><code>goto ::= <span class="hljs-string">'goto'</span> Name
 </code></pre>
@@ -2953,11 +2993,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-132">
+        <li id="section-127">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-132">&#182;</a>
+                <a class="pilcrow" href="#section-127">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">do</span> ::= <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
 </code></pre>
@@ -2975,11 +3015,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-133">
+        <li id="section-128">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-133">&#182;</a>
+                <a class="pilcrow" href="#section-128">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">while</span> ::= <span class="hljs-string">'while'</span> exp <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
 </code></pre>
@@ -2999,11 +3039,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-134">
+        <li id="section-129">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-134">&#182;</a>
+                <a class="pilcrow" href="#section-129">&#182;</a>
               </div>
               <pre><code>repeat ::= <span class="hljs-string">'repeat'</span> block <span class="hljs-string">'until'</span> exp
 </code></pre>
@@ -3022,11 +3062,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-135">
+        <li id="section-130">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-135">&#182;</a>
+                <a class="pilcrow" href="#section-130">&#182;</a>
               </div>
               <pre><code>retstat ::= <span class="hljs-string">'return'</span> [exp {<span class="hljs-string">','</span> exp}] [<span class="hljs-string">';'</span>]
 </code></pre>
@@ -3051,11 +3091,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-136">
+        <li id="section-131">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-136">&#182;</a>
+                <a class="pilcrow" href="#section-131">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">if</span> ::= <span class="hljs-string">'if'</span> exp <span class="hljs-string">'then'</span> block {elif} [<span class="hljs-string">'else'</span> block] <span class="hljs-string">'end'</span>
 elif ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string">'then'</span> block
@@ -3072,11 +3112,11 @@ elif ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string"
         </li>
         
         
-        <li id="section-137">
+        <li id="section-132">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-137">&#182;</a>
+                <a class="pilcrow" href="#section-132">&#182;</a>
               </div>
               <p>IfClauses begin at the same location as the parent IfStatement.
 It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</code>.</p>
@@ -3111,11 +3151,11 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
         </li>
         
         
-        <li id="section-138">
+        <li id="section-133">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-138">&#182;</a>
+                <a class="pilcrow" href="#section-133">&#182;</a>
               </div>
               <p>Include the <code>else</code> in the location of ElseClause.</p>
 
@@ -3138,11 +3178,11 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
         </li>
         
         
-        <li id="section-139">
+        <li id="section-134">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-139">&#182;</a>
+                <a class="pilcrow" href="#section-134">&#182;</a>
               </div>
               <p>There are two types of for statements, generic and numeric.</p>
 <pre><code><span class="hljs-keyword">for</span> ::= Name <span class="hljs-string">'='</span> exp <span class="hljs-string">','</span> exp [<span class="hljs-string">','</span> exp] <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
@@ -3160,11 +3200,11 @@ explist ::= exp {<span class="hljs-string">','</span> exp}
         </li>
         
         
-        <li id="section-140">
+        <li id="section-135">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-140">&#182;</a>
+                <a class="pilcrow" href="#section-135">&#182;</a>
               </div>
               <p>The start-identifier is local.</p>
 
@@ -3179,11 +3219,11 @@ explist ::= exp {<span class="hljs-string">','</span> exp}
         </li>
         
         
-        <li id="section-141">
+        <li id="section-136">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-141">&#182;</a>
+                <a class="pilcrow" href="#section-136">&#182;</a>
               </div>
               <p>If the first expression is followed by a <code>=</code> punctuator, this is a
 Numeric For Statement.</p>
@@ -3195,11 +3235,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-142">
+        <li id="section-137">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-142">&#182;</a>
+                <a class="pilcrow" href="#section-137">&#182;</a>
               </div>
               <p>Start expression</p>
 
@@ -3211,11 +3251,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-143">
+        <li id="section-138">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-143">&#182;</a>
+                <a class="pilcrow" href="#section-138">&#182;</a>
               </div>
               <p>End expression</p>
 
@@ -3226,11 +3266,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-144">
+        <li id="section-139">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-144">&#182;</a>
+                <a class="pilcrow" href="#section-139">&#182;</a>
               </div>
               <p>Optional step expression</p>
 
@@ -3249,11 +3289,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-145">
+        <li id="section-140">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-145">&#182;</a>
+                <a class="pilcrow" href="#section-140">&#182;</a>
               </div>
               <p>If not, it’s a Generic For Statement</p>
 
@@ -3264,11 +3304,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-146">
+        <li id="section-141">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-146">&#182;</a>
+                <a class="pilcrow" href="#section-141">&#182;</a>
               </div>
               <p>The namelist can contain one or more identifiers.</p>
 
@@ -3281,11 +3321,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-147">
+        <li id="section-142">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-147">&#182;</a>
+                <a class="pilcrow" href="#section-142">&#182;</a>
               </div>
               <p>Each variable in the namelist is locally scoped.</p>
 
@@ -3300,11 +3340,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-148">
+        <li id="section-143">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-148">&#182;</a>
+                <a class="pilcrow" href="#section-143">&#182;</a>
               </div>
               <p>One or more expressions in the explist.</p>
 
@@ -3327,11 +3367,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-149">
+        <li id="section-144">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-149">&#182;</a>
+                <a class="pilcrow" href="#section-144">&#182;</a>
               </div>
               <p>Local statements can either be variable assignments or function
 definitions. If a function definition is found, it will be delegated to
@@ -3367,11 +3407,11 @@ child.</p>
         </li>
         
         
-        <li id="section-150">
+        <li id="section-145">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-150">&#182;</a>
+                <a class="pilcrow" href="#section-145">&#182;</a>
               </div>
               <p>Declarations doesn’t exist before the statement has been evaluated.
 Therefore assignments can’t use their declarator. And the identifiers
@@ -3398,11 +3438,11 @@ shouldn’t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-151">
+        <li id="section-146">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-151">&#182;</a>
+                <a class="pilcrow" href="#section-146">&#182;</a>
               </div>
               <p>MemberExpressions are not allowed in local function statements.</p>
 
@@ -3419,11 +3459,11 @@ shouldn’t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-152">
+        <li id="section-147">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-152">&#182;</a>
+                <a class="pilcrow" href="#section-147">&#182;</a>
               </div>
               <p>@TODO we need something not dependent on the exact AST used. see also isCallExpression()</p>
 
@@ -3437,11 +3477,11 @@ shouldn’t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-153">
+        <li id="section-148">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-153">&#182;</a>
+                <a class="pilcrow" href="#section-148">&#182;</a>
               </div>
               <pre><code>assignment ::= varlist <span class="hljs-string">'='</span> explist
 <span class="hljs-keyword">var</span> ::= Name | prefixexp <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> | prefixexp <span class="hljs-string">'.'</span> Name
@@ -3459,11 +3499,11 @@ callexp ::= prefixexp args | prefixexp <span class="hljs-string">':'</span> Name
         </li>
         
         
-        <li id="section-154">
+        <li id="section-149">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-154">&#182;</a>
+                <a class="pilcrow" href="#section-149">&#182;</a>
               </div>
               <p>Keep a reference to the previous token for better error messages in case
 of invalid statement</p>
@@ -3506,11 +3546,11 @@ of invalid statement</p>
         </li>
         
         
-        <li id="section-155">
+        <li id="section-150">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-155">&#182;</a>
+                <a class="pilcrow" href="#section-150">&#182;</a>
               </div>
               <p>The prefix expression was neither part of an assignment or a
 callstatement, however as it was valid it’s been consumed, so raise
@@ -3524,11 +3564,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-156">
+        <li id="section-151">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-156">&#182;</a>
+                <a class="pilcrow" href="#section-151">&#182;</a>
               </div>
               <h3 id="non-statements">Non-statements</h3>
 
@@ -3537,11 +3577,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-157">
+        <li id="section-152">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-157">&#182;</a>
+                <a class="pilcrow" href="#section-152">&#182;</a>
               </div>
               <pre><code>Identifier ::= Name
 </code></pre>
@@ -3559,11 +3599,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-158">
+        <li id="section-153">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-158">&#182;</a>
+                <a class="pilcrow" href="#section-153">&#182;</a>
               </div>
               <p>Parse the functions parameters and body block. The name should already
 have been parsed and passed to this declaration function. By separating
@@ -3583,11 +3623,11 @@ parlist ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hlj
         </li>
         
         
-        <li id="section-159">
+        <li id="section-154">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-159">&#182;</a>
+                <a class="pilcrow" href="#section-154">&#182;</a>
               </div>
               <p>The declaration has arguments</p>
 
@@ -3598,11 +3638,11 @@ parlist ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hlj
         </li>
         
         
-        <li id="section-160">
+        <li id="section-155">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-160">&#182;</a>
+                <a class="pilcrow" href="#section-155">&#182;</a>
               </div>
               <p>Arguments are a comma separated list of identifiers, optionally ending
 with a vararg.</p>
@@ -3616,11 +3656,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-161">
+        <li id="section-156">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-161">&#182;</a>
+                <a class="pilcrow" href="#section-156">&#182;</a>
               </div>
               <p>Function parameters are local.</p>
 
@@ -3637,11 +3677,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-162">
+        <li id="section-157">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-162">&#182;</a>
+                <a class="pilcrow" href="#section-157">&#182;</a>
               </div>
               <p>No arguments are allowed after a vararg.</p>
 
@@ -3668,11 +3708,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-163">
+        <li id="section-158">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-163">&#182;</a>
+                <a class="pilcrow" href="#section-158">&#182;</a>
               </div>
               <p>Parse the function name as identifiers and member expressions.</p>
 <pre><code>Name {<span class="hljs-string">'.'</span> Name} [<span class="hljs-string">':'</span> Name]
@@ -3710,11 +3750,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-164">
+        <li id="section-159">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-164">&#182;</a>
+                <a class="pilcrow" href="#section-159">&#182;</a>
               </div>
               <pre><code>tableconstructor ::= <span class="hljs-string">'{'</span> [fieldlist] <span class="hljs-string">'}'</span>
 fieldlist ::= field {fieldsep field} fieldsep
@@ -3767,11 +3807,11 @@ fieldsep ::= <span class="hljs-string">','</span> | <span class="hljs-string">';
         </li>
         
         
-        <li id="section-165">
+        <li id="section-160">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-165">&#182;</a>
+                <a class="pilcrow" href="#section-160">&#182;</a>
               </div>
               <h2 id="expression-parser">Expression parser</h2>
 
@@ -3780,11 +3820,11 @@ fieldsep ::= <span class="hljs-string">','</span> | <span class="hljs-string">';
         </li>
         
         
-        <li id="section-166">
+        <li id="section-161">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-166">&#182;</a>
+                <a class="pilcrow" href="#section-161">&#182;</a>
               </div>
               <p>Expressions are evaluated and always return a value. If nothing is
 matched null will be returned.</p>
@@ -3807,11 +3847,11 @@ prefixexp ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs
         </li>
         
         
-        <li id="section-167">
+        <li id="section-162">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-167">&#182;</a>
+                <a class="pilcrow" href="#section-162">&#182;</a>
               </div>
               <p>Parse an expression expecting it to be valid.</p>
 
@@ -3827,11 +3867,11 @@ prefixexp ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs
         </li>
         
         
-        <li id="section-168">
+        <li id="section-163">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-168">&#182;</a>
+                <a class="pilcrow" href="#section-163">&#182;</a>
               </div>
               <p>Return the precedence priority of the operator.</p>
 <p>As unary <code>-</code> can’t be distinguished from binary <code>-</code>, unary precedence
@@ -3873,11 +3913,11 @@ the expensive CompareICStub which took ~8% of the parse time.</p>
         </li>
         
         
-        <li id="section-169">
+        <li id="section-164">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-169">&#182;</a>
+                <a class="pilcrow" href="#section-164">&#182;</a>
               </div>
               <p>Implement an operator-precedence parser to handle binary operator
 precedence.</p>
@@ -3895,11 +3935,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-170">
+        <li id="section-165">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-170">&#182;</a>
+                <a class="pilcrow" href="#section-165">&#182;</a>
               </div>
               <p>The left-hand side in binary operations.</p>
 
@@ -3912,11 +3952,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-171">
+        <li id="section-166">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-171">&#182;</a>
+                <a class="pilcrow" href="#section-166">&#182;</a>
               </div>
               <p>UnaryExpression</p>
 
@@ -3934,11 +3974,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-172">
+        <li id="section-167">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-172">&#182;</a>
+                <a class="pilcrow" href="#section-167">&#182;</a>
               </div>
               <p>PrimaryExpression</p>
 
@@ -3949,11 +3989,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-173">
+        <li id="section-168">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-173">&#182;</a>
+                <a class="pilcrow" href="#section-168">&#182;</a>
               </div>
               <p>PrefixExpression</p>
 
@@ -3967,11 +4007,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-174">
+        <li id="section-169">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-174">&#182;</a>
+                <a class="pilcrow" href="#section-169">&#182;</a>
               </div>
               <p>This is not a valid left hand expression.</p>
 
@@ -3991,11 +4031,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-175">
+        <li id="section-170">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-175">&#182;</a>
+                <a class="pilcrow" href="#section-170">&#182;</a>
               </div>
               <p>Right-hand precedence operators</p>
 
@@ -4009,11 +4049,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-176">
+        <li id="section-171">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-176">&#182;</a>
+                <a class="pilcrow" href="#section-171">&#182;</a>
               </div>
               <p>Push in the marker created before the loop to wrap its entirety.</p>
 
@@ -4029,11 +4069,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-177">
+        <li id="section-172">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-177">&#182;</a>
+                <a class="pilcrow" href="#section-172">&#182;</a>
               </div>
               <pre><code>prefixexp ::= prefix {suffix}
 prefix ::= Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span>
@@ -4052,11 +4092,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-178">
+        <li id="section-173">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-178">&#182;</a>
+                <a class="pilcrow" href="#section-173">&#182;</a>
               </div>
               <p>The prefix</p>
 
@@ -4069,11 +4109,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-179">
+        <li id="section-174">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-179">&#182;</a>
+                <a class="pilcrow" href="#section-174">&#182;</a>
               </div>
               <p>Set the parent scope.</p>
 
@@ -4091,11 +4131,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-180">
+        <li id="section-175">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-180">&#182;</a>
+                <a class="pilcrow" href="#section-175">&#182;</a>
               </div>
               <p>The suffix</p>
 
@@ -4127,11 +4167,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-181">
+        <li id="section-176">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-181">&#182;</a>
+                <a class="pilcrow" href="#section-176">&#182;</a>
               </div>
               <p>Once a : is found, this has to be a CallExpression, otherwise
 throw an error.</p>
@@ -4162,11 +4202,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-182">
+        <li id="section-177">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-182">&#182;</a>
+                <a class="pilcrow" href="#section-177">&#182;</a>
               </div>
               <pre><code>args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span>
 </code></pre>
@@ -4182,11 +4222,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-183">
+        <li id="section-178">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-183">&#182;</a>
+                <a class="pilcrow" href="#section-178">&#182;</a>
               </div>
               <p>List of expressions</p>
 
@@ -4219,11 +4259,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-184">
+        <li id="section-179">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-184">&#182;</a>
+                <a class="pilcrow" href="#section-179">&#182;</a>
               </div>
               <pre><code>primary ::= <span class="hljs-built_in">String</span> | Numeric | nil | <span class="hljs-literal">true</span> | <span class="hljs-literal">false</span>
      | functiondef | tableconstructor | <span class="hljs-string">'...'</span>
@@ -4258,11 +4298,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-185">
+        <li id="section-180">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-185">&#182;</a>
+                <a class="pilcrow" href="#section-180">&#182;</a>
               </div>
               <h2 id="parser">Parser</h2>
 
@@ -4271,11 +4311,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-186">
+        <li id="section-181">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-186">&#182;</a>
+                <a class="pilcrow" href="#section-181">&#182;</a>
               </div>
               
             </div>
@@ -4283,11 +4323,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-187">
+        <li id="section-182">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-187">&#182;</a>
+                <a class="pilcrow" href="#section-182">&#182;</a>
               </div>
               <p>Export the main parser.</p>
 <ul>
@@ -4326,11 +4366,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-188">
+        <li id="section-183">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-188">&#182;</a>
+                <a class="pilcrow" href="#section-183">&#182;</a>
               </div>
               <p>Rewind the lexer</p>
 
@@ -4344,11 +4384,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-189">
+        <li id="section-184">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-189">&#182;</a>
+                <a class="pilcrow" href="#section-184">&#182;</a>
               </div>
               <p>When tracking identifier scope, initialize with an empty scope.</p>
 
@@ -4359,6 +4399,10 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
     globals = [];
     locations = [];
 
+    <span class="hljs-keyword">if</span> (!((options.luaVersion === <span class="hljs-string">'5.1'</span>) || (options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(sprintf(<span class="hljs-string">"Lua version '%1' not supported"</span>, options.luaVersion));
+    }
+
     <span class="hljs-keyword">if</span> (options.comments) comments = [];
     <span class="hljs-keyword">if</span> (!options.wait) <span class="hljs-keyword">return</span> end();
     <span class="hljs-keyword">return</span> exports;
@@ -4367,11 +4411,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-190">
+        <li id="section-185">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-190">&#182;</a>
+                <a class="pilcrow" href="#section-185">&#182;</a>
               </div>
               <p>Write to the source code buffer without beginning the parse.</p>
 
@@ -4388,11 +4432,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-191">
+        <li id="section-186">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-191">&#182;</a>
+                <a class="pilcrow" href="#section-186">&#182;</a>
               </div>
               <p>Send an EOF and begin parsing.</p>
 
@@ -4406,11 +4450,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-192">
+        <li id="section-187">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-192">&#182;</a>
+                <a class="pilcrow" href="#section-187">&#182;</a>
               </div>
               <p>Ignore shebangs.</p>
 
@@ -4426,11 +4470,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-193">
+        <li id="section-188">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-193">&#182;</a>
+                <a class="pilcrow" href="#section-188">&#182;</a>
               </div>
               <p>Initialize with a lookahead token.</p>
 

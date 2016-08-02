@@ -55,77 +55,118 @@
       "comments": [],
       "globals": []
     },
-    "::foo": "[1:5] '::' expected near '<eof>'",
+    "nil": "[1:0] unexpected symbol 'nil' near '<eof>'",
+    "::foo": {
+      "result": "[1:5] '::' expected near '<eof>'",
+      "options": {
+        "scope": true,
+        "locations": true,
+        "ranges": true,
+        "luaVersion": "5.2"
+      }
+    },
     "::foo::": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "LabelStatement",
-          "label": {
-            "type": "Identifier",
-            "name": "foo",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "LabelStatement",
+            "label": {
+              "type": "Identifier",
+              "name": "foo",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 2
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                2,
+                5
+              ],
+              "isLocal": true
+            },
             "loc": {
               "start": {
                 "line": 1,
-                "column": 2
+                "column": 0
               },
               "end": {
                 "line": 1,
-                "column": 5
+                "column": 7
               }
             },
             "range": [
-              2,
-              5
-            ],
-            "isLocal": true
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 7
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": []
       },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": []
+      "options": {
+        "scope": true,
+        "locations": true,
+        "ranges": true,
+        "luaVersion": "5.2"
+      }
     },
-    "goto": "[1:4] <name> expected near '<eof>'",
+    "goto": {
+      "result": "[1:4] <name> expected near '<eof>'",
+      "options": {
+        "scope": true,
+        "locations": true,
+        "ranges": true,
+        "luaVersion": "5.2"
+      }
+    },
     "goto foo": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "GotoStatement",
-          "label": {
-            "type": "Identifier",
-            "name": "foo",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "GotoStatement",
+            "label": {
+              "type": "Identifier",
+              "name": "foo",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 5
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                5,
+                8
+              ]
+            },
             "loc": {
               "start": {
                 "line": 1,
-                "column": 5
+                "column": 0
               },
               "end": {
                 "line": 1,
@@ -133,43 +174,34 @@
               }
             },
             "range": [
-              5,
+              0,
               8
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 8
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": []
       },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": []
-    },
-    "nil": "[1:0] unexpected symbol 'nil' near '<eof>'"
+      "options": {
+        "scope": true,
+        "locations": true,
+        "ranges": true,
+        "luaVersion": "5.2"
+      }
+    }
   };
 }));

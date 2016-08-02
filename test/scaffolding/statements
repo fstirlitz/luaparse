@@ -1,6 +1,7 @@
 break
+nil                                     -- FAIL
+// { "luaVersion": "5.2" }
 ::foo                                   -- FAIL
 ::foo::
 goto                                    -- FAIL
 goto foo
-nil                                     -- FAIL

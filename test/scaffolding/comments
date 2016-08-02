@@ -1,13 +1,13 @@
 -- comment
--- comment\n-- comment
+-- comment@n@-- comment
 --coment
--- comment\nbreak
+-- comment@n@break
 break--comment
 --[[comment]]
 if true--[[comment]]then end
 --[=[comment]=]break
---[===[comment\n--[=[sub]=]--\n]===]break
---[[comment\nline two]]
---[[\ncomment\nline two\n]]
---[==\nbreak --]]
-if true -- comment\nthen end
+--[===[comment@n@--[=[sub]=]--@n@]===]break
+--[[comment@n@line two]]
+--[[@n@comment@n@line two@n@]]
+--[==@n@break --]]
+if true -- comment@n@then end
