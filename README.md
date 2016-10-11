@@ -60,6 +60,8 @@ The available options are:
   created.
 - `onDestroyScope: null` A callback which will be invoked when the current
   scope is destroyed.
+- `onLocalDeclaration: null` A callback which will be invoked when a local
+  variable is declared. The identifier will be passed as the only parameter.
 - `luaVersion: '5.1'` The version of Lua the parser will target; supported
   values are `'5.1'`, `'5.2'` and `'5.3'`.
 
