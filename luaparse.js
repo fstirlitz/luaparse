@@ -1265,9 +1265,9 @@
 
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
+    if (options.onScopeIdentifierName) options.onScopeIdentifierName(name);
     if (-1 !== indexOf(scopes[scopeDepth], name)) return;
     scopes[scopeDepth].push(name);
-    if (options.onScopeIdentifierName) options.onScopeIdentifierName(name);
   }
 
   // Add identifier to the current scope
