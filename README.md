@@ -266,6 +266,10 @@ will be generated.
 * Initial tests are scaffolded from [yueliang][yueliang] and then manually checked for error.
 * Much of the code is based on [LuaMinify][luaminify], the [Lua][lua] source and [Esprima][esprima]. All awesome projects.
 
+## TypeScript typing definitions
+
+* [luaparse-std](https://github.com/hydroper/luaparse-tsd)
+
 ## License
 
 MIT
