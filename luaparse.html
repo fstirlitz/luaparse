@@ -281,7 +281,7 @@ defaultOptions, or during the parse call.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , comments: <span class="hljs-literal">true</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">comments</span>: <span class="hljs-literal">true</span></pre></div></div>
             
         </li>
         
@@ -297,7 +297,7 @@ identifier-node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , scope: <span class="hljs-literal">false</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">scope</span>: <span class="hljs-literal">false</span></pre></div></div>
             
         </li>
         
@@ -313,7 +313,7 @@ identifier-node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , locations: <span class="hljs-literal">false</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">locations</span>: <span class="hljs-literal">false</span></pre></div></div>
             
         </li>
         
@@ -329,7 +329,7 @@ identifier-node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , ranges: <span class="hljs-literal">false</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">ranges</span>: <span class="hljs-literal">false</span></pre></div></div>
             
         </li>
         
@@ -345,7 +345,7 @@ The node which has been created will be passed as the only parameter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , onCreateNode: <span class="hljs-literal">null</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">onCreateNode</span>: <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -360,7 +360,7 @@ The node which has been created will be passed as the only parameter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , onCreateScope: <span class="hljs-literal">null</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">onCreateScope</span>: <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -375,7 +375,7 @@ The node which has been created will be passed as the only parameter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , onDestroyScope: <span class="hljs-literal">null</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">onDestroyScope</span>: <span class="hljs-literal">null</span></pre></div></div>
             
         </li>
         
@@ -390,7 +390,7 @@ The node which has been created will be passed as the only parameter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    , luaVersion: <span class="hljs-string">'5.1'</span>
+            <div class="content"><div class='highlight'><pre>    , <span class="hljs-attr">luaVersion</span>: <span class="hljs-string">'5.1'</span>
   };</pre></div></div>
             
         </li>
@@ -412,10 +412,10 @@ bitwise operations.</p>
     , NumericLiteral = <span class="hljs-number">16</span>, Punctuator = <span class="hljs-number">32</span>, BooleanLiteral = <span class="hljs-number">64</span>
     , NilLiteral = <span class="hljs-number">128</span>, VarargLiteral = <span class="hljs-number">256</span>;
 
-  exports.tokenTypes = { EOF: EOF, StringLiteral: StringLiteral
-    , Keyword: Keyword, Identifier: Identifier, NumericLiteral: NumericLiteral
-    , Punctuator: Punctuator, BooleanLiteral: BooleanLiteral
-    , NilLiteral: NilLiteral, VarargLiteral: VarargLiteral
+  exports.tokenTypes = { <span class="hljs-attr">EOF</span>: EOF, <span class="hljs-attr">StringLiteral</span>: StringLiteral
+    , <span class="hljs-attr">Keyword</span>: Keyword, <span class="hljs-attr">Identifier</span>: Identifier, <span class="hljs-attr">NumericLiteral</span>: NumericLiteral
+    , <span class="hljs-attr">Punctuator</span>: Punctuator, <span class="hljs-attr">BooleanLiteral</span>: BooleanLiteral
+    , <span class="hljs-attr">NilLiteral</span>: NilLiteral, <span class="hljs-attr">VarargLiteral</span>: VarargLiteral
   };</pre></div></div>
             
         </li>
@@ -434,17 +434,17 @@ will be different in some situations.</p>
             
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-keyword">var</span> errors = exports.errors = {
-      unexpected: <span class="hljs-string">'unexpected %1 \'%2\' near \'%3\''</span>
-    , expected: <span class="hljs-string">'\'%1\' expected near \'%2\''</span>
-    , expectedToken: <span class="hljs-string">'%1 expected near \'%2\''</span>
-    , unfinishedString: <span class="hljs-string">'unfinished string near \'%1\''</span>
-    , malformedNumber: <span class="hljs-string">'malformed number near \'%1\''</span>
-    , invalidVar: <span class="hljs-string">'invalid left-hand side of assignment near \'%1\''</span>
-    , decimalEscapeTooLarge: <span class="hljs-string">'decimal escape too large near \'%1\''</span>
-    , invalidEscape: <span class="hljs-string">'invalid escape sequence near \'%1\''</span>
-    , hexadecimalDigitExpected: <span class="hljs-string">'hexadecimal digit expected near \'%1\''</span>
-    , braceExpected: <span class="hljs-string">'missing \'%1\' near \'%2\''</span>
-    , tooLargeCodepoint: <span class="hljs-string">'UTF-8 value too large near \'%1\''</span>
+      <span class="hljs-attr">unexpected</span>: <span class="hljs-string">'unexpected %1 \'%2\' near \'%3\''</span>
+    , <span class="hljs-attr">expected</span>: <span class="hljs-string">'\'%1\' expected near \'%2\''</span>
+    , <span class="hljs-attr">expectedToken</span>: <span class="hljs-string">'%1 expected near \'%2\''</span>
+    , <span class="hljs-attr">unfinishedString</span>: <span class="hljs-string">'unfinished string near \'%1\''</span>
+    , <span class="hljs-attr">malformedNumber</span>: <span class="hljs-string">'malformed number near \'%1\''</span>
+    , <span class="hljs-attr">invalidVar</span>: <span class="hljs-string">'invalid left-hand side of assignment near \'%1\''</span>
+    , <span class="hljs-attr">decimalEscapeTooLarge</span>: <span class="hljs-string">'decimal escape too large near \'%1\''</span>
+    , <span class="hljs-attr">invalidEscape</span>: <span class="hljs-string">'invalid escape sequence near \'%1\''</span>
+    , <span class="hljs-attr">hexadecimalDigitExpected</span>: <span class="hljs-string">'hexadecimal digit expected near \'%1\''</span>
+    , <span class="hljs-attr">braceExpected</span>: <span class="hljs-string">'missing \'%1\' near \'%2\''</span>
+    , <span class="hljs-attr">tooLargeCodepoint</span>: <span class="hljs-string">'UTF-8 value too large near \'%1\''</span>
   };</pre></div></div>
             
         </li>
@@ -464,151 +464,151 @@ easily be customized by overriding these functions.</p>
             
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-keyword">var</span> ast = exports.ast = {
-      labelStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">label</span>) </span>{
+      <span class="hljs-attr">labelStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">label</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'LabelStatement'</span>
-        , label: label
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'LabelStatement'</span>
+        , <span class="hljs-attr">label</span>: label
       };
     }
 
-    , breakStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    , <span class="hljs-attr">breakStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'BreakStatement'</span>
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'BreakStatement'</span>
       };
     }
 
-    , gotoStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">label</span>) </span>{
+    , <span class="hljs-attr">gotoStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">label</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'GotoStatement'</span>
-        , label: label
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'GotoStatement'</span>
+        , <span class="hljs-attr">label</span>: label
       };
     }
 
-    , returnStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) </span>{
+    , <span class="hljs-attr">returnStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'ReturnStatement'</span>
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'ReturnStatement'</span>
         , <span class="hljs-string">'arguments'</span>: args
       };
     }
 
-    , ifStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">clauses</span>) </span>{
+    , <span class="hljs-attr">ifStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">clauses</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'IfStatement'</span>
-        , clauses: clauses
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'IfStatement'</span>
+        , <span class="hljs-attr">clauses</span>: clauses
       };
     }
-    , ifClause: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
+    , <span class="hljs-attr">ifClause</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'IfClause'</span>
-        , condition: condition
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'IfClause'</span>
+        , <span class="hljs-attr">condition</span>: condition
+        , <span class="hljs-attr">body</span>: body
       };
     }
-    , elseifClause: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
+    , <span class="hljs-attr">elseifClause</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'ElseifClause'</span>
-        , condition: condition
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'ElseifClause'</span>
+        , <span class="hljs-attr">condition</span>: condition
+        , <span class="hljs-attr">body</span>: body
       };
     }
-    , elseClause: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body</span>) </span>{
+    , <span class="hljs-attr">elseClause</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'ElseClause'</span>
-        , body: body
-      };
-    }
-
-    , whileStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
-      <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'WhileStatement'</span>
-        , condition: condition
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'ElseClause'</span>
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , doStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body</span>) </span>{
+    , <span class="hljs-attr">whileStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'DoStatement'</span>
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'WhileStatement'</span>
+        , <span class="hljs-attr">condition</span>: condition
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , repeatStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
+    , <span class="hljs-attr">doStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'RepeatStatement'</span>
-        , condition: condition
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'DoStatement'</span>
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , localStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variables, init</span>) </span>{
+    , <span class="hljs-attr">repeatStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">condition, body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'LocalStatement'</span>
-        , variables: variables
-        , init: init
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'RepeatStatement'</span>
+        , <span class="hljs-attr">condition</span>: condition
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , assignmentStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variables, init</span>) </span>{
+    , <span class="hljs-attr">localStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variables, init</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'AssignmentStatement'</span>
-        , variables: variables
-        , init: init
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'LocalStatement'</span>
+        , <span class="hljs-attr">variables</span>: variables
+        , <span class="hljs-attr">init</span>: init
       };
     }
 
-    , callStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">expression</span>) </span>{
+    , <span class="hljs-attr">assignmentStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variables, init</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'CallStatement'</span>
-        , expression: expression
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'AssignmentStatement'</span>
+        , <span class="hljs-attr">variables</span>: variables
+        , <span class="hljs-attr">init</span>: init
       };
     }
 
-    , functionStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">identifier, parameters, isLocal, body</span>) </span>{
+    , <span class="hljs-attr">callStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">expression</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'FunctionDeclaration'</span>
-        , identifier: identifier
-        , isLocal: isLocal
-        , parameters: parameters
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'CallStatement'</span>
+        , <span class="hljs-attr">expression</span>: expression
       };
     }
 
-    , forNumericStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variable, start, end, step, body</span>) </span>{
+    , <span class="hljs-attr">functionStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">identifier, parameters, isLocal, body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'ForNumericStatement'</span>
-        , variable: variable
-        , start: start
-        , end: end
-        , step: step
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'FunctionDeclaration'</span>
+        , <span class="hljs-attr">identifier</span>: identifier
+        , <span class="hljs-attr">isLocal</span>: isLocal
+        , <span class="hljs-attr">parameters</span>: parameters
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , forGenericStatement: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variables, iterators, body</span>) </span>{
+    , <span class="hljs-attr">forNumericStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variable, start, end, step, body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'ForGenericStatement'</span>
-        , variables: variables
-        , iterators: iterators
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'ForNumericStatement'</span>
+        , <span class="hljs-attr">variable</span>: variable
+        , <span class="hljs-attr">start</span>: start
+        , <span class="hljs-attr">end</span>: end
+        , <span class="hljs-attr">step</span>: step
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , chunk: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body</span>) </span>{
+    , <span class="hljs-attr">forGenericStatement</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">variables, iterators, body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'Chunk'</span>
-        , body: body
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'ForGenericStatement'</span>
+        , <span class="hljs-attr">variables</span>: variables
+        , <span class="hljs-attr">iterators</span>: iterators
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , identifier: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">name</span>) </span>{
+    , <span class="hljs-attr">chunk</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">body</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'Identifier'</span>
-        , name: name
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'Chunk'</span>
+        , <span class="hljs-attr">body</span>: body
       };
     }
 
-    , literal: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">type, value, raw</span>) </span>{
+    , <span class="hljs-attr">identifier</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">name</span>) </span>{
+      <span class="hljs-keyword">return</span> {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'Identifier'</span>
+        , <span class="hljs-attr">name</span>: name
+      };
+    }
+
+    , <span class="hljs-attr">literal</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">type, value, raw</span>) </span>{
       type = (type === StringLiteral) ? <span class="hljs-string">'StringLiteral'</span>
         : (type === NumericLiteral) ? <span class="hljs-string">'NumericLiteral'</span>
         : (type === BooleanLiteral) ? <span class="hljs-string">'BooleanLiteral'</span>
@@ -616,105 +616,105 @@ easily be customized by overriding these functions.</p>
         : <span class="hljs-string">'VarargLiteral'</span>;
 
       <span class="hljs-keyword">return</span> {
-          type: type
-        , value: value
-        , raw: raw
+          <span class="hljs-attr">type</span>: type
+        , <span class="hljs-attr">value</span>: value
+        , <span class="hljs-attr">raw</span>: raw
       };
     }
 
-    , tableKey: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">key, value</span>) </span>{
+    , <span class="hljs-attr">tableKey</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">key, value</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'TableKey'</span>
-        , key: key
-        , value: value
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'TableKey'</span>
+        , <span class="hljs-attr">key</span>: key
+        , <span class="hljs-attr">value</span>: value
       };
     }
-    , tableKeyString: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">key, value</span>) </span>{
+    , <span class="hljs-attr">tableKeyString</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">key, value</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'TableKeyString'</span>
-        , key: key
-        , value: value
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'TableKeyString'</span>
+        , <span class="hljs-attr">key</span>: key
+        , <span class="hljs-attr">value</span>: value
       };
     }
-    , tableValue: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>{
+    , <span class="hljs-attr">tableValue</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'TableValue'</span>
-        , value: value
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'TableValue'</span>
+        , <span class="hljs-attr">value</span>: value
       };
     }
 
 
-    , tableConstructorExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fields</span>) </span>{
+    , <span class="hljs-attr">tableConstructorExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fields</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'TableConstructorExpression'</span>
-        , fields: fields
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'TableConstructorExpression'</span>
+        , <span class="hljs-attr">fields</span>: fields
       };
     }
-    , binaryExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">operator, left, right</span>) </span>{
+    , <span class="hljs-attr">binaryExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">operator, left, right</span>) </span>{
       <span class="hljs-keyword">var</span> type = (<span class="hljs-string">'and'</span> === operator || <span class="hljs-string">'or'</span> === operator) ?
         <span class="hljs-string">'LogicalExpression'</span> :
         <span class="hljs-string">'BinaryExpression'</span>;
 
       <span class="hljs-keyword">return</span> {
-          type: type
-        , operator: operator
-        , left: left
-        , right: right
+          <span class="hljs-attr">type</span>: type
+        , <span class="hljs-attr">operator</span>: operator
+        , <span class="hljs-attr">left</span>: left
+        , <span class="hljs-attr">right</span>: right
       };
     }
-    , unaryExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">operator, argument</span>) </span>{
+    , <span class="hljs-attr">unaryExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">operator, argument</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'UnaryExpression'</span>
-        , operator: operator
-        , argument: argument
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'UnaryExpression'</span>
+        , <span class="hljs-attr">operator</span>: operator
+        , <span class="hljs-attr">argument</span>: argument
       };
     }
-    , memberExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, indexer, identifier</span>) </span>{
+    , <span class="hljs-attr">memberExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, indexer, identifier</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'MemberExpression'</span>
-        , indexer: indexer
-        , identifier: identifier
-        , base: base
-      };
-    }
-
-    , indexExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, index</span>) </span>{
-      <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'IndexExpression'</span>
-        , base: base
-        , index: index
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'MemberExpression'</span>
+        , <span class="hljs-attr">indexer</span>: indexer
+        , <span class="hljs-attr">identifier</span>: identifier
+        , <span class="hljs-attr">base</span>: base
       };
     }
 
-    , callExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, args</span>) </span>{
+    , <span class="hljs-attr">indexExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, index</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'CallExpression'</span>
-        , base: base
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'IndexExpression'</span>
+        , <span class="hljs-attr">base</span>: base
+        , <span class="hljs-attr">index</span>: index
+      };
+    }
+
+    , <span class="hljs-attr">callExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, args</span>) </span>{
+      <span class="hljs-keyword">return</span> {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'CallExpression'</span>
+        , <span class="hljs-attr">base</span>: base
         , <span class="hljs-string">'arguments'</span>: args
       };
     }
 
-    , tableCallExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, args</span>) </span>{
+    , <span class="hljs-attr">tableCallExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, args</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'TableCallExpression'</span>
-        , base: base
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'TableCallExpression'</span>
+        , <span class="hljs-attr">base</span>: base
         , <span class="hljs-string">'arguments'</span>: args
       };
     }
 
-    , stringCallExpression: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, argument</span>) </span>{
+    , <span class="hljs-attr">stringCallExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">base, argument</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'StringCallExpression'</span>
-        , base: base
-        , argument: argument
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'StringCallExpression'</span>
+        , <span class="hljs-attr">base</span>: base
+        , <span class="hljs-attr">argument</span>: argument
       };
     }
 
-    , comment: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value, raw</span>) </span>{
+    , <span class="hljs-attr">comment</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value, raw</span>) </span>{
       <span class="hljs-keyword">return</span> {
-          type: <span class="hljs-string">'Comment'</span>
-        , value: value
-        , raw: raw
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'Comment'</span>
+        , <span class="hljs-attr">value</span>: value
+        , <span class="hljs-attr">raw</span>: raw
       };
     }
   };</pre></div></div>
@@ -853,7 +853,7 @@ sprintf(<span class="hljs-string">'Unexpected %2 in %1.'</span>, <span class="hl
               <p>Returns a new object with the properties from all objectes passed as
 arguments. Last argument takes precedence.</p>
 <p>Example:</p>
-<pre><code><span class="hljs-keyword">this</span>.options = extend(options, { output: <span class="hljs-literal">false</span> });
+<pre><code><span class="hljs-keyword">this</span>.options = extend(options, { <span class="hljs-attr">output</span>: <span class="hljs-literal">false</span> });
 </code></pre>
             </div>
             
@@ -1058,11 +1058,11 @@ is always enabled to provide proper debug messages).</p>
       skipWhiteSpace();
     }
     <span class="hljs-keyword">if</span> (index &gt;= length) <span class="hljs-keyword">return</span> {
-        type : EOF
-      , value: <span class="hljs-string">'&lt;eof&gt;'</span>
-      , line: line
-      , lineStart: lineStart
-      , range: [index, index]
+        <span class="hljs-attr">type</span> : EOF
+      , <span class="hljs-attr">value</span>: <span class="hljs-string">'&lt;eof&gt;'</span>
+      , <span class="hljs-attr">line</span>: line
+      , <span class="hljs-attr">lineStart</span>: lineStart
+      , <span class="hljs-attr">range</span>: [index, index]
     };
 
     <span class="hljs-keyword">var</span> charCode = input.charCodeAt(index)
@@ -1309,11 +1309,11 @@ loop for performance reasons.</p>
     }
 
     <span class="hljs-keyword">return</span> {
-        type: type
-      , value: value
-      , line: line
-      , lineStart: lineStart
-      , range: [tokenStart, index]
+        <span class="hljs-attr">type</span>: type
+      , <span class="hljs-attr">value</span>: value
+      , <span class="hljs-attr">line</span>: line
+      , <span class="hljs-attr">lineStart</span>: lineStart
+      , <span class="hljs-attr">range</span>: [tokenStart, index]
     };
   }</pre></div></div>
             
@@ -1335,11 +1335,11 @@ validated so we simply return it as a token.</p>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scanPunctuator</span>(<span class="hljs-params">value</span>) </span>{
     index += value.length;
     <span class="hljs-keyword">return</span> {
-        type: Punctuator
-      , value: value
-      , line: line
-      , lineStart: lineStart
-      , range: [tokenStart, index]
+        <span class="hljs-attr">type</span>: Punctuator
+      , <span class="hljs-attr">value</span>: value
+      , <span class="hljs-attr">line</span>: line
+      , <span class="hljs-attr">lineStart</span>: lineStart
+      , <span class="hljs-attr">range</span>: [tokenStart, index]
     };
   }</pre></div></div>
             
@@ -1360,11 +1360,11 @@ validated so we simply return it as a token.</p>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scanVarargLiteral</span>(<span class="hljs-params"></span>) </span>{
     index += <span class="hljs-number">3</span>;
     <span class="hljs-keyword">return</span> {
-        type: VarargLiteral
-      , value: <span class="hljs-string">'...'</span>
-      , line: line
-      , lineStart: lineStart
-      , range: [tokenStart, index]
+        <span class="hljs-attr">type</span>: VarargLiteral
+      , <span class="hljs-attr">value</span>: <span class="hljs-string">'...'</span>
+      , <span class="hljs-attr">line</span>: line
+      , <span class="hljs-attr">lineStart</span>: lineStart
+      , <span class="hljs-attr">range</span>: [tokenStart, index]
     };
   }</pre></div></div>
             
@@ -1418,11 +1418,11 @@ ending delimiter by now, raise an exception.</p>
     string += input.slice(stringStart, index - <span class="hljs-number">1</span>);
 
     <span class="hljs-keyword">return</span> {
-        type: StringLiteral
-      , value: string
-      , line: line
-      , lineStart: lineStart
-      , range: [tokenStart, index]
+        <span class="hljs-attr">type</span>: StringLiteral
+      , <span class="hljs-attr">value</span>: string
+      , <span class="hljs-attr">line</span>: line
+      , <span class="hljs-attr">lineStart</span>: lineStart
+      , <span class="hljs-attr">range</span>: [tokenStart, index]
     };
   }</pre></div></div>
             
@@ -1461,11 +1461,11 @@ exception.</p>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-literal">false</span> === string) raise(token, errors.expected, <span class="hljs-string">'['</span>, token.value);
 
     <span class="hljs-keyword">return</span> {
-        type: StringLiteral
-      , value: string
-      , line: line
-      , lineStart: lineStart
-      , range: [tokenStart, index]
+        <span class="hljs-attr">type</span>: StringLiteral
+      , <span class="hljs-attr">value</span>: string
+      , <span class="hljs-attr">line</span>: line
+      , <span class="hljs-attr">lineStart</span>: lineStart
+      , <span class="hljs-attr">range</span>: [tokenStart, index]
     };
   }</pre></div></div>
             
@@ -1494,11 +1494,11 @@ later on in the process.</p>
       readHexLiteral() : readDecLiteral();
 
     <span class="hljs-keyword">return</span> {
-        type: NumericLiteral
-      , value: value
-      , line: line
-      , lineStart: lineStart
-      , range: [tokenStart, index]
+        <span class="hljs-attr">type</span>: NumericLiteral
+      , <span class="hljs-attr">value</span>: value
+      , <span class="hljs-attr">line</span>: line
+      , <span class="hljs-attr">lineStart</span>: lineStart
+      , <span class="hljs-attr">range</span>: [tokenStart, index]
     };
   }</pre></div></div>
             
@@ -2037,8 +2037,8 @@ intercepted in the lexer all location data is set manually.</p>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (options.locations) {
         node.loc = {
-            start: { line: lineComment, column: tokenStart - lineStartComment }
-          , end: { line: line, column: index - lineStart }
+            <span class="hljs-attr">start</span>: { <span class="hljs-attr">line</span>: lineComment, <span class="hljs-attr">column</span>: tokenStart - lineStartComment }
+          , <span class="hljs-attr">end</span>: { <span class="hljs-attr">line</span>: line, <span class="hljs-attr">column</span>: index - lineStart }
         };
       }
       <span class="hljs-keyword">if</span> (options.ranges) {
@@ -2627,13 +2627,13 @@ location is added and the data is attached to a syntax node.</p>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Marker</span>(<span class="hljs-params">token</span>) </span>{
     <span class="hljs-keyword">if</span> (options.locations) {
       <span class="hljs-keyword">this</span>.loc = {
-          start: {
-            line: token.line
-          , column: token.range[<span class="hljs-number">0</span>] - token.lineStart
+          <span class="hljs-attr">start</span>: {
+            <span class="hljs-attr">line</span>: token.line
+          , <span class="hljs-attr">column</span>: token.range[<span class="hljs-number">0</span>] - token.lineStart
         }
-        , end: {
-            line: <span class="hljs-number">0</span>
-          , column: <span class="hljs-number">0</span>
+        , <span class="hljs-attr">end</span>: {
+            <span class="hljs-attr">line</span>: <span class="hljs-number">0</span>
+          , <span class="hljs-attr">column</span>: <span class="hljs-number">0</span>
         }
       };
     }
