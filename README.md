@@ -256,10 +256,11 @@ To simply check that all code has coverage you can run `make coverage-analysis`.
 By running `make docs` all [documentation](https://oxyc.github.io/luaparse/)
 will be generated.
 
-## Projects using luaparse
+## Projects using/extending luaparse
 
 - [luamin](http://mths.be/luamin), a Lua minifier written by Mathias Bynens.
 - [Ace](https://github.com/ajaxorg/ace), an online code editor.
+- [luaparse-tsd](https://github.com/hydroper/luaparse-tsd), provides type definition for TypeScript.
 
 ## Acknowledgements
 
