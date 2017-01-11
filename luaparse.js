@@ -74,6 +74,9 @@
     , onCreateScope: null
     // A callback which will be invoked when the current scope is destroyed.
     , onDestroyScope: null
+    // A callback which will be invoked when a new identifier is added to the current scope.
+    // The identifier's name will be passed as the only parameter
+    , onScopeIdentifierName: null
     // The version of Lua targeted by the parser (string; allowed values are '5.1', '5.2', '5.3'.)
     , luaVersion: '5.1'
   };
@@ -1262,6 +1265,7 @@
 
   // Add identifier name to the current scope if it doesnt already exist.
   function scopeIdentifierName(name) {
+    if (options.onScopeIdentifierName) options.onScopeIdentifierName(name);
     if (-1 !== indexOf(scopes[scopeDepth], name)) return;
     scopes[scopeDepth].push(name);
   }
