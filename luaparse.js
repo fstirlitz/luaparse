@@ -620,8 +620,7 @@
 
       case 91: // [
         // Check for a multiline string, they begin with [[ or [=
-        if (91 === next || (61 === next))
-          return scanLongStringLiteral();
+        if (91 === next || (61 === next)) return scanLongStringLiteral();
         return scanPunctuator('[');
 
       case 47: // /
@@ -1416,9 +1415,7 @@
     // nodes. Additionally empty `;` statements should not mark a location.
     if (trackLocations) locations.pop();
 
-    // When a `;` is encounted, simply eat it without storing it; except in Lua 5.1,
-    // since there are no empty statements.
-    // https://www.lua.org/manual/5.1/manual.html#2.4.1
+    // When a `;` is encounted, simply eat it without storing it.
     if ((options.luaVersion >= '5.2') && consume(';')) return;
 
     return parseAssignmentOrCallStatement();
