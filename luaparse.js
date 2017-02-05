@@ -1,3 +1,24 @@
+/*! Copyright (c) Oskar Schöldström 2012-2014
+
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 /* global exports:true, module:true, require:true, define:true, global:true */
 
 (function (root, name, factory) {
@@ -619,8 +640,9 @@
         return scanPunctuator(':');
 
       case 91: // [
-        // Check for a multiline string, they begin with [= or [[
-        if (91 === next || 61 === next) return scanLongStringLiteral();
+        // Check for a multiline string, they begin with [[ or [=
+        if (91 === next || (61 === next))
+          return scanLongStringLiteral();
         return scanPunctuator('[');
 
       case 47: // /
@@ -1373,6 +1395,7 @@
         break;
       }
       statement = parseStatement();
+      if (options.luaVersion <= '5.1') consume(';');
       // Statements are only added if they are returned, this allows us to
       // ignore some statements, such as EmptyStatement.
       if (statement) block.push(statement);
@@ -1414,8 +1437,12 @@
     // nodes. Additionally empty `;` statements should not mark a location.
     if (trackLocations) locations.pop();
 
-    // When a `;` is encounted, simply eat it without storing it.
-    if (consume(';')) return;
+    // When a `;` is encounted, simply eat it without storing it; except in Lua 5.1,
+    // since there are no empty statements.
+    // https://www.lua.org/manual/5.1/manual.html#2.4.1
+    if (options.luaVersion >= '5.2') {
+      if (consume(';')) return;
+    }
 
     return parseAssignmentOrCallStatement();
   }
