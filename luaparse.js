@@ -776,15 +776,17 @@
   // exception.
 
   function scanLongStringLiteral() {
-    var string = readLongString();
+    var beginLine = line
+      , beginLineStart = lineStart
+      , string = readLongString();
     // Fail if it's not a multiline literal.
     if (false === string) raise(token, errors.expected, '[', token.value);
 
     return {
         type: StringLiteral
       , value: string
-      , line: line
-      , lineStart: lineStart
+      , line: beginLine
+      , lineStart: beginLineStart
       , range: [tokenStart, index]
     };
   }
