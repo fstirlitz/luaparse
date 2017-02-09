@@ -236,7 +236,8 @@
 
     var nodes = []
       , createdScopes = 0
-      , destroyedScopes = 0;
+      , destroyedScopes = 0
+      , localDeclarations = [];
 
     parse = luaparse.parse('do local a = 1 b = 1 end -- comment', {
         scope: true
@@ -245,9 +246,11 @@
       , onCreateNode: function(node) { nodes.push(node); }
       , onCreateScope: function() { createdScopes++; }
       , onDestroyScope: function() { destroyedScopes++; }
+      , onLocalDeclaration: function(ident) { localDeclarations.push(ident); }
     });
     this.equal(createdScopes, 2, 'should invoke onCreateScope callback');
     this.equal(createdScopes, destroyedScopes, 'should invoke onDestroyScope callback');
+    this.deepEqual(localDeclarations, ['a'], 'should invoke onLocalDeclaration callback');
     this.equal(nodes.length, 9, 'should invoke onCreateNode callback');
     this.deepEqual(
         nodes[0]
@@ -259,7 +262,7 @@
       "type": "Chunk", "body": [{"type": "BreakStatement", "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20], "comments": []
     }, 'should ignore shebangs');
 
-    this.done(10);
+    this.done(11);
   });
 
   suite.addTest('Precedence', function() {
