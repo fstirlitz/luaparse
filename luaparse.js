@@ -742,6 +742,8 @@
 
   function scanStringLiteral() {
     var delimiter = input.charCodeAt(index++)
+      , beginLine = line
+      , beginLineStart = lineStart
       , stringStart = index
       , string = ''
       , charCode;
@@ -749,7 +751,7 @@
     while (index < length) {
       charCode = input.charCodeAt(index++);
       if (delimiter === charCode) break;
-      if (92 === charCode) { // \
+      if (92 === charCode) { // backslash
         string += input.slice(stringStart, index - 1) + readEscapeSequence();
         stringStart = index;
       }
@@ -765,8 +767,10 @@
     return {
         type: StringLiteral
       , value: string
-      , line: line
-      , lineStart: lineStart
+      , line: beginLine
+      , lineStart: beginLineStart
+      , lastLine: line
+      , lastLineStart: lineStart
       , range: [tokenStart, index]
     };
   }
@@ -978,6 +982,14 @@
       case 'v': index++; return '\x0b';
       case 'b': index++; return '\b';
       case 'f': index++; return '\f';
+
+      // Backslash at the end of the line. We treat all line endings as equivalent,
+      // and as representing the [LF] character (code 10). Lua 5.1 through 5.3
+      // have been verified to behave the same way.
+      case '\r':
+      case '\n':
+        consumeEOL();
+        return '\n';
 
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':

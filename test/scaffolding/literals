@@ -29,3 +29,7 @@ a = false
 a = ...
 a = [[hello@n@world]]
 a = { 1, 2, [[hello@n@@n@world]], @n@ 3 }
+a = "\@r@"
+a = "\@n@"
+a = "\@r@@n@"
+a = "\@n@@r@"
