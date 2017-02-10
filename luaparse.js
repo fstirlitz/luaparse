@@ -599,8 +599,9 @@
         return scanPunctuator('=');
 
       case 62: // >
+        if (options.luaVersion === '5.3')
+          if (62 === next) return scanPunctuator('>>');
         if (61 === next) return scanPunctuator('>=');
-        if (62 === next) return scanPunctuator('>>');
         return scanPunctuator('>');
 
       case 60: // <
