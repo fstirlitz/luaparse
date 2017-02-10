@@ -776,15 +776,19 @@
   // exception.
 
   function scanLongStringLiteral() {
-    var string = readLongString();
+    var beginLine = line
+      , beginLineStart = lineStart
+      , string = readLongString();
     // Fail if it's not a multiline literal.
     if (false === string) raise(token, errors.expected, '[', token.value);
 
     return {
         type: StringLiteral
       , value: string
-      , line: line
-      , lineStart: lineStart
+      , line: beginLine
+      , lineStart: beginLineStart
+      , lastLine: line
+      , lastLineStart: lineStart
       , range: [tokenStart, index]
     };
   }
@@ -1324,8 +1328,8 @@
   // of the *previous token* as an end location.
   Marker.prototype.complete = function() {
     if (options.locations) {
-      this.loc.end.line = previousToken.line;
-      this.loc.end.column = previousToken.range[1] - previousToken.lineStart;
+      this.loc.end.line = previousToken.lastLine || previousToken.line;
+      this.loc.end.column = previousToken.range[1] - (previousToken.lastLineStart || previousToken.lineStart);
     }
     if (options.ranges) {
       this.range[1] = previousToken.range[1];

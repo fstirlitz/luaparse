@@ -27,3 +27,5 @@ a = nil
 a = true
 a = false
 a = ...
+a = [[hello@n@world]]
+a = { 1, 2, [[hello@n@@n@world]], @n@ 3 }

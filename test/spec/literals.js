@@ -2451,6 +2451,350 @@
           "isLocal": false
         }
       ]
+    },
+    "a = [[hello\nworld]]": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 1
+                }
+              },
+              "range": [
+                0,
+                1
+              ],
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "StringLiteral",
+              "value": "hello\nworld",
+              "raw": "[[hello\nworld]]",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 2,
+                  "column": 7
+                }
+              },
+              "range": [
+                4,
+                19
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 2,
+              "column": 7
+            }
+          },
+          "range": [
+            0,
+            19
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 7
+        }
+      },
+      "range": [
+        0,
+        19
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          },
+          "range": [
+            0,
+            1
+          ],
+          "isLocal": false
+        }
+      ]
+    },
+    "a = { 1, 2, [[hello\n\nworld]], \n 3 }": {
+      "type": "Chunk",
+      "body": [
+        {
+          "type": "AssignmentStatement",
+          "variables": [
+            {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 1
+                }
+              },
+              "range": [
+                0,
+                1
+              ],
+              "isLocal": false
+            }
+          ],
+          "init": [
+            {
+              "type": "TableConstructorExpression",
+              "fields": [
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "NumericLiteral",
+                    "value": 1,
+                    "raw": "1",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 6
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 7
+                      }
+                    },
+                    "range": [
+                      6,
+                      7
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 6
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    6,
+                    7
+                  ]
+                },
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "NumericLiteral",
+                    "value": 2,
+                    "raw": "2",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 9
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 10
+                      }
+                    },
+                    "range": [
+                      9,
+                      10
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 10
+                    }
+                  },
+                  "range": [
+                    9,
+                    10
+                  ]
+                },
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "StringLiteral",
+                    "value": "hello\n\nworld",
+                    "raw": "[[hello\n\nworld]]",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 12
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 8
+                      }
+                    },
+                    "range": [
+                      12,
+                      28
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 12
+                    },
+                    "end": {
+                      "line": 2,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    12,
+                    28
+                  ]
+                },
+                {
+                  "type": "TableValue",
+                  "value": {
+                    "type": "NumericLiteral",
+                    "value": 3,
+                    "raw": "3",
+                    "loc": {
+                      "start": {
+                        "line": 3,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 3,
+                        "column": 2
+                      }
+                    },
+                    "range": [
+                      32,
+                      33
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 3,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 3,
+                      "column": 2
+                    }
+                  },
+                  "range": [
+                    32,
+                    33
+                  ]
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 3,
+                  "column": 4
+                }
+              },
+              "range": [
+                4,
+                35
+              ]
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 3,
+              "column": 4
+            }
+          },
+          "range": [
+            0,
+            35
+          ]
+        }
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 4
+        }
+      },
+      "range": [
+        0,
+        35
+      ],
+      "comments": [],
+      "globals": [
+        {
+          "type": "Identifier",
+          "name": "a",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          },
+          "range": [
+            0,
+            1
+          ],
+          "isLocal": false
+        }
+      ]
     }
   };
 }));
