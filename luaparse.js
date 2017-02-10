@@ -1,7 +1,6 @@
 /* global exports:true, module:true, require:true, define:true, global:true */
 
 (function (root, name, factory) {
-  /* jshint eqeqeq:false */
   'use strict';
 
   // Used to determine if values are of the language type `Object`
@@ -15,7 +14,7 @@
     , freeModule = objectTypes[typeof module] && module && !module.nodeType && module
     // Detect free variable `global`, from Node.js or Browserified code, and
     // use it as `window`
-    , freeGlobal = freeExports && freeModule && typeof global == 'object' && global
+    , freeGlobal = freeExports && freeModule && typeof global === 'object' && global
     // Detect the popular CommonJS extension `module.exports`
     , moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
 
@@ -25,7 +24,7 @@
 
   // Some AMD build optimizers, like r.js, check for specific condition
   // patterns like the following:
-  if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
     // defined as an anonymous module.
     define(['exports'], factory);
     // In case the source has been processed and wrapped in a define module use
