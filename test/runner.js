@@ -262,7 +262,9 @@
       "type": "Chunk", "body": [{"type": "BreakStatement", "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20], "comments": []
     }, 'should ignore shebangs');
 
-    this.done(11);
+    this.parseError('', "Lua version '4.0' not supported", { luaVersion: '4.0' });
+
+    this.done(12);
   });
 
   suite.addTest('Precedence', function() {
