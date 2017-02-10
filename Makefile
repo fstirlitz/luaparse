@@ -9,10 +9,10 @@ all: build
 # ----------
 
 build:
-	gulp build
+	$(BIN)/gulp build
 
 lint:
-	gulp lint
+	$(BIN)/gulp lint
 
 .PHONY: build lint all
 
