@@ -1400,7 +1400,7 @@
           return parseFunctionDeclaration(name);
         case 'while':    next(); return parseWhileStatement();
         case 'for':      next(); return parseForStatement();
-        case 'repeat':   next(); return parseCallStatement();
+        case 'repeat':   next(); return parseRepeatStatement();
         case 'break':    next(); return parseBreakStatement();
         case 'do':       next(); return parseDoStatement();
         case 'goto':     next(); return parseGotoStatement();
