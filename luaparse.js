@@ -183,9 +183,9 @@
       };
     }
 
-    , repemaybeCallStatement: function(condition, body) {
+    , callStatement: function(condition, body) {
       return {
-          type: 'RepemaybeCallStatement'
+          type: 'CallStatement'
         , condition: condition
         , body: body
       };
@@ -1400,7 +1400,7 @@
           return parseFunctionDeclaration(name);
         case 'while':    next(); return parseWhileStatement();
         case 'for':      next(); return parseForStatement();
-        case 'repeat':   next(); return parseRepemaybeCallStatement();
+        case 'repeat':   next(); return parseCallStatement();
         case 'break':    next(); return parseBreakStatement();
         case 'do':       next(); return parseDoStatement();
         case 'goto':     next(); return parseGotoStatement();
@@ -1482,14 +1482,14 @@
 
   //     repeat ::= 'repeat' block 'until' exp
 
-  function parseRepemaybeCallStatement() {
+  function parseCallStatement() {
     if (options.scope) createScope();
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
     if (options.scope) destroyScope();
     consume(';');
-    return finishNode(ast.repemaybeCallStatement(condition, body));
+    return finishNode(ast.callStatement(condition, body));
   }
 
   //     retstat ::= 'return' [exp {',' exp}] [';']
