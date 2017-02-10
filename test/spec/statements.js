@@ -397,6 +397,6 @@
         "ranges": true,
         "luaVersion": "5.2"
       }
-    },
+    }
   };
 }));
