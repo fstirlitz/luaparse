@@ -262,7 +262,68 @@
       "type": "Chunk", "body": [{"type": "BreakStatement", "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20], "comments": []
     }, 'should ignore shebangs');
 
-    this.done(11);
+    this.parseError('', "Lua version '4.0' not supported", { luaVersion: '4.0' });
+
+    this.done(12);
+  });
+
+  suite.addTest('Interpretation of literals', function () {
+    var testcases =
+      [ [ '019'
+        , '19'
+        , '0x13'
+        ]
+      , [ '"a"'
+        , '"\\97"'
+        , '"\\097"'
+        , '"\\x61"'
+        , '"\\u{61}"'
+        , '"\\u{061}"'
+        ]
+      , [ '"\\u{1f4a9}"'
+        , '"\\u{000001f4a9}"'
+        , '"\\xf0\\x9f\\x92\\xa9"'
+        /* '"\ud83d\udca9"' */
+        ]
+      , [ '"\\\\a"'
+        , '[==[\\a]==]'
+        ]
+      , [ '"\\nfoo"'
+        , '"\\\nfoo"'
+        , '"\\\rfoo"'
+        , '"\\\r\nfoo"'
+        , '"\\\n\rfoo"'
+        , '[[\n\nfoo]]'
+        ]
+      ];
+    var count = 0;
+
+    function symbolicControlChars(s) {
+      /* control characters should not appears in test output;
+       * use characters from the 'Control Pictures' block instead
+       */
+      return s.replace(/[\x00-\x1f]/g, function (m) {
+          return String.fromCharCode(0x2400 + m.charCodeAt(0));
+        });
+    }
+
+    for (var i = 0; i < testcases.length; ++i) {
+      count += testcases[i].length - 1;
+
+      var list = testcases[i];
+      var left = luaparse.parse('return ' + list[0],
+                                { "luaVersion": "5.3" }).body[0].arguments[0];
+
+      for (var j = 1; j < list.length; ++j) {
+        var right = luaparse.parse('return ' + list[j],
+                                   { "luaVersion": "5.3" }).body[0].arguments[0];
+
+        this.equal(left.value, right.value, symbolicControlChars(left.raw) + ' == ' + symbolicControlChars(right.raw));
+        left = right;
+      }
+    }
+
+    this.done(count);
   });
 
   suite.addTest('Precedence', function() {

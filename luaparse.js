@@ -1,7 +1,6 @@
 /* global exports:true, module:true, require:true, define:true, global:true */
 
 (function (root, name, factory) {
-  /* jshint eqeqeq:false */
   'use strict';
 
   // Used to determine if values are of the language type `Object`
@@ -15,7 +14,7 @@
     , freeModule = objectTypes[typeof module] && module && !module.nodeType && module
     // Detect free variable `global`, from Node.js or Browserified code, and
     // use it as `window`
-    , freeGlobal = freeExports && freeModule && typeof global == 'object' && global
+    , freeGlobal = freeExports && freeModule && typeof global === 'object' && global
     // Detect the popular CommonJS extension `module.exports`
     , moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
 
@@ -25,7 +24,7 @@
 
   // Some AMD build optimizers, like r.js, check for specific condition
   // patterns like the following:
-  if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
     // defined as an anonymous module.
     define(['exports'], factory);
     // In case the source has been processed and wrapped in a define module use
@@ -600,8 +599,9 @@
         return scanPunctuator('=');
 
       case 62: // >
+        if (options.luaVersion === '5.3')
+          if (62 === next) return scanPunctuator('>>');
         if (61 === next) return scanPunctuator('>=');
-        if (62 === next) return scanPunctuator('>>');
         return scanPunctuator('>');
 
       case 60: // <
@@ -742,6 +742,8 @@
 
   function scanStringLiteral() {
     var delimiter = input.charCodeAt(index++)
+      , beginLine = line
+      , beginLineStart = lineStart
       , stringStart = index
       , string = ''
       , charCode;
@@ -749,7 +751,7 @@
     while (index < length) {
       charCode = input.charCodeAt(index++);
       if (delimiter === charCode) break;
-      if (92 === charCode) { // \
+      if (92 === charCode) { // backslash
         string += input.slice(stringStart, index - 1) + readEscapeSequence();
         stringStart = index;
       }
@@ -765,8 +767,10 @@
     return {
         type: StringLiteral
       , value: string
-      , line: line
-      , lineStart: lineStart
+      , line: beginLine
+      , lineStart: beginLineStart
+      , lastLine: line
+      , lastLineStart: lineStart
       , range: [tokenStart, index]
     };
   }
@@ -776,15 +780,19 @@
   // exception.
 
   function scanLongStringLiteral() {
-    var string = readLongString();
+    var beginLine = line
+      , beginLineStart = lineStart
+      , string = readLongString();
     // Fail if it's not a multiline literal.
     if (false === string) raise(token, errors.expected, '[', token.value);
 
     return {
         type: StringLiteral
       , value: string
-      , line: line
-      , lineStart: lineStart
+      , line: beginLine
+      , lineStart: beginLineStart
+      , lastLine: line
+      , lastLineStart: lineStart
       , range: [tokenStart, index]
     };
   }
@@ -901,6 +909,32 @@
     return parseFloat(input.slice(tokenStart, index));
   }
 
+  function encodeUTF8(codepoint) {
+    if (codepoint < 0x80) {
+      return String.fromCharCode(codepoint);
+    } else if (codepoint < 0x800) {
+      return String.fromCharCode(
+        0xc0 |  (codepoint >>  6)        ,
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else if (codepoint < 0x10000) {
+      return String.fromCharCode(
+        0xe0 |  (codepoint >> 12)        ,
+        0x80 | ((codepoint >>  6) & 0x3f),
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else if (codepoint < 0x110000) {
+      return String.fromCharCode(
+        0xf0 |  (codepoint >> 18)        ,
+        0x80 | ((codepoint >> 12) & 0x3f),
+        0x80 | ((codepoint >>  6) & 0x3f),
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else {
+      return null;
+    }
+  }
+
   function readUnicodeEscapeSequence() {
     var sequenceStart = index++;
 
@@ -929,37 +963,32 @@
     var codepoint = parseInt(input.slice(escStart, index - 1), 16);
 
     /* Now we have a codepoint number in a variable; encode it in UTF-8,
-     * interpreting each code unit as a code point number (i.e. encode it in WTF-8)
-     * This is wasteful, but at least it preserves the property that literals
-     * that denote the same byte sequence are interpreted identically, i.e.
+     * interpreting each code unit as a code point number, as if we were reading
+     * a UTF-8 file using the ISO-8859-1 encoding. This is wasteful, but at least
+     * it preserves the property that literals that denote the same byte sequence
+     * are interpreted identically, i.e.
+     *
      * "\u{1f4a9}" == "\xf0\x9f\x92\xa9" == "\240\159\146\169"
      *
-     * I am not pleased with this hack, but no solution seems good here; JavaScript
-     * has no "bytes" type like Python.
+     * Some other options to consider:
+     *
+     * @ Use an ArrayBuffer or Uint8Array for string literal values
+     *   - Cannot be serialised as JSON
+     *   - May fail to be portable to older JavaScript engines
+     * @ Store string literal values as code point strings, and require that
+     *   escape sequences constitute well-formed UTF-8; throw an exception
+     *   if they do not
+     *   - Reduced compatibility with PUC Lua
+     * @ Like above, but transform ill-formed escapes to unpaired surrogates,
+     *   just like Python's 'surrogateescape' encoding error handler
+     *   - Destroys the property that ("\xc4" .. "\x99") == "\xc4\x99"
+     *   - If the AST is encoded in JSON, some JSON libraries may refuse to parse it
      */
-    if (codepoint < 0x80) {
-      return String.fromCharCode(codepoint);
-    } else if (codepoint < 0x800) {
-      return String.fromCharCode(
-        0xc0 |  (codepoint >>  6)        ,
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else if (codepoint < 0x10000) {
-      return String.fromCharCode(
-        0xe0 |  (codepoint >> 12)        ,
-        0x80 | ((codepoint >>  6) & 0x3f),
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else if (codepoint < 0x110000) {
-      return String.fromCharCode(
-        0xf0 |  (codepoint >> 18)        ,
-        0x80 | ((codepoint >> 12) & 0x3f),
-        0x80 | ((codepoint >>  6) & 0x3f),
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else {
+    codepoint = encodeUTF8(codepoint);
+    if (codepoint === null) {
       raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
     }
+    return codepoint;
   }
 
   // Translate escape sequences to the actual characters.
@@ -974,6 +1003,14 @@
       case 'v': index++; return '\x0b';
       case 'b': index++; return '\b';
       case 'f': index++; return '\f';
+
+      // Backslash at the end of the line. We treat all line endings as equivalent,
+      // and as representing the [LF] character (code 10). Lua 5.1 through 5.3
+      // have been verified to behave the same way.
+      case '\r':
+      case '\n':
+        consumeEOL();
+        return '\n';
 
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
@@ -1324,8 +1361,8 @@
   // of the *previous token* as an end location.
   Marker.prototype.complete = function() {
     if (options.locations) {
-      this.loc.end.line = previousToken.line;
-      this.loc.end.column = previousToken.range[1] - previousToken.lineStart;
+      this.loc.end.line = previousToken.lastLine || previousToken.line;
+      this.loc.end.column = previousToken.range[1] - (previousToken.lastLineStart || previousToken.lineStart);
     }
     if (options.ranges) {
       this.range[1] = previousToken.range[1];
