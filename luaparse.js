@@ -183,9 +183,9 @@
       };
     }
 
-    , callStatement: function(condition, body) {
+    , repeatStatement: function(condition, body) {
       return {
-          type: 'CallStatement'
+          type: 'RepeatStatement'
         , condition: condition
         , body: body
       };
@@ -1482,14 +1482,14 @@
 
   //     repeat ::= 'repeat' block 'until' exp
 
-  function parseCallStatement() {
+  function parseRepeatStatement() {
     if (options.scope) createScope();
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
     if (options.scope) destroyScope();
     consume(';');
-    return finishNode(ast.callStatement(condition, body));
+    return finishNode(ast.repeatStatement(condition, body));
   }
 
   //     retstat ::= 'return' [exp {',' exp}] [';']
