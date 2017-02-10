@@ -183,9 +183,9 @@
       };
     }
 
-    , repeatStatement: function(condition, body) {
+    , repemaybeCallStatement: function(condition, body) {
       return {
-          type: 'RepeatStatement'
+          type: 'RepemaybeCallStatement'
         , condition: condition
         , body: body
       };
@@ -1400,7 +1400,7 @@
           return parseFunctionDeclaration(name);
         case 'while':    next(); return parseWhileStatement();
         case 'for':      next(); return parseForStatement();
-        case 'repeat':   next(); return parseRepeatStatement();
+        case 'repeat':   next(); return parseRepemaybeCallStatement();
         case 'break':    next(); return parseBreakStatement();
         case 'do':       next(); return parseDoStatement();
         case 'goto':     next(); return parseGotoStatement();
@@ -1415,7 +1415,9 @@
     if (trackLocations) locations.pop();
 
     // When a `;` is encounted, simply eat it without storing it.
-    if (consume(';')) return;
+    // This must be avoided in Lua 5.1 as there are no empty statements.
+    // https://www.lua.org/manual/5.1/manual.html#2.4.1
+    if (options.luaVersion !== '5.1' && consume(';')) return;
 
     return parseAssignmentOrCallStatement();
   }
@@ -1434,12 +1436,14 @@
     }
 
     expect('::');
+    consume(';');
     return finishNode(ast.labelStatement(label));
   }
 
   //     break ::= 'break'
 
   function parseBreakStatement() {
+    consume(';');
     return finishNode(ast.breakStatement());
   }
 
@@ -1448,7 +1452,7 @@
   function parseGotoStatement() {
     var name = token.value
       , label = parseIdentifier();
-
+    consume(';');
     return finishNode(ast.gotoStatement(label));
   }
 
@@ -1459,6 +1463,7 @@
     var body = parseBlock();
     if (options.scope) destroyScope();
     expect('end');
+    consume(';');
     return finishNode(ast.doStatement(body));
   }
 
@@ -1471,18 +1476,20 @@
     var body = parseBlock();
     if (options.scope) destroyScope();
     expect('end');
+    consume(';');
     return finishNode(ast.whileStatement(condition, body));
   }
 
   //     repeat ::= 'repeat' block 'until' exp
 
-  function parseRepeatStatement() {
+  function parseRepemaybeCallStatement() {
     if (options.scope) createScope();
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
     if (options.scope) destroyScope();
-    return finishNode(ast.repeatStatement(condition, body));
+    consume(';');
+    return finishNode(ast.repemaybeCallStatement(condition, body));
   }
 
   //     retstat ::= 'return' [exp {',' exp}] [';']
@@ -1497,8 +1504,8 @@
         expression = parseExpectedExpression();
         expressions.push(expression);
       }
-      consume(';'); // grammar tells us ; is optional here.
     }
+    consume(';');
     return finishNode(ast.returnStatement(expressions));
   }
 
@@ -1549,6 +1556,7 @@
     }
 
     expect('end');
+    consume(';');
     return finishNode(ast.ifStatement(clauses));
   }
 
@@ -1584,8 +1592,8 @@
       expect('do');
       body = parseBlock();
       expect('end');
+      consume(';');
       if (options.scope) destroyScope();
-
       return finishNode(ast.forNumericStatement(variable, start, end, step, body));
     }
     // If not, it's a Generic For Statement
@@ -1610,6 +1618,7 @@
       expect('do');
       body = parseBlock();
       expect('end');
+      consume(';');
       if (options.scope) destroyScope();
 
       return finishNode(ast.forGenericStatement(variables, iterators, body));
@@ -1638,7 +1647,6 @@
 
         variables.push(name);
       } while (consume(','));
-
       if (consume('=')) {
         do {
           var expression = parseExpectedExpression();
@@ -1654,7 +1662,7 @@
           scopeIdentifier(variables[i]);
         }
       }
-
+      consume(';');
       return finishNode(ast.localStatement(variables, init));
     }
     if (consume('function')) {
@@ -1694,7 +1702,7 @@
       , expression, marker;
 
     if (trackLocations) marker = createLocationMarker();
-    expression = parsePrefixExpression();
+    expression = parsePrefixExpression(true);
 
     if (null == expression) return unexpected(token);
     if (',='.indexOf(token.value) >= 0) {
@@ -1715,6 +1723,7 @@
         init.push(exp);
       } while (consume(','));
 
+      consume(';');
       pushLocation(marker);
       return finishNode(ast.assignmentStatement(variables, init));
     }
@@ -1994,7 +2003,7 @@
   //
   //     args ::= '(' [explist] ')' | tableconstructor | String
 
-  function parsePrefixExpression() {
+  function parsePrefixExpression(maybeCallStatement) {
     var base, name, marker;
 
     if (trackLocations) marker = createLocationMarker();
@@ -2045,6 +2054,8 @@
             pushLocation(marker);
             base = parseCallExpression(base);
             break;
+          case ';':
+            if (maybeCallStatement && options.luaVersion === '5.1') next();
           default:
             return base;
         }

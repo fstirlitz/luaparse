@@ -5,3 +5,8 @@ nil                                     -- FAIL
 ::foo::
 goto                                    -- FAIL
 goto foo
+// { "luaVersion": "5.1" }
+call1();(0)()
+;;                                      -- FAIL
+// { "luaVersion": "5.2" }
+;;
