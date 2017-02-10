@@ -622,8 +622,8 @@
         return scanPunctuator(':');
 
       case 91: // [
-        // Check for a multiline string, they begin with [= or [[
-        if (91 === next || 61 === next) return scanLongStringLiteral();
+        // Check for a multiline string, they begin with [[ or [=
+        if (91 === next || (61 === next)) return scanLongStringLiteral();
         return scanPunctuator('[');
 
       case 47: // /
@@ -1414,6 +1414,7 @@
         break;
       }
       statement = parseStatement();
+      if (options.luaVersion <= '5.1') consume(';');
       // Statements are only added if they are returned, this allows us to
       // ignore some statements, such as EmptyStatement.
       if (statement) block.push(statement);
@@ -1456,7 +1457,7 @@
     if (trackLocations) locations.pop();
 
     // When a `;` is encounted, simply eat it without storing it.
-    if (consume(';')) return;
+    if ((options.luaVersion >= '5.2') && consume(';')) return;
 
     return parseAssignmentOrCallStatement();
   }
