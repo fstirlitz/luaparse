@@ -18,13 +18,19 @@
     // Detect the popular CommonJS extension `module.exports`
     , moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
 
-  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
+  /* istanbul ignore else */
+  if (freeGlobal && (freeGlobal.global === freeGlobal ||
+                     /* istanbul ignore next */ freeGlobal.window === freeGlobal ||
+                     /* istanbul ignore next */ freeGlobal.self === freeGlobal)) {
     root = freeGlobal;
   }
 
   // Some AMD build optimizers, like r.js, check for specific condition
   // patterns like the following:
-  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+  /* istanbul ignore if */
+  if (typeof define === 'function' &&
+      /* istanbul ignore next */ typeof define.amd === 'object' &&
+      /* istanbul ignore next */ define.amd) {
     // defined as an anonymous module.
     define(['exports'], factory);
     // In case the source has been processed and wrapped in a define module use
@@ -33,8 +39,9 @@
   }
   // check for `exports` after `define` in case a build optimizer adds an
   // `exports` object
-  else if (freeExports && freeModule) {
+  else /* istanbul ignore else */ if (freeExports && freeModule) {
     // in Node.js or RingoJS v0.8.0+
+    /* istanbul ignore else */
     if (moduleExports) factory(freeModule.exports);
     // in Narwhal or RingoJS v0.7.0-
     else factory(freeExports);
@@ -419,7 +426,7 @@
   function sprintf(format) {
     var args = slice.call(arguments, 1);
     format = format.replace(/%(\d)/g, function (match, index) {
-      return '' + args[index - 1] || '';
+      return '' + args[index - 1] || /* istanbul ignore next */ '';
     });
     return format;
   }
@@ -438,9 +445,11 @@
 
     for (var i = 0, length = args.length; i < length; i++) {
       src = args[i];
-      for (prop in src) if (src.hasOwnProperty(prop)) {
-        dest[prop] = src[prop];
-      }
+      for (prop in src)
+        /* istanbul ignore else */
+        if (src.hasOwnProperty(prop)) {
+          dest[prop] = src[prop];
+        }
     }
     return dest;
   }
@@ -2244,6 +2253,7 @@
     if (options.comments) chunk.comments = comments;
     if (options.scope) chunk.globals = globals;
 
+    /* istanbul ignore if */
     if (locations.length > 0)
       throw new Error('Location tracking failed. This is most likely a bug in luaparse');
 
