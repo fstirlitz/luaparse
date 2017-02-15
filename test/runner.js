@@ -52,6 +52,22 @@
     // Create the test suite.
     , suite = new Spec.Suite('Luaparse Unit Tests');
 
+  if (!('assign' in Object)) {
+    Object.assign = function () {
+      var args = arguments;
+      var target = args[0];
+      for (var i = 1; i < args.length; ++i) {
+        var source = args[i];
+        for (var k in source) {
+          if (!Object.prototype.hasOwnProperty.call(source, k))
+            continue;
+          target[k] = source[k];
+        }
+      }
+      return target;
+    }
+  }
+
   function escapeString(string) {
     return string.replace(/\n/g, '\\n')
       .replace(/\r/g, '\\r')
