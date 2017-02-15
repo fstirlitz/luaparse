@@ -63,6 +63,142 @@
       "result": "[1:0] unexpected symbol 'nil' near '<eof>'"
     },
     {
+      "source": "return;",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "ReturnStatement",
+            "arguments": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": ";",
+      "result": "[1:0] unexpected symbol ';' near '<eof>'"
+    },
+    {
+      "source": "return;",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "ReturnStatement",
+            "arguments": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
+    },
+    {
+      "source": "return;;",
+      "result": "[1:7] unexpected symbol ';' near '<eof>'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
+    },
+    {
+      "source": ";",
+      "result": {
+        "type": "Chunk",
+        "body": [],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 1
+          }
+        },
+        "range": [
+          0,
+          1
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
+    },
+    {
       "source": "::foo",
       "result": "[1:5] '::' expected near '<eof>'",
       "options": {

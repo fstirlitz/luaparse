@@ -1423,6 +1423,7 @@
         break;
       }
       statement = parseStatement();
+      consume(';');
       // Statements are only added if they are returned, this allows us to
       // ignore some statements, such as EmptyStatement.
       if (statement) block.push(statement);
@@ -1465,7 +1466,9 @@
     if (trackLocations) locations.pop();
 
     // When a `;` is encounted, simply eat it without storing it.
-    if (consume(';')) return;
+    if (options.luaVersion === '5.2' || options.luaVersion === '5.3') {
+      if (consume(';')) return;
+    }
 
     return parseAssignmentOrCallStatement();
   }
