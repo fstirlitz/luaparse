@@ -83,7 +83,8 @@
     // A callback which will be invoked when a local variable is declared in the current scope.
     // The variable's name will be passed as the only parameter
     , onLocalDeclaration: null
-    // The version of Lua targeted by the parser (string; allowed values are '5.1', '5.2', '5.3'.)
+    // The version of Lua targeted by the parser (string; allowed values are
+    // '5.1', '5.2', '5.3').
     , luaVersion: '5.1'
   };
 

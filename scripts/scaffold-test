@@ -80,14 +80,13 @@ function scaffoldTest() {
 
     // Interpret "@@" escapes.
     snippet = snippet.replace(/@(.)@/g, function (m, s) {
-        return ({
-            'n': '\n',
-            'r': '\r',
-            't': '\t',
-            'f': '\f',
-            'v': '\v',
-            'b': '\b'
-        })[s] || s;
+      return ({ 'n': '\n'
+              , 'r': '\r'
+              , 't': '\t'
+              , 'f': '\f'
+              , 'v': '\v'
+              , 'b': '\b'
+              })[s] || s;
     });
 
     // Generate the assertion.
