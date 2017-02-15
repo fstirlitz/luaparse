@@ -65,7 +65,7 @@
         }
       }
       return target;
-    }
+    };
   }
 
   function escapeString(string) {

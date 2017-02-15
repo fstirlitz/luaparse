@@ -1169,9 +1169,9 @@
       }
     }
 
-    raise({}, isComment
-              ? errors.unfinishedLongComment
-              : errors.unfinishedLongString,
+    raise({}, isComment ?
+              errors.unfinishedLongComment :
+              errors.unfinishedLongString,
           firstLine, '<eof>');
   }
 
