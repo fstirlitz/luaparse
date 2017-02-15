@@ -18,13 +18,19 @@
     // Detect the popular CommonJS extension `module.exports`
     , moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
 
-  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
+  /* istanbul ignore else */
+  if (freeGlobal && (freeGlobal.global === freeGlobal ||
+                     /* istanbul ignore next */ freeGlobal.window === freeGlobal ||
+                     /* istanbul ignore next */ freeGlobal.self === freeGlobal)) {
     root = freeGlobal;
   }
 
   // Some AMD build optimizers, like r.js, check for specific condition
   // patterns like the following:
-  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+  /* istanbul ignore if */
+  if (typeof define === 'function' &&
+      /* istanbul ignore next */ typeof define.amd === 'object' &&
+      /* istanbul ignore next */ define.amd) {
     // defined as an anonymous module.
     define(['exports'], factory);
     // In case the source has been processed and wrapped in a define module use
@@ -33,8 +39,9 @@
   }
   // check for `exports` after `define` in case a build optimizer adds an
   // `exports` object
-  else if (freeExports && freeModule) {
+  else /* istanbul ignore else */ if (freeExports && freeModule) {
     // in Node.js or RingoJS v0.8.0+
+    /* istanbul ignore else */
     if (moduleExports) factory(freeModule.exports);
     // in Narwhal or RingoJS v0.7.0-
     else factory(freeExports);
@@ -76,7 +83,8 @@
     // A callback which will be invoked when a local variable is declared in the current scope.
     // The variable's name will be passed as the only parameter
     , onLocalDeclaration: null
-    // The version of Lua targeted by the parser (string; allowed values are '5.1', '5.2', '5.3'.)
+    // The version of Lua targeted by the parser (string; allowed values are
+    // '5.1', '5.2', '5.3').
     , luaVersion: '5.1'
   };
 
@@ -108,6 +116,8 @@
     , hexadecimalDigitExpected: 'hexadecimal digit expected near \'%1\''
     , braceExpected: 'missing \'%1\' near \'%2\''
     , tooLargeCodepoint: 'UTF-8 value too large near \'%1\''
+    , unfinishedLongString: 'unfinished long string (starting at line %1) near \'%2\''
+    , unfinishedLongComment: 'unfinished long comment (starting at line %1) near \'%2\''
   };
 
   // ### Abstract Syntax Tree
@@ -419,7 +429,7 @@
   function sprintf(format) {
     var args = slice.call(arguments, 1);
     format = format.replace(/%(\d)/g, function (match, index) {
-      return '' + args[index - 1] || '';
+      return '' + args[index - 1] || /* istanbul ignore next */ '';
     });
     return format;
   }
@@ -438,9 +448,11 @@
 
     for (var i = 0, length = args.length; i < length; i++) {
       src = args[i];
-      for (prop in src) if (src.hasOwnProperty(prop)) {
-        dest[prop] = src[prop];
-      }
+      for (prop in src)
+        /* istanbul ignore else */
+        if (src.hasOwnProperty(prop)) {
+          dest[prop] = src[prop];
+        }
     }
     return dest;
   }
@@ -504,8 +516,8 @@
   //
   // If there's no token in the buffer it means we have reached <eof>.
 
-  function unexpected(found, near) {
-    if ('undefined' === typeof near) near = lookahead.value;
+  function unexpected(found) {
+    var near = lookahead.value;
     if ('undefined' !== typeof found.type) {
       var type;
       switch (found.type) {
@@ -782,7 +794,7 @@
   function scanLongStringLiteral() {
     var beginLine = line
       , beginLineStart = lineStart
-      , string = readLongString();
+      , string = readLongString(false);
     // Fail if it's not a multiline literal.
     if (false === string) raise(token, errors.expected, '[', token.value);
 
@@ -1077,7 +1089,7 @@
       , lineComment = line;
 
     if ('[' === character) {
-      content = readLongString();
+      content = readLongString(true);
       // This wasn't a multiline comment after all.
       if (false === content) content = character;
       else isLong = true;
@@ -1113,11 +1125,11 @@
   // Read a multiline string by calculating the depth of `=` characters and
   // then appending until an equal depth is found.
 
-  function readLongString() {
+  function readLongString(isComment) {
     var level = 0
       , content = ''
       , terminator = false
-      , character, stringStart;
+      , character, stringStart, firstLine = line;
 
     index++; // [
 
@@ -1150,12 +1162,17 @@
       }
 
       // We reached the end of the multiline string. Get out now.
-      if (terminator) break;
+      if (terminator) {
+        content += input.slice(stringStart, index - 1);
+        index += level + 1;
+        return content;
+      }
     }
-    content += input.slice(stringStart, index - 1);
-    index += level + 1;
 
-    return content;
+    raise({}, isComment ?
+              errors.unfinishedLongComment :
+              errors.unfinishedLongString,
+          firstLine, '<eof>');
   }
 
   // ## Lex functions and helpers.
@@ -1414,6 +1431,7 @@
         break;
       }
       statement = parseStatement();
+      consume(';');
       // Statements are only added if they are returned, this allows us to
       // ignore some statements, such as EmptyStatement.
       if (statement) block.push(statement);
@@ -1456,7 +1474,9 @@
     if (trackLocations) locations.pop();
 
     // When a `;` is encounted, simply eat it without storing it.
-    if (consume(';')) return;
+    if (options.luaVersion === '5.2' || options.luaVersion === '5.3') {
+      if (consume(';')) return;
+    }
 
     return parseAssignmentOrCallStatement();
   }
@@ -2244,6 +2264,7 @@
     if (options.comments) chunk.comments = comments;
     if (options.scope) chunk.globals = globals;
 
+    /* istanbul ignore if */
     if (locations.length > 0)
       throw new Error('Location tracking failed. This is most likely a bug in luaparse');
 

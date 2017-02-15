@@ -16,1023 +16,599 @@
   'use strict';
 
   exports.name = 'conditional';
-  exports.spec = {
-    "if": "[1:2] <expression> expected near '<eof>'",
-    "elseif": "[1:0] unexpected keyword 'elseif' near '<eof>'",
-    "else": "[1:0] unexpected keyword 'else' near '<eof>'",
-    "then": "[1:0] unexpected keyword 'then' near '<eof>'",
-    "if then": "[1:3] <expression> expected near 'then'",
-    "if 1": "[1:4] 'then' expected near '<eof>'",
-    "if 1 then": "[1:9] 'end' expected near '<eof>'",
-    "if 1 else": "[1:5] 'then' expected near 'else'",
-    "if 1 then else": "[1:14] 'end' expected near '<eof>'",
-    "if 1 then elseif": "[1:16] <expression> expected near '<eof>'",
-    "if 1 then end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 13
-                }
-              },
-              "range": [
-                0,
-                13
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 13
-            }
-          },
-          "range": [
-            0,
-            13
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 13
-        }
-      },
-      "range": [
-        0,
-        13
-      ],
-      "comments": [],
-      "globals": []
+  exports.spec = [
+    {
+      "source": "if",
+      "result": "[1:2] <expression> expected near '<eof>'"
     },
-    "if 1 then local a end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "a",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 16
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 17
-                        }
-                      },
-                      "range": [
-                        16,
-                        17
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 10
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 17
-                    }
-                  },
-                  "range": [
-                    10,
-                    17
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 21
-                }
-              },
-              "range": [
-                0,
-                21
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 21
-            }
-          },
-          "range": [
-            0,
-            21
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 21
-        }
-      },
-      "range": [
-        0,
-        21
-      ],
-      "comments": [],
-      "globals": []
+    {
+      "source": "elseif",
+      "result": "[1:0] unexpected keyword 'elseif' near '<eof>'"
     },
-    "if 1 then local a local b end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "a",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 16
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 17
-                        }
-                      },
-                      "range": [
-                        16,
-                        17
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 10
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 17
-                    }
-                  },
-                  "range": [
-                    10,
-                    17
-                  ]
-                },
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "b",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 24
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 25
-                        }
-                      },
-                      "range": [
-                        24,
-                        25
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 18
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 25
-                    }
-                  },
-                  "range": [
-                    18,
-                    25
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 29
-                }
-              },
-              "range": [
-                0,
-                29
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 29
-            }
-          },
-          "range": [
-            0,
-            29
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 29
-        }
-      },
-      "range": [
-        0,
-        29
-      ],
-      "comments": [],
-      "globals": []
+    {
+      "source": "else",
+      "result": "[1:0] unexpected keyword 'else' near '<eof>'"
     },
-    "if 1 then local a; local b; end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "a",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 16
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 17
-                        }
-                      },
-                      "range": [
-                        16,
-                        17
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 10
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 17
-                    }
-                  },
-                  "range": [
-                    10,
-                    17
-                  ]
-                },
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "b",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 25
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 26
-                        }
-                      },
-                      "range": [
-                        25,
-                        26
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 19
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 26
-                    }
-                  },
-                  "range": [
-                    19,
-                    26
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 31
-                }
-              },
-              "range": [
-                0,
-                31
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 31
-            }
-          },
-          "range": [
-            0,
-            31
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 31
-        }
-      },
-      "range": [
-        0,
-        31
-      ],
-      "comments": [],
-      "globals": []
+    {
+      "source": "then",
+      "result": "[1:0] unexpected keyword 'then' near '<eof>'"
     },
-    "if 1 then else end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 18
-                }
-              },
-              "range": [
-                0,
-                18
-              ]
-            },
-            {
-              "type": "ElseClause",
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 10
-                },
-                "end": {
-                  "line": 1,
-                  "column": 14
-                }
-              },
-              "range": [
-                10,
-                14
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 18
-            }
-          },
-          "range": [
-            0,
-            18
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 18
-        }
-      },
-      "range": [
-        0,
-        18
-      ],
-      "comments": [],
-      "globals": []
+    {
+      "source": "if then",
+      "result": "[1:3] <expression> expected near 'then'"
     },
-    "if 1 then local a else local b end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "a",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 16
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 17
-                        }
-                      },
-                      "range": [
-                        16,
-                        17
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 10
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 17
-                    }
-                  },
-                  "range": [
-                    10,
-                    17
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 34
-                }
-              },
-              "range": [
-                0,
-                34
-              ]
-            },
-            {
-              "type": "ElseClause",
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "b",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 29
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 30
-                        }
-                      },
-                      "range": [
-                        29,
-                        30
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 23
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 30
-                    }
-                  },
-                  "range": [
-                    23,
-                    30
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 18
-                },
-                "end": {
-                  "line": 1,
-                  "column": 30
-                }
-              },
-              "range": [
-                18,
-                30
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 34
-            }
-          },
-          "range": [
-            0,
-            34
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 34
-        }
-      },
-      "range": [
-        0,
-        34
-      ],
-      "comments": [],
-      "globals": []
+    {
+      "source": "if 1",
+      "result": "[1:4] 'then' expected near '<eof>'"
     },
-    "if 1 then local a; else local b; end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "a",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 16
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 17
-                        }
-                      },
-                      "range": [
-                        16,
-                        17
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 10
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 17
-                    }
-                  },
-                  "range": [
-                    10,
-                    17
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 36
-                }
-              },
-              "range": [
-                0,
-                36
-              ]
-            },
-            {
-              "type": "ElseClause",
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "b",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 30
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 31
-                        }
-                      },
-                      "range": [
-                        30,
-                        31
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 24
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 31
-                    }
-                  },
-                  "range": [
-                    24,
-                    31
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 19
-                },
-                "end": {
-                  "line": 1,
-                  "column": 32
-                }
-              },
-              "range": [
-                19,
-                32
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 36
-            }
-          },
-          "range": [
-            0,
-            36
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 36
-        }
-      },
-      "range": [
-        0,
-        36
-      ],
-      "comments": [],
-      "globals": []
+    {
+      "source": "if 1 then",
+      "result": "[1:9] 'end' expected near '<eof>'"
     },
-    "if 1 then elseif 2": "[1:18] 'then' expected near '<eof>'",
-    "if 1 then elseif 2 then": "[1:23] 'end' expected near '<eof>'",
-    "if 1 then elseif 2 then end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
+    {
+      "source": "if 1 else",
+      "result": "[1:5] 'then' expected near 'else'"
+    },
+    {
+      "source": "if 1 then else",
+      "result": "[1:14] 'end' expected near '<eof>'"
+    },
+    {
+      "source": "if 1 then elseif",
+      "result": "[1:16] <expression> expected near '<eof>'"
+    },
+    {
+      "source": "if 1 then end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [],
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 3
+                    "column": 0
                   },
                   "end": {
                     "line": 1,
-                    "column": 4
+                    "column": 13
                   }
                 },
                 "range": [
-                  3,
-                  4
+                  0,
+                  13
                 ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 27
-                }
-              },
-              "range": [
-                0,
-                27
-              ]
+              "end": {
+                "line": 1,
+                "column": 13
+              }
             },
-            {
-              "type": "ElseifClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 2,
-                "raw": "2",
+            "range": [
+              0,
+              13
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 13
+          }
+        },
+        "range": [
+          0,
+          13
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then local a end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "a",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17
+                          }
+                        },
+                        "range": [
+                          16,
+                          17
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17
+                      }
+                    },
+                    "range": [
+                      10,
+                      17
+                    ]
+                  }
+                ],
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 17
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 21
+                  }
+                },
+                "range": [
+                  0,
+                  21
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 21
+              }
+            },
+            "range": [
+              0,
+              21
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 21
+          }
+        },
+        "range": [
+          0,
+          21
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then local a local b end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "a",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17
+                          }
+                        },
+                        "range": [
+                          16,
+                          17
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17
+                      }
+                    },
+                    "range": [
+                      10,
+                      17
+                    ]
+                  },
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "b",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 24
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 25
+                          }
+                        },
+                        "range": [
+                          24,
+                          25
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 18
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 25
+                      }
+                    },
+                    "range": [
+                      18,
+                      25
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 29
+                  }
+                },
+                "range": [
+                  0,
+                  29
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 29
+              }
+            },
+            "range": [
+              0,
+              29
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 29
+          }
+        },
+        "range": [
+          0,
+          29
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then local a; local b; end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "a",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17
+                          }
+                        },
+                        "range": [
+                          16,
+                          17
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17
+                      }
+                    },
+                    "range": [
+                      10,
+                      17
+                    ]
+                  },
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "b",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 25
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 26
+                          }
+                        },
+                        "range": [
+                          25,
+                          26
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 19
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 26
+                      }
+                    },
+                    "range": [
+                      19,
+                      26
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 31
+                  }
+                },
+                "range": [
+                  0,
+                  31
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 31
+              }
+            },
+            "range": [
+              0,
+              31
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 31
+          }
+        },
+        "range": [
+          0,
+          31
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then else end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
                   },
                   "end": {
                     "line": 1,
@@ -1040,347 +616,461 @@
                   }
                 },
                 "range": [
-                  17,
+                  0,
                   18
                 ]
               },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 10
+              {
+                "type": "ElseClause",
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 10
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
                 },
-                "end": {
-                  "line": 1,
-                  "column": 23
-                }
+                "range": [
+                  10,
+                  14
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
-              "range": [
-                10,
-                23
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+              "end": {
+                "line": 1,
+                "column": 18
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 27
-            }
+            "range": [
+              0,
+              18
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "range": [
-            0,
-            27
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 18
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 27
-        }
-      },
-      "range": [
-        0,
-        27
-      ],
-      "comments": [],
-      "globals": []
+        "range": [
+          0,
+          18
+        ],
+        "comments": [],
+        "globals": []
+      }
     },
-    "if 1 then local a elseif 2 then local b end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "a",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 16
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 17
-                        }
-                      },
-                      "range": [
-                        16,
-                        17
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
+    {
+      "source": "if 1 then local a else local b end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 10
+                      "column": 3
                     },
                     "end": {
                       "line": 1,
-                      "column": 17
+                      "column": 4
                     }
                   },
                   "range": [
-                    10,
-                    17
+                    3,
+                    4
                   ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
                 },
-                "end": {
-                  "line": 1,
-                  "column": 43
-                }
-              },
-              "range": [
-                0,
-                43
-              ]
-            },
-            {
-              "type": "ElseifClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 2,
-                "raw": "2",
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "a",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17
+                          }
+                        },
+                        "range": [
+                          16,
+                          17
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17
+                      }
+                    },
+                    "range": [
+                      10,
+                      17
+                    ]
+                  }
+                ],
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 25
+                    "column": 0
                   },
                   "end": {
                     "line": 1,
-                    "column": 26
+                    "column": 34
                   }
                 },
                 "range": [
-                  25,
-                  26
+                  0,
+                  34
                 ]
               },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "b",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 38
+              {
+                "type": "ElseClause",
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "b",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 29
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 30
+                          }
                         },
-                        "end": {
-                          "line": 1,
-                          "column": 39
-                        }
+                        "range": [
+                          29,
+                          30
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 23
                       },
-                      "range": [
-                        38,
-                        39
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 32
+                      "end": {
+                        "line": 1,
+                        "column": 30
+                      }
                     },
-                    "end": {
-                      "line": 1,
-                      "column": 39
-                    }
+                    "range": [
+                      23,
+                      30
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 18
                   },
-                  "range": [
-                    32,
-                    39
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 18
+                  "end": {
+                    "line": 1,
+                    "column": 30
+                  }
                 },
-                "end": {
-                  "line": 1,
-                  "column": 39
-                }
+                "range": [
+                  18,
+                  30
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
-              "range": [
-                18,
-                39
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+              "end": {
+                "line": 1,
+                "column": 34
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 43
-            }
+            "range": [
+              0,
+              34
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "range": [
-            0,
-            43
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 34
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 43
-        }
-      },
-      "range": [
-        0,
-        43
-      ],
-      "comments": [],
-      "globals": []
+        "range": [
+          0,
+          34
+        ],
+        "comments": [],
+        "globals": []
+      }
     },
-    "if 1 then local a; elseif 2 then local b; end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "a",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 16
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 17
-                        }
-                      },
-                      "range": [
-                        16,
-                        17
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
+    {
+      "source": "if 1 then local a; else local b; end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 10
+                      "column": 3
                     },
                     "end": {
                       "line": 1,
-                      "column": 17
+                      "column": 4
                     }
                   },
                   "range": [
-                    10,
-                    17
+                    3,
+                    4
                   ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
                 },
-                "end": {
-                  "line": 1,
-                  "column": 45
-                }
-              },
-              "range": [
-                0,
-                45
-              ]
-            },
-            {
-              "type": "ElseifClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 2,
-                "raw": "2",
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "a",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17
+                          }
+                        },
+                        "range": [
+                          16,
+                          17
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17
+                      }
+                    },
+                    "range": [
+                      10,
+                      17
+                    ]
+                  }
+                ],
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 26
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 36
+                  }
+                },
+                "range": [
+                  0,
+                  36
+                ]
+              },
+              {
+                "type": "ElseClause",
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "b",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 30
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 31
+                          }
+                        },
+                        "range": [
+                          30,
+                          31
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 24
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 31
+                      }
+                    },
+                    "range": [
+                      24,
+                      31
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 19
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 32
+                  }
+                },
+                "range": [
+                  19,
+                  32
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 36
+              }
+            },
+            "range": [
+              0,
+              36
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 36
+          }
+        },
+        "range": [
+          0,
+          36
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then elseif 2",
+      "result": "[1:18] 'then' expected near '<eof>'"
+    },
+    {
+      "source": "if 1 then elseif 2 then",
+      "result": "[1:23] 'end' expected near '<eof>'"
+    },
+    {
+      "source": "if 1 then elseif 2 then end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
                   },
                   "end": {
                     "line": 1,
@@ -1388,550 +1078,229 @@
                   }
                 },
                 "range": [
-                  26,
+                  0,
                   27
                 ]
               },
-              "body": [
-                {
-                  "type": "LocalStatement",
-                  "variables": [
-                    {
-                      "type": "Identifier",
-                      "name": "b",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 39
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 40
-                        }
-                      },
-                      "range": [
-                        39,
-                        40
-                      ],
-                      "isLocal": true
-                    }
-                  ],
-                  "init": [],
+              {
+                "type": "ElseifClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 2,
+                  "raw": "2",
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 33
+                      "column": 17
                     },
                     "end": {
                       "line": 1,
-                      "column": 40
+                      "column": 18
                     }
                   },
                   "range": [
-                    33,
-                    40
+                    17,
+                    18
                   ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 19
                 },
-                "end": {
-                  "line": 1,
-                  "column": 41
-                }
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 10
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23
+                  }
+                },
+                "range": [
+                  10,
+                  23
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
-              "range": [
-                19,
-                41
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+              "end": {
+                "line": 1,
+                "column": 27
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 45
-            }
+            "range": [
+              0,
+              27
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "range": [
-            0,
-            45
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 27
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 45
-        }
-      },
-      "range": [
-        0,
-        45
-      ],
-      "comments": [],
-      "globals": []
+        "range": [
+          0,
+          27
+        ],
+        "comments": [],
+        "globals": []
+      }
     },
-    "if 1 then elseif 2 then else end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
+    {
+      "source": "if 1 then local a elseif 2 then local b end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
                   },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
+                  "range": [
+                    3,
+                    4
+                  ]
                 },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 32
-                }
-              },
-              "range": [
-                0,
-                32
-              ]
-            },
-            {
-              "type": "ElseifClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 2,
-                "raw": "2",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 17
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 18
-                  }
-                },
-                "range": [
-                  17,
-                  18
-                ]
-              },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 10
-                },
-                "end": {
-                  "line": 1,
-                  "column": 23
-                }
-              },
-              "range": [
-                10,
-                23
-              ]
-            },
-            {
-              "type": "ElseClause",
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 24
-                },
-                "end": {
-                  "line": 1,
-                  "column": 28
-                }
-              },
-              "range": [
-                24,
-                28
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 32
-            }
-          },
-          "range": [
-            0,
-            32
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 32
-        }
-      },
-      "range": [
-        0,
-        32
-      ],
-      "comments": [],
-      "globals": []
-    },
-    "if 1 then else if 2 then end end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 32
-                }
-              },
-              "range": [
-                0,
-                32
-              ]
-            },
-            {
-              "type": "ElseClause",
-              "body": [
-                {
-                  "type": "IfStatement",
-                  "clauses": [
-                    {
-                      "type": "IfClause",
-                      "condition": {
-                        "type": "NumericLiteral",
-                        "value": 2,
-                        "raw": "2",
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "a",
                         "loc": {
                           "start": {
                             "line": 1,
-                            "column": 18
+                            "column": 16
                           },
                           "end": {
                             "line": 1,
-                            "column": 19
+                            "column": 17
                           }
                         },
                         "range": [
-                          18,
-                          19
-                        ]
+                          16,
+                          17
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
                       },
-                      "body": [],
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 15
+                      "end": {
+                        "line": 1,
+                        "column": 17
+                      }
+                    },
+                    "range": [
+                      10,
+                      17
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 43
+                  }
+                },
+                "range": [
+                  0,
+                  43
+                ]
+              },
+              {
+                "type": "ElseifClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 2,
+                  "raw": "2",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 25
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 26
+                    }
+                  },
+                  "range": [
+                    25,
+                    26
+                  ]
+                },
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "b",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 38
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 39
+                          }
                         },
-                        "end": {
-                          "line": 1,
-                          "column": 28
-                        }
+                        "range": [
+                          38,
+                          39
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 32
                       },
-                      "range": [
-                        15,
-                        28
-                      ]
-                    }
-                  ],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 15
+                      "end": {
+                        "line": 1,
+                        "column": 39
+                      }
                     },
-                    "end": {
-                      "line": 1,
-                      "column": 28
-                    }
-                  },
-                  "range": [
-                    15,
-                    28
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 10
-                },
-                "end": {
-                  "line": 1,
-                  "column": 28
-                }
-              },
-              "range": [
-                10,
-                28
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 32
-            }
-          },
-          "range": [
-            0,
-            32
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 32
-        }
-      },
-      "range": [
-        0,
-        32
-      ],
-      "comments": [],
-      "globals": []
-    },
-    "if 1 then else if 2 then end": "[1:28] 'end' expected near '<eof>'",
-    "if 1 then return end": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
+                    "range": [
+                      32,
+                      39
+                    ]
                   }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [
-                {
-                  "type": "ReturnStatement",
-                  "arguments": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 10
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 16
-                    }
-                  },
-                  "range": [
-                    10,
-                    16
-                  ]
-                }
-              ],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 20
-                }
-              },
-              "range": [
-                0,
-                20
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 20
-            }
-          },
-          "range": [
-            0,
-            20
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 20
-        }
-      },
-      "range": [
-        0,
-        20
-      ],
-      "comments": [],
-      "globals": []
-    },
-    "if 1 then return return end": "[1:17] 'end' expected near 'return'",
-    "if 1 then end; if 1 then end;": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 3
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 4
-                  }
-                },
-                "range": [
-                  3,
-                  4
-                ]
-              },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 13
-                }
-              },
-              "range": [
-                0,
-                13
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 13
-            }
-          },
-          "range": [
-            0,
-            13
-          ]
-        },
-        {
-          "type": "IfStatement",
-          "clauses": [
-            {
-              "type": "IfClause",
-              "condition": {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
+                ],
                 "loc": {
                   "start": {
                     "line": 1,
@@ -1939,65 +1308,786 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 19
+                    "column": 39
                   }
                 },
                 "range": [
                   18,
-                  19
+                  39
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 43
+              }
+            },
+            "range": [
+              0,
+              43
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 43
+          }
+        },
+        "range": [
+          0,
+          43
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then local a; elseif 2 then local b; end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "a",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17
+                          }
+                        },
+                        "range": [
+                          16,
+                          17
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17
+                      }
+                    },
+                    "range": [
+                      10,
+                      17
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 45
+                  }
+                },
+                "range": [
+                  0,
+                  45
                 ]
               },
-              "body": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 15
+              {
+                "type": "ElseifClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 2,
+                  "raw": "2",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 26
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 27
+                    }
+                  },
+                  "range": [
+                    26,
+                    27
+                  ]
                 },
-                "end": {
-                  "line": 1,
-                  "column": 28
-                }
+                "body": [
+                  {
+                    "type": "LocalStatement",
+                    "variables": [
+                      {
+                        "type": "Identifier",
+                        "name": "b",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 39
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 40
+                          }
+                        },
+                        "range": [
+                          39,
+                          40
+                        ],
+                        "isLocal": true
+                      }
+                    ],
+                    "init": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 33
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 40
+                      }
+                    },
+                    "range": [
+                      33,
+                      40
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 19
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 41
+                  }
+                },
+                "range": [
+                  19,
+                  41
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
-              "range": [
-                15,
-                28
-              ]
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 15
+              "end": {
+                "line": 1,
+                "column": 45
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 28
-            }
+            "range": [
+              0,
+              45
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "range": [
-            15,
-            28
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 45
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 29
-        }
-      },
-      "range": [
-        0,
-        29
-      ],
-      "comments": [],
-      "globals": []
+        "range": [
+          0,
+          45
+        ],
+        "comments": [],
+        "globals": []
+      }
     },
-    "if then end": "[1:3] <expression> expected near 'then'",
-    "if 1 then elseif then end": "[1:17] <expression> expected near 'then'"
-  };
+    {
+      "source": "if 1 then elseif 2 then else end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 32
+                  }
+                },
+                "range": [
+                  0,
+                  32
+                ]
+              },
+              {
+                "type": "ElseifClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 2,
+                  "raw": "2",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 17
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 18
+                    }
+                  },
+                  "range": [
+                    17,
+                    18
+                  ]
+                },
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 10
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23
+                  }
+                },
+                "range": [
+                  10,
+                  23
+                ]
+              },
+              {
+                "type": "ElseClause",
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 24
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 28
+                  }
+                },
+                "range": [
+                  24,
+                  28
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 32
+              }
+            },
+            "range": [
+              0,
+              32
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 32
+          }
+        },
+        "range": [
+          0,
+          32
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then else if 2 then end end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 32
+                  }
+                },
+                "range": [
+                  0,
+                  32
+                ]
+              },
+              {
+                "type": "ElseClause",
+                "body": [
+                  {
+                    "type": "IfStatement",
+                    "clauses": [
+                      {
+                        "type": "IfClause",
+                        "condition": {
+                          "type": "NumericLiteral",
+                          "value": 2,
+                          "raw": "2",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 18
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 19
+                            }
+                          },
+                          "range": [
+                            18,
+                            19
+                          ]
+                        },
+                        "body": [],
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 15
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 28
+                          }
+                        },
+                        "range": [
+                          15,
+                          28
+                        ]
+                      }
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 15
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 28
+                      }
+                    },
+                    "range": [
+                      15,
+                      28
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 10
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 28
+                  }
+                },
+                "range": [
+                  10,
+                  28
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 32
+              }
+            },
+            "range": [
+              0,
+              32
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 32
+          }
+        },
+        "range": [
+          0,
+          32
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then else if 2 then end",
+      "result": "[1:28] 'end' expected near '<eof>'"
+    },
+    {
+      "source": "if 1 then return end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [
+                  {
+                    "type": "ReturnStatement",
+                    "arguments": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 10
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 16
+                      }
+                    },
+                    "range": [
+                      10,
+                      16
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  0,
+                  20
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 20
+              }
+            },
+            "range": [
+              0,
+              20
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 20
+          }
+        },
+        "range": [
+          0,
+          20
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if 1 then return return end",
+      "result": "[1:17] 'end' expected near 'return'"
+    },
+    {
+      "source": "if 1 then end; if 1 then end;",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 3
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 4
+                    }
+                  },
+                  "range": [
+                    3,
+                    4
+                  ]
+                },
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 13
+                  }
+                },
+                "range": [
+                  0,
+                  13
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 13
+              }
+            },
+            "range": [
+              0,
+              13
+            ]
+          },
+          {
+            "type": "IfStatement",
+            "clauses": [
+              {
+                "type": "IfClause",
+                "condition": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 18
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 19
+                    }
+                  },
+                  "range": [
+                    18,
+                    19
+                  ]
+                },
+                "body": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 15
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 28
+                  }
+                },
+                "range": [
+                  15,
+                  28
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 15
+              },
+              "end": {
+                "line": 1,
+                "column": 28
+              }
+            },
+            "range": [
+              15,
+              28
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 29
+          }
+        },
+        "range": [
+          0,
+          29
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "if then end",
+      "result": "[1:3] <expression> expected near 'then'"
+    },
+    {
+      "source": "if 1 then elseif then end",
+      "result": "[1:17] <expression> expected near 'then'"
+    }
+  ];
 }));

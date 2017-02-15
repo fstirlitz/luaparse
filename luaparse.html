@@ -114,7 +114,10 @@ use it as <code>window</code></p>
             
             <div class="content"><div class='highlight'><pre>    , moduleExports = freeModule &amp;&amp; freeModule.exports === freeExports &amp;&amp; freeExports;
 
-  <span class="hljs-keyword">if</span> (freeGlobal &amp;&amp; (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
+  <span class="hljs-comment">/* istanbul ignore else */</span>
+  <span class="hljs-keyword">if</span> (freeGlobal &amp;&amp; (freeGlobal.global === freeGlobal ||
+                     <span class="hljs-comment">/* istanbul ignore next */</span> freeGlobal.window === freeGlobal ||
+                     <span class="hljs-comment">/* istanbul ignore next */</span> freeGlobal.self === freeGlobal)) {
     root = freeGlobal;
   }</pre></div></div>
             
@@ -132,7 +135,10 @@ patterns like the following:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> define === <span class="hljs-string">'function'</span> &amp;&amp; <span class="hljs-keyword">typeof</span> define.amd === <span class="hljs-string">'object'</span> &amp;&amp; define.amd) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/* istanbul ignore if */</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> define === <span class="hljs-string">'function'</span> &amp;&amp;
+      <span class="hljs-comment">/* istanbul ignore next */</span> <span class="hljs-keyword">typeof</span> define.amd === <span class="hljs-string">'object'</span> &amp;&amp;
+      <span class="hljs-comment">/* istanbul ignore next */</span> define.amd) {</pre></div></div>
             
         </li>
         
@@ -180,7 +186,7 @@ the supplied <code>exports</code> object.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (freeExports &amp;&amp; freeModule) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">else</span> <span class="hljs-comment">/* istanbul ignore else */</span> <span class="hljs-keyword">if</span> (freeExports &amp;&amp; freeModule) {</pre></div></div>
             
         </li>
         
@@ -195,7 +201,8 @@ the supplied <code>exports</code> object.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (moduleExports) factory(freeModule.exports);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/* istanbul ignore else */</span>
+    <span class="hljs-keyword">if</span> (moduleExports) factory(freeModule.exports);</pre></div></div>
             
         </li>
         
@@ -401,7 +408,8 @@ The variable’s name will be passed as the only parameter</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
-              <p>The version of Lua targeted by the parser (string; allowed values are ‘5.1’, ‘5.2’, ‘5.3’.)</p>
+              <p>The version of Lua targeted by the parser (string; allowed values are
+‘5.1’, ‘5.2’, ‘5.3’).</p>
 
             </div>
             
@@ -460,6 +468,8 @@ will be different in some situations.</p>
     , <span class="hljs-attr">hexadecimalDigitExpected</span>: <span class="hljs-string">'hexadecimal digit expected near \'%1\''</span>
     , <span class="hljs-attr">braceExpected</span>: <span class="hljs-string">'missing \'%1\' near \'%2\''</span>
     , <span class="hljs-attr">tooLargeCodepoint</span>: <span class="hljs-string">'UTF-8 value too large near \'%1\''</span>
+    , <span class="hljs-attr">unfinishedLongString</span>: <span class="hljs-string">'unfinished long string (starting at line %1) near \'%2\''</span>
+    , <span class="hljs-attr">unfinishedLongComment</span>: <span class="hljs-string">'unfinished long comment (starting at line %1) near \'%2\''</span>
   };</pre></div></div>
             
         </li>
@@ -851,7 +861,7 @@ sprintf(<span class="hljs-string">'Unexpected %2 in %1.'</span>, <span class="hl
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sprintf</span>(<span class="hljs-params">format</span>) </span>{
     <span class="hljs-keyword">var</span> args = slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>);
     format = format.replace(<span class="hljs-regexp">/%(\d)/g</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">match, index</span>) </span>{
-      <span class="hljs-keyword">return</span> <span class="hljs-string">''</span> + args[index - <span class="hljs-number">1</span>] || <span class="hljs-string">''</span>;
+      <span class="hljs-keyword">return</span> <span class="hljs-string">''</span> + args[index - <span class="hljs-number">1</span>] || <span class="hljs-comment">/* istanbul ignore next */</span> <span class="hljs-string">''</span>;
     });
     <span class="hljs-keyword">return</span> format;
   }</pre></div></div>
@@ -880,9 +890,11 @@ arguments. Last argument takes precedence.</p>
 
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = args.length; i &lt; length; i++) {
       src = args[i];
-      <span class="hljs-keyword">for</span> (prop <span class="hljs-keyword">in</span> src) <span class="hljs-keyword">if</span> (src.hasOwnProperty(prop)) {
-        dest[prop] = src[prop];
-      }
+      <span class="hljs-keyword">for</span> (prop <span class="hljs-keyword">in</span> src)
+        <span class="hljs-comment">/* istanbul ignore else */</span>
+        <span class="hljs-keyword">if</span> (src.hasOwnProperty(prop)) {
+          dest[prop] = src[prop];
+        }
     }
     <span class="hljs-keyword">return</span> dest;
   }</pre></div></div>
@@ -983,8 +995,8 @@ unexpected(token);
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unexpected</span>(<span class="hljs-params">found, near</span>) </span>{
-    <span class="hljs-keyword">if</span> (<span class="hljs-string">'undefined'</span> === <span class="hljs-keyword">typeof</span> near) near = lookahead.value;
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unexpected</span>(<span class="hljs-params">found</span>) </span>{
+    <span class="hljs-keyword">var</span> near = lookahead.value;
     <span class="hljs-keyword">if</span> (<span class="hljs-string">'undefined'</span> !== <span class="hljs-keyword">typeof</span> found.type) {
       <span class="hljs-keyword">var</span> type;
       <span class="hljs-keyword">switch</span> (found.type) {
@@ -1465,7 +1477,7 @@ exception.</p>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scanLongStringLiteral</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">var</span> beginLine = line
       , beginLineStart = lineStart
-      , string = readLongString();</pre></div></div>
+      , string = readLongString(<span class="hljs-literal">false</span>);</pre></div></div>
             
         </li>
         
@@ -2043,7 +2055,7 @@ literals so we reuse the functionality.</p>
       , lineComment = line;
 
     <span class="hljs-keyword">if</span> (<span class="hljs-string">'['</span> === character) {
-      content = readLongString();</pre></div></div>
+      content = readLongString(<span class="hljs-literal">true</span>);</pre></div></div>
             
         </li>
         
@@ -2129,11 +2141,11 @@ then appending until an equal depth is found.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readLongString</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readLongString</span>(<span class="hljs-params">isComment</span>) </span>{
     <span class="hljs-keyword">var</span> level = <span class="hljs-number">0</span>
       , content = <span class="hljs-string">''</span>
       , terminator = <span class="hljs-literal">false</span>
-      , character, stringStart;
+      , character, stringStart, firstLine = line;
 
     index++; <span class="hljs-comment">// [</span></pre></div></div>
             
@@ -2240,12 +2252,17 @@ if it matches.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (terminator) <span class="hljs-keyword">break</span>;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (terminator) {
+        content += input.slice(stringStart, index - <span class="hljs-number">1</span>);
+        index += level + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span> content;
+      }
     }
-    content += input.slice(stringStart, index - <span class="hljs-number">1</span>);
-    index += level + <span class="hljs-number">1</span>;
 
-    <span class="hljs-keyword">return</span> content;
+    raise({}, isComment ?
+              errors.unfinishedLongComment :
+              errors.unfinishedLongString,
+          firstLine, <span class="hljs-string">'&lt;eof&gt;'</span>);
   }</pre></div></div>
             
         </li>
@@ -2868,7 +2885,8 @@ as its last statement.</p>
         block.push(parseStatement());
         <span class="hljs-keyword">break</span>;
       }
-      statement = parseStatement();</pre></div></div>
+      statement = parseStatement();
+      consume(<span class="hljs-string">';'</span>);</pre></div></div>
             
         </li>
         
@@ -2972,7 +2990,9 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">';'</span>)) <span class="hljs-keyword">return</span>;
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.2'</span> || options.luaVersion === <span class="hljs-string">'5.3'</span>) {
+      <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">';'</span>)) <span class="hljs-keyword">return</span>;
+    }
 
     <span class="hljs-keyword">return</span> parseAssignmentOrCallStatement();
   }</pre></div></div>
@@ -4552,6 +4572,7 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
     <span class="hljs-keyword">if</span> (options.comments) chunk.comments = comments;
     <span class="hljs-keyword">if</span> (options.scope) chunk.globals = globals;
 
+    <span class="hljs-comment">/* istanbul ignore if */</span>
     <span class="hljs-keyword">if</span> (locations.length &gt; <span class="hljs-number">0</span>)
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Location tracking failed. This is most likely a bug in luaparse'</span>);
 

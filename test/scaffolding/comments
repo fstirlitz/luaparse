@@ -11,3 +11,4 @@ if true--[[comment]]then end
 --[[@n@comment@n@line two@n@]]
 --[==@n@break --]]
 if true -- comment@n@then end
+--[=[x]x                                  -- FAIL
