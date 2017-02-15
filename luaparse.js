@@ -116,6 +116,8 @@
     , hexadecimalDigitExpected: 'hexadecimal digit expected near \'%1\''
     , braceExpected: 'missing \'%1\' near \'%2\''
     , tooLargeCodepoint: 'UTF-8 value too large near \'%1\''
+    , unfinishedLongString: 'unfinished long string (starting at line %1) near \'%2\''
+    , unfinishedLongComment: 'unfinished long comment (starting at line %1) near \'%2\''
   };
 
   // ### Abstract Syntax Tree
@@ -792,7 +794,7 @@
   function scanLongStringLiteral() {
     var beginLine = line
       , beginLineStart = lineStart
-      , string = readLongString();
+      , string = readLongString(false);
     // Fail if it's not a multiline literal.
     if (false === string) raise(token, errors.expected, '[', token.value);
 
@@ -1087,7 +1089,7 @@
       , lineComment = line;
 
     if ('[' === character) {
-      content = readLongString();
+      content = readLongString(true);
       // This wasn't a multiline comment after all.
       if (false === content) content = character;
       else isLong = true;
@@ -1123,11 +1125,11 @@
   // Read a multiline string by calculating the depth of `=` characters and
   // then appending until an equal depth is found.
 
-  function readLongString() {
+  function readLongString(isComment) {
     var level = 0
       , content = ''
       , terminator = false
-      , character, stringStart;
+      , character, stringStart, firstLine = line;
 
     index++; // [
 
@@ -1160,12 +1162,17 @@
       }
 
       // We reached the end of the multiline string. Get out now.
-      if (terminator) break;
+      if (terminator) {
+        content += input.slice(stringStart, index - 1);
+        index += level + 1;
+        return content;
+      }
     }
-    content += input.slice(stringStart, index - 1);
-    index += level + 1;
 
-    return content;
+    raise({}, isComment
+              ? errors.unfinishedLongComment
+              : errors.unfinishedLongString,
+          firstLine, '<eof>');
   }
 
   // ## Lex functions and helpers.

@@ -817,6 +817,10 @@
         ],
         "globals": []
       }
+    },
+    {
+      "source": "--[=[x]x",
+      "result": "[1:9] unfinished long comment (starting at line 1) near '<eof>'"
     }
   ];
 }));

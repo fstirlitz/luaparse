@@ -3300,6 +3300,18 @@
           }
         ]
       }
+    },
+    {
+      "source": "a = [=[]",
+      "result": "[1:9] unfinished long string (starting at line 1) near '<eof>'"
+    },
+    {
+      "source": "a = [=[x]",
+      "result": "[1:10] unfinished long string (starting at line 1) near '<eof>'"
+    },
+    {
+      "source": "a = [=[x]x",
+      "result": "[1:11] unfinished long string (starting at line 1) near '<eof>'"
     }
   ];
 }));
