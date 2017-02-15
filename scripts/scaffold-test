@@ -5,8 +5,6 @@
 
 var fs = require('fs')
   , luaparse = require('../')
-  , options = { scope: true, locations: true, ranges: true }
-  , defaultOptions = options
   , indent = '  '
   , verbose = true
   , testName
@@ -66,13 +64,15 @@ function scaffoldFile() {
 
 // Scaffold the test
 function scaffoldTest() {
-  var output = {};
+  var output = [];
+  var defaultOptions = { comments: true, locations: true, ranges: true, scope: true };
+  var options = defaultOptions;
 
   // Iterate over all snippets and generate their tests.
   snippets.forEach(function(snippet) {
     // Lines containing ^//{...}$ are luaparse options, use them.
     if (result = /^\/\/\s*(\{[\s\S]+\})\s*$/.exec(snippet)) {
-      options = Object.assign(Object.assign({}, defaultOptions), JSON.parse(result[1]));
+      options = Object.assign({}, options, JSON.parse(result[1]), defaultOptions);
       return;
     }
     // Skip lines beginning with `//` and that are not option objects.
@@ -91,7 +91,7 @@ function scaffoldTest() {
     });
 
     // Generate the assertion.
-    var result = scaffoldTestAssertion(snippet);
+    var result = scaffoldTestAssertion(snippet, options);
 
     // Remove the trailing FAIL flag as this will later be parsed as is by the
     // test suite. To identify failing tests we will check the type of the
@@ -99,18 +99,21 @@ function scaffoldTest() {
     // error.
     snippet = snippet.replace(/\s*-- FAIL\s*$/, '');
 
-    if (options !== defaultOptions) result = {
-      result: result,
-      options: options
+    var testcase = {
+      source: snippet,
+      result: result
     };
-    output[snippet] = result;
+
+    if (options !== defaultOptions)
+      testcase.options = Object.assign({}, options);
+    output.push(testcase);
   });
 
   return output;
 }
 
 // Scaffold a test case.
-function scaffoldTestAssertion(snippet) {
+function scaffoldTestAssertion(snippet, options) {
   var name = snippet // Store the original name with the FAIL flag.
     , expected
     , success = true;

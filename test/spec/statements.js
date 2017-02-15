@@ -16,56 +16,65 @@
   'use strict';
 
   exports.name = 'statements';
-  exports.spec = {
-    "break": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "BreakStatement",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+  exports.spec = [
+    {
+      "source": "break",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "BreakStatement",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
+            "range": [
+              0,
+              5
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 5
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": []
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": []
+      }
     },
-    "nil": "[1:0] unexpected symbol 'nil' near '<eof>'",
-    "::foo": {
+    {
+      "source": "nil",
+      "result": "[1:0] unexpected symbol 'nil' near '<eof>'"
+    },
+    {
+      "source": "::foo",
       "result": "[1:5] '::' expected near '<eof>'",
       "options": {
-        "scope": true,
+        "comments": true,
         "locations": true,
         "ranges": true,
+        "scope": true,
         "luaVersion": "5.2"
       }
     },
-    "::foo::": {
+    {
+      "source": "::foo::",
       "result": {
         "type": "Chunk",
         "body": [
@@ -124,22 +133,26 @@
         "globals": []
       },
       "options": {
-        "scope": true,
+        "comments": true,
         "locations": true,
         "ranges": true,
+        "scope": true,
         "luaVersion": "5.2"
       }
     },
-    "goto": {
+    {
+      "source": "goto",
       "result": "[1:4] <name> expected near '<eof>'",
       "options": {
-        "scope": true,
+        "comments": true,
         "locations": true,
         "ranges": true,
+        "scope": true,
         "luaVersion": "5.2"
       }
     },
-    "goto foo": {
+    {
+      "source": "goto foo",
       "result": {
         "type": "Chunk",
         "body": [
@@ -197,11 +210,12 @@
         "globals": []
       },
       "options": {
-        "scope": true,
+        "comments": true,
         "locations": true,
         "ranges": true,
+        "scope": true,
         "luaVersion": "5.2"
       }
     }
-  };
+  ];
 }));

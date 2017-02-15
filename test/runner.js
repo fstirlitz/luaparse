@@ -21,7 +21,6 @@
   var Spec = load('Spec', './lib/spec')
     , Newton = load('Newton', './lib/newton')
     , luaparse = load('luaparse', '../luaparse')
-    , options = { scope: true, locations: true, ranges: true }
     , specs = root.specs = [
         './spec/assignments'
       , './spec/comments'
@@ -78,8 +77,9 @@
   };
 
   // Expect the parsed AST to match.
-  Spec.Test.prototype.parses = function (source, expected, options) {
-    return this.deepEqual(luaparse.parse(source, options), expected, escapeString(source));
+  Spec.Test.prototype.parses = function (source, expected, options, variant) {
+    return this.deepEqual(luaparse.parse(source, options), expected, escapeString(source) +
+      (variant ? (' ' + variant) : ''));
   };
 
   Spec.Test.prototype.equalPrecedence = function (source, expected, options) {
@@ -102,17 +102,167 @@
 
   // Create a test, and delegate to appropiate test function.
   function addTest(testName, tests) {
+    // Make a semi-deep copy of the tree, modified by the visitor function.
+    function rebuildTree(node, visit) {
+      if (!node) return;
+
+      node = Object.assign({}, node);
+      visit(node);
+
+      function visitKey(key) {
+        if (!node[key]) return;
+
+        if (Array.isArray(node[key])) {
+          node[key] = node[key].map(function (item) {
+            return rebuildTree(item, visit);
+          });
+        } else
+          node[key] = rebuildTree(node[key], visit);
+      }
+
+      switch (node.type) {
+        case 'LocalStatement':
+        case 'AssignmentStatement':
+          visitKey('variables');
+          visitKey('init');
+          break;
+        case 'UnaryExpression':
+          visitKey('argument');
+          break;
+        case 'BinaryExpression':
+        case 'LogicalExpression':
+          visitKey('left');
+          visitKey('right');
+          break;
+        case 'FunctionDeclaration':
+          visitKey('identifier');
+          visitKey('parameters');
+          visitKey('body');
+          break;
+        case 'ForGenericStatement':
+          visitKey('variables');
+          visitKey('iterators');
+          visitKey('body');
+          break;
+        case 'IfClause':
+        case 'ElseifClause':
+        case 'WhileStatement':
+        case 'RepeatStatement':
+          visitKey('condition');
+          /* fall through */
+        case 'Chunk':
+        case 'ElseClause':
+        case 'DoStatement':
+          visitKey('body');
+          visitKey('globals');
+          visitKey('comments');
+          break;
+        case 'ForNumericStatement':
+          visitKey('variable');
+          visitKey('start');
+          visitKey('end');
+          visitKey('step');
+          visitKey('body');
+          break;
+        case 'ReturnStatement':
+          visitKey('arguments');
+          break;
+        case 'IfStatement':
+          visitKey('clauses');
+          break;
+        case 'MemberExpression':
+          visitKey('base');
+          visitKey('identifier');
+          break;
+        case 'IndexExpression':
+          visitKey('base');
+          visitKey('index');
+          break;
+        case 'LabelStatement':
+          visitKey('label');
+          break;
+        case 'CallStatement':
+          visitKey('expression');
+          break;
+        case 'GotoStatement':
+          visitKey('label');
+          break;
+        case 'TableConstructorExpression':
+          visitKey('fields');
+          break;
+        case 'TableKey':
+        case 'TableKeyString':
+          visitKey('key');
+          /* fall through */
+        case 'TableValue':
+          visitKey('value');
+          break;
+        case 'CallExpression':
+          visitKey('base');
+          visitKey('arguments');
+          break;
+        case 'TableCallExpression':
+          visitKey('base');
+          visitKey('arguments');
+          break;
+        case 'StringCallExpression':
+          visitKey('base');
+          visitKey('argument');
+          break;
+        case 'Identifier':
+        case 'NumericLiteral':
+        case 'BooleanLiteral':
+        case 'StringLiteral':
+        case 'NilLiteral':
+        case 'VarargLiteral':
+        case 'BreakStatement':
+        case 'Comment':
+          break;
+        default:
+          throw new Error('Unhandled ' + node.type);
+      }
+
+      return node;
+    }
+
     suite.addTest(testName, function() {
       var count = 0;
-      for (var source in tests) if (tests.hasOwnProperty(source)) {
-        var expected = tests[source];
-        if (typeof expected === 'string') this.parseError(source, expected, options);
-        else if (typeof expected.result === 'object')
-          this.deepEqual(luaparse.parse(source, expected.options || options), expected.result, expected.name || escapeString(source));
-        else if (typeof expected.result === 'string') this.parseError(source, expected.result, expected.options || options);
-        else this.parses(source, expected, options);
+      for (var i = 0; i < tests.length; ++i) {
+        var expected = tests[i].result;
+        var opts = Object.assign({}, tests[i].options,
+          { comments: true, locations: true, ranges: true, scope: true });
+        if (typeof expected === 'string') {
+          this.parseError(tests[i].source, expected, opts);
+          count++;
+        } else {
+          count += 5;
+          this.parses(tests[i].source, expected, opts);
 
-        count++;
+          opts.locations = false;
+          expected = rebuildTree(expected, function (node) {
+            delete node.loc;
+          });
+          this.parses(tests[i].source, expected, opts, '(no locations)');
+
+          opts.ranges = false;
+          expected = rebuildTree(expected, function (node) {
+            delete node.range;
+          });
+          this.parses(tests[i].source, expected, opts, '(no locations, ranges)');
+
+          opts.comments = false;
+          expected = Object.assign({}, expected);
+          delete expected.comments;
+          this.parses(tests[i].source, expected, opts, '(no locations, ranges, comments)');
+
+          opts.scope = false;
+          expected = rebuildTree(expected, function (node) {
+            if (node.type !== 'FunctionDeclaration')
+              delete node.isLocal;
+          });
+          delete expected.globals;
+          this.parses(tests[i].source, expected, opts, '(no locations, ranges, comments, scopes)');
+        }
       }
       this.done(count);
     });

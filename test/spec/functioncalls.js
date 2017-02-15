@@ -16,381 +16,19 @@
   'use strict';
 
   exports.name = 'functioncalls';
-  exports.spec = {
-    "a(": "[1:2] ')' expected near '<eof>'",
-    "a()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "Identifier",
-              "name": "a",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 1
-                }
-              },
-              "range": [
-                0,
-                1
-              ],
-              "isLocal": false
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 3
-              }
-            },
-            "range": [
-              0,
-              3
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            0,
-            3
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 3
-        }
-      },
-      "range": [
-        0,
-        3
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+  exports.spec = [
+    {
+      "source": "a(",
+      "result": "[1:2] ')' expected near '<eof>'"
     },
-    "a(1)": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "Identifier",
-              "name": "a",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 1
-                }
-              },
-              "range": [
-                0,
-                1
-              ],
-              "isLocal": false
-            },
-            "arguments": [
-              {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
-              }
-            ],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 4
-              }
-            },
-            "range": [
-              0,
-              4
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 4
-            }
-          },
-          "range": [
-            0,
-            4
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 4
-        }
-      },
-      "range": [
-        0,
-        4
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a(1,)": "[1:4] <expression> expected near ')'",
-    "a(1,2,3)": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "Identifier",
-              "name": "a",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 1
-                }
-              },
-              "range": [
-                0,
-                1
-              ],
-              "isLocal": false
-            },
-            "arguments": [
-              {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
-              },
-              {
-                "type": "NumericLiteral",
-                "value": 2,
-                "raw": "2",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ]
-              },
-              {
-                "type": "NumericLiteral",
-                "value": 3,
-                "raw": "3",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 6
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 7
-                  }
-                },
-                "range": [
-                  6,
-                  7
-                ]
-              }
-            ],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 8
-              }
-            },
-            "range": [
-              0,
-              8
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "1()": "[1:0] unexpected number '1' near '('",
-    "a()()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
+    {
+      "source": "a()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
@@ -419,15 +57,14 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 5
+                  "column": 3
                 }
               },
               "range": [
                 0,
-                5
+                3
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -435,95 +72,62 @@
               },
               "end": {
                 "line": 1,
-                "column": 5
+                "column": 3
               }
             },
             "range": [
               0,
-              5
+              3
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 3
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a.b()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
+        "range": [
+          0,
+          3
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a(1)",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
                 "type": "Identifier",
                 "name": "a",
@@ -543,6 +147,307 @@
                 ],
                 "isLocal": false
               },
+              "arguments": [
+                {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 4
+                }
+              },
+              "range": [
+                0,
+                4
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 4
+              }
+            },
+            "range": [
+              0,
+              4
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 4
+          }
+        },
+        "range": [
+          0,
+          4
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a(1,)",
+      "result": "[1:4] <expression> expected near ')'"
+    },
+    {
+      "source": "a(1,2,3)",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              },
+              "arguments": [
+                {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                },
+                {
+                  "type": "NumericLiteral",
+                  "value": 2,
+                  "raw": "2",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 5
+                    }
+                  },
+                  "range": [
+                    4,
+                    5
+                  ]
+                },
+                {
+                  "type": "NumericLiteral",
+                  "value": 3,
+                  "raw": "3",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 6
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    6,
+                    7
+                  ]
+                }
+              ],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                0,
+                8
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "1()",
+      "result": "[1:0] unexpected number '1' near '('"
+    },
+    {
+      "source": "a()()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "CallExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "arguments": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  0,
+                  5
+                ]
+              },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -558,7 +463,6 @@
                 5
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -573,72 +477,95 @@
               0,
               5
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 5
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "a[b]()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "IndexExpression",
+    {
+      "source": "a.b()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
-                "type": "Identifier",
-                "name": "a",
+                "type": "MemberExpression",
+                "indexer": ".",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
                 "loc": {
                   "start": {
                     "line": 1,
@@ -646,34 +573,149 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 1
+                    "column": 5
                   }
                 },
                 "range": [
                   0,
-                  1
-                ],
-                "isLocal": false
+                  5
+                ]
               },
-              "index": {
-                "type": "Identifier",
-                "name": "b",
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                0,
+                5
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5
+          }
+        },
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a[b]()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "index": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ],
+                  "isLocal": false
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 2
+                    "column": 0
                   },
                   "end": {
                     "line": 1,
-                    "column": 3
+                    "column": 6
                   }
                 },
                 "range": [
-                  2,
-                  3
-                ],
-                "isLocal": false
+                  0,
+                  6
+                ]
               },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -689,7 +731,6 @@
                 6
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -704,1347 +745,114 @@
               0,
               6
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 6
-            }
-          },
-          "range": [
-            0,
-            6
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 6
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 6
-        }
-      },
-      "range": [
-        0,
-        6
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a.1": "[1:0] unexpected identifier 'a' near '<eof>'",
-    "a.b": "[1:0] unexpected identifier 'a' near '<eof>'",
-    "a[b]": "[1:0] unexpected identifier 'a' near '<eof>'",
-    "a.b.(": "[1:4] <name> expected near '('",
-    "a.b.c()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ]
+        "range": [
+          0,
+          6
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 2
+              },
+              "end": {
+                "line": 1,
+                "column": 3
+              }
+            },
+            "range": [
+              2,
+              3
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a.1",
+      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+    },
+    {
+      "source": "a.b",
+      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+    },
+    {
+      "source": "a[b]",
+      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+    },
+    {
+      "source": "a.b.(",
+      "result": "[1:4] <name> expected near '('"
+    },
+    {
+      "source": "a.b.c()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
                 "type": "MemberExpression",
                 "indexer": ".",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "b",
+                  "name": "c",
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 2
+                      "column": 4
                     },
                     "end": {
                       "line": 1,
-                      "column": 3
+                      "column": 5
                     }
                   },
                   "range": [
-                    2,
-                    3
+                    4,
+                    5
                   ]
                 },
-                "base": {
-                  "type": "Identifier",
-                  "name": "a",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 1
-                    }
-                  },
-                  "range": [
-                    0,
-                    1
-                  ],
-                  "isLocal": false
-                },
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 7
-                  }
-                },
-                "range": [
-                  0,
-                  7
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 7
-                }
-              },
-              "range": [
-                0,
-                7
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 7
-              }
-            },
-            "range": [
-              0,
-              7
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a[b][c]()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "IndexExpression",
-              "base": {
-                "type": "IndexExpression",
-                "base": {
-                  "type": "Identifier",
-                  "name": "a",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 1
-                    }
-                  },
-                  "range": [
-                    0,
-                    1
-                  ],
-                  "isLocal": false
-                },
-                "index": {
-                  "type": "Identifier",
-                  "name": "b",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 3
-                    }
-                  },
-                  "range": [
-                    2,
-                    3
-                  ],
-                  "isLocal": false
-                },
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 9
-                  }
-                },
-                "range": [
-                  0,
-                  9
-                ]
-              },
-              "index": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 5
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6
-                  }
-                },
-                "range": [
-                  5,
-                  6
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 9
-                }
-              },
-              "range": [
-                0,
-                9
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 9
-              }
-            },
-            "range": [
-              0,
-              9
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 9
-            }
-          },
-          "range": [
-            0,
-            9
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 9
-        }
-      },
-      "range": [
-        0,
-        9
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 5
-            },
-            "end": {
-              "line": 1,
-              "column": 6
-            }
-          },
-          "range": [
-            5,
-            6
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a[b].c()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 5
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6
-                  }
-                },
-                "range": [
-                  5,
-                  6
-                ]
-              },
-              "base": {
-                "type": "IndexExpression",
-                "base": {
-                  "type": "Identifier",
-                  "name": "a",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 1
-                    }
-                  },
-                  "range": [
-                    0,
-                    1
-                  ],
-                  "isLocal": false
-                },
-                "index": {
-                  "type": "Identifier",
-                  "name": "b",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 3
-                    }
-                  },
-                  "range": [
-                    2,
-                    3
-                  ],
-                  "isLocal": false
-                },
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 8
-                  }
-                },
-                "range": [
-                  0,
-                  8
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                0,
-                8
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 8
-              }
-            },
-            "range": [
-              0,
-              8
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a.b[c]()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "IndexExpression",
-              "base": {
-                "type": "MemberExpression",
-                "indexer": ".",
-                "identifier": {
-                  "type": "Identifier",
-                  "name": "b",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 3
-                    }
-                  },
-                  "range": [
-                    2,
-                    3
-                  ]
-                },
-                "base": {
-                  "type": "Identifier",
-                  "name": "a",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 1
-                    }
-                  },
-                  "range": [
-                    0,
-                    1
-                  ],
-                  "isLocal": false
-                },
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 8
-                  }
-                },
-                "range": [
-                  0,
-                  8
-                ]
-              },
-              "index": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                0,
-                8
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 8
-              }
-            },
-            "range": [
-              0,
-              8
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 4
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            4,
-            5
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a:b()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
-              },
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                0,
-                5
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 5
-              }
-            },
-            "range": [
-              0,
-              5
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a:b": "[1:3] function arguments expected near '<eof>'",
-    "a:1": "[1:2] <name> expected near '1'",
-    "a.b:c()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ]
-              },
-              "base": {
-                "type": "MemberExpression",
-                "indexer": ".",
-                "identifier": {
-                  "type": "Identifier",
-                  "name": "b",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 3
-                    }
-                  },
-                  "range": [
-                    2,
-                    3
-                  ]
-                },
-                "base": {
-                  "type": "Identifier",
-                  "name": "a",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 1
-                    }
-                  },
-                  "range": [
-                    0,
-                    1
-                  ],
-                  "isLocal": false
-                },
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 7
-                  }
-                },
-                "range": [
-                  0,
-                  7
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 7
-                }
-              },
-              "range": [
-                0,
-                7
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 7
-              }
-            },
-            "range": [
-              0,
-              7
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a[b]:c()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 5
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6
-                  }
-                },
-                "range": [
-                  5,
-                  6
-                ]
-              },
-              "base": {
-                "type": "IndexExpression",
-                "base": {
-                  "type": "Identifier",
-                  "name": "a",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 1
-                    }
-                  },
-                  "range": [
-                    0,
-                    1
-                  ],
-                  "isLocal": false
-                },
-                "index": {
-                  "type": "Identifier",
-                  "name": "b",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 3
-                    }
-                  },
-                  "range": [
-                    2,
-                    3
-                  ],
-                  "isLocal": false
-                },
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 8
-                  }
-                },
-                "range": [
-                  0,
-                  8
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                0,
-                8
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 8
-              }
-            },
-            "range": [
-              0,
-              8
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a:b:": "[1:3] function arguments expected near ':'",
-    "a:b():c()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 6
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 7
-                  }
-                },
-                "range": [
-                  6,
-                  7
-                ]
-              },
-              "base": {
-                "type": "CallExpression",
                 "base": {
                   "type": "MemberExpression",
-                  "indexer": ":",
+                  "indexer": ".",
                   "identifier": {
                     "type": "Identifier",
                     "name": "b",
@@ -2089,6 +897,157 @@
                     },
                     "end": {
                       "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    0,
+                    7
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  0,
+                  7
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                0,
+                7
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a[b][c]()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "IndexExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "index": {
+                    "type": "Identifier",
+                    "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      2,
+                      3
+                    ],
+                    "isLocal": false
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
                       "column": 9
                     }
                   },
@@ -2097,7 +1056,25 @@
                     9
                   ]
                 },
-                "arguments": [],
+                "index": {
+                  "type": "Identifier",
+                  "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 6
+                    }
+                  },
+                  "range": [
+                    5,
+                    6
+                  ],
+                  "isLocal": false
+                },
                 "loc": {
                   "start": {
                     "line": 1,
@@ -2113,6 +1090,7 @@
                   9
                 ]
               },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -2128,7 +1106,6 @@
                 9
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -2143,88 +1120,542 @@
               0,
               9
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 9
-            }
-          },
-          "range": [
-            0,
-            9
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 9
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 9
-        }
-      },
-      "range": [
-        0,
-        9
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          9
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
           },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 2
+              },
+              "end": {
+                "line": 1,
+                "column": 3
+              }
+            },
+            "range": [
+              2,
+              3
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "c",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 5
+              },
+              "end": {
+                "line": 1,
+                "column": 6
+              }
+            },
+            "range": [
+              5,
+              6
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "(a)()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "Identifier",
-              "name": "a",
+    {
+      "source": "a[b].c()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ".",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 6
+                    }
+                  },
+                  "range": [
+                    5,
+                    6
+                  ]
+                },
+                "base": {
+                  "type": "IndexExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "index": {
+                    "type": "Identifier",
+                    "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      2,
+                      3
+                    ],
+                    "isLocal": false
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    0,
+                    8
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  8
+                ]
+              },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
-                  "column": 1
+                  "column": 0
                 },
                 "end": {
                   "line": 1,
-                  "column": 2
+                  "column": 8
                 }
               },
               "range": [
-                1,
-                2
-              ],
-              "isLocal": false,
-              "inParens": true
+                0,
+                8
+              ]
             },
-            "arguments": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 2
+              },
+              "end": {
+                "line": 1,
+                "column": 3
+              }
+            },
+            "range": [
+              2,
+              3
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a.b[c]()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "MemberExpression",
+                  "indexer": ".",
+                  "identifier": {
+                    "type": "Identifier",
+                    "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      2,
+                      3
+                    ]
+                  },
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    0,
+                    8
+                  ]
+                },
+                "index": {
+                  "type": "Identifier",
+                  "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 5
+                    }
+                  },
+                  "range": [
+                    4,
+                    5
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  8
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                0,
+                8
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "c",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 4
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              4,
+              5
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a:b()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  0,
+                  5
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                0,
+                5
+              ]
+            },
             "loc": {
               "start": {
                 "line": 1,
@@ -2239,90 +1670,551 @@
               0,
               5
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 5
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        }
-      ]
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "()()": "[1:1] <expression> expected near ')'",
-    "(\"foo\")()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "\"foo\"",
+    {
+      "source": "a:b",
+      "result": "[1:3] function arguments expected near '<eof>'"
+    },
+    {
+      "source": "a:1",
+      "result": "[1:2] <name> expected near '1'"
+    },
+    {
+      "source": "a.b:c()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 5
+                    }
+                  },
+                  "range": [
+                    4,
+                    5
+                  ]
+                },
+                "base": {
+                  "type": "MemberExpression",
+                  "indexer": ".",
+                  "identifier": {
+                    "type": "Identifier",
+                    "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      2,
+                      3
+                    ]
+                  },
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    0,
+                    7
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  0,
+                  7
+                ]
+              },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
-                  "column": 1
+                  "column": 0
                 },
                 "end": {
                   "line": 1,
-                  "column": 6
+                  "column": 7
                 }
               },
               "range": [
-                1,
-                6
-              ],
-              "inParens": true
+                0,
+                7
+              ]
             },
-            "arguments": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a[b]:c()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 6
+                    }
+                  },
+                  "range": [
+                    5,
+                    6
+                  ]
+                },
+                "base": {
+                  "type": "IndexExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "index": {
+                    "type": "Identifier",
+                    "name": "b",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      2,
+                      3
+                    ],
+                    "isLocal": false
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    0,
+                    8
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  8
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                0,
+                8
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 2
+              },
+              "end": {
+                "line": 1,
+                "column": 3
+              }
+            },
+            "range": [
+              2,
+              3
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a:b:",
+      "result": "[1:3] function arguments expected near ':'"
+    },
+    {
+      "source": "a:b():c()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 6
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    6,
+                    7
+                  ]
+                },
+                "base": {
+                  "type": "CallExpression",
+                  "base": {
+                    "type": "MemberExpression",
+                    "indexer": ":",
+                    "identifier": {
+                      "type": "Identifier",
+                      "name": "b",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 2
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 3
+                        }
+                      },
+                      "range": [
+                        2,
+                        3
+                      ]
+                    },
+                    "base": {
+                      "type": "Identifier",
+                      "name": "a",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 0
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 1
+                        }
+                      },
+                      "range": [
+                        0,
+                        1
+                      ],
+                      "isLocal": false
+                    },
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 9
+                      }
+                    },
+                    "range": [
+                      0,
+                      9
+                    ]
+                  },
+                  "arguments": [],
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 9
+                    }
+                  },
+                  "range": [
+                    0,
+                    9
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 9
+                  }
+                },
+                "range": [
+                  0,
+                  9
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 9
+                }
+              },
+              "range": [
+                0,
+                9
+              ]
+            },
             "loc": {
               "start": {
                 "line": 1,
@@ -2337,48 +2229,54 @@
               0,
               9
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 9
-            }
-          },
-          "range": [
-            0,
-            9
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 9
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 9
-        }
-      },
-      "range": [
-        0,
-        9
-      ],
-      "comments": [],
-      "globals": []
+        "range": [
+          0,
+          9
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "(a)()()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
+    {
+      "source": "(a)()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
               "type": "CallExpression",
               "base": {
                 "type": "Identifier",
@@ -2408,15 +2306,14 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 7
+                  "column": 5
                 }
               },
               "range": [
                 0,
-                7
+                5
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -2424,99 +2321,71 @@
               },
               "end": {
                 "line": 1,
-                "column": 7
+                "column": 5
               }
             },
             "range": [
               0,
-              7
+              5
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 5
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
-            },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        }
-      ]
-    },
-    "(a).b()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ]
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
               },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
+            },
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
+          }
+        ]
+      }
+    },
+    {
+      "source": "()()",
+      "result": "[1:1] <expression> expected near ')'"
+    },
+    {
+      "source": "(\"foo\")()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
-                "type": "Identifier",
-                "name": "a",
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\"",
                 "loc": {
                   "start": {
                     "line": 1,
@@ -2524,808 +2393,16 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 2
+                    "column": 6
                   }
                 },
                 "range": [
                   1,
-                  2
+                  6
                 ],
-                "isLocal": false,
                 "inParens": true
               },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 7
-                }
-              },
-              "range": [
-                0,
-                7
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 7
-              }
-            },
-            "range": [
-              0,
-              7
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
-            },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        }
-      ]
-    },
-    "(a)[b]()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "IndexExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 2
-                  }
-                },
-                "range": [
-                  1,
-                  2
-                ],
-                "isLocal": false,
-                "inParens": true
-              },
-              "index": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                0,
-                8
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 8
-              }
-            },
-            "range": [
-              0,
-              8
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
-            },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 4
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            4,
-            5
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "(a):b()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ]
-              },
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 2
-                  }
-                },
-                "range": [
-                  1,
-                  2
-                ],
-                "isLocal": false,
-                "inParens": true
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 7
-                }
-              },
-              "range": [
-                0,
-                7
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 7
-              }
-            },
-            "range": [
-              0,
-              7
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
-            },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        }
-      ]
-    },
-    "a\"foo\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "Identifier",
-              "name": "a",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 1
-                }
-              },
-              "range": [
-                0,
-                1
-              ],
-              "isLocal": false
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "\"foo\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 1
-                },
-                "end": {
-                  "line": 1,
-                  "column": 6
-                }
-              },
-              "range": [
-                1,
-                6
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 6
-              }
-            },
-            "range": [
-              0,
-              6
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 6
-            }
-          },
-          "range": [
-            0,
-            6
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 6
-        }
-      },
-      "range": [
-        0,
-        6
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a[[foo]]": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "Identifier",
-              "name": "a",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 1
-                }
-              },
-              "range": [
-                0,
-                1
-              ],
-              "isLocal": false
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "[[foo]]",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 1
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                1,
-                8
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 8
-              }
-            },
-            "range": [
-              0,
-              8
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a.b\"foo\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
-              },
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                0,
-                8
-              ]
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "\"foo\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                3,
-                8
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 8
-              }
-            },
-            "range": [
-              0,
-              8
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a[b]\"foo\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "IndexExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "index": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ],
-                "isLocal": false
-              },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -3338,25 +2415,6 @@
               },
               "range": [
                 0,
-                9
-              ]
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "\"foo\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 4
-                },
-                "end": {
-                  "line": 1,
-                  "column": 9
-                }
-              },
-              "range": [
-                4,
                 9
               ]
             },
@@ -3374,110 +2432,58 @@
               0,
               9
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 9
-            }
-          },
-          "range": [
-            0,
-            9
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 9
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 9
-        }
-      },
-      "range": [
-        0,
-        9
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        }
-      ]
+        "range": [
+          0,
+          9
+        ],
+        "comments": [],
+        "globals": []
+      }
     },
-    "a:b\"foo\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
-              },
+    {
+      "source": "(a)()()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
-                "type": "Identifier",
-                "name": "a",
+                "type": "CallExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 2
+                    }
+                  },
+                  "range": [
+                    1,
+                    2
+                  ],
+                  "isLocal": false,
+                  "inParens": true
+                },
+                "arguments": [],
                 "loc": {
                   "start": {
                     "line": 1,
@@ -3485,15 +2491,15 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 1
+                    "column": 7
                   }
                 },
                 "range": [
                   0,
-                  1
-                ],
-                "isLocal": false
+                  7
+                ]
               },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -3501,31 +2507,12 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 8
+                  "column": 7
                 }
               },
               "range": [
                 0,
-                8
-              ]
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "\"foo\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                3,
-                8
+                7
               ]
             },
             "loc": {
@@ -3535,79 +2522,104 @@
               },
               "end": {
                 "line": 1,
-                "column": 8
+                "column": 7
               }
             },
             "range": [
               0,
-              8
+              7
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 7
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
+          }
+        ]
+      }
     },
-    "a()\"foo\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
+    {
+      "source": "(a).b()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
               "type": "CallExpression",
               "base": {
-                "type": "Identifier",
-                "name": "a",
+                "type": "MemberExpression",
+                "indexer": ".",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 5
+                    }
+                  },
+                  "range": [
+                    4,
+                    5
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 2
+                    }
+                  },
+                  "range": [
+                    1,
+                    2
+                  ],
+                  "isLocal": false,
+                  "inParens": true
+                },
                 "loc": {
                   "start": {
                     "line": 1,
@@ -3615,14 +2627,149 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 1
+                    "column": 7
                   }
                 },
                 "range": [
                   0,
-                  1
-                ],
-                "isLocal": false
+                  7
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                0,
+                7
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
+            },
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
+          }
+        ]
+      }
+    },
+    {
+      "source": "(a)[b]()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 2
+                    }
+                  },
+                  "range": [
+                    1,
+                    2
+                  ],
+                  "isLocal": false,
+                  "inParens": true
+                },
+                "index": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 5
+                    }
+                  },
+                  "range": [
+                    4,
+                    5
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  8
+                ]
               },
               "arguments": [],
               "loc": {
@@ -3640,25 +2787,6 @@
                 8
               ]
             },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "\"foo\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                3,
-                8
-              ]
-            },
             "loc": {
               "start": {
                 "line": 1,
@@ -3673,68 +2801,210 @@
               0,
               8
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 8
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
           },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 4
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              4,
+              5
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "a\"foo\"()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
+    {
+      "source": "(a):b()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 5
+                    }
+                  },
+                  "range": [
+                    4,
+                    5
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 2
+                    }
+                  },
+                  "range": [
+                    1,
+                    2
+                  ],
+                  "isLocal": false,
+                  "inParens": true
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  0,
+                  7
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                0,
+                7
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
+            },
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
+          }
+        ]
+      }
+    },
+    {
+      "source": "a\"foo\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
               "type": "StringCallExpression",
               "base": {
                 "type": "Identifier",
@@ -3781,6 +3051,122 @@
                 },
                 "end": {
                   "line": 1,
+                  "column": 6
+                }
+              },
+              "range": [
+                0,
+                6
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 6
+              }
+            },
+            "range": [
+              0,
+              6
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6
+          }
+        },
+        "range": [
+          0,
+          6
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a[[foo]]",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
+              "base": {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              },
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "[[foo]]",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  1,
+                  8
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
                   "column": 8
                 }
               },
@@ -3789,7 +3175,6 @@
                 8
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -3804,77 +3189,99 @@
               0,
               8
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 8
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "a\"foo\".b()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
+    {
+      "source": "a.b\"foo\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ".",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 7
+                    "column": 0
                   },
                   "end": {
                     "line": 1,
@@ -3882,10 +3289,564 @@
                   }
                 },
                 "range": [
-                  7,
+                  0,
                   8
                 ]
               },
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\"",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  3,
+                  8
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                0,
+                8
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a[b]\"foo\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "index": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 9
+                  }
+                },
+                "range": [
+                  0,
+                  9
+                ]
+              },
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\"",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 9
+                  }
+                },
+                "range": [
+                  4,
+                  9
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 9
+                }
+              },
+              "range": [
+                0,
+                9
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 9
+              }
+            },
+            "range": [
+              0,
+              9
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 9
+          }
+        },
+        "range": [
+          0,
+          9
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 2
+              },
+              "end": {
+                "line": 1,
+                "column": 3
+              }
+            },
+            "range": [
+              2,
+              3
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a:b\"foo\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  8
+                ]
+              },
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\"",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  3,
+                  8
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                0,
+                8
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a()\"foo\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
+              "base": {
+                "type": "CallExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "arguments": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  8
+                ]
+              },
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\"",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  3,
+                  8
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                0,
+                8
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a\"foo\"()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
                 "type": "StringCallExpression",
                 "base": {
@@ -3933,6 +3894,176 @@
                   },
                   "end": {
                     "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  0,
+                  8
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 8
+                }
+              },
+              "range": [
+                0,
+                8
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a\"foo\".b()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ".",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 7
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    7,
+                    8
+                  ]
+                },
+                "base": {
+                  "type": "StringCallExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "argument": {
+                    "type": "StringLiteral",
+                    "value": "foo",
+                    "raw": "\"foo\"",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 6
+                      }
+                    },
+                    "range": [
+                      1,
+                      6
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 10
+                    }
+                  },
+                  "range": [
+                    0,
+                    10
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
                     "column": 10
                   }
                 },
@@ -3941,6 +4072,7 @@
                   10
                 ]
               },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -3956,7 +4088,6 @@
                 10
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -3971,69 +4102,414 @@
               0,
               10
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 10
-            }
-          },
-          "range": [
-            0,
-            10
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 10
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 10
-        }
-      },
-      "range": [
-        0,
-        10
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          10
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "a\"foo\"[b]()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "IndexExpression",
+    {
+      "source": "a\"foo\"[b]()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "StringCallExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "argument": {
+                    "type": "StringLiteral",
+                    "value": "foo",
+                    "raw": "\"foo\"",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 6
+                      }
+                    },
+                    "range": [
+                      1,
+                      6
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 11
+                    }
+                  },
+                  "range": [
+                    0,
+                    11
+                  ]
+                },
+                "index": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 7
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    7,
+                    8
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 11
+                  }
+                },
+                "range": [
+                  0,
+                  11
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 11
+                }
+              },
+              "range": [
+                0,
+                11
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 11
+              }
+            },
+            "range": [
+              0,
+              11
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 11
+          }
+        },
+        "range": [
+          0,
+          11
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 7
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              7,
+              8
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a\"foo\":c()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "c",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 7
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    7,
+                    8
+                  ]
+                },
+                "base": {
+                  "type": "StringCallExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "argument": {
+                    "type": "StringLiteral",
+                    "value": "foo",
+                    "raw": "\"foo\"",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 6
+                      }
+                    },
+                    "range": [
+                      1,
+                      6
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 10
+                    }
+                  },
+                  "range": [
+                    0,
+                    10
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  0,
+                  10
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                0,
+                10
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              0,
+              10
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 10
+          }
+        },
+        "range": [
+          0,
+          10
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a\"foo\"\"bar\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
               "base": {
                 "type": "StringCallExpression",
                 "base": {
@@ -4089,24 +4565,24 @@
                   11
                 ]
               },
-              "index": {
-                "type": "Identifier",
-                "name": "b",
+              "argument": {
+                "type": "StringLiteral",
+                "value": "bar",
+                "raw": "\"bar\"",
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 7
+                    "column": 6
                   },
                   "end": {
                     "line": 1,
-                    "column": 8
+                    "column": 11
                   }
                 },
                 "range": [
-                  7,
-                  8
-                ],
-                "isLocal": false
+                  6,
+                  11
+                ]
               },
               "loc": {
                 "start": {
@@ -4123,7 +4599,6 @@
                 11
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -4138,107 +4613,55 @@
               0,
               11
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 11
-            }
-          },
-          "range": [
-            0,
-            11
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 11
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 11
-        }
-      },
-      "range": [
-        0,
-        11
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 7
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            7,
-            8
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a\"foo\":c()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "c",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 7
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 8
-                  }
-                },
-                "range": [
-                  7,
-                  8
-                ]
+        "range": [
+          0,
+          11
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a\"foo\"{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
               "base": {
                 "type": "StringCallExpression",
                 "base": {
@@ -4286,292 +4709,30 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 10
+                    "column": 8
                   }
                 },
                 "range": [
                   0,
-                  10
+                  8
                 ]
               },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 10
-                }
-              },
-              "range": [
-                0,
-                10
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 10
-              }
-            },
-            "range": [
-              0,
-              10
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 10
-            }
-          },
-          "range": [
-            0,
-            10
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 10
-        }
-      },
-      "range": [
-        0,
-        10
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a\"foo\"\"bar\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "StringCallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
                 "loc": {
                   "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "argument": {
-                "type": "StringLiteral",
-                "value": "foo",
-                "raw": "\"foo\"",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
                     "line": 1,
                     "column": 6
-                  }
-                },
-                "range": [
-                  1,
-                  6
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 11
-                }
-              },
-              "range": [
-                0,
-                11
-              ]
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "bar",
-              "raw": "\"bar\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 6
-                },
-                "end": {
-                  "line": 1,
-                  "column": 11
-                }
-              },
-              "range": [
-                6,
-                11
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 11
-              }
-            },
-            "range": [
-              0,
-              11
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 11
-            }
-          },
-          "range": [
-            0,
-            11
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 11
-        }
-      },
-      "range": [
-        0,
-        11
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a\"foo\"{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "StringCallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
                   },
                   "end": {
                     "line": 1,
-                    "column": 1
+                    "column": 8
                   }
                 },
                 "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "argument": {
-                "type": "StringLiteral",
-                "value": "foo",
-                "raw": "\"foo\"",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6
-                  }
-                },
-                "range": [
-                  1,
-                  6
+                  6,
+                  8
                 ]
               },
               "loc": {
@@ -4586,24 +4747,6 @@
               },
               "range": [
                 0,
-                8
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 6
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                6,
                 8
               ]
             },
@@ -4621,286 +4764,27 @@
               0,
               8
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 8
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "(a):b\"foo\".c[d]:e\"bar\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "e",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 16
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 17
-                  }
-                },
-                "range": [
-                  16,
-                  17
-                ]
-              },
-              "base": {
-                "type": "IndexExpression",
-                "base": {
-                  "type": "MemberExpression",
-                  "indexer": ".",
-                  "identifier": {
-                    "type": "Identifier",
-                    "name": "c",
-                    "loc": {
-                      "start": {
-                        "line": 1,
-                        "column": 11
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 12
-                      }
-                    },
-                    "range": [
-                      11,
-                      12
-                    ]
-                  },
-                  "base": {
-                    "type": "StringCallExpression",
-                    "base": {
-                      "type": "MemberExpression",
-                      "indexer": ":",
-                      "identifier": {
-                        "type": "Identifier",
-                        "name": "b",
-                        "loc": {
-                          "start": {
-                            "line": 1,
-                            "column": 4
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 5
-                          }
-                        },
-                        "range": [
-                          4,
-                          5
-                        ]
-                      },
-                      "base": {
-                        "type": "Identifier",
-                        "name": "a",
-                        "loc": {
-                          "start": {
-                            "line": 1,
-                            "column": 1
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 2
-                          }
-                        },
-                        "range": [
-                          1,
-                          2
-                        ],
-                        "isLocal": false,
-                        "inParens": true
-                      },
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 0
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 22
-                        }
-                      },
-                      "range": [
-                        0,
-                        22
-                      ]
-                    },
-                    "argument": {
-                      "type": "StringLiteral",
-                      "value": "foo",
-                      "raw": "\"foo\"",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 5
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 10
-                        }
-                      },
-                      "range": [
-                        5,
-                        10
-                      ]
-                    },
-                    "loc": {
-                      "start": {
-                        "line": 1,
-                        "column": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 22
-                      }
-                    },
-                    "range": [
-                      0,
-                      22
-                    ]
-                  },
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 22
-                    }
-                  },
-                  "range": [
-                    0,
-                    22
-                  ]
-                },
-                "index": {
-                  "type": "Identifier",
-                  "name": "d",
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 13
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 14
-                    }
-                  },
-                  "range": [
-                    13,
-                    14
-                  ],
-                  "isLocal": false
-                },
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 22
-                  }
-                },
-                "range": [
-                  0,
-                  22
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 22
-                }
-              },
-              "range": [
-                0,
-                22
-              ]
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "bar",
-              "raw": "\"bar\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 17
-                },
-                "end": {
-                  "line": 1,
-                  "column": 22
-                }
-              },
-              "range": [
-                17,
-                22
-              ]
-            },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
             "loc": {
               "start": {
                 "line": 1,
@@ -4908,180 +4792,147 @@
               },
               "end": {
                 "line": 1,
-                "column": 22
+                "column": 1
               }
             },
             "range": [
               0,
-              22
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 22
-            }
-          },
-          "range": [
-            0,
-            22
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 22
-        }
-      },
-      "range": [
-        0,
-        22
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
-            },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        },
-        {
-          "type": "Identifier",
-          "name": "d",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 13
-            },
-            "end": {
-              "line": 1,
-              "column": 14
-            }
-          },
-          "range": [
-            13,
-            14
-          ],
-          "isLocal": false
-        }
-      ]
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "(a):b\"foo\"[c].d:e\"bar\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "e",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 16
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 17
-                  }
-                },
-                "range": [
-                  16,
-                  17
-                ]
-              },
+    {
+      "source": "(a):b\"foo\".c[d]:e\"bar\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
               "base": {
                 "type": "MemberExpression",
-                "indexer": ".",
+                "indexer": ":",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "d",
+                  "name": "e",
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 14
+                      "column": 16
                     },
                     "end": {
                       "line": 1,
-                      "column": 15
+                      "column": 17
                     }
                   },
                   "range": [
-                    14,
-                    15
+                    16,
+                    17
                   ]
                 },
                 "base": {
                   "type": "IndexExpression",
                   "base": {
-                    "type": "StringCallExpression",
+                    "type": "MemberExpression",
+                    "indexer": ".",
+                    "identifier": {
+                      "type": "Identifier",
+                      "name": "c",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 11
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 12
+                        }
+                      },
+                      "range": [
+                        11,
+                        12
+                      ]
+                    },
                     "base": {
-                      "type": "MemberExpression",
-                      "indexer": ":",
-                      "identifier": {
-                        "type": "Identifier",
-                        "name": "b",
+                      "type": "StringCallExpression",
+                      "base": {
+                        "type": "MemberExpression",
+                        "indexer": ":",
+                        "identifier": {
+                          "type": "Identifier",
+                          "name": "b",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 5
+                            }
+                          },
+                          "range": [
+                            4,
+                            5
+                          ]
+                        },
+                        "base": {
+                          "type": "Identifier",
+                          "name": "a",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 1
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 2
+                            }
+                          },
+                          "range": [
+                            1,
+                            2
+                          ],
+                          "isLocal": false,
+                          "inParens": true
+                        },
                         "loc": {
                           "start": {
                             "line": 1,
-                            "column": 4
+                            "column": 0
                           },
                           "end": {
                             "line": 1,
-                            "column": 5
+                            "column": 22
                           }
                         },
                         "range": [
-                          4,
-                          5
+                          0,
+                          22
                         ]
                       },
-                      "base": {
-                        "type": "Identifier",
-                        "name": "a",
+                      "argument": {
+                        "type": "StringLiteral",
+                        "value": "foo",
+                        "raw": "\"foo\"",
                         "loc": {
                           "start": {
                             "line": 1,
-                            "column": 1
+                            "column": 5
                           },
                           "end": {
                             "line": 1,
-                            "column": 2
+                            "column": 10
                           }
                         },
                         "range": [
-                          1,
-                          2
-                        ],
-                        "isLocal": false,
-                        "inParens": true
+                          5,
+                          10
+                        ]
                       },
                       "loc": {
                         "start": {
@@ -5096,25 +4947,6 @@
                       "range": [
                         0,
                         22
-                      ]
-                    },
-                    "argument": {
-                      "type": "StringLiteral",
-                      "value": "foo",
-                      "raw": "\"foo\"",
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 5
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 10
-                        }
-                      },
-                      "range": [
-                        5,
-                        10
                       ]
                     },
                     "loc": {
@@ -5134,20 +4966,20 @@
                   },
                   "index": {
                     "type": "Identifier",
-                    "name": "c",
+                    "name": "d",
                     "loc": {
                       "start": {
                         "line": 1,
-                        "column": 11
+                        "column": 13
                       },
                       "end": {
                         "line": 1,
-                        "column": 12
+                        "column": 14
                       }
                     },
                     "range": [
-                      11,
-                      12
+                      13,
+                      14
                     ],
                     "isLocal": false
                   },
@@ -5181,6 +5013,25 @@
                   22
                 ]
               },
+              "argument": {
+                "type": "StringLiteral",
+                "value": "bar",
+                "raw": "\"bar\"",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 17
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 22
+                  }
+                },
+                "range": [
+                  17,
+                  22
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -5193,25 +5044,6 @@
               },
               "range": [
                 0,
-                22
-              ]
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "bar",
-              "raw": "\"bar\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 17
-                },
-                "end": {
-                  "line": 1,
-                  "column": 22
-                }
-              },
-              "range": [
-                17,
                 22
               ]
             },
@@ -5229,1096 +5061,245 @@
               0,
               22
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 22
-            }
-          },
-          "range": [
-            0,
-            22
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 22
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 22
-        }
-      },
-      "range": [
-        0,
-        22
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
-            },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 11
-            },
-            "end": {
-              "line": 1,
-              "column": 12
-            }
-          },
-          "range": [
-            11,
-            12
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a{}\"foo\"": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "StringCallExpression",
-            "base": {
-              "type": "TableCallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "arguments": {
-                "type": "TableConstructorExpression",
-                "fields": [],
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  1,
-                  3
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                0,
-                8
-              ]
-            },
-            "argument": {
-              "type": "StringLiteral",
-              "value": "foo",
-              "raw": "\"foo\"",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 8
-                }
-              },
-              "range": [
-                3,
-                8
-              ]
-            },
+        "range": [
+          0,
+          22
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
             "loc": {
               "start": {
                 "line": 1,
-                "column": 0
+                "column": 1
               },
               "end": {
                 "line": 1,
-                "column": 8
+                "column": 2
               }
             },
             "range": [
-              0,
-              8
-            ]
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "Identifier",
-              "name": "a",
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 1
-                }
-              },
-              "range": [
-                0,
-                1
-              ],
-              "isLocal": false
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 1
-                },
-                "end": {
-                  "line": 1,
-                  "column": 3
-                }
-              },
-              "range": [
-                1,
-                3
-              ]
-            },
+          {
+            "type": "Identifier",
+            "name": "d",
             "loc": {
               "start": {
                 "line": 1,
-                "column": 0
+                "column": 13
               },
               "end": {
                 "line": 1,
-                "column": 3
+                "column": 14
               }
             },
             "range": [
-              0,
-              3
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            0,
-            3
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 3
-        }
-      },
-      "range": [
-        0,
-        3
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+              13,
+              14
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "a.b{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
-              },
+    {
+      "source": "(a):b\"foo\"[c].d:e\"bar\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
               "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                0,
-                5
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                3,
-                5
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 5
-              }
-            },
-            "range": [
-              0,
-              5
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a[b]{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "IndexExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "index": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 6
-                }
-              },
-              "range": [
-                0,
-                6
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 4
-                },
-                "end": {
-                  "line": 1,
-                  "column": 6
-                }
-              },
-              "range": [
-                4,
-                6
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 6
-              }
-            },
-            "range": [
-              0,
-              6
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 6
-            }
-          },
-          "range": [
-            0,
-            6
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 6
-        }
-      },
-      "range": [
-        0,
-        6
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 3
-            }
-          },
-          "range": [
-            2,
-            3
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a:b{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  2,
-                  3
-                ]
-              },
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                0,
-                5
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                3,
-                5
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 5
-              }
-            },
-            "range": [
-              0,
-              5
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a(){}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "CallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "arguments": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                0,
-                5
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                3,
-                5
-              ]
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 5
-              }
-            },
-            "range": [
-              0,
-              5
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a{}()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "TableCallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "arguments": {
-                "type": "TableConstructorExpression",
-                "fields": [],
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  1,
-                  3
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                0,
-                5
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 5
-              }
-            },
-            "range": [
-              0,
-              5
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a{}.b()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ".",
-              "identifier": {
-                "type": "Identifier",
-                "name": "b",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 5
-                  }
-                },
-                "range": [
-                  4,
-                  5
-                ]
-              },
-              "base": {
-                "type": "TableCallExpression",
-                "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
                   "type": "Identifier",
-                  "name": "a",
+                  "name": "e",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 16
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 17
+                    }
+                  },
+                  "range": [
+                    16,
+                    17
+                  ]
+                },
+                "base": {
+                  "type": "MemberExpression",
+                  "indexer": ".",
+                  "identifier": {
+                    "type": "Identifier",
+                    "name": "d",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 14
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15
+                      }
+                    },
+                    "range": [
+                      14,
+                      15
+                    ]
+                  },
+                  "base": {
+                    "type": "IndexExpression",
+                    "base": {
+                      "type": "StringCallExpression",
+                      "base": {
+                        "type": "MemberExpression",
+                        "indexer": ":",
+                        "identifier": {
+                          "type": "Identifier",
+                          "name": "b",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 5
+                            }
+                          },
+                          "range": [
+                            4,
+                            5
+                          ]
+                        },
+                        "base": {
+                          "type": "Identifier",
+                          "name": "a",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 1
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 2
+                            }
+                          },
+                          "range": [
+                            1,
+                            2
+                          ],
+                          "isLocal": false,
+                          "inParens": true
+                        },
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 22
+                          }
+                        },
+                        "range": [
+                          0,
+                          22
+                        ]
+                      },
+                      "argument": {
+                        "type": "StringLiteral",
+                        "value": "foo",
+                        "raw": "\"foo\"",
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 5
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 10
+                          }
+                        },
+                        "range": [
+                          5,
+                          10
+                        ]
+                      },
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 0
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 22
+                        }
+                      },
+                      "range": [
+                        0,
+                        22
+                      ]
+                    },
+                    "index": {
+                      "type": "Identifier",
+                      "name": "c",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 11
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 12
+                        }
+                      },
+                      "range": [
+                        11,
+                        12
+                      ],
+                      "isLocal": false
+                    },
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 22
+                      }
+                    },
+                    "range": [
+                      0,
+                      22
+                    ]
+                  },
                   "loc": {
                     "start": {
                       "line": 1,
@@ -6326,31 +5307,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 1
+                      "column": 22
                     }
                   },
                   "range": [
                     0,
-                    1
-                  ],
-                  "isLocal": false
-                },
-                "arguments": {
-                  "type": "TableConstructorExpression",
-                  "fields": [],
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 1
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 3
-                    }
-                  },
-                  "range": [
-                    1,
-                    3
+                    22
                   ]
                 },
                 "loc": {
@@ -6360,12 +5322,31 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 7
+                    "column": 22
                   }
                 },
                 "range": [
                   0,
-                  7
+                  22
+                ]
+              },
+              "argument": {
+                "type": "StringLiteral",
+                "value": "bar",
+                "raw": "\"bar\"",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 17
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 22
+                  }
+                },
+                "range": [
+                  17,
+                  22
                 ]
               },
               "loc": {
@@ -6375,15 +5356,14 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 7
+                  "column": 22
                 }
               },
               "range": [
                 0,
-                7
+                22
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -6391,76 +5371,82 @@
               },
               "end": {
                 "line": 1,
-                "column": 7
+                "column": 22
               }
             },
             "range": [
               0,
-              7
+              22
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 22
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          22
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
           },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
+          {
+            "type": "Identifier",
+            "name": "c",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 11
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              11,
+              12
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "a{}[b]()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "IndexExpression",
+    {
+      "source": "a{}\"foo\"",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "StringCallExpression",
               "base": {
                 "type": "TableCallExpression",
                 "base": {
@@ -6515,24 +5501,24 @@
                   8
                 ]
               },
-              "index": {
-                "type": "Identifier",
-                "name": "b",
+              "argument": {
+                "type": "StringLiteral",
+                "value": "foo",
+                "raw": "\"foo\"",
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 4
+                    "column": 3
                   },
                   "end": {
                     "line": 1,
-                    "column": 5
+                    "column": 8
                   }
                 },
                 "range": [
-                  4,
-                  5
-                ],
-                "isLocal": false
+                  3,
+                  8
+                ]
               },
               "loc": {
                 "start": {
@@ -6549,7 +5535,6 @@
                 8
               ]
             },
-            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -6564,96 +5549,214 @@
               0,
               8
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 8
-            }
-          },
-          "range": [
-            0,
-            8
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 8
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 8
-        }
-      },
-      "range": [
-        0,
-        8
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        },
-        {
-          "type": "Identifier",
-          "name": "b",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 4
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            4,
-            5
-          ],
-          "isLocal": false
-        }
-      ]
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     },
-    "a{}:c()": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "CallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
+    {
+      "source": "a{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
                 "type": "Identifier",
-                "name": "c",
+                "name": "a",
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 4
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 3
+                  }
+                },
+                "range": [
+                  1,
+                  3
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3
+                }
+              },
+              "range": [
+                0,
+                3
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 3
+              }
+            },
+            "range": [
+              0,
+              3
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 3
+          }
+        },
+        "range": [
+          0,
+          3
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a.b{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ".",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
                   },
                   "end": {
                     "line": 1,
@@ -6661,10 +5764,560 @@
                   }
                 },
                 "range": [
-                  4,
+                  0,
                   5
                 ]
               },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                0,
+                5
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5
+          }
+        },
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a[b]{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "index": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 6
+                  }
+                },
+                "range": [
+                  0,
+                  6
+                ]
+              },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 6
+                  }
+                },
+                "range": [
+                  4,
+                  6
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 6
+                }
+              },
+              "range": [
+                0,
+                6
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 6
+              }
+            },
+            "range": [
+              0,
+              6
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6
+          }
+        },
+        "range": [
+          0,
+          6
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 2
+              },
+              "end": {
+                "line": 1,
+                "column": 3
+              }
+            },
+            "range": [
+              2,
+              3
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a:b{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    2,
+                    3
+                  ]
+                },
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  0,
+                  5
+                ]
+              },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                0,
+                5
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5
+          }
+        },
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a(){}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
+                "type": "CallExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "arguments": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  0,
+                  5
+                ]
+              },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                0,
+                5
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5
+          }
+        },
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a{}()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
                 "type": "TableCallExpression",
                 "base": {
@@ -6711,144 +6364,15 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 7
+                    "column": 5
                   }
                 },
                 "range": [
                   0,
-                  7
+                  5
                 ]
               },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 7
-                }
-              },
-              "range": [
-                0,
-                7
-              ]
-            },
-            "arguments": [],
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 7
-              }
-            },
-            "range": [
-              0,
-              7
-            ]
-          },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 7
-            }
-          },
-          "range": [
-            0,
-            7
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 7
-        }
-      },
-      "range": [
-        0,
-        7
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "a{}{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "TableCallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 1
-                  }
-                },
-                "range": [
-                  0,
-                  1
-                ],
-                "isLocal": false
-              },
-              "arguments": {
-                "type": "TableConstructorExpression",
-                "fields": [],
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 3
-                  }
-                },
-                "range": [
-                  1,
-                  3
-                ]
-              },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -6861,24 +6385,6 @@
               },
               "range": [
                 0,
-                5
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 3
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                }
-              },
-              "range": [
-                3,
                 5
               ]
             },
@@ -6896,187 +6402,81 @@
               0,
               5
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 5
-            }
-          },
-          "range": [
-            0,
-            5
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 5
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 5
-        }
-      },
-      "range": [
-        0,
-        5
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 1
-            }
-          },
-          "range": [
-            0,
-            1
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "(a):b{}.c[d]:e{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "e",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 14
-                  }
-                },
-                "range": [
-                  13,
-                  14
-                ]
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a{}.b()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
-                "type": "IndexExpression",
-                "base": {
-                  "type": "MemberExpression",
-                  "indexer": ".",
-                  "identifier": {
-                    "type": "Identifier",
-                    "name": "c",
-                    "loc": {
-                      "start": {
-                        "line": 1,
-                        "column": 8
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 9
-                      }
+                "type": "MemberExpression",
+                "indexer": ".",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "b",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 4
                     },
-                    "range": [
-                      8,
-                      9
-                    ]
+                    "end": {
+                      "line": 1,
+                      "column": 5
+                    }
                   },
+                  "range": [
+                    4,
+                    5
+                  ]
+                },
+                "base": {
+                  "type": "TableCallExpression",
                   "base": {
-                    "type": "TableCallExpression",
-                    "base": {
-                      "type": "MemberExpression",
-                      "indexer": ":",
-                      "identifier": {
-                        "type": "Identifier",
-                        "name": "b",
-                        "loc": {
-                          "start": {
-                            "line": 1,
-                            "column": 4
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 5
-                          }
-                        },
-                        "range": [
-                          4,
-                          5
-                        ]
-                      },
-                      "base": {
-                        "type": "Identifier",
-                        "name": "a",
-                        "loc": {
-                          "start": {
-                            "line": 1,
-                            "column": 1
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 2
-                          }
-                        },
-                        "range": [
-                          1,
-                          2
-                        ],
-                        "isLocal": false,
-                        "inParens": true
-                      },
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 0
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 16
-                        }
-                      },
-                      "range": [
-                        0,
-                        16
-                      ]
-                    },
-                    "arguments": {
-                      "type": "TableConstructorExpression",
-                      "fields": [],
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 5
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 7
-                        }
-                      },
-                      "range": [
-                        5,
-                        7
-                      ]
-                    },
+                    "type": "Identifier",
+                    "name": "a",
                     "loc": {
                       "start": {
                         "line": 1,
@@ -7084,12 +6484,31 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 16
+                        "column": 1
                       }
                     },
                     "range": [
                       0,
-                      16
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "arguments": {
+                    "type": "TableConstructorExpression",
+                    "fields": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      1,
+                      3
                     ]
                   },
                   "loc": {
@@ -7099,30 +6518,180 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 16
+                      "column": 7
                     }
                   },
                   "range": [
                     0,
-                    16
+                    7
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  0,
+                  7
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                0,
+                7
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a{}[b]()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
+              "base": {
+                "type": "IndexExpression",
+                "base": {
+                  "type": "TableCallExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "arguments": {
+                    "type": "TableConstructorExpression",
+                    "fields": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      1,
+                      3
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    0,
+                    8
                   ]
                 },
                 "index": {
                   "type": "Identifier",
-                  "name": "d",
+                  "name": "b",
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 10
+                      "column": 4
                     },
                     "end": {
                       "line": 1,
-                      "column": 11
+                      "column": 5
                     }
                   },
                   "range": [
-                    10,
-                    11
+                    4,
+                    5
                   ],
                   "isLocal": false
                 },
@@ -7133,14 +6702,15 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 16
+                    "column": 8
                   }
                 },
                 "range": [
                   0,
-                  16
+                  8
                 ]
               },
+              "arguments": [],
               "loc": {
                 "start": {
                   "line": 1,
@@ -7148,30 +6718,12 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 16
+                  "column": 8
                 }
               },
               "range": [
                 0,
-                16
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 14
-                },
-                "end": {
-                  "line": 1,
-                  "column": 16
-                }
-              },
-              "range": [
-                14,
-                16
+                8
               ]
             },
             "loc": {
@@ -7181,180 +6733,519 @@
               },
               "end": {
                 "line": 1,
-                "column": 16
+                "column": 8
               }
             },
             "range": [
               0,
-              16
+              8
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 16
-            }
-          },
-          "range": [
-            0,
-            16
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 8
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 16
-        }
-      },
-      "range": [
-        0,
-        16
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
-            },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
-          },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
-        },
-        {
-          "type": "Identifier",
-          "name": "d",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 10
-            },
-            "end": {
-              "line": 1,
-              "column": 11
-            }
-          },
-          "range": [
-            10,
-            11
-          ],
-          "isLocal": false
-        }
-      ]
-    },
-    "(a):b{}[c].d:e{}": {
-      "type": "Chunk",
-      "body": [
-        {
-          "type": "CallStatement",
-          "expression": {
-            "type": "TableCallExpression",
-            "base": {
-              "type": "MemberExpression",
-              "indexer": ":",
-              "identifier": {
-                "type": "Identifier",
-                "name": "e",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 14
-                  }
-                },
-                "range": [
-                  13,
-                  14
-                ]
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
               },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 4
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              4,
+              5
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a{}:c()",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "CallExpression",
               "base": {
                 "type": "MemberExpression",
-                "indexer": ".",
+                "indexer": ":",
                 "identifier": {
                   "type": "Identifier",
-                  "name": "d",
+                  "name": "c",
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 11
+                      "column": 4
                     },
                     "end": {
                       "line": 1,
-                      "column": 12
+                      "column": 5
                     }
                   },
                   "range": [
-                    11,
-                    12
+                    4,
+                    5
+                  ]
+                },
+                "base": {
+                  "type": "TableCallExpression",
+                  "base": {
+                    "type": "Identifier",
+                    "name": "a",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 1
+                      }
+                    },
+                    "range": [
+                      0,
+                      1
+                    ],
+                    "isLocal": false
+                  },
+                  "arguments": {
+                    "type": "TableConstructorExpression",
+                    "fields": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      1,
+                      3
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    0,
+                    7
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  0,
+                  7
+                ]
+              },
+              "arguments": [],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                0,
+                7
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "a{}{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
+                "type": "TableCallExpression",
+                "base": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 1
+                    }
+                  },
+                  "range": [
+                    0,
+                    1
+                  ],
+                  "isLocal": false
+                },
+                "arguments": {
+                  "type": "TableConstructorExpression",
+                  "fields": [],
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    1,
+                    3
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  0,
+                  5
+                ]
+              },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                0,
+                5
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5
+          }
+        },
+        "range": [
+          0,
+          5
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "(a):b{}.c[d]:e{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "e",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 13
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 14
+                    }
+                  },
+                  "range": [
+                    13,
+                    14
                   ]
                 },
                 "base": {
                   "type": "IndexExpression",
                   "base": {
-                    "type": "TableCallExpression",
+                    "type": "MemberExpression",
+                    "indexer": ".",
+                    "identifier": {
+                      "type": "Identifier",
+                      "name": "c",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 8
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 9
+                        }
+                      },
+                      "range": [
+                        8,
+                        9
+                      ]
+                    },
                     "base": {
-                      "type": "MemberExpression",
-                      "indexer": ":",
-                      "identifier": {
-                        "type": "Identifier",
-                        "name": "b",
+                      "type": "TableCallExpression",
+                      "base": {
+                        "type": "MemberExpression",
+                        "indexer": ":",
+                        "identifier": {
+                          "type": "Identifier",
+                          "name": "b",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 5
+                            }
+                          },
+                          "range": [
+                            4,
+                            5
+                          ]
+                        },
+                        "base": {
+                          "type": "Identifier",
+                          "name": "a",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 1
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 2
+                            }
+                          },
+                          "range": [
+                            1,
+                            2
+                          ],
+                          "isLocal": false,
+                          "inParens": true
+                        },
                         "loc": {
                           "start": {
                             "line": 1,
-                            "column": 4
+                            "column": 0
                           },
                           "end": {
                             "line": 1,
-                            "column": 5
+                            "column": 16
                           }
                         },
                         "range": [
-                          4,
-                          5
+                          0,
+                          16
                         ]
                       },
-                      "base": {
-                        "type": "Identifier",
-                        "name": "a",
+                      "arguments": {
+                        "type": "TableConstructorExpression",
+                        "fields": [],
                         "loc": {
                           "start": {
                             "line": 1,
-                            "column": 1
+                            "column": 5
                           },
                           "end": {
                             "line": 1,
-                            "column": 2
+                            "column": 7
                           }
                         },
                         "range": [
-                          1,
-                          2
-                        ],
-                        "isLocal": false,
-                        "inParens": true
+                          5,
+                          7
+                        ]
                       },
                       "loc": {
                         "start": {
@@ -7369,24 +7260,6 @@
                       "range": [
                         0,
                         16
-                      ]
-                    },
-                    "arguments": {
-                      "type": "TableConstructorExpression",
-                      "fields": [],
-                      "loc": {
-                        "start": {
-                          "line": 1,
-                          "column": 5
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 7
-                        }
-                      },
-                      "range": [
-                        5,
-                        7
                       ]
                     },
                     "loc": {
@@ -7406,20 +7279,20 @@
                   },
                   "index": {
                     "type": "Identifier",
-                    "name": "c",
+                    "name": "d",
                     "loc": {
                       "start": {
                         "line": 1,
-                        "column": 8
+                        "column": 10
                       },
                       "end": {
                         "line": 1,
-                        "column": 9
+                        "column": 11
                       }
                     },
                     "range": [
-                      8,
-                      9
+                      10,
+                      11
                     ],
                     "isLocal": false
                   },
@@ -7453,6 +7326,24 @@
                   16
                 ]
               },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  14,
+                  16
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -7465,24 +7356,6 @@
               },
               "range": [
                 0,
-                16
-              ]
-            },
-            "arguments": {
-              "type": "TableConstructorExpression",
-              "fields": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 14
-                },
-                "end": {
-                  "line": 1,
-                  "column": 16
-                }
-              },
-              "range": [
-                14,
                 16
               ]
             },
@@ -7500,79 +7373,380 @@
               0,
               16
             ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
           },
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 16
-            }
-          },
-          "range": [
-            0,
-            16
-          ]
-        }
-      ],
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
+          "end": {
+            "line": 1,
+            "column": 16
+          }
         },
-        "end": {
-          "line": 1,
-          "column": 16
-        }
-      },
-      "range": [
-        0,
-        16
-      ],
-      "comments": [],
-      "globals": [
-        {
-          "type": "Identifier",
-          "name": "a",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 1
+        "range": [
+          0,
+          16
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 2
-            }
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
           },
-          "range": [
-            1,
-            2
-          ],
-          "isLocal": false,
-          "inParens": true
+          {
+            "type": "Identifier",
+            "name": "d",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 10
+              },
+              "end": {
+                "line": 1,
+                "column": 11
+              }
+            },
+            "range": [
+              10,
+              11
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "(a):b{}[c].d:e{}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "CallStatement",
+            "expression": {
+              "type": "TableCallExpression",
+              "base": {
+                "type": "MemberExpression",
+                "indexer": ":",
+                "identifier": {
+                  "type": "Identifier",
+                  "name": "e",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 13
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 14
+                    }
+                  },
+                  "range": [
+                    13,
+                    14
+                  ]
+                },
+                "base": {
+                  "type": "MemberExpression",
+                  "indexer": ".",
+                  "identifier": {
+                    "type": "Identifier",
+                    "name": "d",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 11
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 12
+                      }
+                    },
+                    "range": [
+                      11,
+                      12
+                    ]
+                  },
+                  "base": {
+                    "type": "IndexExpression",
+                    "base": {
+                      "type": "TableCallExpression",
+                      "base": {
+                        "type": "MemberExpression",
+                        "indexer": ":",
+                        "identifier": {
+                          "type": "Identifier",
+                          "name": "b",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 5
+                            }
+                          },
+                          "range": [
+                            4,
+                            5
+                          ]
+                        },
+                        "base": {
+                          "type": "Identifier",
+                          "name": "a",
+                          "loc": {
+                            "start": {
+                              "line": 1,
+                              "column": 1
+                            },
+                            "end": {
+                              "line": 1,
+                              "column": 2
+                            }
+                          },
+                          "range": [
+                            1,
+                            2
+                          ],
+                          "isLocal": false,
+                          "inParens": true
+                        },
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 16
+                          }
+                        },
+                        "range": [
+                          0,
+                          16
+                        ]
+                      },
+                      "arguments": {
+                        "type": "TableConstructorExpression",
+                        "fields": [],
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 5
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 7
+                          }
+                        },
+                        "range": [
+                          5,
+                          7
+                        ]
+                      },
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 0
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 16
+                        }
+                      },
+                      "range": [
+                        0,
+                        16
+                      ]
+                    },
+                    "index": {
+                      "type": "Identifier",
+                      "name": "c",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 8
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 9
+                        }
+                      },
+                      "range": [
+                        8,
+                        9
+                      ],
+                      "isLocal": false
+                    },
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 16
+                      }
+                    },
+                    "range": [
+                      0,
+                      16
+                    ]
+                  },
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 16
+                    }
+                  },
+                  "range": [
+                    0,
+                    16
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  0,
+                  16
+                ]
+              },
+              "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  14,
+                  16
+                ]
+              },
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16
+                }
+              },
+              "range": [
+                0,
+                16
+              ]
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              0,
+              16
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 16
+          }
         },
-        {
-          "type": "Identifier",
-          "name": "c",
-          "loc": {
-            "start": {
-              "line": 1,
-              "column": 8
+        "range": [
+          0,
+          16
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "line": 1,
+                "column": 2
+              }
             },
-            "end": {
-              "line": 1,
-              "column": 9
-            }
+            "range": [
+              1,
+              2
+            ],
+            "isLocal": false,
+            "inParens": true
           },
-          "range": [
-            8,
-            9
-          ],
-          "isLocal": false
-        }
-      ]
+          {
+            "type": "Identifier",
+            "name": "c",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 8
+              },
+              "end": {
+                "line": 1,
+                "column": 9
+              }
+            },
+            "range": [
+              8,
+              9
+            ],
+            "isLocal": false
+          }
+        ]
+      }
     }
-  };
+  ];
 }));
