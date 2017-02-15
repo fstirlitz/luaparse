@@ -30,8 +30,8 @@ launchers:
     protocol: tap
 
 launch_in_ci:
-  - PhantomJS
   - node
+  - PhantomJS
   - narwhal
   - ringo
   - rhino

@@ -43,6 +43,6 @@
     "istanbul": "~0.3.2",
     "marked": "~0.3.2",
     "spec": "git://github.com/kitcambridge/spec.git#gh-pages",
-    "testem": "~0.6.9"
+    "testem": "~1.15.0"
   }
 }
