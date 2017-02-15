@@ -40,3 +40,5 @@ a = p & q                               -- FAIL
 a = 1 // 0
 a = p ~ q >> r | s
 a = ~ p ~ q / r
+a = a <=                                -- FAIL
+a = a >=                                -- FAIL

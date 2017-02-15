@@ -4290,6 +4290,28 @@
         "scope": true,
         "luaVersion": "5.3"
       }
+    },
+    {
+      "source": "a = a <=",
+      "result": "[1:8] <expression> expected near '<eof>'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.3"
+      }
+    },
+    {
+      "source": "a = a >=",
+      "result": "[1:8] <expression> expected near '<eof>'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.3"
+      }
     }
   ];
 }));

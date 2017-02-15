@@ -7431,6 +7431,13 @@
             "isLocal": false
           }
         ]
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
       }
     },
     {
@@ -7746,6 +7753,13 @@
             "isLocal": false
           }
         ]
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
       }
     }
   ];
