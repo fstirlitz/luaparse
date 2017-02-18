@@ -812,7 +812,7 @@ easily be customized by overriding these functions.</p>
   <span class="hljs-keyword">var</span> slice = <span class="hljs-built_in">Array</span>.prototype.slice
     , toString = <span class="hljs-built_in">Object</span>.prototype.toString
     , indexOf = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">indexOf</span>(<span class="hljs-params">array, element</span>) </span>{
-      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; i++) {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; ++i) {
         <span class="hljs-keyword">if</span> (array[i] === element) <span class="hljs-keyword">return</span> i;
       }
       <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
@@ -834,7 +834,7 @@ with a matching property.</p>
             
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">indexOfObject</span>(<span class="hljs-params">array, property, element</span>) </span>{
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; i++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; ++i) {
       <span class="hljs-keyword">if</span> (array[i][property] === element) <span class="hljs-keyword">return</span> i;
     }
     <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
@@ -888,7 +888,7 @@ arguments. Last argument takes precedence.</p>
       , dest = {}
       , src, prop;
 
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = args.length; i &lt; length; i++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = args.length; i &lt; length; ++i) {
       src = args[i];
       <span class="hljs-keyword">for</span> (prop <span class="hljs-keyword">in</span> src)
         <span class="hljs-comment">/* istanbul ignore else */</span>
@@ -1254,9 +1254,9 @@ single line.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-number">10</span> === charCode &amp;&amp; <span class="hljs-number">13</span> === peekCharCode) index++;
-      <span class="hljs-keyword">if</span> (<span class="hljs-number">13</span> === charCode &amp;&amp; <span class="hljs-number">10</span> === peekCharCode) index++;
-      line++;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-number">10</span> === charCode &amp;&amp; <span class="hljs-number">13</span> === peekCharCode) ++index;
+      <span class="hljs-keyword">if</span> (<span class="hljs-number">13</span> === charCode &amp;&amp; <span class="hljs-number">10</span> === peekCharCode) ++index;
+      ++line;
       lineStart = ++index;
 
       <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
@@ -1268,7 +1268,7 @@ single line.</p>
     <span class="hljs-keyword">while</span> (index &lt; length) {
       <span class="hljs-keyword">var</span> charCode = input.charCodeAt(index);
       <span class="hljs-keyword">if</span> (isWhiteSpace(charCode)) {
-        index++;
+        ++index;
       } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!consumeEOL()) {
         <span class="hljs-keyword">break</span>;
       }
@@ -1583,7 +1583,7 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!isHexDigit(input.charCodeAt(index)))
       raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
-    <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) index++;</pre></div></div>
+    <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) ++index;</pre></div></div>
             
         </li>
         
@@ -1616,7 +1616,7 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-string">'.'</span> === input.charAt(index)) {
       fractionStart = ++index;
 
-      <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) index++;
+      <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) ++index;
       fraction = input.slice(fractionStart, index);</pre></div></div>
             
         </li>
@@ -1651,7 +1651,7 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-string">'pP'</span>.indexOf(input.charAt(index) || <span class="hljs-literal">null</span>) &gt;= <span class="hljs-number">0</span>) {
-      index++;</pre></div></div>
+      ++index;</pre></div></div>
             
         </li>
         
@@ -1687,7 +1687,7 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
-      <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
+      <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) ++index;
       binaryExponent = input.slice(exponentStart, index);</pre></div></div>
             
         </li>
@@ -1726,7 +1726,7 @@ functions.</p>
             
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readDecLiteral</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;</pre></div></div>
+    <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) ++index;</pre></div></div>
             
         </li>
         
@@ -1742,7 +1742,7 @@ functions.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-string">'.'</span> === input.charAt(index)) {
-      index++;</pre></div></div>
+      ++index;</pre></div></div>
             
         </li>
         
@@ -1757,7 +1757,7 @@ functions.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) ++index;
     }</pre></div></div>
             
         </li>
@@ -1774,7 +1774,7 @@ functions.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-string">'eE'</span>.indexOf(input.charAt(index) || <span class="hljs-literal">null</span>) &gt;= <span class="hljs-number">0</span>) {
-      index++;</pre></div></div>
+      ++index;</pre></div></div>
             
         </li>
         
@@ -1789,7 +1789,7 @@ functions.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'+-'</span>.indexOf(input.charAt(index) || <span class="hljs-literal">null</span>) &gt;= <span class="hljs-number">0</span>) index++;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'+-'</span>.indexOf(input.charAt(index) || <span class="hljs-literal">null</span>) &gt;= <span class="hljs-number">0</span>) ++index;</pre></div></div>
             
         </li>
         
@@ -1807,7 +1807,7 @@ functions.</p>
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
-      <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) index++;
+      <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) ++index;
     }
 
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(input.slice(tokenStart, index));
@@ -1847,11 +1847,11 @@ functions.</p>
     <span class="hljs-keyword">if</span> (!isHexDigit(input.charCodeAt(index)))
       raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
 
-    <span class="hljs-keyword">while</span> (input.charCodeAt(index) === <span class="hljs-number">0x30</span>) index++;
+    <span class="hljs-keyword">while</span> (input.charCodeAt(index) === <span class="hljs-number">0x30</span>) ++index;
     <span class="hljs-keyword">var</span> escStart = index;
 
     <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) {
-      index++;
+      ++index;
       <span class="hljs-keyword">if</span> (index - escStart &gt; <span class="hljs-number">6</span>)
         raise({}, errors.tooLargeCodepoint, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
     }
@@ -1925,13 +1925,13 @@ functions.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-string">'a'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\x07'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'n'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\n'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'r'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\r'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'t'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\t'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'v'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\x0b'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'b'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\b'</span>;
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'f'</span>: index++; <span class="hljs-keyword">return</span> <span class="hljs-string">'\f'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">case</span> <span class="hljs-string">'a'</span>: ++index; <span class="hljs-keyword">return</span> <span class="hljs-string">'\x07'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'n'</span>: ++index; <span class="hljs-keyword">return</span> <span class="hljs-string">'\n'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'r'</span>: ++index; <span class="hljs-keyword">return</span> <span class="hljs-string">'\r'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'t'</span>: ++index; <span class="hljs-keyword">return</span> <span class="hljs-string">'\t'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'v'</span>: ++index; <span class="hljs-keyword">return</span> <span class="hljs-string">'\x0b'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'b'</span>: ++index; <span class="hljs-keyword">return</span> <span class="hljs-string">'\b'</span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'f'</span>: ++index; <span class="hljs-keyword">return</span> <span class="hljs-string">'\f'</span>;</pre></div></div>
             
         </li>
         
@@ -1969,7 +1969,7 @@ have been verified to behave the same way.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index)) &amp;&amp; index - sequenceStart &lt; <span class="hljs-number">3</span>) index++;
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index)) &amp;&amp; index - sequenceStart &lt; <span class="hljs-number">3</span>) ++index;
 
         <span class="hljs-keyword">var</span> ddd = <span class="hljs-built_in">parseInt</span>(input.slice(sequenceStart, index), <span class="hljs-number">10</span>);
         <span class="hljs-keyword">if</span> (ddd &gt; <span class="hljs-number">255</span>) {
@@ -1979,7 +1979,7 @@ have been verified to behave the same way.</p>
 
       <span class="hljs-keyword">case</span> <span class="hljs-string">'z'</span>:
         <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>)) {
-          index++;
+          ++index;
           skipWhiteSpace();
           <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
         }
@@ -2090,7 +2090,7 @@ literals so we reuse the functionality.</p>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!isLong) {
       <span class="hljs-keyword">while</span> (index &lt; length) {
         <span class="hljs-keyword">if</span> (isLineTerminator(input.charCodeAt(index))) <span class="hljs-keyword">break</span>;
-        index++;
+        ++index;
       }
       <span class="hljs-keyword">if</span> (options.comments) content = input.slice(commentStart, index);
     }
@@ -2147,7 +2147,7 @@ then appending until an equal depth is found.</p>
       , terminator = <span class="hljs-literal">false</span>
       , character, stringStart, firstLine = line;
 
-    index++; <span class="hljs-comment">// [</span></pre></div></div>
+    ++index; <span class="hljs-comment">// [</span></pre></div></div>
             
         </li>
         
@@ -2162,7 +2162,7 @@ then appending until an equal depth is found.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">while</span> (<span class="hljs-string">'='</span> === input.charAt(index + level)) level++;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">while</span> (<span class="hljs-string">'='</span> === input.charAt(index + level)) ++level;</pre></div></div>
             
         </li>
         
@@ -2233,7 +2233,7 @@ if it matches.</p>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">']'</span> === character) {
         terminator = <span class="hljs-literal">true</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; level; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; level; ++i) {
           <span class="hljs-keyword">if</span> (<span class="hljs-string">'='</span> !== input.charAt(index + i)) terminator = <span class="hljs-literal">false</span>;
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-string">']'</span> !== input.charAt(index + level)) terminator = <span class="hljs-literal">false</span>;
@@ -3506,7 +3506,7 @@ shouldn’t be added to the scope until the statement is complete.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (options.scope) {
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, l = variables.length; i &lt; l; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, l = variables.length; i &lt; l; ++i) {
           scopeIdentifier(variables[i]);
         }
       }

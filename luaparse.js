@@ -402,7 +402,7 @@
   var slice = Array.prototype.slice
     , toString = Object.prototype.toString
     , indexOf = function indexOf(array, element) {
-      for (var i = 0, length = array.length; i < length; i++) {
+      for (var i = 0, length = array.length; i < length; ++i) {
         if (array[i] === element) return i;
       }
       return -1;
@@ -412,7 +412,7 @@
   // with a matching property.
 
   function indexOfObject(array, property, element) {
-    for (var i = 0, length = array.length; i < length; i++) {
+    for (var i = 0, length = array.length; i < length; ++i) {
       if (array[i][property] === element) return i;
     }
     return -1;
@@ -446,7 +446,7 @@
       , dest = {}
       , src, prop;
 
-    for (var i = 0, length = args.length; i < length; i++) {
+    for (var i = 0, length = args.length; i < length; ++i) {
       src = args[i];
       for (prop in src)
         /* istanbul ignore else */
@@ -668,9 +668,9 @@
 
     if (isLineTerminator(charCode)) {
       // Count \n\r and \r\n as one newline.
-      if (10 === charCode && 13 === peekCharCode) index++;
-      if (13 === charCode && 10 === peekCharCode) index++;
-      line++;
+      if (10 === charCode && 13 === peekCharCode) ++index;
+      if (13 === charCode && 10 === peekCharCode) ++index;
+      ++line;
       lineStart = ++index;
 
       return true;
@@ -682,7 +682,7 @@
     while (index < length) {
       var charCode = input.charCodeAt(index);
       if (isWhiteSpace(charCode)) {
-        index++;
+        ++index;
       } else if (!consumeEOL()) {
         break;
       }
@@ -853,7 +853,7 @@
     if (!isHexDigit(input.charCodeAt(index)))
       raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
-    while (isHexDigit(input.charCodeAt(index))) index++;
+    while (isHexDigit(input.charCodeAt(index))) ++index;
     // Convert the hexadecimal digit to base 10.
     digit = parseInt(input.slice(digitStart, index), 16);
 
@@ -861,7 +861,7 @@
     if ('.' === input.charAt(index)) {
       fractionStart = ++index;
 
-      while (isHexDigit(input.charCodeAt(index))) index++;
+      while (isHexDigit(input.charCodeAt(index))) ++index;
       fraction = input.slice(fractionStart, index);
 
       // Empty fraction parts should default to 0, others should be converted
@@ -872,7 +872,7 @@
 
     // Binary exponents are optional
     if ('pP'.indexOf(input.charAt(index) || null) >= 0) {
-      index++;
+      ++index;
 
       // Sign part is optional and defaults to 1 (positive).
       if ('+-'.indexOf(input.charAt(index) || null) >= 0)
@@ -884,7 +884,7 @@
       if (!isDecDigit(input.charCodeAt(index)))
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
-      while (isDecDigit(input.charCodeAt(index))) index++;
+      while (isDecDigit(input.charCodeAt(index))) ++index;
       binaryExponent = input.slice(exponentStart, index);
 
       // Calculate the binary exponent of the number.
@@ -899,23 +899,23 @@
   // functions.
 
   function readDecLiteral() {
-    while (isDecDigit(input.charCodeAt(index))) index++;
+    while (isDecDigit(input.charCodeAt(index))) ++index;
     // Fraction part is optional
     if ('.' === input.charAt(index)) {
-      index++;
+      ++index;
       // Fraction part defaults to 0
-      while (isDecDigit(input.charCodeAt(index))) index++;
+      while (isDecDigit(input.charCodeAt(index))) ++index;
     }
     // Exponent part is optional.
     if ('eE'.indexOf(input.charAt(index) || null) >= 0) {
-      index++;
+      ++index;
       // Sign part is optional.
-      if ('+-'.indexOf(input.charAt(index) || null) >= 0) index++;
+      if ('+-'.indexOf(input.charAt(index) || null) >= 0) ++index;
       // An exponent is required to contain at least one decimal digit.
       if (!isDecDigit(input.charCodeAt(index)))
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
-      while (isDecDigit(input.charCodeAt(index))) index++;
+      while (isDecDigit(input.charCodeAt(index))) ++index;
     }
 
     return parseFloat(input.slice(tokenStart, index));
@@ -955,11 +955,11 @@
     if (!isHexDigit(input.charCodeAt(index)))
       raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
 
-    while (input.charCodeAt(index) === 0x30) index++;
+    while (input.charCodeAt(index) === 0x30) ++index;
     var escStart = index;
 
     while (isHexDigit(input.charCodeAt(index))) {
-      index++;
+      ++index;
       if (index - escStart > 6)
         raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
     }
@@ -1008,13 +1008,13 @@
     var sequenceStart = index;
     switch (input.charAt(index)) {
       // Lua allow the following escape sequences.
-      case 'a': index++; return '\x07';
-      case 'n': index++; return '\n';
-      case 'r': index++; return '\r';
-      case 't': index++; return '\t';
-      case 'v': index++; return '\x0b';
-      case 'b': index++; return '\b';
-      case 'f': index++; return '\f';
+      case 'a': ++index; return '\x07';
+      case 'n': ++index; return '\n';
+      case 'r': ++index; return '\r';
+      case 't': ++index; return '\t';
+      case 'v': ++index; return '\x0b';
+      case 'b': ++index; return '\b';
+      case 'f': ++index; return '\f';
 
       // Backslash at the end of the line. We treat all line endings as equivalent,
       // and as representing the [LF] character (code 10). Lua 5.1 through 5.3
@@ -1027,7 +1027,7 @@
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
         // \ddd, where ddd is a sequence of up to three decimal digits.
-        while (isDecDigit(input.charCodeAt(index)) && index - sequenceStart < 3) index++;
+        while (isDecDigit(input.charCodeAt(index)) && index - sequenceStart < 3) ++index;
 
         var ddd = parseInt(input.slice(sequenceStart, index), 10);
         if (ddd > 255) {
@@ -1037,7 +1037,7 @@
 
       case 'z':
         if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3')) {
-          index++;
+          ++index;
           skipWhiteSpace();
           return '';
         }
@@ -1098,7 +1098,7 @@
     if (!isLong) {
       while (index < length) {
         if (isLineTerminator(input.charCodeAt(index))) break;
-        index++;
+        ++index;
       }
       if (options.comments) content = input.slice(commentStart, index);
     }
@@ -1131,10 +1131,10 @@
       , terminator = false
       , character, stringStart, firstLine = line;
 
-    index++; // [
+    ++index; // [
 
     // Calculate the depth of the comment.
-    while ('=' === input.charAt(index + level)) level++;
+    while ('=' === input.charAt(index + level)) ++level;
     // Exit, this is not a long string afterall.
     if ('[' !== input.charAt(index + level)) return false;
 
@@ -1155,7 +1155,7 @@
       // if it matches.
       if (']' === character) {
         terminator = true;
-        for (var i = 0; i < level; i++) {
+        for (var i = 0; i < level; ++i) {
           if ('=' !== input.charAt(index + i)) terminator = false;
         }
         if (']' !== input.charAt(index + level)) terminator = false;
@@ -1711,7 +1711,7 @@
       // Therefore assignments can't use their declarator. And the identifiers
       // shouldn't be added to the scope until the statement is complete.
       if (options.scope) {
-        for (var i = 0, l = variables.length; i < l; i++) {
+        for (var i = 0, l = variables.length; i < l; ++i) {
           scopeIdentifier(variables[i]);
         }
       }
