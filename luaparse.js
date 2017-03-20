@@ -2104,8 +2104,8 @@
             pushLocation(marker);
             next();
             expression = parseExpectedExpression();
-            base = finishNode(ast.indexExpression(base, expression));
             expect(']');
+            base = finishNode(ast.indexExpression(base, expression));
             break;
           case '.':
             pushLocation(marker);
