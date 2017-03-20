@@ -388,8 +388,7 @@
     if (trackLocations) {
       var location = locations.pop();
       location.complete();
-      if (options.locations) node.loc = location.loc;
-      if (options.ranges) node.range = location.range;
+      location.bless(node);
     }
     if (options.onCreateNode) options.onCreateNode(node);
     return node;
@@ -1383,6 +1382,28 @@
     }
     if (options.ranges) {
       this.range[1] = previousToken.range[1];
+    }
+  };
+
+  Marker.prototype.bless = function (node) {
+    if (this.loc) {
+      var loc = this.loc;
+      node.loc = {
+        start: {
+          line: loc.start.line,
+          column: loc.start.column
+        },
+        end: {
+          line: loc.end.line,
+          column: loc.end.column
+        }
+      };
+    }
+    if (this.range) {
+      node.range = [
+        this.range[0],
+        this.range[1]
+      ];
     }
   };
 
