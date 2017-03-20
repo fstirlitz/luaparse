@@ -1766,12 +1766,12 @@
                         },
                         "end": {
                           "line": 1,
-                          "column": 14
+                          "column": 15
                         }
                       },
                       "range": [
                         11,
-                        14
+                        15
                       ]
                     },
                     "loc": {
@@ -1840,12 +1840,12 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 22
+                            "column": 20
                           }
                         },
                         "range": [
                           17,
-                          22
+                          20
                         ]
                       },
                       "arguments": [],
