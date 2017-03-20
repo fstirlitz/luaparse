@@ -911,12 +911,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 25
+                      "column": 9
                     }
                   },
                   "range": [
                     4,
-                    25
+                    9
                   ]
                 },
                 "right": {
@@ -970,12 +970,12 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 25
+                        "column": 17
                       }
                     },
                     "range": [
                       12,
-                      25
+                      17
                     ]
                   },
                   "right": {
@@ -1211,12 +1211,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 13
+                      "column": 9
                     }
                   },
                   "range": [
                     4,
-                    13
+                    9
                   ]
                 },
                 "right": {
@@ -1743,12 +1743,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 22
+                      "column": 16
                     }
                   },
                   "range": [
                     4,
-                    22
+                    16
                   ]
                 },
                 "right": {
@@ -2642,12 +2642,12 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 28
+                            "column": 9
                           }
                         },
                         "range": [
                           4,
-                          28
+                          9
                         ]
                       },
                       "right": {
@@ -2676,12 +2676,12 @@
                         },
                         "end": {
                           "line": 1,
-                          "column": 28
+                          "column": 14
                         }
                       },
                       "range": [
                         4,
-                        28
+                        14
                       ]
                     },
                     "right": {
@@ -2710,12 +2710,12 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 28
+                        "column": 18
                       }
                     },
                     "range": [
                       4,
-                      28
+                      18
                     ]
                   },
                   "right": {
@@ -2744,12 +2744,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 28
+                      "column": 23
                     }
                   },
                   "range": [
                     4,
-                    28
+                    23
                   ]
                 },
                 "right": {
@@ -3096,12 +3096,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 16
+                      "column": 11
                     }
                   },
                   "range": [
                     4,
-                    16
+                    11
                   ]
                 },
                 "right": {
@@ -3279,12 +3279,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 19
+                      "column": 13
                     }
                   },
                   "range": [
                     4,
-                    19
+                    13
                   ]
                 },
                 "right": {
@@ -3457,12 +3457,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 28
+                      "column": 19
                     }
                   },
                   "range": [
                     4,
-                    28
+                    19
                   ]
                 },
                 "right": {
@@ -3852,12 +3852,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 18
+                      "column": 14
                     }
                   },
                   "range": [
                     4,
-                    18
+                    14
                   ]
                 },
                 "right": {

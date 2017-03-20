@@ -1223,12 +1223,12 @@
                         },
                         "end": {
                           "line": 1,
-                          "column": 23
+                          "column": 24
                         }
                       },
                       "range": [
                         20,
-                        23
+                        24
                       ]
                     },
                     "loc": {
@@ -1297,12 +1297,12 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 31
+                            "column": 29
                           }
                         },
                         "range": [
                           26,
-                          31
+                          29
                         ]
                       },
                       "arguments": [],
@@ -1673,12 +1673,12 @@
                         },
                         "end": {
                           "line": 1,
-                          "column": 36
+                          "column": 37
                         }
                       },
                       "range": [
                         33,
-                        36
+                        37
                       ]
                     },
                     "loc": {
@@ -1747,12 +1747,12 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 44
+                            "column": 42
                           }
                         },
                         "range": [
                           39,
-                          44
+                          42
                         ]
                       },
                       "arguments": [],
@@ -1977,12 +1977,12 @@
                         },
                         "end": {
                           "line": 1,
-                          "column": 23
+                          "column": 24
                         }
                       },
                       "range": [
                         20,
-                        23
+                        24
                       ]
                     },
                     "loc": {
@@ -2673,12 +2673,12 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 19
+                        "column": 13
                       }
                     },
                     "range": [
                       8,
-                      19
+                      13
                     ]
                   },
                   "arguments": [],
@@ -2689,12 +2689,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 19
+                      "column": 15
                     }
                   },
                   "range": [
                     8,
-                    19
+                    15
                   ]
                 },
                 "loc": {
@@ -2704,12 +2704,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 19
+                    "column": 17
                   }
                 },
                 "range": [
                   8,
-                  19
+                  17
                 ]
               },
               "arguments": [],

@@ -388,8 +388,7 @@
     if (trackLocations) {
       var location = locations.pop();
       location.complete();
-      if (options.locations) node.loc = location.loc;
-      if (options.ranges) node.range = location.range;
+      location.bless(node);
     }
     if (options.onCreateNode) options.onCreateNode(node);
     return node;
@@ -1386,6 +1385,28 @@
     }
   };
 
+  Marker.prototype.bless = function (node) {
+    if (this.loc) {
+      var loc = this.loc;
+      node.loc = {
+        start: {
+          line: loc.start.line,
+          column: loc.start.column
+        },
+        end: {
+          line: loc.end.line,
+          column: loc.end.column
+        }
+      };
+    }
+    if (this.range) {
+      node.range = [
+        this.range[0],
+        this.range[1]
+      ];
+    }
+  };
+
   // Create a new `Marker` and add it to the FILO-array.
   function markLocation() {
     if (trackLocations) locations.push(createLocationMarker());
@@ -2083,8 +2104,8 @@
             pushLocation(marker);
             next();
             expression = parseExpectedExpression();
-            base = finishNode(ast.indexExpression(base, expression));
             expect(']');
+            base = finishNode(ast.indexExpression(base, expression));
             break;
           case '.':
             pushLocation(marker);

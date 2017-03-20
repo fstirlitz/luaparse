@@ -888,12 +888,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 5
+                      "column": 3
                     }
                   },
                   "range": [
                     0,
-                    5
+                    3
                   ]
                 },
                 "loc": {
@@ -1042,12 +1042,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 3
+                    "column": 4
                   }
                 },
                 "range": [
                   0,
-                  3
+                  4
                 ]
               }
             ],
@@ -1202,12 +1202,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 6
+                      "column": 4
                     }
                   },
                   "range": [
                     0,
-                    6
+                    4
                   ]
                 },
                 "index": {
@@ -1236,12 +1236,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 6
+                    "column": 7
                   }
                 },
                 "range": [
                   0,
-                  6
+                  7
                 ]
               }
             ],
@@ -1415,12 +1415,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 5
+                      "column": 3
                     }
                   },
                   "range": [
                     0,
-                    5
+                    3
                   ]
                 },
                 "index": {
@@ -1449,12 +1449,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 5
+                    "column": 6
                   }
                 },
                 "range": [
                   0,
-                  5
+                  6
                 ]
               }
             ],
@@ -1628,12 +1628,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 6
+                      "column": 4
                     }
                   },
                   "range": [
                     0,
-                    6
+                    4
                   ]
                 },
                 "loc": {
@@ -1801,12 +1801,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 3
+                    "column": 4
                   }
                 },
                 "range": [
                   0,
-                  3
+                  4
                 ]
               },
               {
@@ -1856,12 +1856,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 9
+                    "column": 10
                   }
                 },
                 "range": [
                   6,
-                  9
+                  10
                 ]
               }
             ],
@@ -2036,12 +2036,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 5
+                      "column": 3
                     }
                   },
                   "range": [
                     0,
-                    5
+                    3
                   ]
                 },
                 "loc": {
@@ -2190,12 +2190,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 6
+                    "column": 7
                   }
                 },
                 "range": [
                   0,
-                  6
+                  7
                 ]
               }
             ],
@@ -2331,12 +2331,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 5
+                      "column": 3
                     }
                   },
                   "range": [
                     0,
-                    5
+                    3
                   ]
                 },
                 "index": {
@@ -2365,12 +2365,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 5
+                    "column": 6
                   }
                 },
                 "range": [
                   0,
-                  5
+                  6
                 ]
               }
             ],
@@ -2524,12 +2524,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 5
+                      "column": 3
                     }
                   },
                   "range": [
                     0,
-                    5
+                    3
                   ]
                 },
                 "index": {
@@ -2558,12 +2558,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 5
+                    "column": 6
                   }
                 },
                 "range": [
                   0,
-                  5
+                  6
                 ]
               }
             ],
@@ -2754,12 +2754,12 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 11
+                      "column": 9
                     }
                   },
                   "range": [
                     0,
-                    11
+                    9
                   ]
                 },
                 "index": {
@@ -2788,12 +2788,12 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 11
+                    "column": 12
                   }
                 },
                 "range": [
                   0,
-                  11
+                  12
                 ]
               }
             ],

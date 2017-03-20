@@ -776,8 +776,7 @@ easily be customized by overriding these functions.</p>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (trackLocations) {
       <span class="hljs-keyword">var</span> location = locations.pop();
       location.complete();
-      <span class="hljs-keyword">if</span> (options.locations) node.loc = location.loc;
-      <span class="hljs-keyword">if</span> (options.ranges) node.range = location.range;
+      location.bless(node);
     }
     <span class="hljs-keyword">if</span> (options.onCreateNode) options.onCreateNode(node);
     <span class="hljs-keyword">return</span> node;
@@ -2745,6 +2744,28 @@ of the <em>previous token</em> as an end location.</p>
     <span class="hljs-keyword">if</span> (options.ranges) {
       <span class="hljs-keyword">this</span>.range[<span class="hljs-number">1</span>] = previousToken.range[<span class="hljs-number">1</span>];
     }
+  };
+
+  Marker.prototype.bless = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">node</span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.loc) {
+      <span class="hljs-keyword">var</span> loc = <span class="hljs-keyword">this</span>.loc;
+      node.loc = {
+        <span class="hljs-attr">start</span>: {
+          <span class="hljs-attr">line</span>: loc.start.line,
+          <span class="hljs-attr">column</span>: loc.start.column
+        },
+        <span class="hljs-attr">end</span>: {
+          <span class="hljs-attr">line</span>: loc.end.line,
+          <span class="hljs-attr">column</span>: loc.end.column
+        }
+      };
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.range) {
+      node.range = [
+        <span class="hljs-keyword">this</span>.range[<span class="hljs-number">0</span>],
+        <span class="hljs-keyword">this</span>.range[<span class="hljs-number">1</span>]
+      ];
+    }
   };</pre></div></div>
             
         </li>
@@ -4235,8 +4256,8 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
             pushLocation(marker);
             next();
             expression = parseExpectedExpression();
-            base = finishNode(ast.indexExpression(base, expression));
             expect(<span class="hljs-string">']'</span>);
+            base = finishNode(ast.indexExpression(base, expression));
             <span class="hljs-keyword">break</span>;
           <span class="hljs-keyword">case</span> <span class="hljs-string">'.'</span>:
             pushLocation(marker);
