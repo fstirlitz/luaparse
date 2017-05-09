@@ -1317,15 +1317,15 @@
   }
 
   // Add identifier name to the current scope if it doesnt already exist.
-  function scopeIdentifierName(name) {
-    if (options.onLocalDeclaration) options.onLocalDeclaration(name);
+  function scopeIdentifierName(name, data) {
+    if (options.onLocalDeclaration) options.onLocalDeclaration(name, data);
     if (-1 !== indexOf(scopes[scopeDepth], name)) return;
     scopes[scopeDepth].push(name);
   }
 
   // Add identifier to the current scope
-  function scopeIdentifier(node) {
-    scopeIdentifierName(node.name);
+  function scopeIdentifier(node, data) {
+    scopeIdentifierName(node.name, data);
     attachScope(node, true);
   }
 
@@ -1838,6 +1838,8 @@
     var parameters = [];
     expect('(');
 
+    var parameterIndex = (name && name.indexer === ':') ? 1 : 0;
+
     // The declaration has arguments
     if (!consume(')')) {
       // Arguments are a comma separated list of identifiers, optionally ending
@@ -1846,7 +1848,10 @@
         if (Identifier === token.type) {
           var parameter = parseIdentifier();
           // Function parameters are local.
-          if (options.scope) scopeIdentifier(parameter);
+          if (options.scope) scopeIdentifier(parameter, {
+            parameterOf: name,
+            parameterIndex: parameterIndex
+          });
 
           parameters.push(parameter);
 
@@ -1897,7 +1902,10 @@
       pushLocation(marker);
       name = parseIdentifier();
       base = finishNode(ast.memberExpression(base, ':', name));
-      if (options.scope) scopeIdentifierName('self');
+      if (options.scope) scopeIdentifierName('self', {
+        parameterOf: base,
+        parameterIndex: 0
+      });
     }
 
     return base;
