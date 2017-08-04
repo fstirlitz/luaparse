@@ -725,10 +725,10 @@
 
   function fixupHighCharacters(s) {
     return s.replace(/[\ud800-\udbff][\udc00-\udfff]|[^\x00-\x7f]/g, function (m) {
-      if (m.length == 1)
+      if (m.length === 1)
         return encodeUTF8(m.charCodeAt(0));
       return encodeUTF8(0x10000 + (((m.charCodeAt(0) & 0x3ff) << 10) | (m.charCodeAt(1) & 0x3ff)));
-    })
+    });
   }
 
   // Identifiers, keywords, booleans and nil all look the same syntax wise. We
