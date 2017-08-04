@@ -433,6 +433,18 @@
     this.done(12);
   });
 
+  suite.addTest('Extended identifiers', function () {
+    var lcode = 'foo.\ud83d\udca9';
+    var rcode = 'foo["\ud83d\udca9"]';
+    var left = luaparse.parse('return ' + lcode,
+                              { "extendedIdentifiers": true }).body[0].arguments[0].identifier.name;
+    var right = luaparse.parse('return ' + rcode,
+                               { "extendedIdentifiers": true }).body[0].arguments[0].index.value;
+    this.equal(left, right, lcode + ' == ' + rcode);
+
+    this.done(1);
+  });
+
   suite.addTest('Interpretation of literals', function () {
     var testcases =
       [ [ '019'

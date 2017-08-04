@@ -2604,6 +2604,99 @@
         "comments": [],
         "globals": []
       }
+    },
+    {
+      "source": "local Дождь = {}",
+      "result": "[1:7] unexpected symbol 'Д' near 'local'"
+    },
+    {
+      "source": "local Дождь = {}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "LocalStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "Ð\u0094Ð¾Ð¶Ð´Ñ\u008c",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 11
+                  }
+                },
+                "range": [
+                  6,
+                  11
+                ],
+                "isLocal": true
+              }
+            ],
+            "init": [
+              {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  14,
+                  16
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              0,
+              16
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 16
+          }
+        },
+        "range": [
+          0,
+          16
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "extendedIdentifiers": true
+      }
     }
   ];
 }));

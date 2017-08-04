@@ -86,6 +86,8 @@
     // The version of Lua targeted by the parser (string; allowed values are
     // '5.1', '5.2', '5.3').
     , luaVersion: '5.1'
+    // Whether to allow code points outside the Basic Latin block in identifiers
+    , extendedIdentifiers: false
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -739,7 +741,7 @@
     // Slicing the input string is prefered before string concatenation in a
     // loop for performance reasons.
     while (isIdentifierPart(input.charCodeAt(++index)));
-    value = input.slice(tokenStart, index);
+    value = fixupHighCharacters(input.slice(tokenStart, index));
 
     // Decide on the token type and possibly cast the value.
     if (isKeyword(value)) {
@@ -1217,14 +1219,23 @@
   }
 
   // From [Lua 5.2](http://www.lua.org/manual/5.2/manual.html#8.1) onwards
-  // identifiers cannot use locale-dependet letters.
+  // identifiers cannot use 'locale-dependent' letters (i.e. dependent on the C locale).
+  // On the other hand, LuaJIT allows arbitrary octets ≥ 128 in identifiers.
 
   function isIdentifierStart(charCode) {
-    return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode;
+    if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode)
+      return true;
+    if (options.extendedIdentifiers && charCode >= 128)
+      return true;
+    return false;
   }
 
   function isIdentifierPart(charCode) {
-    return (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode || (charCode >= 48 && charCode <= 57);
+    if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode || (charCode >= 48 && charCode <= 57))
+      return true;
+    if (options.extendedIdentifiers && charCode >= 128)
+      return true;
+    return false;
   }
 
   // [3.1 Lexical Conventions](http://www.lua.org/manual/5.2/manual.html#3.1)
