@@ -119,6 +119,62 @@ then the returned value will be:
 }
 ```
 
+#### Note on character encodings
+
+Unlike strings in JavaScript, Lua strings are not Unicode strings, but
+bytestrings (sequences of 8-bit values); likewise, implementations of Lua
+parse the source code as a sequence of octets. However, the input to this
+parser is a JavaScript string, i.e.  a sequence of UTF-16 code units (not
+necessarily well-formed). This poses a problem of how those code units should
+be interpreted in string literals, particularly if they are outside the
+Basic Latin block ('ASCII').
+
+This parser chose to encode UTF-16 code units in [WTF-8][wtf8], and reinterpret
+the resulting code units as Unicode code points, as if the parser input was
+encoded in UTF-8, but interpreted as ISO-8859-1 (which was the original
+meaning of 'WTF-8').  Lua byte escapes are interpreted directly as code
+points, while Lua 5.3 `\u{}` escapes are similarly re-encoded in 'classic
+WTF-8'. This preserves the following properties:
+
+- No otherwise valid input will be rejected due to encoding errors.
+- If the parser input comes from a source that was originally UTF-8-encoded,
+  `StringLiteral` nodes representing the same string value in Lua will have the
+  same `.value` field in the AST: e.g. the Lua literals `'💩'`, `'\u{1f4a9}'`
+  and `'\240\159\146\169'` will all have `"\u00f0\u009f\u0092\u00a9"` in their
+  `.value` field in the AST.
+
+The latter property makes the logic of static analysers and code transformation
+tools simpler. However, it poses a problem when displaying strings to the user
+and serialising AST back into a string; to recover the original bytestrings,
+values transformed in this way will have to be encoded in ISO-8859-1.
+
+Other solutions to this problem may be considered in the future. Some of them
+have been listed below, with caveats:
+
+- A mode that instead assumes the input was encoded in ISO-8859-1 and rejects
+  code points above U+00FF in source code (may be useful for source code in
+  encodings other than UTF-8).
+  - Still tricky to get semantics correctly
+- Using an `ArrayBuffer` or `Uint8Array` for source code and/or string
+  literals
+  - May fail to be portable to older JavaScript engines
+  - Cannot be (directly) serialised as JSON
+  - Converting to a printable string is cumbersome
+- Using a plain `Array` of numbers in the range [0, 256)
+  - Memory-inefficient
+  - May bloat the JSON serialisation considerably
+  - Converting to a printable string is cumbersome
+- Storing string literal values as code point strings, and requiring that
+  escape sequences constitute well-formed UTF-8; an exception is thrown
+  if they do not
+  - UTF-8 chauvinism; imposes semantics that may be unwanted
+  - Reduced compatibility with other Lua implementations
+- Like above, but instead of throwing an exception, ill-formed escapes are
+  transformed to unpaired surrogates, just like Python's `surrogateescape`
+  encoding error handler
+  - Destroys the property that `("\xc4" .. "\x99") == "\xc4\x99"`
+  - If the AST is encoded in JSON, some JSON libraries may refuse to parse it
+
 ### Custom AST
 
 The default AST structure is somewhat inspired by the Mozilla Parser API but
@@ -277,3 +333,4 @@ MIT
 [yueliang]: http://yueliang.luaforge.net/
 [lua]: http://www.lua.org
 [esprima]: http://esprima.org
+[wtf8]: https://simonsapin.github.io/wtf8/

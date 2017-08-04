@@ -688,6 +688,47 @@
     }
   }
 
+  function encodeUTF8(codepoint) {
+    if (codepoint < 0x80) {
+      return String.fromCharCode(codepoint);
+    } else if (codepoint < 0x800) {
+      return String.fromCharCode(
+        0xc0 |  (codepoint >>  6)        ,
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else if (codepoint < 0x10000) {
+      return String.fromCharCode(
+        0xe0 |  (codepoint >> 12)        ,
+        0x80 | ((codepoint >>  6) & 0x3f),
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else if (codepoint < 0x110000) {
+      return String.fromCharCode(
+        0xf0 |  (codepoint >> 18)        ,
+        0x80 | ((codepoint >> 12) & 0x3f),
+        0x80 | ((codepoint >>  6) & 0x3f),
+        0x80 | ( codepoint        & 0x3f)
+      );
+    } else {
+      return null;
+    }
+  }
+
+  // This function takes a JavaScript string, encodes it in WTF-8 and
+  // reinterprets the resulting code units as code points; i.e. it encodes
+  // the string in what was the original meaning of WTF-8.
+  //
+  // For a detailed rationale, see the README.md file, section
+  // "Note on character encodings".
+
+  function fixupHighCharacters(s) {
+    return s.replace(/[\ud800-\udbff][\udc00-\udfff]|[^\x00-\x7f]/g, function (m) {
+      if (m.length == 1)
+        return encodeUTF8(m.charCodeAt(0));
+      return encodeUTF8(0x10000 + (((m.charCodeAt(0) & 0x3ff) << 10) | (m.charCodeAt(1) & 0x3ff)));
+    })
+  }
+
   // Identifiers, keywords, booleans and nil all look the same syntax wise. We
   // simply go through them one by one and defaulting to an identifier if no
   // previous case matched.
@@ -763,7 +804,7 @@
       charCode = input.charCodeAt(index++);
       if (delimiter === charCode) break;
       if (92 === charCode) { // backslash
-        string += input.slice(stringStart, index - 1) + readEscapeSequence();
+        string += fixupHighCharacters(input.slice(stringStart, index - 1)) + readEscapeSequence();
         stringStart = index;
       }
       // EOF or `\n` terminates a string literal. If we haven't found the
@@ -773,7 +814,7 @@
         raise({}, errors.unfinishedString, string + String.fromCharCode(charCode));
       }
     }
-    string += input.slice(stringStart, index - 1);
+    string += fixupHighCharacters(input.slice(stringStart, index - 1));
 
     return {
         type: StringLiteral
@@ -920,32 +961,6 @@
     return parseFloat(input.slice(tokenStart, index));
   }
 
-  function encodeUTF8(codepoint) {
-    if (codepoint < 0x80) {
-      return String.fromCharCode(codepoint);
-    } else if (codepoint < 0x800) {
-      return String.fromCharCode(
-        0xc0 |  (codepoint >>  6)        ,
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else if (codepoint < 0x10000) {
-      return String.fromCharCode(
-        0xe0 |  (codepoint >> 12)        ,
-        0x80 | ((codepoint >>  6) & 0x3f),
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else if (codepoint < 0x110000) {
-      return String.fromCharCode(
-        0xf0 |  (codepoint >> 18)        ,
-        0x80 | ((codepoint >> 12) & 0x3f),
-        0x80 | ((codepoint >>  6) & 0x3f),
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else {
-      return null;
-    }
-  }
-
   function readUnicodeEscapeSequence() {
     var sequenceStart = index++;
 
@@ -973,28 +988,6 @@
 
     var codepoint = parseInt(input.slice(escStart, index - 1), 16);
 
-    /* Now we have a codepoint number in a variable; encode it in UTF-8,
-     * interpreting each code unit as a code point number, as if we were reading
-     * a UTF-8 file using the ISO-8859-1 encoding. This is wasteful, but at least
-     * it preserves the property that literals that denote the same byte sequence
-     * are interpreted identically, i.e.
-     *
-     * "\u{1f4a9}" == "\xf0\x9f\x92\xa9" == "\240\159\146\169"
-     *
-     * Some other options to consider:
-     *
-     * @ Use an ArrayBuffer or Uint8Array for string literal values
-     *   - Cannot be serialised as JSON
-     *   - May fail to be portable to older JavaScript engines
-     * @ Store string literal values as code point strings, and require that
-     *   escape sequences constitute well-formed UTF-8; throw an exception
-     *   if they do not
-     *   - Reduced compatibility with PUC Lua
-     * @ Like above, but transform ill-formed escapes to unpaired surrogates,
-     *   just like Python's 'surrogateescape' encoding error handler
-     *   - Destroys the property that ("\xc4" .. "\x99") == "\xc4\x99"
-     *   - If the AST is encoded in JSON, some JSON libraries may refuse to parse it
-     */
     codepoint = encodeUTF8(codepoint);
     if (codepoint === null) {
       raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
