@@ -334,6 +334,6 @@ MIT
 
 [luaminify]: https://github.com/stravant/LuaMinify
 [yueliang]: http://yueliang.luaforge.net/
-[lua]: http://www.lua.org
+[lua]: https://www.lua.org
 [esprima]: http://esprima.org
-[wtf8]: https://simonsapin.github.io/wtf8/
+[wtf8]: https://simonsapin.github.io/wtf-8/
