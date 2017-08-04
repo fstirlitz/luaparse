@@ -87,6 +87,9 @@ scope is destroyed.</li>
 variable is declared. The identifier will be passed as the only parameter.</li>
 <li><code>luaVersion: &#39;5.1&#39;</code> The version of Lua the parser will target; supported
 values are <code>&#39;5.1&#39;</code>, <code>&#39;5.2&#39;</code> and <code>&#39;5.3&#39;</code>.</li>
+<li><code>extendedIdentifiers: false</code> Whether to allow code points ≥ U+0080 in
+identifiers, like LuaJIT does. See &#39;Note on character encodings&#39; below
+if you wish to use this option.</li>
 </ul>
 <p>The default options are also exposed through <code>luaparse.defaultOptions</code> where
 they can be overriden globally.</p>
@@ -128,6 +131,69 @@ var ast = parser.end(&#39;&quot;&#39;);
   &quot;comments&quot;: []
 }
 </code></pre>
+<h4 id="note-on-character-encodings">Note on character encodings</h4>
+<p>Unlike strings in JavaScript, Lua strings are not Unicode strings, but
+bytestrings (sequences of 8-bit values); likewise, implementations of Lua
+parse the source code as a sequence of octets. However, the input to this
+parser is a JavaScript string, i.e.  a sequence of UTF-16 code units (not
+necessarily well-formed). This poses a problem of how those code units should
+be interpreted in string literals, particularly if they are outside the
+Basic Latin block (&#39;ASCII&#39;).</p>
+<p>This parser chose to encode UTF-16 code units in <a href="https://simonsapin.github.io/wtf-8/">WTF-8</a>, and reinterpret
+the resulting code units as Unicode code points, as if the parser input was
+encoded in UTF-8, but interpreted as ISO-8859-1 (which was the original
+meaning of &#39;WTF-8&#39;).  Lua byte escapes are interpreted directly as code
+points, while Lua 5.3 <code>\u{}</code> escapes are similarly re-encoded in &#39;classic
+WTF-8&#39;. This preserves the following properties:</p>
+<ul>
+<li>No otherwise valid input will be rejected due to encoding errors.</li>
+<li>If the parser input comes from a source that was originally UTF-8-encoded,
+<code>StringLiteral</code> nodes representing the same string value in Lua will have the
+same <code>.value</code> field in the AST: e.g. the Lua literals <code>&#39;💩&#39;</code>, <code>&#39;\u{1f4a9}&#39;</code>
+and <code>&#39;\240\159\146\169&#39;</code> will all have <code>&quot;\u00f0\u009f\u0092\u00a9&quot;</code> in their
+<code>.value</code> field in the AST.</li>
+</ul>
+<p>The latter property makes the logic of static analysers and code transformation
+tools simpler. However, it poses a problem when displaying strings to the user
+and serialising AST back into a string; to recover the original bytestrings,
+values transformed in this way will have to be encoded in ISO-8859-1.</p>
+<p>Other solutions to this problem may be considered in the future. Some of them
+have been listed below, with caveats:</p>
+<ul>
+<li>A mode that instead assumes the input was encoded in ISO-8859-1 and rejects
+code points above U+00FF in source code (may be useful for source code in
+encodings other than UTF-8).<ul>
+<li>Still tricky to get semantics correctly</li>
+</ul>
+</li>
+<li>Using an <code>ArrayBuffer</code> or <code>Uint8Array</code> for source code and/or string
+literals<ul>
+<li>May fail to be portable to older JavaScript engines</li>
+<li>Cannot be (directly) serialised as JSON</li>
+<li>Converting to a printable string is cumbersome</li>
+</ul>
+</li>
+<li>Using a plain <code>Array</code> of numbers in the range [0, 256)<ul>
+<li>Memory-inefficient</li>
+<li>May bloat the JSON serialisation considerably</li>
+<li>Converting to a printable string is cumbersome</li>
+</ul>
+</li>
+<li>Storing string literal values as code point strings, and requiring that
+escape sequences constitute well-formed UTF-8; an exception is thrown
+if they do not<ul>
+<li>UTF-8 chauvinism; imposes semantics that may be unwanted</li>
+<li>Reduced compatibility with other Lua implementations</li>
+</ul>
+</li>
+<li>Like above, but instead of throwing an exception, ill-formed escapes are
+transformed to unpaired surrogates, just like Python&#39;s <code>surrogateescape</code>
+encoding error handler<ul>
+<li>Destroys the property that <code>(&quot;\xc4&quot; .. &quot;\x99&quot;) == &quot;\xc4\x99&quot;</code></li>
+<li>If the AST is encoded in JSON, some JSON libraries may refuse to parse it</li>
+</ul>
+</li>
+</ul>
 <h3 id="custom-ast">Custom AST</h3>
 <p>The default AST structure is somewhat inspired by the Mozilla Parser API but
 can easily be overriden to customize the structure or to inject custom logic.</p>
@@ -248,7 +314,7 @@ will be generated.</p>
 <h2 id="acknowledgements">Acknowledgements</h2>
 <ul>
 <li>Initial tests are scaffolded from <a href="http://yueliang.luaforge.net/">yueliang</a> and then manually checked for error.</li>
-<li>Much of the code is based on <a href="https://github.com/stravant/LuaMinify">LuaMinify</a>, the <a href="http://www.lua.org">Lua</a> source and <a href="http://esprima.org">Esprima</a>. All awesome projects.</li>
+<li>Much of the code is based on <a href="https://github.com/stravant/LuaMinify">LuaMinify</a>, the <a href="https://www.lua.org">Lua</a> source and <a href="http://esprima.org">Esprima</a>. All awesome projects.</li>
 </ul>
 <h2 id="license">License</h2>
 <p>MIT</p>

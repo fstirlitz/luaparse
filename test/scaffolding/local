@@ -51,3 +51,6 @@ local function a() local a local b end
 local function a() local a; local b; end
 local function a() end; local function a() end;
 local a = { b = { z = 1 } }
+local Дождь = {}                        -- FAIL
+// { "extendedIdentifiers": true }
+local Дождь = {}
