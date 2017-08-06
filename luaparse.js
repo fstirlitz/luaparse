@@ -842,7 +842,7 @@
 
     return {
         type: StringLiteral
-      , value: string
+      , value: fixupHighCharacters(string)
       , line: beginLine
       , lineStart: beginLineStart
       , lastLine: line
