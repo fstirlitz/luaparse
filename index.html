@@ -135,34 +135,43 @@ var ast = parser.end(&#39;&quot;&#39;);
 <p>Unlike strings in JavaScript, Lua strings are not Unicode strings, but
 bytestrings (sequences of 8-bit values); likewise, implementations of Lua
 parse the source code as a sequence of octets. However, the input to this
-parser is a JavaScript string, i.e.  a sequence of UTF-16 code units (not
-necessarily well-formed). This poses a problem of how those code units should
-be interpreted in string literals, particularly if they are outside the
-Basic Latin block (&#39;ASCII&#39;).</p>
-<p>This parser chose to encode UTF-16 code units in <a href="https://simonsapin.github.io/wtf-8/">WTF-8</a>, and reinterpret
-the resulting code units as Unicode code points, as if the parser input was
-encoded in UTF-8, but interpreted as ISO-8859-1 (which was the original
-meaning of &#39;WTF-8&#39;).  Lua byte escapes are interpreted directly as code
-points, while Lua 5.3 <code>\u{}</code> escapes are similarly re-encoded in &#39;classic
-WTF-8&#39;. This preserves the following properties:</p>
+parser is a JavaScript string, i.e. a sequence of 16-bit code units (not
+necessarily well-formed UTF-16). This poses a problem of how those code
+units should be interpreted, particularly if they are outside the Basic
+Latin block (&#39;ASCII&#39;).</p>
+<p>Currently, this parser handles Unicode input by encoding it in <a href="https://simonsapin.github.io/wtf-8/">WTF-8</a>,
+and reinterpreting the resulting code units as Unicode code points. This
+applies to string literals and (if <code>extendedIdentifiers</code> is enabled) to
+identifiers as well. Lua byte escapes inside string literals are interpreted
+directly as code points, while Lua 5.3 <code>\u{}</code> escapes are similarly decoded
+as UTF-8 code units reinterpreted as code points. It is as if the parser input
+was being interpreted as ISO-8859-1, while actually being encoded in UTF-8.</p>
+<p>This ensures that no otherwise-valid input will be rejected due to encoding
+errors. Assuming the input was originally encoded in UTF-8 (which includes
+the case of only containing ASCII characters), it also preserves the following
+properties:</p>
 <ul>
-<li>No otherwise valid input will be rejected due to encoding errors.</li>
-<li>If the parser input comes from a source that was originally UTF-8-encoded,
-<code>StringLiteral</code> nodes representing the same string value in Lua will have the
-same <code>.value</code> field in the AST: e.g. the Lua literals <code>&#39;💩&#39;</code>, <code>&#39;\u{1f4a9}&#39;</code>
-and <code>&#39;\240\159\146\169&#39;</code> will all have <code>&quot;\u00f0\u009f\u0092\u00a9&quot;</code> in their
-<code>.value</code> field in the AST.</li>
+<li>String literal nodes representing the same string value in Lua (and
+identifier nodes, if <code>extendedIdentifiers</code> is enabled) will have the same
+interpretation in the AST: e.g. the Lua literals <code>&#39;💩&#39;</code>, <code>&#39;\u{1f4a9}&#39;</code> and
+<code>&#39;\240\159\146\169&#39;</code> will all have <code>&quot;\u00f0\u009f\u0092\u00a9&quot;</code> in their
+<code>.value</code> property, and likewise <code>local 💩</code> will have the same string in
+its <code>.name</code> property.</li>
+<li>The <code>.length</code> property of decoded string values in the AST is equal to
+the value that the <code>#</code> operator would return in Lua.</li>
 </ul>
-<p>The latter property makes the logic of static analysers and code transformation
-tools simpler. However, it poses a problem when displaying strings to the user
-and serialising AST back into a string; to recover the original bytestrings,
-values transformed in this way will have to be encoded in ISO-8859-1.</p>
-<p>Other solutions to this problem may be considered in the future. Some of them
-have been listed below, with caveats:</p>
+<p>Maintaining those properties makes the logic of static analysers and code
+transformation tools simpler. However, it poses a problem when displaying
+strings to the user and serialising AST back into a string; to recover the
+original bytestrings, values transformed in this way will have to be encoded
+in ISO-8859-1.</p>
+<p>Other solutions to this problem may be considered in the future. Some of
+them have been listed below, with their drawbacks:</p>
 <ul>
-<li>A mode that instead assumes the input was encoded in ISO-8859-1 and rejects
-code points above U+00FF in source code (may be useful for source code in
-encodings other than UTF-8).<ul>
+<li>A mode that instead treats the input as if it were decoded according
+to ISO-8859-1 (or <a href="https://encoding.spec.whatwg.org/#x-user-defined">the <code>x-user-defined</code> encoding</a>)
+and rejects code points that cannot appear in that encoding; may be
+useful for source code in encodings other than UTF-8<ul>
 <li>Still tricky to get semantics correctly</li>
 </ul>
 </li>
@@ -170,18 +179,21 @@ encodings other than UTF-8).<ul>
 literals<ul>
 <li>May fail to be portable to older JavaScript engines</li>
 <li>Cannot be (directly) serialised as JSON</li>
-<li>Converting to a printable string is cumbersome</li>
+<li>Values of those types are fixed-length, which makes manipulation
+cumbersome; they cannot be incrementally built by appending.</li>
+<li>They cannot be used as keys in objects; one has to use
+<code>Map</code> and <code>WeakMap</code> instead</li>
 </ul>
 </li>
 <li>Using a plain <code>Array</code> of numbers in the range [0, 256)<ul>
 <li>Memory-inefficient</li>
 <li>May bloat the JSON serialisation considerably</li>
-<li>Converting to a printable string is cumbersome</li>
+<li>Cannot be used as keys in objects either</li>
 </ul>
 </li>
-<li>Storing string literal values as code point strings, and requiring that
-escape sequences constitute well-formed UTF-8; an exception is thrown
-if they do not<ul>
+<li>Storing string literal values as ordinary <code>String</code> values, and requiring that
+escape sequences in literals constitute well-formed UTF-8; an exception
+is thrown if they do not<ul>
 <li>UTF-8 chauvinism; imposes semantics that may be unwanted</li>
 <li>Reduced compatibility with other Lua implementations</li>
 </ul>
