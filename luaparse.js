@@ -498,14 +498,13 @@
       error = fixupError(new SyntaxError(sprintf('[%1:%2] %3', token.line, col, message)));
       error.line = token.line;
       error.index = token.range[0];
-      error.column = col;
     } else {
       col = index - lineStart + 1;
       error = fixupError(new SyntaxError(sprintf('[%1:%2] %3', line, col, message)));
       error.index = index;
       error.line = line;
-      error.column = col;
     }
+    error.column = col;
     throw error;
   }
 
