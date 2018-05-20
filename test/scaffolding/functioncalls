@@ -54,6 +54,26 @@ a{}.b()
 a{}[b]()
 a{}:c()
 a{}{}
-// { "luaVersion": "5.2" }
 (a):b{}.c[d]:e{}
 (a):b{}[c].d:e{}
+a@n@()                                  -- FAIL
+a@n@""
+a@n@{}
+a.b@n@()                                -- FAIL
+a.b@n@""
+a.b@n@{}
+a:b@n@()                                -- FAIL
+a:b@n@""
+a:b@n@{}
+(a@n@())                                -- FAIL
+(a@n@"")
+(a@n@{})
+(a)@n@()                                -- FAIL
+(a)@n@""
+(a)@n@{}
+// { "luaVersion": "5.2" }
+a@n@()
+a.b@n@()
+a:b@n@()
+(a@n@())
+(a)@n@()

@@ -120,6 +120,7 @@
     , tooLargeCodepoint: 'UTF-8 value too large near \'%1\''
     , unfinishedLongString: 'unfinished long string (starting at line %1) near \'%2\''
     , unfinishedLongComment: 'unfinished long comment (starting at line %1) near \'%2\''
+    , ambiguousSyntax: 'ambiguous syntax (function call x new statement) near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -2151,6 +2152,10 @@
     if (Punctuator === token.type) {
       switch (token.value) {
         case '(':
+          if (options.luaVersion === '5.1') {
+            if (token.line !== previousToken.line)
+              raise({}, errors.ambiguousSyntax, token.value);
+          }
           next();
 
           // List of expressions
