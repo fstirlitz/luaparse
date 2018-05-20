@@ -120,6 +120,7 @@
     , tooLargeCodepoint: 'UTF-8 value too large near \'%1\''
     , unfinishedLongString: 'unfinished long string (starting at line %1) near \'%2\''
     , unfinishedLongComment: 'unfinished long comment (starting at line %1) near \'%2\''
+    , ambiguousSyntax: 'ambiguous syntax (function call x new statement) near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -460,6 +461,21 @@
 
   // ### Error functions
 
+  // XXX: Eliminate this function and change the error type to be different from SyntaxError.
+  // This will unfortunately be a breaking change, because some downstream users depend
+  // on the error thrown being an instance of SyntaxError. For example, the Ace editor:
+  // <https://github.com/ajaxorg/ace/blob/4c7e5eb3f5d5ca9434847be51834a4e41661b852/lib/ace/mode/lua_worker.js#L55>
+
+  function fixupError(e) {
+    if (!Object.create)
+      return e;
+    return Object.create(e, {
+      'line': { 'writable': true, value: e.line },
+      'index': { 'writable': true, value: e.index },
+      'column': { 'writable': true, value: e.column }
+    });
+  }
+
   // #### Raise an exception.
   //
   // Raise an exception by passing a token, a string format and its paramters.
@@ -479,13 +495,13 @@
 
     if ('undefined' !== typeof token.line) {
       col = token.range[0] - token.lineStart;
-      error = new SyntaxError(sprintf('[%1:%2] %3', token.line, col, message));
+      error = fixupError(new SyntaxError(sprintf('[%1:%2] %3', token.line, col, message)));
       error.line = token.line;
       error.index = token.range[0];
       error.column = col;
     } else {
       col = index - lineStart + 1;
-      error = new SyntaxError(sprintf('[%1:%2] %3', line, col, message));
+      error = fixupError(new SyntaxError(sprintf('[%1:%2] %3', line, col, message)));
       error.index = index;
       error.line = line;
       error.column = col;
@@ -2151,6 +2167,10 @@
     if (Punctuator === token.type) {
       switch (token.value) {
         case '(':
+          if (options.luaVersion === '5.1') {
+            if (token.line !== previousToken.line)
+              raise({}, errors.ambiguousSyntax, token.value);
+          }
           next();
 
           // List of expressions
