@@ -63,7 +63,7 @@ The available options are:
 - `onLocalDeclaration: null` A callback which will be invoked when a local
   variable is declared. The identifier will be passed as the only parameter.
 - `luaVersion: '5.1'` The version of Lua the parser will target; supported
-  values are `'5.1'`, `'5.2'` and `'5.3'`.
+  values are `'5.1'`, `'5.2'`, `'5.3'` and `'LuaJIT'`.
 - `extendedIdentifiers: false` Whether to allow code points ≥ U+0080 in
   identifiers, like LuaJIT does. See 'Note on character encodings' below
   if you wish to use this option.

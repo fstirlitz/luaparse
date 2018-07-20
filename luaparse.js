@@ -641,7 +641,7 @@
 
       case 126: // ~
         if (61 === next) return scanPunctuator('~=');
-        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
+        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2') || (options.luaVersion === 'LuaJIT'))
           break;
         return scanPunctuator('~');
 
@@ -662,7 +662,7 @@
         return scanPunctuator('/');
 
       case 38: case 124: // & |
-        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
+        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2') || (options.luaVersion === 'LuaJIT'))
           break;
 
         /* fall through */
@@ -889,6 +889,52 @@
     };
   }
 
+  function scanLuaJITImaginaryUnitSuffix() {
+    if (options.luaVersion !== 'LuaJIT') return;
+
+    // Imaginary unit number suffix is optional.
+    // See http://luajit.org/ext_ffi_api.html#literals
+    if ('iI'.indexOf(input.charAt(index) || null) >= 0) {
+      ++index;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function scanLuaJITInt64Suffix() {
+    if (options.luaVersion !== 'LuaJIT') return;
+
+    // Int64/uint64 number suffix is optional.
+    // See http://luajit.org/ext_ffi_api.html#literals
+
+    if ('uU'.indexOf(input.charAt(index) || null) >= 0) {
+      ++index;
+      if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        ++index;
+        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+          ++index;
+          return true;
+        } else {
+          // UL but no L
+          raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+        }
+      } else {
+        // U but no L
+        raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+      }
+    } else if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        ++index;
+        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+          ++index;
+          return true;
+        } else {
+          // First L but no second L
+          raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+        }
+    }
+  }
+
   // Lua hexadecimals have an optional fraction part and an optional binary
   // exoponent part. These are not included in JavaScript so we will compute
   // all three parts separately and then sum them up at the end of the function
@@ -915,8 +961,10 @@
     // Convert the hexadecimal digit to base 10.
     digit = parseInt(input.slice(digitStart, index), 16);
 
-    // Fraction part i optional.
+    // Fraction part is optional.
+    var foundFraction = false;
     if ('.' === input.charAt(index)) {
+      foundFraction = true;
       fractionStart = ++index;
 
       while (isHexDigit(input.charCodeAt(index))) ++index;
@@ -929,7 +977,9 @@
     }
 
     // Binary exponents are optional
+    var foundBinaryExponent = false;
     if ('pP'.indexOf(input.charAt(index) || null) >= 0) {
+      foundBinaryExponent = true;
       ++index;
 
       // Sign part is optional and defaults to 1 (positive).
@@ -949,6 +999,18 @@
       binaryExponent = Math.pow(2, binaryExponent * binarySign);
     }
 
+    var foundImaginaryUnit = scanLuaJITImaginaryUnitSuffix()
+      , foundInt64Suffix = scanLuaJITInt64Suffix();
+
+    if (
+      (foundFraction && foundInt64Suffix) ||
+      (foundBinaryExponent && foundInt64Suffix) ||
+      (foundBinaryExponent && foundImaginaryUnit) ||
+      (foundImaginaryUnit && foundInt64Suffix)
+    ) {
+      raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+    }
+
     return (digit + fraction) * binaryExponent;
   }
 
@@ -959,13 +1021,18 @@
   function readDecLiteral() {
     while (isDecDigit(input.charCodeAt(index))) ++index;
     // Fraction part is optional
+    var foundFraction = false;
     if ('.' === input.charAt(index)) {
+      foundFraction = true;
       ++index;
       // Fraction part defaults to 0
       while (isDecDigit(input.charCodeAt(index))) ++index;
     }
+
     // Exponent part is optional.
+    var foundExponent = false;
     if ('eE'.indexOf(input.charAt(index) || null) >= 0) {
+      foundExponent = true;
       ++index;
       // Sign part is optional.
       if ('+-'.indexOf(input.charAt(index) || null) >= 0) ++index;
@@ -974,6 +1041,19 @@
         raise({}, errors.malformedNumber, input.slice(tokenStart, index));
 
       while (isDecDigit(input.charCodeAt(index))) ++index;
+    }
+
+    // Imaginary unit part is optional
+    var foundImaginaryUnit = scanLuaJITImaginaryUnitSuffix()
+      , foundInt64Suffix = scanLuaJITInt64Suffix();
+    
+    if (
+      (foundFraction && foundInt64Suffix) ||
+      (foundExponent && foundInt64Suffix) ||
+      (foundExponent && foundImaginaryUnit) ||
+      (foundImaginaryUnit && foundInt64Suffix)
+    ) {
+      raise({}, errors.malformedNumber, input.slice(tokenStart, index));
     }
 
     return parseFloat(input.slice(tokenStart, index));
@@ -2167,7 +2247,7 @@
     if (Punctuator === token.type) {
       switch (token.value) {
         case '(':
-          if (options.luaVersion === '5.1') {
+          if (options.luaVersion === '5.1' || options.luaVersion === 'LuaJIT') {
             if (token.line !== previousToken.line)
               raise({}, errors.ambiguousSyntax, token.value);
           }
@@ -2271,7 +2351,7 @@
     globals = [];
     locations = [];
 
-    if (!((options.luaVersion === '5.1') || (options.luaVersion === '5.2') || (options.luaVersion === '5.3'))) {
+    if (!((options.luaVersion === '5.1') || (options.luaVersion === '5.2') || (options.luaVersion === '5.3') || (options.luaVersion === 'LuaJIT'))) {
       throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
     }
 

@@ -850,6 +850,966 @@
       }
     },
     {
+      "source": "a = 1L",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:7] malformed number near '1L'",
+    },
+    {
+      "source": "a = 1LL",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1,
+                "raw": "1LL",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  4,
+                  7
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
+      "source": "a = 1.1L",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:9] malformed number near '1.1L'",
+    },
+    {
+      "source": "a = 1.1LL",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:10] malformed number near '1.1LL'",
+    },
+    {
+      "source": "a = 1l",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:7] malformed number near '1l'",
+    },
+    {
+      "source": "a = 1ll",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1,
+                "raw": "1ll",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  4,
+                  7
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 7
+              }
+            },
+            "range": [
+              0,
+              7
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7
+          }
+        },
+        "range": [
+          0,
+          7
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
+      "source": "a = 1.1l",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:9] malformed number near '1.1l'",
+    },
+    {
+      "source": "a = 1.1ll",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:10] malformed number near '1.1ll'",
+    },
+    {
+      "source": "a = 1U",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:7] malformed number near '1U'",
+    },
+    {
+      "source": "a = 1UL",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:8] malformed number near '1UL'",
+    },
+    {
+      "source": "a = 1ULL",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1,
+                "raw": "1ULL",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  4,
+                  8
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
+      "source": "a = 1.1U",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:9] malformed number near '1.1U'",
+    },
+    {
+      "source": "a = 1.1UL",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:10] malformed number near '1.1UL'",
+    },
+    {
+      "source": "a = 1.1ULL",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:11] malformed number near '1.1ULL'",
+    },
+    {
+      "source": "a = 1u",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:7] malformed number near '1u'",
+    },
+    {
+      "source": "a = 1ul",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:8] malformed number near '1ul'",
+    },
+    {
+      "source": "a = 1ull",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1,
+                "raw": "1ull",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  4,
+                  8
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
+      "source": "a = 1.1u",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:9] malformed number near '1.1u'",
+    },
+    {
+      "source": "a = 1.1ul",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:10] malformed number near '1.1ul'",
+    },
+    {
+      "source": "a = 1.1ull",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": "[1:11] malformed number near '1.1ull'",
+    },
+    {
+      "source": "a = 1i",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1,
+                "raw": "1i",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 6
+                  }
+                },
+                "range": [
+                  4,
+                  6
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 6
+              }
+            },
+            "range": [
+              0,
+              6
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6
+          }
+        },
+        "range": [
+          0,
+          6
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
+      "source": "a = 1.1i",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1.1,
+                "raw": "1.1i",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  4,
+                  8
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
+      "source": "a = 1I",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1,
+                "raw": "1I",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 6
+                  }
+                },
+                "range": [
+                  4,
+                  6
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 6
+              }
+            },
+            "range": [
+              0,
+              6
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6
+          }
+        },
+        "range": [
+          0,
+          6
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
+      "source": "a = 1.1I",
+      "options": {
+        "luaVersion": "LuaJIT"
+      },
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "NumericLiteral",
+                "value": 1.1,
+                "raw": "1.1I",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  4,
+                  8
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+    },
+    {
       "source": "a = 0x",
       "result": "[1:7] malformed number near '0x'"
     },
