@@ -55,7 +55,7 @@
 
   exports.version = '0.2.1';
 
-  var input, options, length;
+  var input, options, length, features;
 
   // Options can be set either globally on the parser object through
   // defaultOptions, or during the parse call.
@@ -628,25 +628,25 @@
         return scanPunctuator('=');
 
       case 62: // >
-        if (options.luaVersion === '5.3')
+        if (features.bitwiseOperators)
           if (62 === next) return scanPunctuator('>>');
         if (61 === next) return scanPunctuator('>=');
         return scanPunctuator('>');
 
       case 60: // <
-        if (options.luaVersion === '5.3')
+        if (features.bitwiseOperators)
           if (60 === next) return scanPunctuator('<<');
         if (61 === next) return scanPunctuator('<=');
         return scanPunctuator('<');
 
       case 126: // ~
         if (61 === next) return scanPunctuator('~=');
-        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
+        if (!features.bitwiseOperators)
           break;
         return scanPunctuator('~');
 
       case 58: // :
-        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+        if (features.labels)
           if (58 === next) return scanPunctuator('::');
         return scanPunctuator(':');
 
@@ -657,12 +657,12 @@
 
       case 47: // /
         // Check for integer division op (//)
-        if (options.luaVersion === '5.3')
+        if (features.integerDivision)
           if (47 === next) return scanPunctuator('//');
         return scanPunctuator('/');
 
       case 38: case 124: // & |
-        if ((options.luaVersion === '5.1') || (options.luaVersion === '5.2'))
+        if (!features.bitwiseOperators)
           break;
 
         /* fall through */
@@ -1046,7 +1046,7 @@
         return String.fromCharCode(ddd);
 
       case 'z':
-        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3')) {
+        if (features.skipWhitespaceEscape) {
           ++index;
           skipWhiteSpace();
           return '';
@@ -1054,7 +1054,7 @@
 
         /* fall through */
       case 'x':
-        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3')) {
+        if (features.hexEscapes) {
           // \xXX, where XX is a sequence of exactly two hexadecimal digits
           if (isHexDigit(input.charCodeAt(index + 1)) &&
               isHexDigit(input.charCodeAt(index + 2))) {
@@ -1066,13 +1066,13 @@
 
         /* fall through */
       case 'u':
-        if (options.luaVersion === '5.3') {
+        if (features.unicodeEscapes) {
           return readUnicodeEscapeSequence();
         }
 
         /* fall through */
       default:
-        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+        if (features.strictEscapes)
           raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
 
         /* fall through */
@@ -1267,7 +1267,7 @@
       case 4:
         if ('else' === id || 'then' === id)
           return true;
-        if ((options.luaVersion === '5.2') || (options.luaVersion === '5.3'))
+        if (features.labels)
           return ('goto' === id);
         return false;
       case 5:
@@ -1515,7 +1515,7 @@
     if (trackLocations) locations.pop();
 
     // When a `;` is encounted, simply eat it without storing it.
-    if (options.luaVersion === '5.2' || options.luaVersion === '5.3') {
+    if (features.emptyStatement) {
       if (consume(';')) return;
     }
 
@@ -2167,7 +2167,7 @@
     if (Punctuator === token.type) {
       switch (token.value) {
         case '(':
-          if (options.luaVersion === '5.1') {
+          if (!features.emptyStatement) {
             if (token.line !== previousToken.line)
               raise({}, errors.ambiguousSyntax, token.value);
           }
@@ -2250,6 +2250,28 @@
 
   exports.parse = parse;
 
+  var versionFeatures = {
+    '5.1': {
+    },
+    '5.2': {
+      labels: true,
+      emptyStatement: true,
+      hexEscapes: true,
+      skipWhitespaceEscape: true,
+      strictEscapes: true
+    },
+    '5.3': {
+      labels: true,
+      emptyStatement: true,
+      hexEscapes: true,
+      skipWhitespaceEscape: true,
+      strictEscapes: true,
+      unicodeEscapes: true,
+      bitwiseOperators: true,
+      integerDivision: true
+    }
+  };
+
   function parse(_input, _options) {
     if ('undefined' === typeof _options && 'object' === typeof _input) {
       _options = _input;
@@ -2271,7 +2293,7 @@
     globals = [];
     locations = [];
 
-    if (!((options.luaVersion === '5.1') || (options.luaVersion === '5.2') || (options.luaVersion === '5.3'))) {
+    if (!(features = versionFeatures[options.luaVersion])) {
       throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
     }
 
