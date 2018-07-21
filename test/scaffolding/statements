@@ -2,11 +2,18 @@ break
 nil                                     -- FAIL
 return;
 ;                                       -- FAIL
+goto "foo"
+goto foo                                -- FAIL
 // { "luaVersion": "5.2" }
 return;
 return;;                                -- FAIL
 ;
 ::foo                                   -- FAIL
 ::foo::
-goto                                    -- FAIL
+goto "foo"                              -- FAIL
 goto foo
+// { "luaVersion": "LuaJIT" }
+::foo::
+goto "foo"
+goto foo
+goto goto                               -- FAIL

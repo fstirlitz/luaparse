@@ -86,10 +86,11 @@ scope is destroyed.</li>
 <li><code>onLocalDeclaration: null</code> A callback which will be invoked when a local
 variable is declared. The identifier will be passed as the only parameter.</li>
 <li><code>luaVersion: &#39;5.1&#39;</code> The version of Lua the parser will target; supported
-values are <code>&#39;5.1&#39;</code>, <code>&#39;5.2&#39;</code> and <code>&#39;5.3&#39;</code>.</li>
+values are <code>&#39;5.1&#39;</code>, <code>&#39;5.2&#39;</code>, <code>&#39;5.3&#39;</code> and <code>&#39;LuaJIT&#39;</code>.</li>
 <li><code>extendedIdentifiers: false</code> Whether to allow code points ≥ U+0080 in
 identifiers, like LuaJIT does. See &#39;Note on character encodings&#39; below
-if you wish to use this option.</li>
+if you wish to use this option. <strong>Note:</strong> setting <code>luaVersion: &#39;LuaJIT&#39;</code>
+currently does <em>not</em> enable this option; this may change in the future.</li>
 </ul>
 <p>The default options are also exposed through <code>luaparse.defaultOptions</code> where
 they can be overriden globally.</p>

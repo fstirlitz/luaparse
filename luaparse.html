@@ -241,7 +241,7 @@ the supplied <code>exports</code> object.</p>
 
   exports.version = <span class="hljs-string">'0.2.1'</span>;
 
-  <span class="hljs-keyword">var</span> input, options, length;</pre></div></div>
+  <span class="hljs-keyword">var</span> input, options, length, features;</pre></div></div>
             
         </li>
         
@@ -1188,25 +1188,25 @@ is always enabled to provide proper debug messages).</p>
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'='</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">62</span>: <span class="hljs-comment">// &gt;</span>
-        <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.3'</span>)
+        <span class="hljs-keyword">if</span> (features.bitwiseOperators)
           <span class="hljs-keyword">if</span> (<span class="hljs-number">62</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&gt;&gt;'</span>);
         <span class="hljs-keyword">if</span> (<span class="hljs-number">61</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&gt;='</span>);
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&gt;'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">60</span>: <span class="hljs-comment">// &lt;</span>
-        <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.3'</span>)
+        <span class="hljs-keyword">if</span> (features.bitwiseOperators)
           <span class="hljs-keyword">if</span> (<span class="hljs-number">60</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&lt;&lt;'</span>);
         <span class="hljs-keyword">if</span> (<span class="hljs-number">61</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&lt;='</span>);
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'&lt;'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">126</span>: <span class="hljs-comment">// ~</span>
         <span class="hljs-keyword">if</span> (<span class="hljs-number">61</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'~='</span>);
-        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.1'</span>) || (options.luaVersion === <span class="hljs-string">'5.2'</span>))
+        <span class="hljs-keyword">if</span> (!features.bitwiseOperators)
           <span class="hljs-keyword">break</span>;
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'~'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">58</span>: <span class="hljs-comment">// :</span>
-        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))
+        <span class="hljs-keyword">if</span> (features.labels)
           <span class="hljs-keyword">if</span> (<span class="hljs-number">58</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'::'</span>);
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">':'</span>);
 
@@ -1243,12 +1243,12 @@ is always enabled to provide proper debug messages).</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.3'</span>)
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (features.integerDivision)
           <span class="hljs-keyword">if</span> (<span class="hljs-number">47</span> === next) <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'//'</span>);
         <span class="hljs-keyword">return</span> scanPunctuator(<span class="hljs-string">'/'</span>);
 
       <span class="hljs-keyword">case</span> <span class="hljs-number">38</span>: <span class="hljs-keyword">case</span> <span class="hljs-number">124</span>: <span class="hljs-comment">// &amp; |</span>
-        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.1'</span>) || (options.luaVersion === <span class="hljs-string">'5.2'</span>))
+        <span class="hljs-keyword">if</span> (!features.bitwiseOperators)
           <span class="hljs-keyword">break</span>;
 
         <span class="hljs-comment">/* fall through */</span>
@@ -2024,7 +2024,7 @@ have been verified to behave the same way.</p>
         <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(ddd);
 
       <span class="hljs-keyword">case</span> <span class="hljs-string">'z'</span>:
-        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>)) {
+        <span class="hljs-keyword">if</span> (features.skipWhitespaceEscape) {
           ++index;
           skipWhiteSpace();
           <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
@@ -2032,7 +2032,7 @@ have been verified to behave the same way.</p>
 
         <span class="hljs-comment">/* fall through */</span>
       <span class="hljs-keyword">case</span> <span class="hljs-string">'x'</span>:
-        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>)) {</pre></div></div>
+        <span class="hljs-keyword">if</span> (features.hexEscapes) {</pre></div></div>
             
         </li>
         
@@ -2057,13 +2057,13 @@ have been verified to behave the same way.</p>
 
         <span class="hljs-comment">/* fall through */</span>
       <span class="hljs-keyword">case</span> <span class="hljs-string">'u'</span>:
-        <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.3'</span>) {
+        <span class="hljs-keyword">if</span> (features.unicodeEscapes) {
           <span class="hljs-keyword">return</span> readUnicodeEscapeSequence();
         }
 
         <span class="hljs-comment">/* fall through */</span>
       <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))
+        <span class="hljs-keyword">if</span> (features.strictEscapes)
           raise({}, errors.invalidEscape, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">1</span>));
 
         <span class="hljs-comment">/* fall through */</span>
@@ -2474,7 +2474,7 @@ On the other hand, LuaJIT allows arbitrary octets ≥ 128 in identifiers.</p>
       <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:
         <span class="hljs-keyword">if</span> (<span class="hljs-string">'else'</span> === id || <span class="hljs-string">'then'</span> === id)
           <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-        <span class="hljs-keyword">if</span> ((options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))
+        <span class="hljs-keyword">if</span> (features.labels &amp;&amp; !features.contextualGoto)
           <span class="hljs-keyword">return</span> (<span class="hljs-string">'goto'</span> === id);
         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
       <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:
@@ -3034,6 +3034,12 @@ ignore some statements, such as EmptyStatement.</p>
       }
     }
 
+    <span class="hljs-keyword">if</span> (features.contextualGoto &amp;&amp;
+        token.type === Identifier &amp;&amp; token.value === <span class="hljs-string">'goto'</span> &amp;&amp;
+        lookahead.type === Identifier &amp;&amp; lookahead.value !== <span class="hljs-string">'goto'</span>) {
+      next(); <span class="hljs-keyword">return</span> parseGotoStatement();
+    }
+
     <span class="hljs-keyword">if</span> (Punctuator === token.type) {
       <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'::'</span>)) <span class="hljs-keyword">return</span> parseLabelStatement();
     }</pre></div></div>
@@ -3067,7 +3073,7 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.2'</span> || options.luaVersion === <span class="hljs-string">'5.3'</span>) {
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (features.emptyStatement) {
       <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">';'</span>)) <span class="hljs-keyword">return</span>;
     }
 
@@ -4380,7 +4386,7 @@ throw an error.</p>
     <span class="hljs-keyword">if</span> (Punctuator === token.type) {
       <span class="hljs-keyword">switch</span> (token.value) {
         <span class="hljs-keyword">case</span> <span class="hljs-string">'('</span>:
-          <span class="hljs-keyword">if</span> (options.luaVersion === <span class="hljs-string">'5.1'</span>) {
+          <span class="hljs-keyword">if</span> (!features.emptyStatement) {
             <span class="hljs-keyword">if</span> (token.line !== previousToken.line)
               raise({}, errors.ambiguousSyntax, token.value);
           }
@@ -4520,6 +4526,52 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
             <div class="content"><div class='highlight'><pre>
   exports.parse = parse;
 
+  <span class="hljs-keyword">var</span> versionFeatures = {
+    <span class="hljs-string">'5.1'</span>: {
+    },
+    <span class="hljs-string">'5.2'</span>: {
+      <span class="hljs-attr">labels</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">emptyStatement</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">hexEscapes</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">skipWhitespaceEscape</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">strictEscapes</span>: <span class="hljs-literal">true</span>
+    },
+    <span class="hljs-string">'5.3'</span>: {
+      <span class="hljs-attr">labels</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">emptyStatement</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">hexEscapes</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">skipWhitespaceEscape</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">strictEscapes</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">unicodeEscapes</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">bitwiseOperators</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">integerDivision</span>: <span class="hljs-literal">true</span>
+    },
+    <span class="hljs-string">'LuaJIT'</span>: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-188">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-188">&#182;</a>
+              </div>
+              <p>XXX: LuaJIT language features may depend on compilation options; may need to
+rethink how to handle this. Specifically, there is a LUAJIT_ENABLE_LUA52COMPAT
+that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      labels: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">contextualGoto</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">hexEscapes</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">skipWhitespaceEscape</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">strictEscapes</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">unicodeEscapes</span>: <span class="hljs-literal">true</span>
+    }
+  };
+
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parse</span>(<span class="hljs-params">_input, _options</span>) </span>{
     <span class="hljs-keyword">if</span> (<span class="hljs-string">'undefined'</span> === <span class="hljs-keyword">typeof</span> _options &amp;&amp; <span class="hljs-string">'object'</span> === <span class="hljs-keyword">typeof</span> _input) {
       _options = _input;
@@ -4533,11 +4585,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-188">
+        <li id="section-189">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-188">&#182;</a>
+                <a class="pilcrow" href="#section-189">&#182;</a>
               </div>
               <p>Rewind the lexer</p>
 
@@ -4551,11 +4603,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-189">
+        <li id="section-190">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-189">&#182;</a>
+                <a class="pilcrow" href="#section-190">&#182;</a>
               </div>
               <p>When tracking identifier scope, initialize with an empty scope.</p>
 
@@ -4566,7 +4618,7 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
     globals = [];
     locations = [];
 
-    <span class="hljs-keyword">if</span> (!((options.luaVersion === <span class="hljs-string">'5.1'</span>) || (options.luaVersion === <span class="hljs-string">'5.2'</span>) || (options.luaVersion === <span class="hljs-string">'5.3'</span>))) {
+    <span class="hljs-keyword">if</span> (!(features = versionFeatures[options.luaVersion])) {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(sprintf(<span class="hljs-string">"Lua version '%1' not supported"</span>, options.luaVersion));
     }
 
@@ -4578,11 +4630,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-190">
+        <li id="section-191">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-190">&#182;</a>
+                <a class="pilcrow" href="#section-191">&#182;</a>
               </div>
               <p>Write to the source code buffer without beginning the parse.</p>
 
@@ -4599,11 +4651,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-191">
+        <li id="section-192">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-191">&#182;</a>
+                <a class="pilcrow" href="#section-192">&#182;</a>
               </div>
               <p>Send an EOF and begin parsing.</p>
 
@@ -4617,11 +4669,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-192">
+        <li id="section-193">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-192">&#182;</a>
+                <a class="pilcrow" href="#section-193">&#182;</a>
               </div>
               <p>Ignore shebangs.</p>
 
@@ -4637,11 +4689,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-193">
+        <li id="section-194">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-193">&#182;</a>
+                <a class="pilcrow" href="#section-194">&#182;</a>
               </div>
               <p>Initialize with a lookahead token.</p>
 
