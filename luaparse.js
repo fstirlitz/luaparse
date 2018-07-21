@@ -1267,7 +1267,7 @@
       case 4:
         if ('else' === id || 'then' === id)
           return true;
-        if (features.labels)
+        if (features.labels && !features.contextualGoto)
           return ('goto' === id);
         return false;
       case 5:
@@ -1505,6 +1505,12 @@
         case 'do':       next(); return parseDoStatement();
         case 'goto':     next(); return parseGotoStatement();
       }
+    }
+
+    if (features.contextualGoto &&
+        token.type === Identifier && token.value === 'goto' &&
+        lookahead.type === Identifier && lookahead.value !== 'goto') {
+      next(); return parseGotoStatement();
     }
 
     if (Punctuator === token.type) {
@@ -2269,6 +2275,17 @@
       unicodeEscapes: true,
       bitwiseOperators: true,
       integerDivision: true
+    },
+    'LuaJIT': {
+      // XXX: LuaJIT language features may depend on compilation options; may need to
+      // rethink how to handle this. Specifically, there is a LUAJIT_ENABLE_LUA52COMPAT
+      // that removes contextual goto. Maybe add 'LuaJIT-5.2compat' as well?
+      labels: true,
+      contextualGoto: true,
+      hexEscapes: true,
+      skipWhitespaceEscape: true,
+      strictEscapes: true,
+      unicodeEscapes: true
     }
   };
 
