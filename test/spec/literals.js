@@ -2758,8 +2758,8 @@
                           "column": 12
                         },
                         "end": {
-                          "line": 2,
-                          "column": 8
+                          "line": 3,
+                          "column": 7
                         }
                       },
                       "range": [
@@ -2773,8 +2773,8 @@
                         "column": 12
                       },
                       "end": {
-                        "line": 2,
-                        "column": 8
+                        "line": 3,
+                        "column": 7
                       }
                     },
                     "range": [
@@ -2790,11 +2790,11 @@
                       "raw": "3",
                       "loc": {
                         "start": {
-                          "line": 3,
+                          "line": 4,
                           "column": 1
                         },
                         "end": {
-                          "line": 3,
+                          "line": 4,
                           "column": 2
                         }
                       },
@@ -2805,11 +2805,11 @@
                     },
                     "loc": {
                       "start": {
-                        "line": 3,
+                        "line": 4,
                         "column": 1
                       },
                       "end": {
-                        "line": 3,
+                        "line": 4,
                         "column": 2
                       }
                     },
@@ -2825,7 +2825,7 @@
                     "column": 4
                   },
                   "end": {
-                    "line": 3,
+                    "line": 4,
                     "column": 4
                   }
                 },
@@ -2841,7 +2841,7 @@
                 "column": 0
               },
               "end": {
-                "line": 3,
+                "line": 4,
                 "column": 4
               }
             },
@@ -2857,7 +2857,7 @@
             "column": 0
           },
           "end": {
-            "line": 3,
+            "line": 4,
             "column": 4
           }
         },

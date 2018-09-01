@@ -2259,7 +2259,7 @@ its counter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (isLineTerminator(input.charCodeAt(index))) consumeEOL();
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">while</span> (isLineTerminator(input.charCodeAt(index))) consumeEOL();
 
       character = input.charAt(index++);</pre></div></div>
             
