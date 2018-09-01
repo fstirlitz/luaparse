@@ -1157,7 +1157,7 @@
     while (index < length) {
       // To keep track of line numbers run the `consumeEOL()` which increments
       // its counter.
-      if (isLineTerminator(input.charCodeAt(index))) consumeEOL();
+      while (isLineTerminator(input.charCodeAt(index))) consumeEOL();
 
       character = input.charAt(index++);
 
