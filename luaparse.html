@@ -945,6 +945,7 @@ on the error thrown being an instance of SyntaxError. For example, the Ace edito
             
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fixupError</span>(<span class="hljs-params">e</span>) </span>{
+    <span class="hljs-comment">/* istanbul ignore if */</span>
     <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">Object</span>.create)
       <span class="hljs-keyword">return</span> e;
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.create(e, {
