@@ -467,6 +467,7 @@
   // <https://github.com/ajaxorg/ace/blob/4c7e5eb3f5d5ca9434847be51834a4e41661b852/lib/ace/mode/lua_worker.js#L55>
 
   function fixupError(e) {
+    /* istanbul ignore if */
     if (!Object.create)
       return e;
     return Object.create(e, {
