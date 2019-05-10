@@ -335,7 +335,6 @@ will be generated.
 
 - [luamin](http://mths.be/luamin), a Lua minifier written by Mathias Bynens.
 - [Ace](https://github.com/ajaxorg/ace), an online code editor.
-- [luaparse-ts](https://github.com/hydroper/luaparse-ts), type definitions for [TypeScript](http://typescriptlang.org).
 
 ## Acknowledgements
 
