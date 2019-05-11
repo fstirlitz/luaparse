@@ -335,6 +335,7 @@ will be generated.
 
 - [luamin](http://mths.be/luamin), a Lua minifier written by Mathias Bynens.
 - [Ace](https://github.com/ajaxorg/ace), an online code editor.
+- [lua2php](https://www.npmjs.com/package/lua2php), a Lua to PHP transpiler.
 
 ## Acknowledgements
 
