@@ -333,6 +333,7 @@ will be generated.
 
 ## Projects using/extending luaparse
 
+- [@types/luaparse](https://www.npmjs.com/package/@types/luaparse), type definitions for luaparse.
 - [luamin](http://mths.be/luamin), a Lua minifier written by Mathias Bynens.
 - [Ace](https://github.com/ajaxorg/ace), an online code editor.
 
