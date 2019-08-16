@@ -42,7 +42,7 @@
     "gulp-uglify": "^1.0.1",
     "istanbul": "~0.3.2",
     "marked": "~0.3.2",
-    "spec": "git://github.com/kitcambridge/spec.git#gh-pages",
+    "spec": "1.0.1",
     "testem": "~1.15.0"
   }
 }
