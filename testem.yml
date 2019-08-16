@@ -5,10 +5,6 @@ launchers:
     command: node test/runner.js
     protocol: tap
 
-  narwhal:
-    command: export NARWHAL_OPTIMIZATION=-1; narwhal test/runner.js
-    protocol: tap
-
   ringo:
     command: ringo -o -1 test/runner.js 2>&1
     protocol: tap
@@ -32,7 +28,6 @@ launchers:
 launch_in_ci:
   - node
   - PhantomJS
-  - narwhal
   - ringo
   - rhino
 
@@ -42,7 +37,6 @@ launch_in_dev:
   - Chrome
   - PhantomJS
   - node
-  - narwhal
   - ringo
   - rhino
   - rhino1.7R5

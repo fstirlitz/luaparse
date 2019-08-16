@@ -43,7 +43,7 @@
     // in Node.js or RingoJS v0.8.0+
     /* istanbul ignore else */
     if (moduleExports) factory(freeModule.exports);
-    // in Narwhal or RingoJS v0.7.0-
+    // in RingoJS v0.7.0-
     else factory(freeExports);
   }
   // in a browser or Rhino

@@ -291,7 +291,7 @@ $ luaparse "i = 0"
 ## Support
 
 Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+,
-Node 0.4.0+, RingoJS 0.8-0.9, Narwhal 0.3.2, Rhino 1.7R4-1.7R5, Nashorn 1.8.0.
+Node 0.4.0+, RingoJS 0.8-0.9, Rhino 1.7R4-1.7R5, Nashorn 1.8.0.
 
 ## Quality Assurance
 
@@ -311,7 +311,7 @@ using `make test` or `npm test` you should have PhantomJS installed.
 ### Test runners
 
 - `make test` uses PhantomJS and node.
-- `make testem-engines` uses PhantomJS, node, narwhal, ringo, rhino and rhino
+- `make testem-engines` uses PhantomJS, node, ringo, rhino and rhino
 1.7R5. This requires that you have the engines installed.
 - `make test-node` uses a custom command line reporter to make the output
 easier on the eyes while practicing TDD.
