@@ -23,7 +23,7 @@
   else if (freeExports && !freeExports.nodeType) {
     // in Node.js or RingoJS v0.8.0+
     if (freeModule) factory(freeModule.exports);
-    // in Narwhal or RingoJS v0.7.0-
+    // in RingoJS v0.7.0-
     else factory(freeExports);
   }
   // in a browser or Rhino
