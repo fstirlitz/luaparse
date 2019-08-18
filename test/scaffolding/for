@@ -23,7 +23,7 @@ for a in 1 do end
 for a in true do end
 for a in "foo" do end
 for a in b do break end
-//for a in b do break break end           -- FAIL
+for a in b do break break end           -- FAIL
 for a in b do return end
 for a in b do return return end         -- FAIL
 for a in b do do end end
@@ -47,9 +47,12 @@ for a = 1, 2 do "foo" end               -- FAIL
 for a = p, q, r do end
 for a = 1, 2, 3 do end
 for a = p, q do break end
-//for a = p, q do break break end         -- FAIL
+for a = p, q do break break end         -- FAIL
 for a = 1, 2 do return end
 for a = 1, 2 do return return end       -- FAIL
 for a = p, q do do end end
 for a = p, q do do break end end
 for a = p, q do do return end end
+// { "luaVersion": "5.2" }
+for a in b do break break end
+for a = p, q do break break end

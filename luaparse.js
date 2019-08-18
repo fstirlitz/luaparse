@@ -1468,7 +1468,8 @@
 
     while (!isBlockFollow(token)) {
       // Return has to be the last statement in a block.
-      if ('return' === token.value) {
+      // Likewise 'break' in Lua older than 5.2
+      if ('return' === token.value || (!features.relaxedBreak && 'break' === token.value)) {
         block.push(parseStatement());
         break;
       }
@@ -2264,7 +2265,8 @@
       emptyStatement: true,
       hexEscapes: true,
       skipWhitespaceEscape: true,
-      strictEscapes: true
+      strictEscapes: true,
+      relaxedBreak: true
     },
     '5.3': {
       labels: true,
@@ -2274,7 +2276,8 @@
       strictEscapes: true,
       unicodeEscapes: true,
       bitwiseOperators: true,
-      integerDivision: true
+      integerDivision: true,
+      relaxedBreak: true
     },
     'LuaJIT': {
       // XXX: LuaJIT language features may depend on compilation options; may need to
