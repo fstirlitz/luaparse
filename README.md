@@ -161,37 +161,6 @@ strings to the user and serialising AST back into a string; to recover the
 original bytestrings, values transformed in this way will have to be encoded
 in ISO-8859-1.
 
-Other solutions to this problem may be considered in the future. Some of
-them have been listed below, with their drawbacks:
-
-- A mode that instead treats the input as if it were decoded according
-  to ISO-8859-1 (or [the `x-user-defined` encoding][x-user-defined])
-  and rejects code points that cannot appear in that encoding; may be
-  useful for source code in encodings other than UTF-8
-  - Still tricky to get semantics correctly
-- Using an `ArrayBuffer` or `Uint8Array` for source code and/or string
-  literals
-  - May fail to be portable to older JavaScript engines
-  - Cannot be (directly) serialised as JSON
-  - Values of those types are fixed-length, which makes manipulation
-    cumbersome; they cannot be incrementally built by appending.
-  - They cannot be used as keys in objects; one has to use
-    `Map` and `WeakMap` instead
-- Using a plain `Array` of numbers in the range [0, 256)
-  - Memory-inefficient
-  - May bloat the JSON serialisation considerably
-  - Cannot be used as keys in objects either
-- Storing string literal values as ordinary `String` values, and requiring that
-  escape sequences in literals constitute well-formed UTF-8; an exception
-  is thrown if they do not
-  - UTF-8 chauvinism; imposes semantics that may be unwanted
-  - Reduced compatibility with other Lua implementations
-- Like above, but instead of throwing an exception, ill-formed escapes are
-  transformed to unpaired surrogates, just like Python's `surrogateescape`
-  encoding error handler
-  - Destroys the property that `("\xc4" .. "\x99") == "\xc4\x99"`
-  - If the AST is encoded in JSON, some JSON libraries may refuse to parse it
-
 ### Custom AST
 
 The default AST structure is somewhat inspired by the Mozilla Parser API but
@@ -350,4 +319,3 @@ MIT
 [lua]: https://www.lua.org
 [esprima]: http://esprima.org
 [wtf8]: https://simonsapin.github.io/wtf-8/
-[x-user-defined]: https://encoding.spec.whatwg.org/#x-user-defined
