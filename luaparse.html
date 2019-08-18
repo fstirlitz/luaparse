@@ -3841,7 +3841,6 @@ with a vararg.</p>
           parameters.push(parameter);
 
           <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">','</span>)) <span class="hljs-keyword">continue</span>;
-          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">')'</span>)) <span class="hljs-keyword">break</span>;
         }</pre></div></div>
             
         </li>
@@ -3859,11 +3858,11 @@ with a vararg.</p>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (VarargLiteral === token.type) {
           parameters.push(parsePrimaryExpression());
-          expect(<span class="hljs-string">')'</span>);
-          <span class="hljs-keyword">break</span>;
         } <span class="hljs-keyword">else</span> {
           raiseUnexpectedToken(<span class="hljs-string">'&lt;name&gt; or \'...\''</span>, token);
         }
+        expect(<span class="hljs-string">')'</span>);
+        <span class="hljs-keyword">break</span>;
       }
     }
 

@@ -11,6 +11,8 @@ function a(p                            -- FAIL
 function a(p,)                          -- FAIL
 function a(p q                          -- FAIL
 function a(p) end
+function a(p,q) end
+function a(p q) end                     -- FAIL
 function a(p,q,) end                    -- FAIL
 function a(p,q,r) end
 function a(p,q,1                        -- FAIL

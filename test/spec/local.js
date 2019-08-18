@@ -1253,7 +1253,7 @@
     },
     {
       "source": "local function a(p",
-      "result": "[1:18] <name> or '...' expected near '<eof>'"
+      "result": "[1:18] ')' expected near '<eof>'"
     },
     {
       "source": "local function a(p,)",
@@ -1261,7 +1261,7 @@
     },
     {
       "source": "local function a(p q",
-      "result": "[1:20] <name> or '...' expected near '<eof>'"
+      "result": "[1:19] ')' expected near 'q'"
     },
     {
       "source": "local function a(p) end",
@@ -1345,6 +1345,112 @@
         "comments": [],
         "globals": []
       }
+    },
+    {
+      "source": "local function a(p,q) end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "FunctionDeclaration",
+            "identifier": {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 15
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16
+                }
+              },
+              "range": [
+                15,
+                16
+              ],
+              "isLocal": true
+            },
+            "isLocal": true,
+            "parameters": [
+              {
+                "type": "Identifier",
+                "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 17
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 18
+                  }
+                },
+                "range": [
+                  17,
+                  18
+                ],
+                "isLocal": true
+              },
+              {
+                "type": "Identifier",
+                "name": "q",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 19
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  19,
+                  20
+                ],
+                "isLocal": true
+              }
+            ],
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 25
+              }
+            },
+            "range": [
+              0,
+              25
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 25
+          }
+        },
+        "range": [
+          0,
+          25
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "local function a(p q) end",
+      "result": "[1:19] ')' expected near 'q'"
     },
     {
       "source": "local function a(p,q,) end",

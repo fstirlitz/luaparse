@@ -1878,16 +1878,15 @@
           parameters.push(parameter);
 
           if (consume(',')) continue;
-          else if (consume(')')) break;
         }
         // No arguments are allowed after a vararg.
         else if (VarargLiteral === token.type) {
           parameters.push(parsePrimaryExpression());
-          expect(')');
-          break;
         } else {
           raiseUnexpectedToken('<name> or \'...\'', token);
         }
+        expect(')');
+        break;
       }
     }
 

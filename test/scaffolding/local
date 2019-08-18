@@ -32,6 +32,8 @@ local function a(p                      -- FAIL
 local function a(p,)                    -- FAIL
 local function a(p q                    -- FAIL
 local function a(p) end
+local function a(p,q) end
+local function a(p q) end               -- FAIL
 local function a(p,q,) end              -- FAIL
 local function a(p,q,r) end
 local function a(p,q,1                  -- FAIL
