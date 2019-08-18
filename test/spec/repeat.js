@@ -545,6 +545,10 @@
       }
     },
     {
+      "source": "repeat ; until 1",
+      "result": "[1:7] unexpected symbol ';' near 'until'"
+    },
+    {
       "source": "repeat 2 until 1",
       "result": "[1:7] unexpected number '2' near 'until'"
     },
@@ -994,6 +998,74 @@
         ],
         "comments": [],
         "globals": []
+      }
+    },
+    {
+      "source": "repeat ; until 1",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "RepeatStatement",
+            "condition": {
+              "type": "NumericLiteral",
+              "value": 1,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 15
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16
+                }
+              },
+              "range": [
+                15,
+                16
+              ]
+            },
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              0,
+              16
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 16
+          }
+        },
+        "range": [
+          0,
+          16
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
       }
     },
     {

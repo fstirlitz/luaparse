@@ -1,7 +1,7 @@
 do                                      -- FAIL
 end                                     -- FAIL
 do end
-//do ; end                                -- FAIL
+do ; end                                -- FAIL
 do 1 end                                -- FAIL
 do "foo" end                            -- FAIL
 do local a, b end
@@ -18,3 +18,5 @@ do end end                              -- FAIL
 do return end
 do return return end                    -- FAIL
 //do break end                            -- FAIL
+// { "luaVersion": "5.2" }
+do ; end

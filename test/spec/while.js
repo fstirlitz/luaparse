@@ -545,6 +545,10 @@
       }
     },
     {
+      "source": "while 1 do ; end",
+      "result": "[1:11] unexpected symbol ';' near 'end'"
+    },
+    {
       "source": "while 1 do while",
       "result": "[1:16] <expression> expected near '<eof>'"
     },
@@ -1002,6 +1006,74 @@
         ],
         "comments": [],
         "globals": []
+      }
+    },
+    {
+      "source": "while 1 do ; end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "WhileStatement",
+            "condition": {
+              "type": "NumericLiteral",
+              "value": 1,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 6
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                6,
+                7
+              ]
+            },
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              0,
+              16
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 16
+          }
+        },
+        "range": [
+          0,
+          16
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
       }
     },
     {
