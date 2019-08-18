@@ -1,7 +1,6 @@
 a = {                                   -- FAIL
 a = {}
 a = {,}                                 -- FAIL
-//a = {;}
 a = {;}                                 -- FAIL
 a = {,,}                                -- FAIL
 a = {;;}                                -- FAIL
