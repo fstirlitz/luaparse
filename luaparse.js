@@ -1052,8 +1052,8 @@
           skipWhiteSpace();
           return '';
         }
+        break;
 
-        /* fall through */
       case 'x':
         if (features.hexEscapes) {
           // \xXX, where XX is a sequence of exactly two hexadecimal digits
@@ -1064,22 +1064,20 @@
           }
           raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
         }
+        break;
 
-        /* fall through */
       case 'u':
-        if (features.unicodeEscapes) {
+        if (features.unicodeEscapes)
           return readUnicodeEscapeSequence();
-        }
+        break;
 
-        /* fall through */
-      default:
-        if (features.strictEscapes)
-          raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
-
-        /* fall through */
       case '\\': case '"': case "'":
         return input.charAt(index++);
     }
+
+    if (features.strictEscapes)
+      raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
+    return input.charAt(index++);
   }
 
   // Comments begin with -- after which it will be decided if they are
