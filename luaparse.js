@@ -1052,8 +1052,8 @@
           skipWhiteSpace();
           return '';
         }
+        break;
 
-        /* fall through */
       case 'x':
         if (features.hexEscapes) {
           // \xXX, where XX is a sequence of exactly two hexadecimal digits
@@ -1064,22 +1064,20 @@
           }
           raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
         }
+        break;
 
-        /* fall through */
       case 'u':
-        if (features.unicodeEscapes) {
+        if (features.unicodeEscapes)
           return readUnicodeEscapeSequence();
-        }
+        break;
 
-        /* fall through */
-      default:
-        if (features.strictEscapes)
-          raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
-
-        /* fall through */
       case '\\': case '"': case "'":
         return input.charAt(index++);
     }
+
+    if (features.strictEscapes)
+      raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
+    return input.charAt(index++);
   }
 
   // Comments begin with -- after which it will be decided if they are
@@ -1468,7 +1466,8 @@
 
     while (!isBlockFollow(token)) {
       // Return has to be the last statement in a block.
-      if ('return' === token.value) {
+      // Likewise 'break' in Lua older than 5.2
+      if ('return' === token.value || (!features.relaxedBreak && 'break' === token.value)) {
         block.push(parseStatement());
         break;
       }
@@ -2264,7 +2263,8 @@
       emptyStatement: true,
       hexEscapes: true,
       skipWhitespaceEscape: true,
-      strictEscapes: true
+      strictEscapes: true,
+      relaxedBreak: true
     },
     '5.3': {
       labels: true,
@@ -2274,7 +2274,8 @@
       strictEscapes: true,
       unicodeEscapes: true,
       bitwiseOperators: true,
-      integerDivision: true
+      integerDivision: true,
+      relaxedBreak: true
     },
     'LuaJIT': {
       // XXX: LuaJIT language features may depend on compilation options; may need to

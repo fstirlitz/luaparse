@@ -9,7 +9,7 @@ while 1 do local a; local b; end
 while 1 do 2 end                        -- FAIL
 while 1 do "foo" end                    -- FAIL
 while true do end
-//while 1 do ; end                        -- FAIL
+while 1 do ; end                        -- FAIL
 while 1 do while                        -- FAIL
 while 1 end                             -- FAIL
 while 1 2 do                            -- FAIL
@@ -19,5 +19,8 @@ while 1 do return return end            -- FAIL
 while 1 do do end end
 while 1 do do return end end
 while 1 do break end
-//while 1 do break break end              -- FAIL
+while 1 do break break end              -- FAIL
 while 1 do do break end end
+// { "luaVersion": "5.2" }
+while 1 do ; end
+while 1 do break break end

@@ -1286,6 +1286,10 @@
       }
     },
     {
+      "source": "for a in b do break break end",
+      "result": "[1:20] 'end' expected near 'break'"
+    },
+    {
       "source": "for a in b do return end",
       "result": {
         "type": "Chunk",
@@ -2911,6 +2915,10 @@
       }
     },
     {
+      "source": "for a = p, q do break break end",
+      "result": "[1:22] 'end' expected near 'break'"
+    },
+    {
       "source": "for a = 1, 2 do return end",
       "result": {
         "type": "Chunk",
@@ -3542,6 +3550,333 @@
             "isLocal": false
           }
         ]
+      }
+    },
+    {
+      "source": "for a in b do break break end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "ForGenericStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  4,
+                  5
+                ],
+                "isLocal": true
+              }
+            ],
+            "iterators": [
+              {
+                "type": "Identifier",
+                "name": "b",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  9,
+                  10
+                ],
+                "isLocal": false
+              }
+            ],
+            "body": [
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 19
+                  }
+                },
+                "range": [
+                  14,
+                  19
+                ]
+              },
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 20
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 25
+                  }
+                },
+                "range": [
+                  20,
+                  25
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 29
+              }
+            },
+            "range": [
+              0,
+              29
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 29
+          }
+        },
+        "range": [
+          0,
+          29
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "b",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
+    },
+    {
+      "source": "for a = p, q do break break end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "ForNumericStatement",
+            "variable": {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 4
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5
+                }
+              },
+              "range": [
+                4,
+                5
+              ],
+              "isLocal": true
+            },
+            "start": {
+              "type": "Identifier",
+              "name": "p",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 8
+                },
+                "end": {
+                  "line": 1,
+                  "column": 9
+                }
+              },
+              "range": [
+                8,
+                9
+              ],
+              "isLocal": false
+            },
+            "end": {
+              "type": "Identifier",
+              "name": "q",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 11
+                },
+                "end": {
+                  "line": 1,
+                  "column": 12
+                }
+              },
+              "range": [
+                11,
+                12
+              ],
+              "isLocal": false
+            },
+            "step": null,
+            "body": [
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 16
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 21
+                  }
+                },
+                "range": [
+                  16,
+                  21
+                ]
+              },
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 22
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 27
+                  }
+                },
+                "range": [
+                  22,
+                  27
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 31
+              }
+            },
+            "range": [
+              0,
+              31
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 31
+          }
+        },
+        "range": [
+          0,
+          31
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "p",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 8
+              },
+              "end": {
+                "line": 1,
+                "column": 9
+              }
+            },
+            "range": [
+              8,
+              9
+            ],
+            "isLocal": false
+          },
+          {
+            "type": "Identifier",
+            "name": "q",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 11
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              11,
+              12
+            ],
+            "isLocal": false
+          }
+        ]
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
       }
     }
   ];

@@ -2030,8 +2030,8 @@ have been verified to behave the same way.</p>
           skipWhiteSpace();
           <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
         }
+        <span class="hljs-keyword">break</span>;
 
-        <span class="hljs-comment">/* fall through */</span>
       <span class="hljs-keyword">case</span> <span class="hljs-string">'x'</span>:
         <span class="hljs-keyword">if</span> (features.hexEscapes) {</pre></div></div>
             
@@ -2055,22 +2055,20 @@ have been verified to behave the same way.</p>
           }
           raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">2</span>));
         }
+        <span class="hljs-keyword">break</span>;
 
-        <span class="hljs-comment">/* fall through */</span>
       <span class="hljs-keyword">case</span> <span class="hljs-string">'u'</span>:
-        <span class="hljs-keyword">if</span> (features.unicodeEscapes) {
+        <span class="hljs-keyword">if</span> (features.unicodeEscapes)
           <span class="hljs-keyword">return</span> readUnicodeEscapeSequence();
-        }
+        <span class="hljs-keyword">break</span>;
 
-        <span class="hljs-comment">/* fall through */</span>
-      <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">if</span> (features.strictEscapes)
-          raise({}, errors.invalidEscape, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">1</span>));
-
-        <span class="hljs-comment">/* fall through */</span>
       <span class="hljs-keyword">case</span> <span class="hljs-string">'\\'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'"'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">"'"</span>:
         <span class="hljs-keyword">return</span> input.charAt(index++);
     }
+
+    <span class="hljs-keyword">if</span> (features.strictEscapes)
+      raise({}, errors.invalidEscape, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">1</span>));
+    <span class="hljs-keyword">return</span> input.charAt(index++);
   }</pre></div></div>
             
         </li>
@@ -2955,11 +2953,12 @@ as its last statement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-122">&#182;</a>
               </div>
-              <p>Return has to be the last statement in a block.</p>
+              <p>Return has to be the last statement in a block.
+Likewise ‘break’ in Lua older than 5.2</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'return'</span> === token.value) {
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'return'</span> === token.value || (!features.relaxedBreak &amp;&amp; <span class="hljs-string">'break'</span> === token.value)) {
         block.push(parseStatement());
         <span class="hljs-keyword">break</span>;
       }
@@ -4534,7 +4533,8 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
       <span class="hljs-attr">emptyStatement</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">hexEscapes</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">skipWhitespaceEscape</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">strictEscapes</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">strictEscapes</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">relaxedBreak</span>: <span class="hljs-literal">true</span>
     },
     <span class="hljs-string">'5.3'</span>: {
       <span class="hljs-attr">labels</span>: <span class="hljs-literal">true</span>,
@@ -4544,7 +4544,8 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
       <span class="hljs-attr">strictEscapes</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">unicodeEscapes</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">bitwiseOperators</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">integerDivision</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">integerDivision</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">relaxedBreak</span>: <span class="hljs-literal">true</span>
     },
     <span class="hljs-string">'LuaJIT'</span>: {</pre></div></div>
             

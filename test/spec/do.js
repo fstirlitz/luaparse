@@ -68,6 +68,10 @@
       }
     },
     {
+      "source": "do ; end",
+      "result": "[1:3] unexpected symbol ';' near 'end'"
+    },
+    {
       "source": "do 1 end",
       "result": "[1:3] unexpected number '1' near 'end'"
     },
@@ -973,6 +977,55 @@
     {
       "source": "do return return end",
       "result": "[1:10] 'end' expected near 'return'"
+    },
+    {
+      "source": "do ; end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "DoStatement",
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 8
+              }
+            },
+            "range": [
+              0,
+              8
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8
+          }
+        },
+        "range": [
+          0,
+          8
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
     }
   ];
 }));

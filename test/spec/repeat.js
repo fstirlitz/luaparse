@@ -545,6 +545,10 @@
       }
     },
     {
+      "source": "repeat ; until 1",
+      "result": "[1:7] unexpected symbol ';' near 'until'"
+    },
+    {
       "source": "repeat 2 until 1",
       "result": "[1:7] unexpected number '2' near 'until'"
     },
@@ -714,6 +718,10 @@
         "comments": [],
         "globals": []
       }
+    },
+    {
+      "source": "repeat break break until 0",
+      "result": "[1:13] 'until' expected near 'break'"
     },
     {
       "source": "repeat do end until 0",
@@ -990,6 +998,177 @@
         ],
         "comments": [],
         "globals": []
+      }
+    },
+    {
+      "source": "repeat ; until 1",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "RepeatStatement",
+            "condition": {
+              "type": "NumericLiteral",
+              "value": 1,
+              "raw": "1",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 15
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16
+                }
+              },
+              "range": [
+                15,
+                16
+              ]
+            },
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 16
+              }
+            },
+            "range": [
+              0,
+              16
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 16
+          }
+        },
+        "range": [
+          0,
+          16
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
+    },
+    {
+      "source": "repeat break break until 0",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "RepeatStatement",
+            "condition": {
+              "type": "NumericLiteral",
+              "value": 0,
+              "raw": "0",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 25
+                },
+                "end": {
+                  "line": 1,
+                  "column": 26
+                }
+              },
+              "range": [
+                25,
+                26
+              ]
+            },
+            "body": [
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 7
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  7,
+                  12
+                ]
+              },
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 18
+                  }
+                },
+                "range": [
+                  13,
+                  18
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 26
+              }
+            },
+            "range": [
+              0,
+              26
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 26
+          }
+        },
+        "range": [
+          0,
+          26
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
       }
     }
   ];
