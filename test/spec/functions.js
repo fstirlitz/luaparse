@@ -134,7 +134,7 @@
     },
     {
       "source": "function a(p",
-      "result": "[1:12] <name> or '...' expected near '<eof>'"
+      "result": "[1:12] ')' expected near '<eof>'"
     },
     {
       "source": "function a(p,)",
@@ -142,7 +142,7 @@
     },
     {
       "source": "function a(p q",
-      "result": "[1:14] <name> or '...' expected near '<eof>'"
+      "result": "[1:13] ')' expected near 'q'"
     },
     {
       "source": "function a(p) end",
@@ -246,6 +246,132 @@
           }
         ]
       }
+    },
+    {
+      "source": "function a(p,q) end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "FunctionDeclaration",
+            "identifier": {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
+              "isLocal": false
+            },
+            "isLocal": false,
+            "parameters": [
+              {
+                "type": "Identifier",
+                "name": "p",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  11,
+                  12
+                ],
+                "isLocal": true
+              },
+              {
+                "type": "Identifier",
+                "name": "q",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
+                },
+                "range": [
+                  13,
+                  14
+                ],
+                "isLocal": true
+              }
+            ],
+            "body": [],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 19
+              }
+            },
+            "range": [
+              0,
+              19
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 19
+          }
+        },
+        "range": [
+          0,
+          19
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "function a(p q) end",
+      "result": "[1:13] ')' expected near 'q'"
     },
     {
       "source": "function a(p,q,) end",
