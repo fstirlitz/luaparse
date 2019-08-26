@@ -1,19 +1,27 @@
 break
-nil                                     -- FAIL
+nil                                                                         -- FAIL
 return;
-;                                       -- FAIL
+;                                                                           -- FAIL
 goto "foo"
-goto foo                                -- FAIL
+goto foo                                                                    -- FAIL
 // { "luaVersion": "5.2" }
 return;
-return;;                                -- FAIL
+return;;                                                                    -- FAIL
 ;
-::foo                                   -- FAIL
+::foo                                                                       -- FAIL
 ::foo::
-goto "foo"                              -- FAIL
-goto foo
+goto "foo"                                                                  -- FAIL
+goto foo ::foo::
+goto l1 do ::l1:: end                                                       -- FAIL
+do ::l1:: end goto l1                                                       -- FAIL
+::l1:: ::l1::                                                               -- FAIL
+goto l1; local aa ::l1:: ::l2:: print(3)                                    -- FAIL
+do local bb, cc; goto l1; end; local aa; ::l1:: print(3)                    -- FAIL
+repeat if x then goto cont end; local xuxu = 10; ::cont:: until xuxu < x    -- FAIL
+do goto l1 local a = 23 ::l1:: end
+do goto l1 goto l2 local x ::l1:: ::l2:: ::l3:: end
 // { "luaVersion": "LuaJIT" }
 ::foo::
 goto "foo"
-goto foo
-goto goto                               -- FAIL
+goto foo ::foo::
+goto goto                                                                   -- FAIL

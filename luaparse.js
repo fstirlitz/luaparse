@@ -121,6 +121,9 @@
     , unfinishedLongString: 'unfinished long string (starting at line %1) near \'%2\''
     , unfinishedLongComment: 'unfinished long comment (starting at line %1) near \'%2\''
     , ambiguousSyntax: 'ambiguous syntax (function call x new statement) near \'%1\''
+    , labelAlreadyDefined: 'label \'%1\' already defined'
+    , labelNotVisible: 'no visible label \'%1\' for <goto>'
+    , gotoJumpInLocalScope: '<goto %1> jumps into the scope of local \'%2\''
   };
 
   // ### Abstract Syntax Tree
@@ -1310,6 +1313,113 @@
     }
   }
 
+  // Goto info - used for goto/label errors
+  // -----
+
+  // Unique number for current goto block
+  var gotoScope
+    // A gotoScope to gotoScope parent map
+    , gotoScopeMap
+    // Function that generates a unique number for gotoScope
+    , getNextGotoScope
+    // Array of objects of form { type (one of local, label or goto), name, scope, last, token }
+    , gotoInfo;
+
+  // Create a new goto scope
+  function createGotoScope() {
+    const parent = gotoScope;
+    gotoScope = getNextGotoScope();
+    gotoScopeMap.set(gotoScope, parent);
+  }
+
+  // Set additional info for the label and destroy current goto scope
+  function destroyGotoScope(body, isRepeatStatement) {
+    // set last prop on label
+    // this needs to be done after the body has been parsed because the last prop is dependent on the body AST
+    let nrOfLabelsAtEnd = 0;
+    for (let i = body.length - 1; i >= 0; i--) {
+      if (body[i].type !== 'LabelStatement') break;
+      nrOfLabelsAtEnd++;
+    }
+
+    const labels = gotoInfo.filter(n => n.scope === gotoScope && n.type === 'label');
+
+    let labelI = 0;
+    for (let i = 0; i < body.length; i++) {
+      if (body[i].type === 'LabelStatement') {
+        labels[labelI].last = !isRepeatStatement && nrOfLabelsAtEnd >= body.length - i;
+        labelI++;
+      }
+    }
+
+    gotoScope = gotoScopeMap.get(gotoScope);
+  }
+
+  // Add LocalStatement to gotoInfo
+  function addLocalToGotoInfo(name) {
+    gotoInfo.push({
+      type: 'local',
+      name: name,
+      scope: gotoScope
+    });
+  }
+
+  // Add LabelStatement to gotoInfo
+  function addLabelToGotoInfo(name) {
+    const duplicateLabel = gotoInfo.find(n =>
+      n.type === 'label' && n.name === name && n.scope === gotoScope);
+
+    if (duplicateLabel) {
+      raise(token, errors.labelAlreadyDefined, name);
+    }
+
+    gotoInfo.push({
+      type: 'label',
+      name: name,
+      scope: gotoScope,
+      last: false // will be overwritten in destroyGotoScope function
+    });
+  }
+
+  // Add GotoStatement to gotoInfo
+  function addGotoToGotoInfo(name, token) {
+    gotoInfo.push({
+      type: 'goto',
+      name: name,
+      scope: gotoScope,
+      token: token
+    });
+  }
+
+  // Analyze gotoInfo for errors
+  function analyzeGotoInfo() {
+    for (let i = 0; i < gotoInfo.length; i++) {
+      const goto = gotoInfo[i];
+
+      if (goto.type === 'goto') {
+        const label = gotoInfo
+          .filter(node => node.type === 'label' && node.name === goto.name && node.scope <= goto.scope)
+          .sort((a, b) => Math.abs(goto.scope - a.scope) - Math.abs(goto.scope - b.scope))[0];
+
+        if (!label) {
+          raise(goto.token, errors.labelNotVisible, goto.name);
+        }
+
+        const labelI = gotoInfo.findIndex(n => n === label);
+
+        if (labelI > i) {
+          const locals = gotoInfo
+            .slice(i, labelI)
+            .filter(node => node.type === 'local' && node.scope === label.scope);
+
+          if (!label.last && locals.length > 0) {
+            raise(goto.token, errors.gotoJumpInLocalScope, goto.name, locals[0].name);
+          }
+        }
+      }
+    }
+  }
+
   // Scope
   // -----
 
@@ -1447,7 +1557,9 @@
     next();
     markLocation();
     if (options.scope) createScope();
+    if (features.labels) createGotoScope();
     var body = parseBlock();
+    if (features.labels) destroyGotoScope(body);
     if (options.scope) destroyScope();
     if (EOF !== token.type) unexpected(token);
     // If the body is empty no previousToken exists when finishNode runs.
@@ -1536,6 +1648,8 @@
     var name = token.value
       , label = parseIdentifier();
 
+    addLabelToGotoInfo(name);
+
     if (options.scope) {
       scopeIdentifierName('::' + name + '::');
       attachScope(label, true);
@@ -1557,6 +1671,8 @@
     var name = token.value
       , label = parseIdentifier();
 
+    addGotoToGotoInfo(name, token);
+
     return finishNode(ast.gotoStatement(label));
   }
 
@@ -1564,7 +1680,9 @@
 
   function parseDoStatement() {
     if (options.scope) createScope();
+    if (features.labels) createGotoScope();
     var body = parseBlock();
+    if (features.labels) destroyGotoScope(body);
     if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.doStatement(body));
@@ -1576,7 +1694,9 @@
     var condition = parseExpectedExpression();
     expect('do');
     if (options.scope) createScope();
+    if (features.labels) createGotoScope();
     var body = parseBlock();
+    if (features.labels) destroyGotoScope(body);
     if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.whileStatement(condition, body));
@@ -1586,9 +1706,11 @@
 
   function parseRepeatStatement() {
     if (options.scope) createScope();
+    if (features.labels) createGotoScope();
     var body = parseBlock();
     expect('until');
     var condition = parseExpectedExpression();
+    if (features.labels) destroyGotoScope(body, true);
     if (options.scope) destroyScope();
     return finishNode(ast.repeatStatement(condition, body));
   }
@@ -1628,7 +1750,9 @@
     condition = parseExpectedExpression();
     expect('then');
     if (options.scope) createScope();
+    if (features.labels) createGotoScope();
     body = parseBlock();
+    if (features.labels) destroyGotoScope(body);
     if (options.scope) destroyScope();
     clauses.push(finishNode(ast.ifClause(condition, body)));
 
@@ -1638,7 +1762,9 @@
       condition = parseExpectedExpression();
       expect('then');
       if (options.scope) createScope();
+      if (features.labels) createGotoScope();
       body = parseBlock();
+      if (features.labels) destroyGotoScope(body);
       if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseifClause(condition, body)));
       if (trackLocations) marker = createLocationMarker();
@@ -1651,7 +1777,9 @@
         locations.push(marker);
       }
       if (options.scope) createScope();
+      if (features.labels) createGotoScope();
       body = parseBlock();
+      if (features.labels) destroyGotoScope(body);
       if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseClause(body)));
     }
@@ -1689,9 +1817,11 @@
       // Optional step expression
       var step = consume(',') ? parseExpectedExpression() : null;
 
+      if (features.labels) createGotoScope();
       expect('do');
       body = parseBlock();
       expect('end');
+      if (features.labels) destroyGotoScope(body);
       if (options.scope) destroyScope();
 
       return finishNode(ast.forNumericStatement(variable, start, end, step, body));
@@ -1715,9 +1845,11 @@
         iterators.push(expression);
       } while (consume(','));
 
+      if (features.labels) createGotoScope();
       expect('do');
       body = parseBlock();
       expect('end');
+      if (features.labels) destroyGotoScope(body);
       if (options.scope) destroyScope();
 
       return finishNode(ast.forGenericStatement(variables, iterators, body));
@@ -1746,6 +1878,8 @@
 
         variables.push(name);
       } while (consume(','));
+
+      if (features.labels) addLocalToGotoInfo(variables[0].name);
 
       if (consume('=')) {
         do {
@@ -1889,8 +2023,10 @@
       }
     }
 
+    if (features.labels) createGotoScope();
     var body = parseBlock();
     expect('end');
+    if (features.labels) destroyGotoScope(body);
     if (options.scope) destroyScope();
 
     isLocal = isLocal || false;
@@ -2306,6 +2442,16 @@
     lineStart = 0;
     length = input.length;
     // When tracking identifier scope, initialize with an empty scope.
+    gotoScope = 0;
+    gotoScopeMap = new Map();
+    getNextGotoScope = (() => {
+      let id = 0;
+      return () => {
+        id += 1;
+        return id;
+      };
+    })();
+    gotoInfo = [];
     scopes = [[]];
     scopeDepth = 0;
     globals = [];
@@ -2348,6 +2494,8 @@
     var chunk = parseChunk();
     if (options.comments) chunk.comments = comments;
     if (options.scope) chunk.globals = globals;
+
+    if (features.labels) analyzeGotoInfo();
 
     /* istanbul ignore if */
     if (locations.length > 0)

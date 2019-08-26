@@ -41,7 +41,7 @@ gulp.task('lint', function() {
       , '.{bowerrc,jshintrc}'
     ]))
     .pipe(filelog())
-    .pipe(jshint())
+    .pipe(jshint({ esversion: 6 }))
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
 });
