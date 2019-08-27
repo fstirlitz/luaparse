@@ -273,14 +273,12 @@ install` which will download RequireJS.
 
 The luaparse test suite uses [testem](https://github.com/airportyh/testem) as a
 test runner, and because of this it's very easy to run the tests using
-different javascript engines or even on locally installed browsers. Currently
-the default runner uses [PhantomJS](http://phantomjs.org/) and node so when
-using `make test` or `npm test` you should have PhantomJS installed.
+different javascript engines or even on locally installed browsers.
 
 ### Test runners
 
-- `make test` uses PhantomJS and node.
-- `make testem-engines` uses PhantomJS, node, ringo, rhino and rhino
+- `make test` uses node.
+- `make testem-engines` uses node, ringo and rhino
 1.7R5. This requires that you have the engines installed.
 - `make test-node` uses a custom command line reporter to make the output
 easier on the eyes while practicing TDD.

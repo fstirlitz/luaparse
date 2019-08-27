@@ -349,14 +349,14 @@
         // As of Node 0.6.9, neither `process.nextTick` nor `setTimeout` isolate
         // execution; if the `callback` throws an exception, subsequent deferred
         // callbacks **will not execute**. This is an unfortunate incompatibility
-        // with both the `setTimeout` function exposed in Browsers and Phantom,
+        // with both the `setTimeout` function exposed in Browsers,
         // and the Java `Timer` API exposed via LiveConnect in Rhino.
         function run() {
           call.call(callback, context);
         }
         process.nextTick(run);
       };
-    // Browsers and Phantom provide the `setTimeout` function.
+    // Browsers provide the `setTimeout` function.
     } else if (Environment.setTimeout) {
       defer = function defer(callback, context) {
         function run() {

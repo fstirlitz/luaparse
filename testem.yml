@@ -27,7 +27,6 @@ launchers:
 
 launch_in_ci:
   - node
-  - PhantomJS
   - ringo
   - rhino
 
@@ -35,7 +34,6 @@ launch_in_dev:
   - Opera
   - Firefox
   - Chrome
-  - PhantomJS
   - node
   - ringo
   - rhino

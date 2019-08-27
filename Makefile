@@ -48,7 +48,7 @@ test:
 	$(BIN)/testem ci
 
 testem-engines:
-	$(BIN)/testem -l PhantomJS,node,ringo,rhino,rhino1.7R5
+	$(BIN)/testem -l node,ringo,rhino,rhino1.7R5
 
 # Scaffold all test files in the scaffolding dir.
 scaffold-tests:
