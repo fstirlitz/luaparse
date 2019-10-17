@@ -1331,7 +1331,7 @@
   // Exit and remove the current scope.
   function destroyScope() {
     var scope = scopes.pop();
-    scopeDepth--;
+    --scopeDepth;
     if (options.onDestroyScope) options.onDestroyScope();
   }
 
@@ -2083,7 +2083,7 @@
 
       if (precedence === 0 || precedence <= minPrecedence) break;
       // Right-hand precedence operators
-      if ('^' === operator || '..' === operator) precedence--;
+      if ('^' === operator || '..' === operator) --precedence;
       next();
       var right = parseSubExpression(precedence);
       if (null == right) raiseUnexpectedToken('<expression>', token);
