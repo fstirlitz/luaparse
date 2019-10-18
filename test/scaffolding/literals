@@ -33,6 +33,11 @@ a = "\@r@"
 a = "\@n@"
 a = "\@r@@n@"
 a = "\@n@@r@"
+a = "\u"
+a = "\?"
 a = [=[]                                  -- FAIL
 a = [=[x]                                 -- FAIL
 a = [=[x]x                                -- FAIL
+// { "luaVersion": "5.2" }
+a = "\u"                                  -- FAIL
+a = "\?"                                  -- FAIL

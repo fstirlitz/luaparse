@@ -166,47 +166,6 @@ transformation tools simpler. However, it poses a problem when displaying
 strings to the user and serialising AST back into a string; to recover the
 original bytestrings, values transformed in this way will have to be encoded
 in ISO-8859-1.</p>
-<p>Other solutions to this problem may be considered in the future. Some of
-them have been listed below, with their drawbacks:</p>
-<ul>
-<li>A mode that instead treats the input as if it were decoded according
-to ISO-8859-1 (or <a href="https://encoding.spec.whatwg.org/#x-user-defined">the <code>x-user-defined</code> encoding</a>)
-and rejects code points that cannot appear in that encoding; may be
-useful for source code in encodings other than UTF-8<ul>
-<li>Still tricky to get semantics correctly</li>
-</ul>
-</li>
-<li>Using an <code>ArrayBuffer</code> or <code>Uint8Array</code> for source code and/or string
-literals<ul>
-<li>May fail to be portable to older JavaScript engines</li>
-<li>Cannot be (directly) serialised as JSON</li>
-<li>Values of those types are fixed-length, which makes manipulation
-cumbersome; they cannot be incrementally built by appending.</li>
-<li>They cannot be used as keys in objects; one has to use
-<code>Map</code> and <code>WeakMap</code> instead</li>
-</ul>
-</li>
-<li>Using a plain <code>Array</code> of numbers in the range [0, 256)<ul>
-<li>Memory-inefficient</li>
-<li>May bloat the JSON serialisation considerably</li>
-<li>Cannot be used as keys in objects either</li>
-</ul>
-</li>
-<li>Storing string literal values as ordinary <code>String</code> values, and requiring that
-escape sequences in literals constitute well-formed UTF-8; an exception
-is thrown if they do not<ul>
-<li>UTF-8 chauvinism; imposes semantics that may be unwanted</li>
-<li>Reduced compatibility with other Lua implementations</li>
-</ul>
-</li>
-<li>Like above, but instead of throwing an exception, ill-formed escapes are
-transformed to unpaired surrogates, just like Python&#39;s <code>surrogateescape</code>
-encoding error handler<ul>
-<li>Destroys the property that <code>(&quot;\xc4&quot; .. &quot;\x99&quot;) == &quot;\xc4\x99&quot;</code></li>
-<li>If the AST is encoded in JSON, some JSON libraries may refuse to parse it</li>
-</ul>
-</li>
-</ul>
 <h3 id="custom-ast">Custom AST</h3>
 <p>The default AST structure is somewhat inspired by the Mozilla Parser API but
 can easily be overriden to customize the structure or to inject custom logic.</p>
@@ -294,13 +253,11 @@ with <code>npm install</code>. To test AMD loading for browsers you should run <
 install</code> which will download RequireJS.</p>
 <p>The luaparse test suite uses <a href="https://github.com/airportyh/testem">testem</a> as a
 test runner, and because of this it&#39;s very easy to run the tests using
-different javascript engines or even on locally installed browsers. Currently
-the default runner uses <a href="http://phantomjs.org/">PhantomJS</a> and node so when
-using <code>make test</code> or <code>npm test</code> you should have PhantomJS installed.</p>
+different javascript engines or even on locally installed browsers.</p>
 <h3 id="test-runners">Test runners</h3>
 <ul>
-<li><code>make test</code> uses PhantomJS and node.</li>
-<li><code>make testem-engines</code> uses PhantomJS, node, ringo, rhino and rhino
+<li><code>make test</code> uses node.</li>
+<li><code>make testem-engines</code> uses node, ringo and rhino
 1.7R5. This requires that you have the engines installed.</li>
 <li><code>make test-node</code> uses a custom command line reporter to make the output
 easier on the eyes while practicing TDD.</li>

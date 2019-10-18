@@ -2646,7 +2646,7 @@ stored in an FILO-array.</p>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">destroyScope</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">var</span> scope = scopes.pop();
-    scopeDepth--;
+    --scopeDepth;
     <span class="hljs-keyword">if</span> (options.onDestroyScope) options.onDestroyScope();
   }</pre></div></div>
             
@@ -4209,7 +4209,7 @@ without excessive amounts of tests.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'^'</span> === operator || <span class="hljs-string">'..'</span> === operator) precedence--;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'^'</span> === operator || <span class="hljs-string">'..'</span> === operator) --precedence;
       next();
       <span class="hljs-keyword">var</span> right = parseSubExpression(precedence);
       <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == right) raiseUnexpectedToken(<span class="hljs-string">'&lt;expression&gt;'</span>, token);</pre></div></div>
