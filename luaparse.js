@@ -440,28 +440,27 @@
     return format;
   }
 
-  // Returns a new object with the properties from all objectes passed as
-  // arguments. Last argument takes precedence.
-  //
-  // Example:
-  //
-  //     this.options = extend(options, { output: false });
+  // Polyfill for `Object.assign`.
 
-  function extend() {
-    var args = slice.call(arguments)
-      , dest = {}
+  var assign = /* istanbul ignore next */ function (dest) {
+    var args = slice.call(arguments, 1)
       , src, prop;
 
     for (var i = 0, length = args.length; i < length; ++i) {
       src = args[i];
       for (prop in src)
         /* istanbul ignore else */
-        if (src.hasOwnProperty(prop)) {
+        if (Object.prototype.hasOwnProperty.call(src, prop)) {
           dest[prop] = src[prop];
         }
     }
+
     return dest;
-  }
+  };
+
+  /* istanbul ignore else */
+  if (Object.assign)
+    assign = Object.assign;
 
   // ### Error functions
 
@@ -2491,7 +2490,7 @@
     if (!_options) _options = {};
 
     input = _input || '';
-    options = extend(defaultOptions, _options);
+    options = assign({}, defaultOptions, _options);
 
     // Rewind the lexer
     index = 0;
