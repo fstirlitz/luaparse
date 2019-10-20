@@ -486,6 +486,10 @@ will be different in some situations.</p>
     , <span class="hljs-attr">unfinishedLongString</span>: <span class="hljs-string">'unfinished long string (starting at line %1) near \'%2\''</span>
     , <span class="hljs-attr">unfinishedLongComment</span>: <span class="hljs-string">'unfinished long comment (starting at line %1) near \'%2\''</span>
     , <span class="hljs-attr">ambiguousSyntax</span>: <span class="hljs-string">'ambiguous syntax (function call x new statement) near \'%1\''</span>
+    , <span class="hljs-attr">noLoopToBreak</span>: <span class="hljs-string">'no loop to break near \'%1\''</span>
+    , <span class="hljs-attr">labelAlreadyDefined</span>: <span class="hljs-string">'label \'%1\' already defined on line %2'</span>
+    , <span class="hljs-attr">labelNotVisible</span>: <span class="hljs-string">'no visible label \'%1\' for &lt;goto&gt;'</span>
+    , <span class="hljs-attr">gotoJumpInLocalScope</span>: <span class="hljs-string">'&lt;goto %1&gt; jumps into the scope of local \'%2\''</span>
   };</pre></div></div>
             
         </li>
@@ -826,11 +830,18 @@ easily be customized by overriding these functions.</p>
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-keyword">var</span> slice = <span class="hljs-built_in">Array</span>.prototype.slice
     , toString = <span class="hljs-built_in">Object</span>.prototype.toString
-    , indexOf = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">indexOf</span>(<span class="hljs-params">array, element</span>) </span>{
-      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; ++i) {
-        <span class="hljs-keyword">if</span> (array[i] === element) <span class="hljs-keyword">return</span> i;
-      }
-      <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    ;
+
+  <span class="hljs-keyword">var</span> indexOf = <span class="hljs-comment">/* istanbul ignore next */</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">array, element</span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = array.length; i &lt; length; ++i) {
+      <span class="hljs-keyword">if</span> (array[i] === element) <span class="hljs-keyword">return</span> i;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+  };
+
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.prototype.indexOf)
+    indexOf = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">array, element</span>) </span>{
+      <span class="hljs-keyword">return</span> array.indexOf(element);
     };</pre></div></div>
             
         </li>
@@ -890,29 +901,30 @@ sprintf(<span class="hljs-string">'Unexpected %2 in %1.'</span>, <span class="hl
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>Returns a new object with the properties from all objectes passed as
-arguments. Last argument takes precedence.</p>
-<p>Example:</p>
-<pre><code><span class="hljs-keyword">this</span>.options = extend(options, { <span class="hljs-attr">output</span>: <span class="hljs-literal">false</span> });
-</code></pre>
+              <p>Polyfill for <code>Object.assign</code>.</p>
+
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">extend</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> args = slice.call(<span class="hljs-built_in">arguments</span>)
-      , dest = {}
+  <span class="hljs-keyword">var</span> assign = <span class="hljs-comment">/* istanbul ignore next */</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dest</span>) </span>{
+    <span class="hljs-keyword">var</span> args = slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>)
       , src, prop;
 
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, length = args.length; i &lt; length; ++i) {
       src = args[i];
       <span class="hljs-keyword">for</span> (prop <span class="hljs-keyword">in</span> src)
         <span class="hljs-comment">/* istanbul ignore else */</span>
-        <span class="hljs-keyword">if</span> (src.hasOwnProperty(prop)) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(src, prop)) {
           dest[prop] = src[prop];
         }
     }
+
     <span class="hljs-keyword">return</span> dest;
-  }</pre></div></div>
+  };
+
+  <span class="hljs-comment">/* istanbul ignore else */</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.assign)
+    assign = <span class="hljs-built_in">Object</span>.assign;</pre></div></div>
             
         </li>
         
@@ -980,17 +992,17 @@ raise(token, <span class="hljs-string">"expected %1 near %2"</span>, <span class
     <span class="hljs-keyword">var</span> message = sprintf.apply(<span class="hljs-literal">null</span>, slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>))
       , error, col;
 
-    <span class="hljs-keyword">if</span> (<span class="hljs-string">'undefined'</span> !== <span class="hljs-keyword">typeof</span> token.line) {
-      col = token.range[<span class="hljs-number">0</span>] - token.lineStart;
-      error = fixupError(<span class="hljs-keyword">new</span> <span class="hljs-built_in">SyntaxError</span>(sprintf(<span class="hljs-string">'[%1:%2] %3'</span>, token.line, col, message)));
-      error.line = token.line;
-      error.index = token.range[<span class="hljs-number">0</span>];
-      error.column = col;
-    } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (token === <span class="hljs-literal">null</span> || <span class="hljs-keyword">typeof</span> token.line === <span class="hljs-string">'undefined'</span>) {
       col = index - lineStart + <span class="hljs-number">1</span>;
       error = fixupError(<span class="hljs-keyword">new</span> <span class="hljs-built_in">SyntaxError</span>(sprintf(<span class="hljs-string">'[%1:%2] %3'</span>, line, col, message)));
       error.index = index;
       error.line = line;
+      error.column = col;
+    } <span class="hljs-keyword">else</span> {
+      col = token.range[<span class="hljs-number">0</span>] - token.lineStart;
+      error = fixupError(<span class="hljs-keyword">new</span> <span class="hljs-built_in">SyntaxError</span>(sprintf(<span class="hljs-string">'[%1:%2] %3'</span>, token.line, col, message)));
+      error.line = token.line;
+      error.index = token.range[<span class="hljs-number">0</span>];
       error.column = col;
     }
     <span class="hljs-keyword">throw</span> error;
@@ -1537,7 +1549,7 @@ ending delimiter by now, raise an exception.</p>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (index &gt;= length || isLineTerminator(charCode)) {
         string += input.slice(stringStart, index - <span class="hljs-number">1</span>);
-        raise({}, errors.unfinishedString, string + <span class="hljs-built_in">String</span>.fromCharCode(charCode));
+        raise(<span class="hljs-literal">null</span>, errors.unfinishedString, string + <span class="hljs-built_in">String</span>.fromCharCode(charCode));
       }
     }
     string += fixupHighCharacters(input.slice(stringStart, index - <span class="hljs-number">1</span>));
@@ -1676,7 +1688,7 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!isHexDigit(input.charCodeAt(index)))
-      raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+      raise(<span class="hljs-literal">null</span>, errors.malformedNumber, input.slice(tokenStart, index));
 
     <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) ++index;</pre></div></div>
             
@@ -1780,7 +1792,7 @@ BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
-        raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+        raise(<span class="hljs-literal">null</span>, errors.malformedNumber, input.slice(tokenStart, index));
 
       <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) ++index;
       binaryExponent = input.slice(exponentStart, index);</pre></div></div>
@@ -1900,7 +1912,7 @@ functions.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!isDecDigit(input.charCodeAt(index)))
-        raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+        raise(<span class="hljs-literal">null</span>, errors.malformedNumber, input.slice(tokenStart, index));
 
       <span class="hljs-keyword">while</span> (isDecDigit(input.charCodeAt(index))) ++index;
     }
@@ -1912,9 +1924,9 @@ functions.</p>
     <span class="hljs-keyword">var</span> sequenceStart = index++;
 
     <span class="hljs-keyword">if</span> (input.charAt(index++) !== <span class="hljs-string">'{'</span>)
-      raise({}, errors.braceExpected, <span class="hljs-string">'{'</span>, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+      raise(<span class="hljs-literal">null</span>, errors.braceExpected, <span class="hljs-string">'{'</span>, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
     <span class="hljs-keyword">if</span> (!isHexDigit(input.charCodeAt(index)))
-      raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+      raise(<span class="hljs-literal">null</span>, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
 
     <span class="hljs-keyword">while</span> (input.charCodeAt(index) === <span class="hljs-number">0x30</span>) ++index;
     <span class="hljs-keyword">var</span> escStart = index;
@@ -1922,22 +1934,22 @@ functions.</p>
     <span class="hljs-keyword">while</span> (isHexDigit(input.charCodeAt(index))) {
       ++index;
       <span class="hljs-keyword">if</span> (index - escStart &gt; <span class="hljs-number">6</span>)
-        raise({}, errors.tooLargeCodepoint, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+        raise(<span class="hljs-literal">null</span>, errors.tooLargeCodepoint, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
     }
 
     <span class="hljs-keyword">var</span> b = input.charAt(index++);
     <span class="hljs-keyword">if</span> (b !== <span class="hljs-string">'}'</span>) {
       <span class="hljs-keyword">if</span> ((b === <span class="hljs-string">'"'</span>) || (b === <span class="hljs-string">"'"</span>))
-        raise({}, errors.braceExpected, <span class="hljs-string">'}'</span>, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index--));
+        raise(<span class="hljs-literal">null</span>, errors.braceExpected, <span class="hljs-string">'}'</span>, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index--));
       <span class="hljs-keyword">else</span>
-        raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+        raise(<span class="hljs-literal">null</span>, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
     }
 
     <span class="hljs-keyword">var</span> codepoint = <span class="hljs-built_in">parseInt</span>(input.slice(escStart, index - <span class="hljs-number">1</span>), <span class="hljs-number">16</span>);
 
     codepoint = encodeUTF8(codepoint);
     <span class="hljs-keyword">if</span> (codepoint === <span class="hljs-literal">null</span>) {
-      raise({}, errors.tooLargeCodepoint, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
+      raise(<span class="hljs-literal">null</span>, errors.tooLargeCodepoint, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index));
     }
     <span class="hljs-keyword">return</span> codepoint;
   }</pre></div></div>
@@ -2020,7 +2032,7 @@ have been verified to behave the same way.</p>
 
         <span class="hljs-keyword">var</span> ddd = <span class="hljs-built_in">parseInt</span>(input.slice(sequenceStart, index), <span class="hljs-number">10</span>);
         <span class="hljs-keyword">if</span> (ddd &gt; <span class="hljs-number">255</span>) {
-          raise({}, errors.decimalEscapeTooLarge, <span class="hljs-string">'\\'</span> + ddd);
+          raise(<span class="hljs-literal">null</span>, errors.decimalEscapeTooLarge, <span class="hljs-string">'\\'</span> + ddd);
         }
         <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(ddd);
 
@@ -2053,7 +2065,7 @@ have been verified to behave the same way.</p>
             index += <span class="hljs-number">3</span>;
             <span class="hljs-keyword">return</span> <span class="hljs-built_in">String</span>.fromCharCode(<span class="hljs-built_in">parseInt</span>(input.slice(sequenceStart + <span class="hljs-number">1</span>, index), <span class="hljs-number">16</span>));
           }
-          raise({}, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">2</span>));
+          raise(<span class="hljs-literal">null</span>, errors.hexadecimalDigitExpected, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">2</span>));
         }
         <span class="hljs-keyword">break</span>;
 
@@ -2067,7 +2079,7 @@ have been verified to behave the same way.</p>
     }
 
     <span class="hljs-keyword">if</span> (features.strictEscapes)
-      raise({}, errors.invalidEscape, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">1</span>));
+      raise(<span class="hljs-literal">null</span>, errors.invalidEscape, <span class="hljs-string">'\\'</span> + input.slice(sequenceStart, index + <span class="hljs-number">1</span>));
     <span class="hljs-keyword">return</span> input.charAt(index++);
   }</pre></div></div>
             
@@ -2304,9 +2316,9 @@ if it matches.</p>
       }
     }
 
-    raise({}, isComment ?
-              errors.unfinishedLongComment :
-              errors.unfinishedLongString,
+    raise(<span class="hljs-literal">null</span>, isComment ?
+                errors.unfinishedLongComment :
+                errors.unfinishedLongString,
           firstLine, <span class="hljs-string">'&lt;eof&gt;'</span>);
   }</pre></div></div>
             
@@ -2866,7 +2878,7 @@ of the <em>previous token</em> as an end location.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-117">&#182;</a>
               </div>
-              <h2 id="parse-functions">Parse functions</h2>
+              <h2 id="control-flow-tracking">Control flow tracking</h2>
 
             </div>
             
@@ -2879,8 +2891,112 @@ of the <em>previous token</em> as an end location.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-118">&#182;</a>
               </div>
-              
+              <p>A context object that validates loop breaks and <code>goto</code>-based control flow.</p>
+
             </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">FullFlowContext</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.scopes = [];
+    <span class="hljs-keyword">this</span>.pendingGotos = [];
+  }
+
+  FullFlowContext.prototype.isInLoop = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> i = <span class="hljs-keyword">this</span>.scopes.length;
+    <span class="hljs-keyword">while</span> (i --&gt; <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.scopes[i].isLoop)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  };
+
+  FullFlowContext.prototype.pushScope = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">isLoop</span>) </span>{
+    <span class="hljs-keyword">var</span> scope = {
+      <span class="hljs-attr">labels</span>: {},
+      <span class="hljs-attr">locals</span>: [],
+      <span class="hljs-attr">deferredGotos</span>: [],
+      <span class="hljs-attr">isLoop</span>: !!isLoop
+    };
+    <span class="hljs-keyword">this</span>.scopes.push(scope);
+  };
+
+  FullFlowContext.prototype.popScope = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.pendingGotos.length; ++i) {
+      <span class="hljs-keyword">var</span> theGoto = <span class="hljs-keyword">this</span>.pendingGotos[i];
+      <span class="hljs-keyword">if</span> (theGoto.maxDepth &gt;= <span class="hljs-keyword">this</span>.scopes.length)
+        <span class="hljs-keyword">if</span> (--theGoto.maxDepth &lt;= <span class="hljs-number">0</span>)
+          raise(theGoto.token, errors.labelNotVisible, theGoto.target);
+    }
+
+    <span class="hljs-keyword">this</span>.scopes.pop();
+  };
+
+  FullFlowContext.prototype.addGoto = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, token</span>) </span>{
+    <span class="hljs-keyword">var</span> localCounts = [];
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.scopes.length; ++i) {
+      <span class="hljs-keyword">var</span> scope = <span class="hljs-keyword">this</span>.scopes[i];
+      localCounts.push(scope.locals.length);
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(scope.labels, target))
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">this</span>.pendingGotos.push({
+      <span class="hljs-attr">maxDepth</span>: <span class="hljs-keyword">this</span>.scopes.length,
+      <span class="hljs-attr">target</span>: target,
+      <span class="hljs-attr">token</span>: token,
+      <span class="hljs-attr">localCounts</span>: localCounts
+    });
+  };
+
+  FullFlowContext.prototype.addLabel = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name, token</span>) </span>{
+    <span class="hljs-keyword">var</span> scope = <span class="hljs-keyword">this</span>.currentScope();
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(scope.labels, name)) {
+      raise(token, errors.labelAlreadyDefined, name, scope.labels[name].line);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">var</span> newGotos = [];
+
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.pendingGotos.length; ++i) {
+        <span class="hljs-keyword">var</span> theGoto = <span class="hljs-keyword">this</span>.pendingGotos[i];
+
+        <span class="hljs-keyword">if</span> (theGoto.maxDepth &gt;= <span class="hljs-keyword">this</span>.scopes.length &amp;&amp; theGoto.target === name) {
+          <span class="hljs-keyword">if</span> (theGoto.localCounts[<span class="hljs-keyword">this</span>.scopes.length - <span class="hljs-number">1</span>] &lt; scope.locals.length) {
+            scope.deferredGotos.push(theGoto);
+          }
+          <span class="hljs-keyword">continue</span>;
+        }
+
+        newGotos.push(theGoto);
+      }
+
+      <span class="hljs-keyword">this</span>.pendingGotos = newGotos;
+    }
+
+    scope.labels[name] = {
+      <span class="hljs-attr">localCount</span>: scope.locals.length,
+      <span class="hljs-attr">line</span>: token.line
+    };
+  };
+
+  FullFlowContext.prototype.addLocal = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">name, token</span>) </span>{
+    <span class="hljs-keyword">this</span>.currentScope().locals.push({
+      <span class="hljs-attr">name</span>: name,
+      <span class="hljs-attr">token</span>: token
+    });
+  };
+
+  FullFlowContext.prototype.currentScope = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.scopes[<span class="hljs-keyword">this</span>.scopes.length - <span class="hljs-number">1</span>];
+  };
+
+  FullFlowContext.prototype.raiseDeferredErrors = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> scope = <span class="hljs-keyword">this</span>.currentScope();
+    <span class="hljs-keyword">var</span> bads = scope.deferredGotos;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; bads.length; ++i) {
+      <span class="hljs-keyword">var</span> theGoto = bads[i];
+      raise(theGoto.token, errors.gotoJumpInLocalScope, theGoto.target, scope.locals[theGoto.localCounts[<span class="hljs-keyword">this</span>.scopes.length - <span class="hljs-number">1</span>]].name);
+    }</pre></div></div>
             
         </li>
         
@@ -2890,6 +3006,100 @@ of the <em>previous token</em> as an end location.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-119">&#182;</a>
+              </div>
+              <p>Would be dead code currently, but may be useful later
+if (bads.length)
+  scope.deferredGotos = [];</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-120">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-120">&#182;</a>
+              </div>
+              <p>Simplified context that only checks the validity of loop breaks.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoopFlowContext</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.level = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">this</span>.loopLevels = [];
+  }
+
+  LoopFlowContext.prototype.isInLoop = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> !!<span class="hljs-keyword">this</span>.loopLevels.length;
+  };
+
+  LoopFlowContext.prototype.pushScope = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">isLoop</span>) </span>{
+    ++<span class="hljs-keyword">this</span>.level;
+    <span class="hljs-keyword">if</span> (isLoop)
+      <span class="hljs-keyword">this</span>.loopLevels.push(<span class="hljs-keyword">this</span>.level);
+  };
+
+  LoopFlowContext.prototype.popScope = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> levels = <span class="hljs-keyword">this</span>.loopLevels;
+    <span class="hljs-keyword">var</span> levlen = levels.length;
+    <span class="hljs-keyword">if</span> (levlen) {
+      <span class="hljs-keyword">if</span> (levels[levlen - <span class="hljs-number">1</span>] === <span class="hljs-keyword">this</span>.level)
+        levels.pop();
+    }
+    --<span class="hljs-keyword">this</span>.level;
+  };
+
+  LoopFlowContext.prototype.addGoto =
+  LoopFlowContext.prototype.addLabel =
+  <span class="hljs-comment">/* istanbul ignore next */</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'This should never happen'</span>); };
+
+  LoopFlowContext.prototype.addLocal =
+  LoopFlowContext.prototype.raiseDeferredErrors =
+  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{};
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeFlowContext</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> features.labels ? <span class="hljs-keyword">new</span> FullFlowContext() : <span class="hljs-keyword">new</span> LoopFlowContext();
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-121">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-121">&#182;</a>
+              </div>
+              <h2 id="parse-functions">Parse functions</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-122">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-122">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-123">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-123">&#182;</a>
               </div>
               <p>Chunk is the main program object. Syntactically it’s the same as a block.</p>
 <pre><code>chunk ::= block
@@ -2901,18 +3111,21 @@ of the <em>previous token</em> as an end location.</p>
     next();
     markLocation();
     <span class="hljs-keyword">if</span> (options.scope) createScope();
-    <span class="hljs-keyword">var</span> body = parseBlock();
+    <span class="hljs-keyword">var</span> flowContext = makeFlowContext();
+    flowContext.pushScope();
+    <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
+    flowContext.popScope();
     <span class="hljs-keyword">if</span> (options.scope) destroyScope();
     <span class="hljs-keyword">if</span> (EOF !== token.type) unexpected(token);</pre></div></div>
             
         </li>
         
         
-        <li id="section-120">
+        <li id="section-124">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-120">&#182;</a>
+                <a class="pilcrow" href="#section-124">&#182;</a>
               </div>
               <p>If the body is empty no previousToken exists when finishNode runs.</p>
 
@@ -2925,11 +3138,11 @@ of the <em>previous token</em> as an end location.</p>
         </li>
         
         
-        <li id="section-121">
+        <li id="section-125">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-121">&#182;</a>
+                <a class="pilcrow" href="#section-125">&#182;</a>
               </div>
               <p>A block contains a list of statements with an optional return statement
 as its last statement.</p>
@@ -2938,7 +3151,7 @@ as its last statement.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseBlock</span>(<span class="hljs-params">terminator</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseBlock</span>(<span class="hljs-params">flowContext, isRepeat</span>) </span>{
     <span class="hljs-keyword">var</span> block = []
       , statement;
 
@@ -2947,11 +3160,11 @@ as its last statement.</p>
         </li>
         
         
-        <li id="section-122">
+        <li id="section-126">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-122">&#182;</a>
+                <a class="pilcrow" href="#section-126">&#182;</a>
               </div>
               <p>Return has to be the last statement in a block.
 Likewise ‘break’ in Lua older than 5.2</p>
@@ -2959,20 +3172,20 @@ Likewise ‘break’ in Lua older than 5.2</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'return'</span> === token.value || (!features.relaxedBreak &amp;&amp; <span class="hljs-string">'break'</span> === token.value)) {
-        block.push(parseStatement());
+        block.push(parseStatement(flowContext));
         <span class="hljs-keyword">break</span>;
       }
-      statement = parseStatement();
+      statement = parseStatement(flowContext);
       consume(<span class="hljs-string">';'</span>);</pre></div></div>
             
         </li>
         
         
-        <li id="section-123">
+        <li id="section-127">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-123">&#182;</a>
+                <a class="pilcrow" href="#section-127">&#182;</a>
               </div>
               <p>Statements are only added if they are returned, this allows us to
 ignore some statements, such as EmptyStatement.</p>
@@ -2985,11 +3198,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-124">
+        <li id="section-128">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-124">&#182;</a>
+                <a class="pilcrow" href="#section-128">&#182;</a>
               </div>
               <p>Doesn’t really need an ast node</p>
 
@@ -3001,11 +3214,11 @@ ignore some statements, such as EmptyStatement.</p>
         </li>
         
         
-        <li id="section-125">
+        <li id="section-129">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-125">&#182;</a>
+                <a class="pilcrow" href="#section-129">&#182;</a>
               </div>
               <p>There are two types of statements, simple and compound.</p>
 <pre><code>statement ::= <span class="hljs-keyword">break</span> | goto | <span class="hljs-keyword">do</span> | <span class="hljs-keyword">while</span> | repeat | <span class="hljs-keyword">return</span>
@@ -3015,110 +3228,12 @@ ignore some statements, such as EmptyStatement.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     markLocation();
-    <span class="hljs-keyword">if</span> (Keyword === token.type) {
-      <span class="hljs-keyword">switch</span> (token.value) {
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'local'</span>:    next(); <span class="hljs-keyword">return</span> parseLocalStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'if'</span>:       next(); <span class="hljs-keyword">return</span> parseIfStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'return'</span>:   next(); <span class="hljs-keyword">return</span> parseReturnStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'function'</span>: next();
-          <span class="hljs-keyword">var</span> name = parseFunctionName();
-          <span class="hljs-keyword">return</span> parseFunctionDeclaration(name);
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'while'</span>:    next(); <span class="hljs-keyword">return</span> parseWhileStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'for'</span>:      next(); <span class="hljs-keyword">return</span> parseForStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'repeat'</span>:   next(); <span class="hljs-keyword">return</span> parseRepeatStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'break'</span>:    next(); <span class="hljs-keyword">return</span> parseBreakStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'do'</span>:       next(); <span class="hljs-keyword">return</span> parseDoStatement();
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'goto'</span>:     next(); <span class="hljs-keyword">return</span> parseGotoStatement();
-      }
-    }
-
-    <span class="hljs-keyword">if</span> (features.contextualGoto &amp;&amp;
-        token.type === Identifier &amp;&amp; token.value === <span class="hljs-string">'goto'</span> &amp;&amp;
-        lookahead.type === Identifier &amp;&amp; lookahead.value !== <span class="hljs-string">'goto'</span>) {
-      next(); <span class="hljs-keyword">return</span> parseGotoStatement();
-    }
 
     <span class="hljs-keyword">if</span> (Punctuator === token.type) {
-      <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'::'</span>)) <span class="hljs-keyword">return</span> parseLabelStatement();
+      <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'::'</span>)) <span class="hljs-keyword">return</span> parseLabelStatement(flowContext);
     }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-126">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-126">&#182;</a>
-              </div>
-              <p>Assignments memorizes the location and pushes it manually for wrapper
-nodes. Additionally empty <code>;</code> statements should not mark a location.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (trackLocations) locations.pop();</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-127">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-127">&#182;</a>
-              </div>
-              <p>When a <code>;</code> is encounted, simply eat it without storing it.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (features.emptyStatement) {
-      <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">';'</span>)) <span class="hljs-keyword">return</span>;
-    }
-
-    <span class="hljs-keyword">return</span> parseAssignmentOrCallStatement();
-  }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-128">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-128">&#182;</a>
-              </div>
-              <h2 id="statements">Statements</h2>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-129">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-129">&#182;</a>
-              </div>
-              <pre><code>label ::= <span class="hljs-string">'::'</span> Name <span class="hljs-string">'::'</span>
-</code></pre>
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseLabelStatement</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> name = token.value
-      , label = parseIdentifier();
-
-    <span class="hljs-keyword">if</span> (options.scope) {
-      scopeIdentifierName(<span class="hljs-string">'::'</span> + name + <span class="hljs-string">'::'</span>);
-      attachScope(label, <span class="hljs-literal">true</span>);
-    }
-
-    expect(<span class="hljs-string">'::'</span>);
-    <span class="hljs-keyword">return</span> finishNode(ast.labelStatement(label));
-  }</pre></div></div>
             
         </li>
         
@@ -3128,6 +3243,114 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-130">&#182;</a>
+              </div>
+              <p>When a <code>;</code> is encounted, simply eat it without storing it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (features.emptyStatement) {
+      <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">';'</span>)) {
+        <span class="hljs-keyword">if</span> (trackLocations) locations.pop();
+        <span class="hljs-keyword">return</span>;
+      }
+    }
+
+    flowContext.raiseDeferredErrors();
+
+    <span class="hljs-keyword">if</span> (Keyword === token.type) {
+      <span class="hljs-keyword">switch</span> (token.value) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'local'</span>:    next(); <span class="hljs-keyword">return</span> parseLocalStatement(flowContext);
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'if'</span>:       next(); <span class="hljs-keyword">return</span> parseIfStatement(flowContext);
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'return'</span>:   next(); <span class="hljs-keyword">return</span> parseReturnStatement();
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'function'</span>: next();
+          <span class="hljs-keyword">var</span> name = parseFunctionName();
+          <span class="hljs-keyword">return</span> parseFunctionDeclaration(name);
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'while'</span>:    next(); <span class="hljs-keyword">return</span> parseWhileStatement(flowContext);
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'for'</span>:      next(); <span class="hljs-keyword">return</span> parseForStatement(flowContext);
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'repeat'</span>:   next(); <span class="hljs-keyword">return</span> parseRepeatStatement(flowContext);
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'break'</span>:    next();
+          <span class="hljs-keyword">if</span> (!flowContext.isInLoop())
+            raise(token, errors.noLoopToBreak, token.value);
+          <span class="hljs-keyword">return</span> parseBreakStatement();
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'do'</span>:       next(); <span class="hljs-keyword">return</span> parseDoStatement(flowContext);
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'goto'</span>:     next(); <span class="hljs-keyword">return</span> parseGotoStatement(flowContext);
+      }
+    }
+
+    <span class="hljs-keyword">if</span> (features.contextualGoto &amp;&amp;
+        token.type === Identifier &amp;&amp; token.value === <span class="hljs-string">'goto'</span> &amp;&amp;
+        lookahead.type === Identifier &amp;&amp; lookahead.value !== <span class="hljs-string">'goto'</span>) {
+      next(); <span class="hljs-keyword">return</span> parseGotoStatement(flowContext);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-131">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-131">&#182;</a>
+              </div>
+              <p>Assignments memorizes the location and pushes it manually for wrapper nodes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (trackLocations) locations.pop();
+
+    <span class="hljs-keyword">return</span> parseAssignmentOrCallStatement();
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-132">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-132">&#182;</a>
+              </div>
+              <h2 id="statements">Statements</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-133">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-133">&#182;</a>
+              </div>
+              <pre><code>label ::= <span class="hljs-string">'::'</span> Name <span class="hljs-string">'::'</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseLabelStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
+    <span class="hljs-keyword">var</span> nameToken = token
+      , label = parseIdentifier();
+
+    <span class="hljs-keyword">if</span> (options.scope) {
+      scopeIdentifierName(<span class="hljs-string">'::'</span> + nameToken.value + <span class="hljs-string">'::'</span>);
+      attachScope(label, <span class="hljs-literal">true</span>);
+    }
+
+    expect(<span class="hljs-string">'::'</span>);
+
+    flowContext.addLabel(nameToken.value, nameToken);
+    <span class="hljs-keyword">return</span> finishNode(ast.labelStatement(label));
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-134">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-134">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">break</span> ::= <span class="hljs-string">'break'</span>
 </code></pre>
@@ -3141,41 +3364,45 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-131">
+        <li id="section-135">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-131">&#182;</a>
+                <a class="pilcrow" href="#section-135">&#182;</a>
               </div>
               <pre><code>goto ::= <span class="hljs-string">'goto'</span> Name
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseGotoStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseGotoStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> name = token.value
+      , gotoToken = previousToken
       , label = parseIdentifier();
 
+    flowContext.addGoto(name, gotoToken);
     <span class="hljs-keyword">return</span> finishNode(ast.gotoStatement(label));
   }</pre></div></div>
             
         </li>
         
         
-        <li id="section-132">
+        <li id="section-136">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-132">&#182;</a>
+                <a class="pilcrow" href="#section-136">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">do</span> ::= <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseDoStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseDoStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">if</span> (options.scope) createScope();
-    <span class="hljs-keyword">var</span> body = parseBlock();
+    flowContext.pushScope();
+    <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
+    flowContext.popScope();
     <span class="hljs-keyword">if</span> (options.scope) destroyScope();
     expect(<span class="hljs-string">'end'</span>);
     <span class="hljs-keyword">return</span> finishNode(ast.doStatement(body));
@@ -3184,22 +3411,24 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-133">
+        <li id="section-137">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-133">&#182;</a>
+                <a class="pilcrow" href="#section-137">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">while</span> ::= <span class="hljs-string">'while'</span> exp <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseWhileStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseWhileStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> condition = parseExpectedExpression();
     expect(<span class="hljs-string">'do'</span>);
     <span class="hljs-keyword">if</span> (options.scope) createScope();
-    <span class="hljs-keyword">var</span> body = parseBlock();
+    flowContext.pushScope(<span class="hljs-literal">true</span>);
+    <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
+    flowContext.popScope();
     <span class="hljs-keyword">if</span> (options.scope) destroyScope();
     expect(<span class="hljs-string">'end'</span>);
     <span class="hljs-keyword">return</span> finishNode(ast.whileStatement(condition, body));
@@ -3208,22 +3437,25 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-134">
+        <li id="section-138">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-134">&#182;</a>
+                <a class="pilcrow" href="#section-138">&#182;</a>
               </div>
               <pre><code>repeat ::= <span class="hljs-string">'repeat'</span> block <span class="hljs-string">'until'</span> exp
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseRepeatStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseRepeatStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">if</span> (options.scope) createScope();
-    <span class="hljs-keyword">var</span> body = parseBlock();
+    flowContext.pushScope(<span class="hljs-literal">true</span>);
+    <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
     expect(<span class="hljs-string">'until'</span>);
+    flowContext.raiseDeferredErrors();
     <span class="hljs-keyword">var</span> condition = parseExpectedExpression();
+    flowContext.popScope();
     <span class="hljs-keyword">if</span> (options.scope) destroyScope();
     <span class="hljs-keyword">return</span> finishNode(ast.repeatStatement(condition, body));
   }</pre></div></div>
@@ -3231,11 +3463,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-135">
+        <li id="section-139">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-135">&#182;</a>
+                <a class="pilcrow" href="#section-139">&#182;</a>
               </div>
               <pre><code>retstat ::= <span class="hljs-string">'return'</span> [exp {<span class="hljs-string">','</span> exp}] [<span class="hljs-string">';'</span>]
 </code></pre>
@@ -3260,11 +3492,11 @@ nodes. Additionally empty <code>;</code> statements should not mark a location.<
         </li>
         
         
-        <li id="section-136">
+        <li id="section-140">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-136">&#182;</a>
+                <a class="pilcrow" href="#section-140">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">if</span> ::= <span class="hljs-string">'if'</span> exp <span class="hljs-string">'then'</span> block {elif} [<span class="hljs-string">'else'</span> block] <span class="hljs-string">'end'</span>
 elif ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string">'then'</span> block
@@ -3272,7 +3504,7 @@ elif ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string"
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseIfStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseIfStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> clauses = []
       , condition
       , body
@@ -3281,11 +3513,11 @@ elif ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string"
         </li>
         
         
-        <li id="section-137">
+        <li id="section-141">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-137">&#182;</a>
+                <a class="pilcrow" href="#section-141">&#182;</a>
               </div>
               <p>IfClauses begin at the same location as the parent IfStatement.
 It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</code>.</p>
@@ -3299,7 +3531,9 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
     condition = parseExpectedExpression();
     expect(<span class="hljs-string">'then'</span>);
     <span class="hljs-keyword">if</span> (options.scope) createScope();
-    body = parseBlock();
+    flowContext.pushScope();
+    body = parseBlock(flowContext);
+    flowContext.popScope();
     <span class="hljs-keyword">if</span> (options.scope) destroyScope();
     clauses.push(finishNode(ast.ifClause(condition, body)));
 
@@ -3309,7 +3543,9 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
       condition = parseExpectedExpression();
       expect(<span class="hljs-string">'then'</span>);
       <span class="hljs-keyword">if</span> (options.scope) createScope();
-      body = parseBlock();
+      flowContext.pushScope();
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       <span class="hljs-keyword">if</span> (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseifClause(condition, body)));
       <span class="hljs-keyword">if</span> (trackLocations) marker = createLocationMarker();
@@ -3320,11 +3556,11 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
         </li>
         
         
-        <li id="section-138">
+        <li id="section-142">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-138">&#182;</a>
+                <a class="pilcrow" href="#section-142">&#182;</a>
               </div>
               <p>Include the <code>else</code> in the location of ElseClause.</p>
 
@@ -3335,7 +3571,9 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
         locations.push(marker);
       }
       <span class="hljs-keyword">if</span> (options.scope) createScope();
-      body = parseBlock();
+      flowContext.pushScope();
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       <span class="hljs-keyword">if</span> (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseClause(body)));
     }
@@ -3347,11 +3585,11 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
         </li>
         
         
-        <li id="section-139">
+        <li id="section-143">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-139">&#182;</a>
+                <a class="pilcrow" href="#section-143">&#182;</a>
               </div>
               <p>There are two types of for statements, generic and numeric.</p>
 <pre><code><span class="hljs-keyword">for</span> ::= Name <span class="hljs-string">'='</span> exp <span class="hljs-string">','</span> exp [<span class="hljs-string">','</span> exp] <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
@@ -3362,18 +3600,18 @@ explist ::= exp {<span class="hljs-string">','</span> exp}
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseForStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseForStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> variable = parseIdentifier()
       , body;</pre></div></div>
             
         </li>
         
         
-        <li id="section-140">
+        <li id="section-144">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-140">&#182;</a>
+                <a class="pilcrow" href="#section-144">&#182;</a>
               </div>
               <p>The start-identifier is local.</p>
 
@@ -3388,11 +3626,11 @@ explist ::= exp {<span class="hljs-string">','</span> exp}
         </li>
         
         
-        <li id="section-141">
+        <li id="section-145">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-141">&#182;</a>
+                <a class="pilcrow" href="#section-145">&#182;</a>
               </div>
               <p>If the first expression is followed by a <code>=</code> punctuator, this is a
 Numeric For Statement.</p>
@@ -3404,11 +3642,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-142">
+        <li id="section-146">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-142">&#182;</a>
+                <a class="pilcrow" href="#section-146">&#182;</a>
               </div>
               <p>Start expression</p>
 
@@ -3420,11 +3658,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-143">
+        <li id="section-147">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-143">&#182;</a>
+                <a class="pilcrow" href="#section-147">&#182;</a>
               </div>
               <p>End expression</p>
 
@@ -3435,11 +3673,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-144">
+        <li id="section-148">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-144">&#182;</a>
+                <a class="pilcrow" href="#section-148">&#182;</a>
               </div>
               <p>Optional step expression</p>
 
@@ -3448,7 +3686,9 @@ Numeric For Statement.</p>
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> step = consume(<span class="hljs-string">','</span>) ? parseExpectedExpression() : <span class="hljs-literal">null</span>;
 
       expect(<span class="hljs-string">'do'</span>);
-      body = parseBlock();
+      flowContext.pushScope(<span class="hljs-literal">true</span>);
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       expect(<span class="hljs-string">'end'</span>);
       <span class="hljs-keyword">if</span> (options.scope) destroyScope();
 
@@ -3458,11 +3698,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-145">
+        <li id="section-149">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-145">&#182;</a>
+                <a class="pilcrow" href="#section-149">&#182;</a>
               </div>
               <p>If not, it’s a Generic For Statement</p>
 
@@ -3473,11 +3713,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-146">
+        <li id="section-150">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-146">&#182;</a>
+                <a class="pilcrow" href="#section-150">&#182;</a>
               </div>
               <p>The namelist can contain one or more identifiers.</p>
 
@@ -3490,11 +3730,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-147">
+        <li id="section-151">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-147">&#182;</a>
+                <a class="pilcrow" href="#section-151">&#182;</a>
               </div>
               <p>Each variable in the namelist is locally scoped.</p>
 
@@ -3509,11 +3749,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-148">
+        <li id="section-152">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-148">&#182;</a>
+                <a class="pilcrow" href="#section-152">&#182;</a>
               </div>
               <p>One or more expressions in the explist.</p>
 
@@ -3525,7 +3765,9 @@ Numeric For Statement.</p>
       } <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>));
 
       expect(<span class="hljs-string">'do'</span>);
-      body = parseBlock();
+      flowContext.pushScope(<span class="hljs-literal">true</span>);
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       expect(<span class="hljs-string">'end'</span>);
       <span class="hljs-keyword">if</span> (options.scope) destroyScope();
 
@@ -3536,11 +3778,11 @@ Numeric For Statement.</p>
         </li>
         
         
-        <li id="section-149">
+        <li id="section-153">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-149">&#182;</a>
+                <a class="pilcrow" href="#section-153">&#182;</a>
               </div>
               <p>Local statements can either be variable assignments or function
 definitions. If a function definition is found, it will be delegated to
@@ -3553,8 +3795,9 @@ child.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseLocalStatement</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> name;
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseLocalStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
+    <span class="hljs-keyword">var</span> name
+      , declToken = previousToken;
 
     <span class="hljs-keyword">if</span> (Identifier === token.type) {
       <span class="hljs-keyword">var</span> variables = []
@@ -3564,6 +3807,7 @@ child.</p>
         name = parseIdentifier();
 
         variables.push(name);
+        flowContext.addLocal(name.name, declToken);
       } <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>));
 
       <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'='</span>)) {
@@ -3576,11 +3820,11 @@ child.</p>
         </li>
         
         
-        <li id="section-150">
+        <li id="section-154">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-150">&#182;</a>
+                <a class="pilcrow" href="#section-154">&#182;</a>
               </div>
               <p>Declarations doesn’t exist before the statement has been evaluated.
 Therefore assignments can’t use their declarator. And the identifiers
@@ -3598,6 +3842,7 @@ shouldn’t be added to the scope until the statement is complete.</p>
     }
     <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'function'</span>)) {
       name = parseIdentifier();
+      flowContext.addLocal(name.name, declToken);
 
       <span class="hljs-keyword">if</span> (options.scope) {
         scopeIdentifier(name);
@@ -3607,11 +3852,11 @@ shouldn’t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-151">
+        <li id="section-155">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-151">&#182;</a>
+                <a class="pilcrow" href="#section-155">&#182;</a>
               </div>
               <p>MemberExpressions are not allowed in local function statements.</p>
 
@@ -3628,17 +3873,22 @@ shouldn’t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-152">
+        <li id="section-156">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-152">&#182;</a>
+                <a class="pilcrow" href="#section-156">&#182;</a>
               </div>
               <p>@TODO we need something not dependent on the exact AST used. see also isCallExpression()</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (node.inParens || ([<span class="hljs-string">'Identifier'</span>, <span class="hljs-string">'MemberExpression'</span>, <span class="hljs-string">'IndexExpression'</span>].indexOf(node.type) === <span class="hljs-number">-1</span>)) {
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">switch</span> (node.inParens ? <span class="hljs-literal">null</span> : node.type) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'Identifier'</span>:
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'MemberExpression'</span>:
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'IndexExpression'</span>:
+      <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">default</span>:
       raise(token, errors.invalidVar, token.value);
     }
   }</pre></div></div>
@@ -3646,11 +3896,11 @@ shouldn’t be added to the scope until the statement is complete.</p>
         </li>
         
         
-        <li id="section-153">
+        <li id="section-157">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-153">&#182;</a>
+                <a class="pilcrow" href="#section-157">&#182;</a>
               </div>
               <pre><code>assignment ::= varlist <span class="hljs-string">'='</span> explist
 <span class="hljs-keyword">var</span> ::= Name | prefixexp <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> | prefixexp <span class="hljs-string">'.'</span> Name
@@ -3668,11 +3918,11 @@ callexp ::= prefixexp args | prefixexp <span class="hljs-string">':'</span> Name
         </li>
         
         
-        <li id="section-154">
+        <li id="section-158">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-154">&#182;</a>
+                <a class="pilcrow" href="#section-158">&#182;</a>
               </div>
               <p>Keep a reference to the previous token for better error messages in case
 of invalid statement</p>
@@ -3715,11 +3965,11 @@ of invalid statement</p>
         </li>
         
         
-        <li id="section-155">
+        <li id="section-159">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-155">&#182;</a>
+                <a class="pilcrow" href="#section-159">&#182;</a>
               </div>
               <p>The prefix expression was neither part of an assignment or a
 callstatement, however as it was valid it’s been consumed, so raise
@@ -3733,11 +3983,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-156">
+        <li id="section-160">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-156">&#182;</a>
+                <a class="pilcrow" href="#section-160">&#182;</a>
               </div>
               <h3 id="non-statements">Non-statements</h3>
 
@@ -3746,11 +3996,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-157">
+        <li id="section-161">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-157">&#182;</a>
+                <a class="pilcrow" href="#section-161">&#182;</a>
               </div>
               <pre><code>Identifier ::= Name
 </code></pre>
@@ -3768,11 +4018,11 @@ the exception on the previous token to provide a helpful message.</p>
         </li>
         
         
-        <li id="section-158">
+        <li id="section-162">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-158">&#182;</a>
+                <a class="pilcrow" href="#section-162">&#182;</a>
               </div>
               <p>Parse the functions parameters and body block. The name should already
 have been parsed and passed to this declaration function. By separating
@@ -3792,11 +4042,11 @@ parlist ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hlj
         </li>
         
         
-        <li id="section-159">
+        <li id="section-163">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-159">&#182;</a>
+                <a class="pilcrow" href="#section-163">&#182;</a>
               </div>
               <p>The declaration has arguments</p>
 
@@ -3807,11 +4057,11 @@ parlist ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hlj
         </li>
         
         
-        <li id="section-160">
+        <li id="section-164">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-160">&#182;</a>
+                <a class="pilcrow" href="#section-164">&#182;</a>
               </div>
               <p>Arguments are a comma separated list of identifiers, optionally ending
 with a vararg.</p>
@@ -3825,11 +4075,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-161">
+        <li id="section-165">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-161">&#182;</a>
+                <a class="pilcrow" href="#section-165">&#182;</a>
               </div>
               <p>Function parameters are local.</p>
 
@@ -3845,11 +4095,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-162">
+        <li id="section-166">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-162">&#182;</a>
+                <a class="pilcrow" href="#section-166">&#182;</a>
               </div>
               <p>No arguments are allowed after a vararg.</p>
 
@@ -3865,7 +4115,10 @@ with a vararg.</p>
       }
     }
 
-    <span class="hljs-keyword">var</span> body = parseBlock();
+    <span class="hljs-keyword">var</span> flowContext = makeFlowContext();
+    flowContext.pushScope();
+    <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
+    flowContext.popScope();
     expect(<span class="hljs-string">'end'</span>);
     <span class="hljs-keyword">if</span> (options.scope) destroyScope();
 
@@ -3876,11 +4129,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-163">
+        <li id="section-167">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-163">&#182;</a>
+                <a class="pilcrow" href="#section-167">&#182;</a>
               </div>
               <p>Parse the function name as identifiers and member expressions.</p>
 <pre><code>Name {<span class="hljs-string">'.'</span> Name} [<span class="hljs-string">':'</span> Name]
@@ -3918,11 +4171,11 @@ with a vararg.</p>
         </li>
         
         
-        <li id="section-164">
+        <li id="section-168">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-164">&#182;</a>
+                <a class="pilcrow" href="#section-168">&#182;</a>
               </div>
               <pre><code>tableconstructor ::= <span class="hljs-string">'{'</span> [fieldlist] <span class="hljs-string">'}'</span>
 fieldlist ::= field {fieldsep field} fieldsep
@@ -3975,11 +4228,11 @@ fieldsep ::= <span class="hljs-string">','</span> | <span class="hljs-string">';
         </li>
         
         
-        <li id="section-165">
+        <li id="section-169">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-165">&#182;</a>
+                <a class="pilcrow" href="#section-169">&#182;</a>
               </div>
               <h2 id="expression-parser">Expression parser</h2>
 
@@ -3988,11 +4241,11 @@ fieldsep ::= <span class="hljs-string">','</span> | <span class="hljs-string">';
         </li>
         
         
-        <li id="section-166">
+        <li id="section-170">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-166">&#182;</a>
+                <a class="pilcrow" href="#section-170">&#182;</a>
               </div>
               <p>Expressions are evaluated and always return a value. If nothing is
 matched null will be returned.</p>
@@ -4015,11 +4268,11 @@ prefixexp ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs
         </li>
         
         
-        <li id="section-167">
+        <li id="section-171">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-167">&#182;</a>
+                <a class="pilcrow" href="#section-171">&#182;</a>
               </div>
               <p>Parse an expression expecting it to be valid.</p>
 
@@ -4035,11 +4288,11 @@ prefixexp ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs
         </li>
         
         
-        <li id="section-168">
+        <li id="section-172">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-168">&#182;</a>
+                <a class="pilcrow" href="#section-172">&#182;</a>
               </div>
               <p>Return the precedence priority of the operator.</p>
 <p>As unary <code>-</code> can’t be distinguished from binary <code>-</code>, unary precedence
@@ -4081,11 +4334,11 @@ the expensive CompareICStub which took ~8% of the parse time.</p>
         </li>
         
         
-        <li id="section-169">
+        <li id="section-173">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-169">&#182;</a>
+                <a class="pilcrow" href="#section-173">&#182;</a>
               </div>
               <p>Implement an operator-precedence parser to handle binary operator
 precedence.</p>
@@ -4103,11 +4356,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-170">
+        <li id="section-174">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-170">&#182;</a>
+                <a class="pilcrow" href="#section-174">&#182;</a>
               </div>
               <p>The left-hand side in binary operations.</p>
 
@@ -4120,11 +4373,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-171">
+        <li id="section-175">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-171">&#182;</a>
+                <a class="pilcrow" href="#section-175">&#182;</a>
               </div>
               <p>UnaryExpression</p>
 
@@ -4142,11 +4395,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-172">
+        <li id="section-176">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-172">&#182;</a>
+                <a class="pilcrow" href="#section-176">&#182;</a>
               </div>
               <p>PrimaryExpression</p>
 
@@ -4157,11 +4410,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-173">
+        <li id="section-177">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-173">&#182;</a>
+                <a class="pilcrow" href="#section-177">&#182;</a>
               </div>
               <p>PrefixExpression</p>
 
@@ -4175,11 +4428,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-174">
+        <li id="section-178">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-174">&#182;</a>
+                <a class="pilcrow" href="#section-178">&#182;</a>
               </div>
               <p>This is not a valid left hand expression.</p>
 
@@ -4199,11 +4452,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-175">
+        <li id="section-179">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-175">&#182;</a>
+                <a class="pilcrow" href="#section-179">&#182;</a>
               </div>
               <p>Right-hand precedence operators</p>
 
@@ -4217,11 +4470,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-176">
+        <li id="section-180">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-176">&#182;</a>
+                <a class="pilcrow" href="#section-180">&#182;</a>
               </div>
               <p>Push in the marker created before the loop to wrap its entirety.</p>
 
@@ -4237,11 +4490,11 @@ without excessive amounts of tests.</p>
         </li>
         
         
-        <li id="section-177">
+        <li id="section-181">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-177">&#182;</a>
+                <a class="pilcrow" href="#section-181">&#182;</a>
               </div>
               <pre><code>prefixexp ::= prefix {suffix}
 prefix ::= Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span>
@@ -4260,11 +4513,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-178">
+        <li id="section-182">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-178">&#182;</a>
+                <a class="pilcrow" href="#section-182">&#182;</a>
               </div>
               <p>The prefix</p>
 
@@ -4277,11 +4530,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-179">
+        <li id="section-183">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-179">&#182;</a>
+                <a class="pilcrow" href="#section-183">&#182;</a>
               </div>
               <p>Set the parent scope.</p>
 
@@ -4299,11 +4552,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-180">
+        <li id="section-184">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-180">&#182;</a>
+                <a class="pilcrow" href="#section-184">&#182;</a>
               </div>
               <p>The suffix</p>
 
@@ -4335,11 +4588,11 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
         </li>
         
         
-        <li id="section-181">
+        <li id="section-185">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-181">&#182;</a>
+                <a class="pilcrow" href="#section-185">&#182;</a>
               </div>
               <p>Once a : is found, this has to be a CallExpression, otherwise
 throw an error.</p>
@@ -4370,11 +4623,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-182">
+        <li id="section-186">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-182">&#182;</a>
+                <a class="pilcrow" href="#section-186">&#182;</a>
               </div>
               <pre><code>args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span>
 </code></pre>
@@ -4387,18 +4640,18 @@ throw an error.</p>
         <span class="hljs-keyword">case</span> <span class="hljs-string">'('</span>:
           <span class="hljs-keyword">if</span> (!features.emptyStatement) {
             <span class="hljs-keyword">if</span> (token.line !== previousToken.line)
-              raise({}, errors.ambiguousSyntax, token.value);
+              raise(<span class="hljs-literal">null</span>, errors.ambiguousSyntax, token.value);
           }
           next();</pre></div></div>
             
         </li>
         
         
-        <li id="section-183">
+        <li id="section-187">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-183">&#182;</a>
+                <a class="pilcrow" href="#section-187">&#182;</a>
               </div>
               <p>List of expressions</p>
 
@@ -4431,11 +4684,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-184">
+        <li id="section-188">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-184">&#182;</a>
+                <a class="pilcrow" href="#section-188">&#182;</a>
               </div>
               <pre><code>primary ::= <span class="hljs-built_in">String</span> | Numeric | nil | <span class="hljs-literal">true</span> | <span class="hljs-literal">false</span>
      | functiondef | tableconstructor | <span class="hljs-string">'...'</span>
@@ -4470,11 +4723,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-185">
+        <li id="section-189">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-185">&#182;</a>
+                <a class="pilcrow" href="#section-189">&#182;</a>
               </div>
               <h2 id="parser">Parser</h2>
 
@@ -4483,11 +4736,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-186">
+        <li id="section-190">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-186">&#182;</a>
+                <a class="pilcrow" href="#section-190">&#182;</a>
               </div>
               
             </div>
@@ -4495,11 +4748,11 @@ throw an error.</p>
         </li>
         
         
-        <li id="section-187">
+        <li id="section-191">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-187">&#182;</a>
+                <a class="pilcrow" href="#section-191">&#182;</a>
               </div>
               <p>Export the main parser.</p>
 <ul>
@@ -4552,11 +4805,11 @@ parser.parse(<span class="hljs-string">'i = 0'</span>);
         </li>
         
         
-        <li id="section-188">
+        <li id="section-192">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-188">&#182;</a>
+                <a class="pilcrow" href="#section-192">&#182;</a>
               </div>
               <p>XXX: LuaJIT language features may depend on compilation options; may need to
 rethink how to handle this. Specifically, there is a LUAJIT_ENABLE_LUA52COMPAT
@@ -4581,16 +4834,16 @@ that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
     <span class="hljs-keyword">if</span> (!_options) _options = {};
 
     input = _input || <span class="hljs-string">''</span>;
-    options = extend(defaultOptions, _options);</pre></div></div>
+    options = assign({}, defaultOptions, _options);</pre></div></div>
             
         </li>
         
         
-        <li id="section-189">
+        <li id="section-193">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-189">&#182;</a>
+                <a class="pilcrow" href="#section-193">&#182;</a>
               </div>
               <p>Rewind the lexer</p>
 
@@ -4604,11 +4857,11 @@ that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
         </li>
         
         
-        <li id="section-190">
+        <li id="section-194">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-190">&#182;</a>
+                <a class="pilcrow" href="#section-194">&#182;</a>
               </div>
               <p>When tracking identifier scope, initialize with an empty scope.</p>
 
@@ -4619,9 +4872,11 @@ that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
     globals = [];
     locations = [];
 
-    <span class="hljs-keyword">if</span> (!(features = versionFeatures[options.luaVersion])) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(versionFeatures, options.luaVersion)) {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(sprintf(<span class="hljs-string">"Lua version '%1' not supported"</span>, options.luaVersion));
     }
+
+    features = versionFeatures[options.luaVersion];
 
     <span class="hljs-keyword">if</span> (options.comments) comments = [];
     <span class="hljs-keyword">if</span> (!options.wait) <span class="hljs-keyword">return</span> end();
@@ -4631,11 +4886,11 @@ that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
         </li>
         
         
-        <li id="section-191">
+        <li id="section-195">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-191">&#182;</a>
+                <a class="pilcrow" href="#section-195">&#182;</a>
               </div>
               <p>Write to the source code buffer without beginning the parse.</p>
 
@@ -4652,11 +4907,11 @@ that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
         </li>
         
         
-        <li id="section-192">
+        <li id="section-196">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-192">&#182;</a>
+                <a class="pilcrow" href="#section-196">&#182;</a>
               </div>
               <p>Send an EOF and begin parsing.</p>
 
@@ -4670,11 +4925,11 @@ that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
         </li>
         
         
-        <li id="section-193">
+        <li id="section-197">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-193">&#182;</a>
+                <a class="pilcrow" href="#section-197">&#182;</a>
               </div>
               <p>Ignore shebangs.</p>
 
@@ -4690,11 +4945,11 @@ that removes contextual goto. Maybe add ‘LuaJIT-5.2compat’ as well?</p>
         </li>
         
         
-        <li id="section-194">
+        <li id="section-198">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-194">&#182;</a>
+                <a class="pilcrow" href="#section-198">&#182;</a>
               </div>
               <p>Initialize with a lookahead token.</p>
 

@@ -9,12 +9,45 @@
     // Use the console reporter
     , isConsole = typeof process == 'object' && process.argv && process.argv.indexOf('--console') >= 0;
 
+  function makeLoader(readTextFile) {
+    function loadModule(id, filename) {
+      /*jshint evil:true */
+      var filedir = filename.replace(/[^/]+$/, '') || '.';
+      var loader = new Function(
+        "require", "exports", "module",
+        readTextFile(filename)
+      );
+      var module = {
+        id: id,
+        exports: {}
+      };
+      loader(
+        function (what) { return loadModule(what, filedir + '/' + what + '.js'); },
+        module.exports, module
+      );
+
+      return module.exports;
+    }
+
+    return loadModule;
+  }
+
   var load = function load(mod, path) {
     if (root[mod]) return root[mod];
     if (isModule) return require(path);
+    var filename = path.replace(/\.js$/, '') + '.js';
+
     if (isEngine) {
-      root.load(path.replace(/\.js$/, '') + '.js');
+      root.load(filename);
       return root[mod];
+    }
+
+    // Duktape
+    if (typeof Duktape !== 'undefined' && typeof readFile === 'function') {
+      return root[mod] = makeLoader(function (filename) {
+        /*global readFile, TextDecoder */
+        return (new TextDecoder('utf-8')).decode(readFile(filename));
+      })(mod, filename);
     }
   };
 
@@ -23,6 +56,7 @@
     , luaparse = load('luaparse', '../luaparse')
     , specs = root.specs = [
         './spec/assignments'
+      , './spec/break'
       , './spec/comments'
       , './spec/conditional'
       , './spec/do'
@@ -31,6 +65,7 @@
       , './spec/for'
       , './spec/functioncalls'
       , './spec/functions'
+      , './spec/labels'
       , './spec/literals'
       , './spec/local'
       , './spec/misc'
@@ -390,11 +425,12 @@
     this.equal(typeof luaparse.write, 'function', 'luaparse.write() is a function');
     this.equal(typeof luaparse.end, 'function', 'luaparse.end() is a function');
     var parse = luaparse.parse({ wait: true });
-    this.deepEqual(parse.end('break'), {
+    this.deepEqual(parse.end('return'), {
       "type": "Chunk",
       "body": [
         {
-          "type": "BreakStatement"
+          "type": "ReturnStatement",
+          "arguments": []
         }
       ],
       "comments": []
@@ -424,13 +460,14 @@
       , 'should invoke onCreateNode callback with syntax node parameter'
     );
 
-    this.deepEqual(luaparse.parse('#!/usr/bin/lua\nbreak', { locations: true, ranges: true }), {
-      "type": "Chunk", "body": [{"type": "BreakStatement", "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 5}}, "range": [15, 20], "comments": []
+    this.deepEqual(luaparse.parse('#!/usr/bin/lua\nreturn', { locations: true, ranges: true }), {
+      "type": "Chunk", "body": [{"type": "ReturnStatement", "arguments": [], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 6}}, "range": [15, 21]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 6}}, "range": [15, 21], "comments": []
     }, 'should ignore shebangs');
 
     this.parseError('', "Lua version '4.0' not supported", { luaVersion: '4.0' });
+    this.parseError('', "Lua version 'hasOwnProperty' not supported", { luaVersion: 'hasOwnProperty' });
 
-    this.done(12);
+    this.done(13);
   });
 
   suite.addTest('Extended identifiers', function () {

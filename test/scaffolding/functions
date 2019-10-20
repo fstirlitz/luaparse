@@ -19,7 +19,6 @@ function a(p,q,1                        -- FAIL
 function a(p) do                        -- FAIL
 function a(p) 1 end                     -- FAIL
 function a(p) return end
-//function a(p) break end                 -- FAIL
 function a(p) return return end         -- FAIL
 function a(p) do end end
 function a.(                            -- FAIL

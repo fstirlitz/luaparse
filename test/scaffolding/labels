@@ -1,0 +1,32 @@
+goto "foo"
+::foo::                                 -- FAIL
+goto foo                                -- FAIL
+// { "luaVersion": "5.2" }
+::foo                                   -- FAIL
+::foo::
+::break::                               -- FAIL
+goto "foo"                              -- FAIL
+goto hasOwnProperty                     -- FAIL
+goto x ::x::
+goto x do ::x:: end                     -- FAIL
+do ::l1:: end goto l1                   -- FAIL
+::x:: ::x::                             -- FAIL
+goto x local a ::x:: f()                -- FAIL
+goto x local a, b ::x:: f()             -- FAIL
+goto x local function a() end ::x:: f() -- FAIL
+do goto x local a end ::x:: f()
+do local a goto x end local b ::x:: f() -- FAIL
+do goto x local a ::x:: end
+while 0 do goto x local a ::x:: end
+repeat goto x local a ::x:: until 0     -- FAIL
+do goto x local a ::x:: ::y:: ::z:: end
+do do ::x:: end do goto x end end       -- FAIL
+do do goto x end do ::x:: end end       -- FAIL
+do do goto x end do end ::x:: end
+// { "luaVersion": "LuaJIT" }
+::foo::
+goto "foo"
+goto foo                                -- FAIL
+::foo:: goto foo
+goto goto                               -- FAIL
+::goto:: -- sic!

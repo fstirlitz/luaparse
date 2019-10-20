@@ -1,14 +1,14 @@
 -- comment
 -- comment@n@-- comment
 --coment
--- comment@n@break
-break--comment
+-- comment@n@return
+return --comment @n@
 --[[comment]]
 if true--[[comment]]then end
---[=[comment]=]break
---[===[comment@n@--[=[sub]=]--@n@]===]break
+--[=[comment]=] return
+--[===[comment@n@--[=[sub]=]--@n@]===]return
 --[[comment@n@line two]]
 --[[@n@comment@n@line two@n@]]
---[==@n@break --]]
+--[==@n@return --]]
 if true -- comment@n@then end
 --[=[x]x                                  -- FAIL
