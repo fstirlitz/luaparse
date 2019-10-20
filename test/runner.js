@@ -429,8 +429,9 @@
     }, 'should ignore shebangs');
 
     this.parseError('', "Lua version '4.0' not supported", { luaVersion: '4.0' });
+    this.parseError('', "Lua version 'hasOwnProperty' not supported", { luaVersion: 'hasOwnProperty' });
 
-    this.done(12);
+    this.done(13);
   });
 
   suite.addTest('Extended identifiers', function () {

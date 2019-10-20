@@ -2311,9 +2311,11 @@
     globals = [];
     locations = [];
 
-    if (!(features = versionFeatures[options.luaVersion])) {
+    if (!Object.prototype.hasOwnProperty.call(versionFeatures, options.luaVersion)) {
       throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
     }
+
+    features = versionFeatures[options.luaVersion];
 
     if (options.comments) comments = [];
     if (!options.wait) return end();
