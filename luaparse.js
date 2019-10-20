@@ -1978,7 +1978,12 @@
 
   function validateVar(node) {
     // @TODO we need something not dependent on the exact AST used. see also isCallExpression()
-    if (node.inParens || (['Identifier', 'MemberExpression', 'IndexExpression'].indexOf(node.type) === -1)) {
+    switch (node.inParens ? null : node.type) {
+    case 'Identifier':
+    case 'MemberExpression':
+    case 'IndexExpression':
+      return;
+    default:
       raise(token, errors.invalidVar, token.value);
     }
   }
