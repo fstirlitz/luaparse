@@ -1,0 +1,36 @@
+break                                   -- FAIL
+do break end                            -- FAIL
+if 0 then break end                     -- FAIL
+if 0 then else break end                -- FAIL
+while 0 do function x() break end end   -- FAIL
+repeat function x() break end until 0   -- FAIL
+repeat x = function() break end until 0 -- FAIL
+repeat break until 0
+repeat do break end until 0
+repeat if 0 then break end until 0
+repeat if 0 then else break end until 0
+while 0 do break end
+while 0 do do break end end
+while 0 do if 0 then break end end
+while 0 do if 0 then else break end end
+for i = 1, 2 do break end
+for i = 1, 2 do do break end end
+for i = 1, 2 do if 0 then break end end
+for i = 1, 2 do if 0 then else break end end
+for a in b do break end
+for a in b do do break end end
+for a in b do if 0 then break end end
+for a in b do if 0 then else break end end
+function x() break end                  -- FAIL
+local function x() break end            -- FAIL
+function x() repeat break until 0 end
+// { "luaVersion": "5.2" }
+break                                   -- FAIL
+do break end                            -- FAIL
+if 0 then break end                     -- FAIL
+if 0 then else break end                -- FAIL
+while 0 do function x() break end end   -- FAIL
+repeat function x() break end until 0   -- FAIL
+repeat x = function() break end until 0 -- FAIL
+repeat break until 0
+repeat do break end until 0

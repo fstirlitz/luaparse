@@ -121,6 +121,10 @@
     , unfinishedLongString: 'unfinished long string (starting at line %1) near \'%2\''
     , unfinishedLongComment: 'unfinished long comment (starting at line %1) near \'%2\''
     , ambiguousSyntax: 'ambiguous syntax (function call x new statement) near \'%1\''
+    , noLoopToBreak: 'no loop to break near \'%1\''
+    , labelAlreadyDefined: 'label \'%1\' already defined on line %2'
+    , labelNotVisible: 'no visible label \'%1\' for <goto>'
+    , gotoJumpInLocalScope: '<goto %1> jumps into the scope of local \'%2\''
   };
 
   // ### Abstract Syntax Tree
@@ -1436,6 +1440,156 @@
     if (trackLocations) locations.push(marker);
   }
 
+  // Control flow tracking
+  // ---------------------
+  // A context object that validates loop breaks and `goto`-based control flow.
+
+  function FullFlowContext() {
+    this.scopes = [];
+    this.pendingGotos = [];
+  }
+
+  FullFlowContext.prototype.isInLoop = function () {
+    var i = this.scopes.length;
+    while (i --> 0) {
+      if (this.scopes[i].isLoop)
+        return true;
+    }
+    return false;
+  };
+
+  FullFlowContext.prototype.pushScope = function (isLoop) {
+    var scope = {
+      labels: {},
+      locals: [],
+      deferredGotos: [],
+      isLoop: !!isLoop
+    };
+    this.scopes.push(scope);
+  };
+
+  FullFlowContext.prototype.popScope = function () {
+    for (var i = 0; i < this.pendingGotos.length; ++i) {
+      var theGoto = this.pendingGotos[i];
+      if (theGoto.maxDepth >= this.scopes.length)
+        if (--theGoto.maxDepth <= 0)
+          raise(theGoto.token, errors.labelNotVisible, theGoto.target);
+    }
+
+    this.scopes.pop();
+  };
+
+  FullFlowContext.prototype.addGoto = function (target, token) {
+    var localCounts = [];
+
+    for (var i = 0; i < this.scopes.length; ++i) {
+      var scope = this.scopes[i];
+      localCounts.push(scope.locals.length);
+      if (Object.prototype.hasOwnProperty.call(scope.labels, target))
+        return;
+    }
+
+    this.pendingGotos.push({
+      maxDepth: this.scopes.length,
+      target: target,
+      token: token,
+      localCounts: localCounts
+    });
+  };
+
+  FullFlowContext.prototype.addLabel = function (name, token) {
+    var scope = this.currentScope();
+
+    if (Object.prototype.hasOwnProperty.call(scope.labels, name)) {
+      raise(token, errors.labelAlreadyDefined, name, scope.labels[name].line);
+    } else {
+      var newGotos = [];
+
+      for (var i = 0; i < this.pendingGotos.length; ++i) {
+        var theGoto = this.pendingGotos[i];
+
+        if (theGoto.maxDepth >= this.scopes.length && theGoto.target === name) {
+          if (theGoto.localCounts[this.scopes.length - 1] < scope.locals.length) {
+            scope.deferredGotos.push(theGoto);
+          }
+          continue;
+        }
+
+        newGotos.push(theGoto);
+      }
+
+      this.pendingGotos = newGotos;
+    }
+
+    scope.labels[name] = {
+      localCount: scope.locals.length,
+      line: token.line
+    };
+  };
+
+  FullFlowContext.prototype.addLocal = function (name, token) {
+    this.currentScope().locals.push({
+      name: name,
+      token: token
+    });
+  };
+
+  FullFlowContext.prototype.currentScope = function () {
+    return this.scopes[this.scopes.length - 1];
+  };
+
+  FullFlowContext.prototype.raiseDeferredErrors = function () {
+    var scope = this.currentScope();
+    var bads = scope.deferredGotos;
+    for (var i = 0; i < bads.length; ++i) {
+      var theGoto = bads[i];
+      raise(theGoto.token, errors.gotoJumpInLocalScope, theGoto.target, scope.locals[theGoto.localCounts[this.scopes.length - 1]].name);
+    }
+    // Would be dead code currently, but may be useful later
+    // if (bads.length)
+    //   scope.deferredGotos = [];
+  };
+
+  // Simplified context that only checks the validity of loop breaks.
+
+  function LoopFlowContext() {
+    this.level = 0;
+    this.loopLevels = [];
+  }
+
+  LoopFlowContext.prototype.isInLoop = function () {
+    return !!this.loopLevels.length;
+  };
+
+  LoopFlowContext.prototype.pushScope = function (isLoop) {
+    ++this.level;
+    if (isLoop)
+      this.loopLevels.push(this.level);
+  };
+
+  LoopFlowContext.prototype.popScope = function () {
+    var levels = this.loopLevels;
+    var levlen = levels.length;
+    if (levlen) {
+      if (levels[levlen - 1] === this.level)
+        levels.pop();
+    }
+    --this.level;
+  };
+
+  LoopFlowContext.prototype.addGoto =
+  LoopFlowContext.prototype.addLabel =
+  /* istanbul ignore next */
+  function () { throw new Error('This should never happen'); };
+
+  LoopFlowContext.prototype.addLocal =
+  LoopFlowContext.prototype.raiseDeferredErrors =
+  function () {};
+
+  function makeFlowContext() {
+    return features.labels ? new FullFlowContext() : new LoopFlowContext();
+  }
+
   // Parse functions
   // ---------------
 
@@ -1447,7 +1601,10 @@
     next();
     markLocation();
     if (options.scope) createScope();
-    var body = parseBlock();
+    var flowContext = makeFlowContext();
+    flowContext.pushScope();
+    var body = parseBlock(flowContext);
+    flowContext.popScope();
     if (options.scope) destroyScope();
     if (EOF !== token.type) unexpected(token);
     // If the body is empty no previousToken exists when finishNode runs.
@@ -1460,7 +1617,7 @@
   //
   //     block ::= {stat} [retstat]
 
-  function parseBlock(terminator) {
+  function parseBlock(flowContext, isRepeat) {
     var block = []
       , statement;
 
@@ -1468,10 +1625,10 @@
       // Return has to be the last statement in a block.
       // Likewise 'break' in Lua older than 5.2
       if ('return' === token.value || (!features.relaxedBreak && 'break' === token.value)) {
-        block.push(parseStatement());
+        block.push(parseStatement(flowContext));
         break;
       }
-      statement = parseStatement();
+      statement = parseStatement(flowContext);
       consume(';');
       // Statements are only added if they are returned, this allows us to
       // ignore some statements, such as EmptyStatement.
@@ -1488,42 +1645,51 @@
   //          | if | for | function | local | label | assignment
   //          | functioncall | ';'
 
-  function parseStatement() {
+  function parseStatement(flowContext) {
     markLocation();
+
+    if (Punctuator === token.type) {
+      if (consume('::')) return parseLabelStatement(flowContext);
+    }
+
+    // When a `;` is encounted, simply eat it without storing it.
+    if (features.emptyStatement) {
+      if (consume(';')) {
+        if (trackLocations) locations.pop();
+        return;
+      }
+    }
+
+    flowContext.raiseDeferredErrors();
+
     if (Keyword === token.type) {
       switch (token.value) {
-        case 'local':    next(); return parseLocalStatement();
-        case 'if':       next(); return parseIfStatement();
+        case 'local':    next(); return parseLocalStatement(flowContext);
+        case 'if':       next(); return parseIfStatement(flowContext);
         case 'return':   next(); return parseReturnStatement();
         case 'function': next();
           var name = parseFunctionName();
           return parseFunctionDeclaration(name);
-        case 'while':    next(); return parseWhileStatement();
-        case 'for':      next(); return parseForStatement();
-        case 'repeat':   next(); return parseRepeatStatement();
-        case 'break':    next(); return parseBreakStatement();
-        case 'do':       next(); return parseDoStatement();
-        case 'goto':     next(); return parseGotoStatement();
+        case 'while':    next(); return parseWhileStatement(flowContext);
+        case 'for':      next(); return parseForStatement(flowContext);
+        case 'repeat':   next(); return parseRepeatStatement(flowContext);
+        case 'break':    next();
+          if (!flowContext.isInLoop())
+            raise(token, errors.noLoopToBreak, token.value);
+          return parseBreakStatement();
+        case 'do':       next(); return parseDoStatement(flowContext);
+        case 'goto':     next(); return parseGotoStatement(flowContext);
       }
     }
 
     if (features.contextualGoto &&
         token.type === Identifier && token.value === 'goto' &&
         lookahead.type === Identifier && lookahead.value !== 'goto') {
-      next(); return parseGotoStatement();
+      next(); return parseGotoStatement(flowContext);
     }
 
-    if (Punctuator === token.type) {
-      if (consume('::')) return parseLabelStatement();
-    }
-    // Assignments memorizes the location and pushes it manually for wrapper
-    // nodes. Additionally empty `;` statements should not mark a location.
+    // Assignments memorizes the location and pushes it manually for wrapper nodes.
     if (trackLocations) locations.pop();
-
-    // When a `;` is encounted, simply eat it without storing it.
-    if (features.emptyStatement) {
-      if (consume(';')) return;
-    }
 
     return parseAssignmentOrCallStatement();
   }
@@ -1532,16 +1698,18 @@
 
   //     label ::= '::' Name '::'
 
-  function parseLabelStatement() {
-    var name = token.value
+  function parseLabelStatement(flowContext) {
+    var nameToken = token
       , label = parseIdentifier();
 
     if (options.scope) {
-      scopeIdentifierName('::' + name + '::');
+      scopeIdentifierName('::' + nameToken.value + '::');
       attachScope(label, true);
     }
 
     expect('::');
+
+    flowContext.addLabel(nameToken.value, nameToken);
     return finishNode(ast.labelStatement(label));
   }
 
@@ -1553,18 +1721,22 @@
 
   //     goto ::= 'goto' Name
 
-  function parseGotoStatement() {
+  function parseGotoStatement(flowContext) {
     var name = token.value
+      , gotoToken = previousToken
       , label = parseIdentifier();
 
+    flowContext.addGoto(name, gotoToken);
     return finishNode(ast.gotoStatement(label));
   }
 
   //     do ::= 'do' block 'end'
 
-  function parseDoStatement() {
+  function parseDoStatement(flowContext) {
     if (options.scope) createScope();
-    var body = parseBlock();
+    flowContext.pushScope();
+    var body = parseBlock(flowContext);
+    flowContext.popScope();
     if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.doStatement(body));
@@ -1572,11 +1744,13 @@
 
   //     while ::= 'while' exp 'do' block 'end'
 
-  function parseWhileStatement() {
+  function parseWhileStatement(flowContext) {
     var condition = parseExpectedExpression();
     expect('do');
     if (options.scope) createScope();
-    var body = parseBlock();
+    flowContext.pushScope(true);
+    var body = parseBlock(flowContext);
+    flowContext.popScope();
     if (options.scope) destroyScope();
     expect('end');
     return finishNode(ast.whileStatement(condition, body));
@@ -1584,11 +1758,14 @@
 
   //     repeat ::= 'repeat' block 'until' exp
 
-  function parseRepeatStatement() {
+  function parseRepeatStatement(flowContext) {
     if (options.scope) createScope();
-    var body = parseBlock();
+    flowContext.pushScope(true);
+    var body = parseBlock(flowContext);
     expect('until');
+    flowContext.raiseDeferredErrors();
     var condition = parseExpectedExpression();
+    flowContext.popScope();
     if (options.scope) destroyScope();
     return finishNode(ast.repeatStatement(condition, body));
   }
@@ -1613,7 +1790,7 @@
   //     if ::= 'if' exp 'then' block {elif} ['else' block] 'end'
   //     elif ::= 'elseif' exp 'then' block
 
-  function parseIfStatement() {
+  function parseIfStatement(flowContext) {
     var clauses = []
       , condition
       , body
@@ -1628,7 +1805,9 @@
     condition = parseExpectedExpression();
     expect('then');
     if (options.scope) createScope();
-    body = parseBlock();
+    flowContext.pushScope();
+    body = parseBlock(flowContext);
+    flowContext.popScope();
     if (options.scope) destroyScope();
     clauses.push(finishNode(ast.ifClause(condition, body)));
 
@@ -1638,7 +1817,9 @@
       condition = parseExpectedExpression();
       expect('then');
       if (options.scope) createScope();
-      body = parseBlock();
+      flowContext.pushScope();
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseifClause(condition, body)));
       if (trackLocations) marker = createLocationMarker();
@@ -1651,7 +1832,9 @@
         locations.push(marker);
       }
       if (options.scope) createScope();
-      body = parseBlock();
+      flowContext.pushScope();
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       if (options.scope) destroyScope();
       clauses.push(finishNode(ast.elseClause(body)));
     }
@@ -1667,7 +1850,7 @@
   //     namelist ::= Name {',' Name}
   //     explist ::= exp {',' exp}
 
-  function parseForStatement() {
+  function parseForStatement(flowContext) {
     var variable = parseIdentifier()
       , body;
 
@@ -1690,7 +1873,9 @@
       var step = consume(',') ? parseExpectedExpression() : null;
 
       expect('do');
-      body = parseBlock();
+      flowContext.pushScope(true);
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       expect('end');
       if (options.scope) destroyScope();
 
@@ -1716,7 +1901,9 @@
       } while (consume(','));
 
       expect('do');
-      body = parseBlock();
+      flowContext.pushScope(true);
+      body = parseBlock(flowContext);
+      flowContext.popScope();
       expect('end');
       if (options.scope) destroyScope();
 
@@ -1734,8 +1921,9 @@
   //     local ::= 'local' 'function' Name funcdecl
   //        | 'local' Name {',' Name} ['=' exp {',' exp}]
 
-  function parseLocalStatement() {
-    var name;
+  function parseLocalStatement(flowContext) {
+    var name
+      , declToken = previousToken;
 
     if (Identifier === token.type) {
       var variables = []
@@ -1745,6 +1933,7 @@
         name = parseIdentifier();
 
         variables.push(name);
+        flowContext.addLocal(name.name, declToken);
       } while (consume(','));
 
       if (consume('=')) {
@@ -1767,6 +1956,7 @@
     }
     if (consume('function')) {
       name = parseIdentifier();
+      flowContext.addLocal(name.name, declToken);
 
       if (options.scope) {
         scopeIdentifier(name);
@@ -1889,7 +2079,10 @@
       }
     }
 
-    var body = parseBlock();
+    var flowContext = makeFlowContext();
+    flowContext.pushScope();
+    var body = parseBlock(flowContext);
+    flowContext.popScope();
     expect('end');
     if (options.scope) destroyScope();
 

@@ -166,12 +166,13 @@
       }
     },
     {
-      "source": "-- comment\nbreak",
+      "source": "-- comment\nreturn",
       "result": {
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement",
+            "type": "ReturnStatement",
+            "arguments": [],
             "loc": {
               "start": {
                 "line": 2,
@@ -179,12 +180,12 @@
               },
               "end": {
                 "line": 2,
-                "column": 5
+                "column": 6
               }
             },
             "range": [
               11,
-              16
+              17
             ]
           }
         ],
@@ -195,12 +196,12 @@
           },
           "end": {
             "line": 2,
-            "column": 5
+            "column": 6
           }
         },
         "range": [
           11,
-          16
+          17
         ],
         "comments": [
           {
@@ -227,12 +228,13 @@
       }
     },
     {
-      "source": "break--comment",
+      "source": "return --comment \n",
       "result": {
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement",
+            "type": "ReturnStatement",
+            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
@@ -240,12 +242,12 @@
               },
               "end": {
                 "line": 1,
-                "column": 5
+                "column": 6
               }
             },
             "range": [
               0,
-              5
+              6
             ]
           }
         ],
@@ -256,31 +258,31 @@
           },
           "end": {
             "line": 1,
-            "column": 5
+            "column": 6
           }
         },
         "range": [
           0,
-          5
+          6
         ],
         "comments": [
           {
             "type": "Comment",
-            "value": "comment",
-            "raw": "--comment",
+            "value": "comment ",
+            "raw": "--comment ",
             "loc": {
               "start": {
                 "line": 1,
-                "column": 5
+                "column": 7
               },
               "end": {
                 "line": 1,
-                "column": 14
+                "column": 17
               }
             },
             "range": [
-              5,
-              14
+              7,
+              17
             ]
           }
         ],
@@ -431,41 +433,42 @@
       }
     },
     {
-      "source": "--[=[comment]=]break",
+      "source": "--[=[comment]=] return",
       "result": {
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement",
+            "type": "ReturnStatement",
+            "arguments": [],
             "loc": {
               "start": {
                 "line": 1,
-                "column": 15
+                "column": 16
               },
               "end": {
                 "line": 1,
-                "column": 20
+                "column": 22
               }
             },
             "range": [
-              15,
-              20
+              16,
+              22
             ]
           }
         ],
         "loc": {
           "start": {
             "line": 1,
-            "column": 15
+            "column": 16
           },
           "end": {
             "line": 1,
-            "column": 20
+            "column": 22
           }
         },
         "range": [
-          15,
-          20
+          16,
+          22
         ],
         "comments": [
           {
@@ -492,12 +495,13 @@
       }
     },
     {
-      "source": "--[===[comment\n--[=[sub]=]--\n]===]break",
+      "source": "--[===[comment\n--[=[sub]=]--\n]===]return",
       "result": {
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement",
+            "type": "ReturnStatement",
+            "arguments": [],
             "loc": {
               "start": {
                 "line": 3,
@@ -505,12 +509,12 @@
               },
               "end": {
                 "line": 3,
-                "column": 10
+                "column": 11
               }
             },
             "range": [
               34,
-              39
+              40
             ]
           }
         ],
@@ -521,12 +525,12 @@
           },
           "end": {
             "line": 3,
-            "column": 10
+            "column": 11
           }
         },
         "range": [
           34,
-          39
+          40
         ],
         "comments": [
           {
@@ -639,12 +643,13 @@
       }
     },
     {
-      "source": "--[==\nbreak --]]",
+      "source": "--[==\nreturn --]]",
       "result": {
         "type": "Chunk",
         "body": [
           {
-            "type": "BreakStatement",
+            "type": "ReturnStatement",
+            "arguments": [],
             "loc": {
               "start": {
                 "line": 2,
@@ -652,12 +657,12 @@
               },
               "end": {
                 "line": 2,
-                "column": 5
+                "column": 6
               }
             },
             "range": [
               6,
-              11
+              12
             ]
           }
         ],
@@ -668,12 +673,12 @@
           },
           "end": {
             "line": 2,
-            "column": 5
+            "column": 6
           }
         },
         "range": [
           6,
-          11
+          12
         ],
         "comments": [
           {
@@ -702,16 +707,16 @@
             "loc": {
               "start": {
                 "line": 2,
-                "column": 6
+                "column": 7
               },
               "end": {
                 "line": 2,
-                "column": 10
+                "column": 11
               }
             },
             "range": [
-              12,
-              16
+              13,
+              17
             ]
           }
         ],
