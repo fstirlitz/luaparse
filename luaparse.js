@@ -504,17 +504,17 @@
     var message = sprintf.apply(null, slice.call(arguments, 1))
       , error, col;
 
-    if ('undefined' !== typeof token.line) {
-      col = token.range[0] - token.lineStart;
-      error = fixupError(new SyntaxError(sprintf('[%1:%2] %3', token.line, col, message)));
-      error.line = token.line;
-      error.index = token.range[0];
-      error.column = col;
-    } else {
+    if (token === null || typeof token.line === 'undefined') {
       col = index - lineStart + 1;
       error = fixupError(new SyntaxError(sprintf('[%1:%2] %3', line, col, message)));
       error.index = index;
       error.line = line;
+      error.column = col;
+    } else {
+      col = token.range[0] - token.lineStart;
+      error = fixupError(new SyntaxError(sprintf('[%1:%2] %3', token.line, col, message)));
+      error.line = token.line;
+      error.index = token.range[0];
       error.column = col;
     }
     throw error;
@@ -840,7 +840,7 @@
       // ending delimiter by now, raise an exception.
       else if (index >= length || isLineTerminator(charCode)) {
         string += input.slice(stringStart, index - 1);
-        raise({}, errors.unfinishedString, string + String.fromCharCode(charCode));
+        raise(null, errors.unfinishedString, string + String.fromCharCode(charCode));
       }
     }
     string += fixupHighCharacters(input.slice(stringStart, index - 1));
@@ -920,7 +920,7 @@
 
     // A minimum of one hex digit is required.
     if (!isHexDigit(input.charCodeAt(index)))
-      raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+      raise(null, errors.malformedNumber, input.slice(tokenStart, index));
 
     while (isHexDigit(input.charCodeAt(index))) ++index;
     // Convert the hexadecimal digit to base 10.
@@ -951,7 +951,7 @@
 
       // The binary exponent sign requires a decimal digit.
       if (!isDecDigit(input.charCodeAt(index)))
-        raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+        raise(null, errors.malformedNumber, input.slice(tokenStart, index));
 
       while (isDecDigit(input.charCodeAt(index))) ++index;
       binaryExponent = input.slice(exponentStart, index);
@@ -982,7 +982,7 @@
       if ('+-'.indexOf(input.charAt(index) || null) >= 0) ++index;
       // An exponent is required to contain at least one decimal digit.
       if (!isDecDigit(input.charCodeAt(index)))
-        raise({}, errors.malformedNumber, input.slice(tokenStart, index));
+        raise(null, errors.malformedNumber, input.slice(tokenStart, index));
 
       while (isDecDigit(input.charCodeAt(index))) ++index;
     }
@@ -994,9 +994,9 @@
     var sequenceStart = index++;
 
     if (input.charAt(index++) !== '{')
-      raise({}, errors.braceExpected, '{', '\\' + input.slice(sequenceStart, index));
+      raise(null, errors.braceExpected, '{', '\\' + input.slice(sequenceStart, index));
     if (!isHexDigit(input.charCodeAt(index)))
-      raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
+      raise(null, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
 
     while (input.charCodeAt(index) === 0x30) ++index;
     var escStart = index;
@@ -1004,22 +1004,22 @@
     while (isHexDigit(input.charCodeAt(index))) {
       ++index;
       if (index - escStart > 6)
-        raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
+        raise(null, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
     }
 
     var b = input.charAt(index++);
     if (b !== '}') {
       if ((b === '"') || (b === "'"))
-        raise({}, errors.braceExpected, '}', '\\' + input.slice(sequenceStart, index--));
+        raise(null, errors.braceExpected, '}', '\\' + input.slice(sequenceStart, index--));
       else
-        raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
+        raise(null, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
     }
 
     var codepoint = parseInt(input.slice(escStart, index - 1), 16);
 
     codepoint = encodeUTF8(codepoint);
     if (codepoint === null) {
-      raise({}, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
+      raise(null, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
     }
     return codepoint;
   }
@@ -1052,7 +1052,7 @@
 
         var ddd = parseInt(input.slice(sequenceStart, index), 10);
         if (ddd > 255) {
-          raise({}, errors.decimalEscapeTooLarge, '\\' + ddd);
+          raise(null, errors.decimalEscapeTooLarge, '\\' + ddd);
         }
         return String.fromCharCode(ddd);
 
@@ -1072,7 +1072,7 @@
             index += 3;
             return String.fromCharCode(parseInt(input.slice(sequenceStart + 1, index), 16));
           }
-          raise({}, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
+          raise(null, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
         }
         break;
 
@@ -1086,7 +1086,7 @@
     }
 
     if (features.strictEscapes)
-      raise({}, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
+      raise(null, errors.invalidEscape, '\\' + input.slice(sequenceStart, index + 1));
     return input.charAt(index++);
   }
 
@@ -1188,9 +1188,9 @@
       }
     }
 
-    raise({}, isComment ?
-              errors.unfinishedLongComment :
-              errors.unfinishedLongString,
+    raise(null, isComment ?
+                errors.unfinishedLongComment :
+                errors.unfinishedLongString,
           firstLine, '<eof>');
   }
 
@@ -2378,7 +2378,7 @@
         case '(':
           if (!features.emptyStatement) {
             if (token.line !== previousToken.line)
-              raise({}, errors.ambiguousSyntax, token.value);
+              raise(null, errors.ambiguousSyntax, token.value);
           }
           next();
 
