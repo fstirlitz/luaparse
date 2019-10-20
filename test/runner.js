@@ -9,12 +9,45 @@
     // Use the console reporter
     , isConsole = typeof process == 'object' && process.argv && process.argv.indexOf('--console') >= 0;
 
+  function makeLoader(readTextFile) {
+    function loadModule(id, filename) {
+      /*jshint evil:true */
+      var filedir = filename.replace(/[^/]+$/, '') || '.';
+      var loader = new Function(
+        "require", "exports", "module",
+        readTextFile(filename)
+      );
+      var module = {
+        id: id,
+        exports: {}
+      };
+      loader(
+        function (what) { return loadModule(what, filedir + '/' + what + '.js'); },
+        module.exports, module
+      );
+
+      return module.exports;
+    }
+
+    return loadModule;
+  }
+
   var load = function load(mod, path) {
     if (root[mod]) return root[mod];
     if (isModule) return require(path);
+    var filename = path.replace(/\.js$/, '') + '.js';
+
     if (isEngine) {
-      root.load(path.replace(/\.js$/, '') + '.js');
+      root.load(filename);
       return root[mod];
+    }
+
+    // Duktape
+    if (typeof Duktape !== 'undefined' && typeof readFile === 'function') {
+      return root[mod] = makeLoader(function (filename) {
+        /*global readFile, TextDecoder */
+        return (new TextDecoder('utf-8')).decode(readFile(filename));
+      })(mod, filename);
     }
   };
 

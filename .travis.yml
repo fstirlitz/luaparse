@@ -7,8 +7,10 @@ before_install:
   - PACKAGE=Rhino1_7R4_RELEASE; echo -e '#!/bin/sh\njava -jar /opt/Rhino1_7R4_RELEASE/js.jar $@' | sudo tee /usr/local/bin/rhino && sudo chmod +x /usr/local/bin/rhino
   - PACKAGE=ringojs-0.9; wget http://ringojs.org/downloads/$PACKAGE.zip && sudo unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip
   - PACKAGE=ringojs-0.9; sudo ln -s /opt/$PACKAGE/bin/ringo /usr/local/bin/ringo && sudo chmod +x /usr/local/bin/ringo
-  #  If the enviroment stores rt.jar in a different directory, find it and symlink the directory
-  - PREFIX=/usr/lib/jvm; if [ ! -d $PREFIX/java-6-openjdk ]; then for d in $PREFIX/java-6-openjdk-*; do if [ -e $d/jre/lib/rt.jar ]; then sudo ln -s $d $PREFIX/java-6-openjdk; break; fi; done; fi
+  # Duktape
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq make gcc
+  - PACKAGE=duktape-2.4.0; wget "https://duktape.org/$PACKAGE.tar.xz" && tar xf "$PACKAGE.tar.xz" && make -C "$PACKAGE/" -f Makefile.cmdline DEFINES=-DDUK_CMDLINE_FILEIO && sudo install -Dm755 "$PACKAGE/duk" /usr/local/bin/duk && rm -rf "$PACKAGE.tar.xz" "$PACKAGE/"
 before_deploy:
   - make build
 deploy:
