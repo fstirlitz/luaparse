@@ -407,11 +407,18 @@
 
   var slice = Array.prototype.slice
     , toString = Object.prototype.toString
-    , indexOf = function indexOf(array, element) {
-      for (var i = 0, length = array.length; i < length; ++i) {
-        if (array[i] === element) return i;
-      }
-      return -1;
+    ;
+
+  var indexOf = /* istanbul ignore next */ function (array, element) {
+    for (var i = 0, length = array.length; i < length; ++i) {
+      if (array[i] === element) return i;
+    }
+    return -1;
+  };
+
+  if (Array.prototype.indexOf)
+    indexOf = function (array, element) {
+      return array.indexOf(element);
     };
 
   // Iterate through an array of objects and return the index of an object
