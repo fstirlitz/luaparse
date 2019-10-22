@@ -1,4 +1,4 @@
-/*global require, define, exports, load, console, print, module, emit, process */
+/*global require, define, exports, load, console, print, module, emit, process, __loadScript */
 (function (root) {
   var isLoader = typeof define === 'function' && !!define.amd
     , isModule = typeof require === 'function' && typeof exports === 'object' && exports && !isLoader
@@ -47,6 +47,12 @@
         /*global readFile, TextDecoder */
         return (new TextDecoder('utf-8')).decode(readFile(filename));
       })(mod, filename);
+    }
+
+    // QuickJS
+    if (typeof __loadScript !== 'undefined') {
+      __loadScript(filename);
+      return root[mod];
     }
   };
 
