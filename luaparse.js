@@ -829,18 +829,18 @@
       , string = ''
       , charCode;
 
-    while (index < length) {
+    for (;;) {
       charCode = input.charCodeAt(index++);
       if (delimiter === charCode) break;
+      // EOF or `\n` terminates a string literal. If we haven't found the
+      // ending delimiter by now, raise an exception.
+      if (index > length || isLineTerminator(charCode)) {
+        string += input.slice(stringStart, index - 1);
+        raise(null, errors.unfinishedString, String.fromCharCode(delimiter) + string);
+      }
       if (92 === charCode) { // backslash
         string += fixupHighCharacters(input.slice(stringStart, index - 1)) + readEscapeSequence();
         stringStart = index;
-      }
-      // EOF or `\n` terminates a string literal. If we haven't found the
-      // ending delimiter by now, raise an exception.
-      else if (index >= length || isLineTerminator(charCode)) {
-        string += input.slice(stringStart, index - 1);
-        raise(null, errors.unfinishedString, string + String.fromCharCode(charCode));
       }
     }
     string += fixupHighCharacters(input.slice(stringStart, index - 1));

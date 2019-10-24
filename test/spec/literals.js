@@ -1914,8 +1914,139 @@
       }
     },
     {
+      "source": "a = \"",
+      "result": "[1:7] unfinished string near '\"'"
+    },
+    {
+      "source": "a = \"'",
+      "result": "[1:8] unfinished string near '\"''"
+    },
+    {
+      "source": "a = '\"",
+      "result": "[1:8] unfinished string near ''\"'"
+    },
+    {
+      "source": "a = \"\n\"",
+      "result": "[1:7] unfinished string near '\"'"
+    },
+    {
+      "source": "a = '",
+      "result": "[1:7] unfinished string near '''"
+    },
+    {
+      "source": "a = '\n'",
+      "result": "[1:7] unfinished string near '''"
+    },
+    {
+      "source": "a = [[",
+      "result": "[1:7] unfinished long string (starting at line 1) near '<eof>'"
+    },
+    {
+      "source": "a = [[\n]]",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "AssignmentStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "a",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1
+                  }
+                },
+                "range": [
+                  0,
+                  1
+                ],
+                "isLocal": false
+              }
+            ],
+            "init": [
+              {
+                "type": "StringLiteral",
+                "value": "",
+                "raw": "[[\n]]",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 2
+                  }
+                },
+                "range": [
+                  4,
+                  9
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 2
+              }
+            },
+            "range": [
+              0,
+              9
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 2
+          }
+        },
+        "range": [
+          0,
+          9
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 1
+              }
+            },
+            "range": [
+              0,
+              1
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
       "source": "a = \"bar",
-      "result": "[1:9] unfinished string near 'bar'"
+      "result": "[1:10] unfinished string near '\"bar'"
     },
     {
       "source": "a = 'bar'",
