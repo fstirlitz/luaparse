@@ -1,13 +1,12 @@
-/*globals require:true, define:true, exports:true, load:true, console:true, print:true, module:true, emit:true, process:true */
-/*jshint eqeqeq:false */
+/*global require, define, exports, load, console, print, module, emit, process, __loadScript */
 (function (root) {
   var isLoader = typeof define === 'function' && !!define.amd
     , isModule = typeof require === 'function' && typeof exports === 'object' && exports && !isLoader
-    , isBrowser = 'window' in root && root.window == root && typeof root.navigator !== 'undefined'
+    , isBrowser = 'window' in root && root.window === root && typeof root.navigator !== 'undefined'
     , isEngine = !isBrowser && !isModule && typeof root.load === 'function'
     , isTestem = isBrowser && root.location.hash === '#testem'
     // Use the console reporter
-    , isConsole = typeof process == 'object' && process.argv && process.argv.indexOf('--console') >= 0;
+    , isConsole = typeof process === 'object' && process.argv && process.argv.indexOf('--console') >= 0;
 
   function makeLoader(readTextFile) {
     function loadModule(id, filename) {
@@ -48,6 +47,12 @@
         /*global readFile, TextDecoder */
         return (new TextDecoder('utf-8')).decode(readFile(filename));
       })(mod, filename);
+    }
+
+    // QuickJS
+    if (typeof __loadScript !== 'undefined') {
+      __loadScript(filename);
+      return root[mod];
     }
   };
 

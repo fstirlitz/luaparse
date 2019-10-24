@@ -1525,13 +1525,9 @@ validated so we simply return it as a token.</p>
       , string = <span class="hljs-string">''</span>
       , charCode;
 
-    <span class="hljs-keyword">while</span> (index &lt; length) {
+    <span class="hljs-keyword">for</span> (;;) {
       charCode = input.charCodeAt(index++);
-      <span class="hljs-keyword">if</span> (delimiter === charCode) <span class="hljs-keyword">break</span>;
-      <span class="hljs-keyword">if</span> (<span class="hljs-number">92</span> === charCode) { <span class="hljs-comment">// backslash</span>
-        string += fixupHighCharacters(input.slice(stringStart, index - <span class="hljs-number">1</span>)) + readEscapeSequence();
-        stringStart = index;
-      }</pre></div></div>
+      <span class="hljs-keyword">if</span> (delimiter === charCode) <span class="hljs-keyword">break</span>;</pre></div></div>
             
         </li>
         
@@ -1547,9 +1543,13 @@ ending delimiter by now, raise an exception.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (index &gt;= length || isLineTerminator(charCode)) {
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (index &gt; length || isLineTerminator(charCode)) {
         string += input.slice(stringStart, index - <span class="hljs-number">1</span>);
-        raise(<span class="hljs-literal">null</span>, errors.unfinishedString, string + <span class="hljs-built_in">String</span>.fromCharCode(charCode));
+        raise(<span class="hljs-literal">null</span>, errors.unfinishedString, <span class="hljs-built_in">String</span>.fromCharCode(delimiter) + string);
+      }
+      <span class="hljs-keyword">if</span> (<span class="hljs-number">92</span> === charCode) { <span class="hljs-comment">// backslash</span>
+        string += fixupHighCharacters(input.slice(stringStart, index - <span class="hljs-number">1</span>)) + readEscapeSequence();
+        stringStart = index;
       }
     }
     string += fixupHighCharacters(input.slice(stringStart, index - <span class="hljs-number">1</span>));

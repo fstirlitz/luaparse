@@ -19,11 +19,11 @@
   exports.spec = [
     {
       "source": "a = \"bar\nbaz\"",
-      "result": "[1:10] unfinished string near 'bar\n'"
+      "result": "[1:10] unfinished string near '\"bar'"
     },
     {
       "source": "a = \"bar\rbaz\"",
-      "result": "[1:10] unfinished string near 'bar\r'"
+      "result": "[1:10] unfinished string near '\"bar'"
     },
     {
       "source": "a = \"bar\\n\\r\\t\tbaz\"",
