@@ -33,7 +33,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* global exports:true, module:true, require:true, define:true, global:true */</span>
 
 (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">root, name, factory</span>) </span>{
-<span class="hljs-meta">  'use strict'</span>;</pre></div></div>
+  <span class="hljs-string">'use strict'</span>;</pre></div></div>
             
         </li>
         
@@ -237,7 +237,7 @@ the supplied <code>exports</code> object.</p>
     factory((root[name] = {}));
   }
 }(<span class="hljs-keyword">this</span>, <span class="hljs-string">'luaparse'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">exports</span>) </span>{
-<span class="hljs-meta">  'use strict'</span>;
+  <span class="hljs-string">'use strict'</span>;
 
   exports.version = <span class="hljs-string">'0.2.1'</span>;
 
@@ -490,6 +490,7 @@ will be different in some situations.</p>
     , <span class="hljs-attr">labelAlreadyDefined</span>: <span class="hljs-string">'label \'%1\' already defined on line %2'</span>
     , <span class="hljs-attr">labelNotVisible</span>: <span class="hljs-string">'no visible label \'%1\' for &lt;goto&gt;'</span>
     , <span class="hljs-attr">gotoJumpInLocalScope</span>: <span class="hljs-string">'&lt;goto %1&gt; jumps into the scope of local \'%2\''</span>
+    , <span class="hljs-attr">cannotUseVararg</span>: <span class="hljs-string">'cannot use \'...\' outside a vararg function near \'%1\''</span>
   };</pre></div></div>
             
         </li>
@@ -1659,9 +1660,9 @@ exoponent part. These are not included in JavaScript so we will compute
 all three parts separately and then sum them up at the end of the function
 with the following algorithm.</p>
 <pre><code>Digit := toDec(digit)
-Fraction := toDec(fraction) / <span class="hljs-number">16</span> ^ fractionCount
-BinaryExp := <span class="hljs-number">2</span> ^ binaryExp
-<span class="hljs-built_in">Number</span> := ( Digit + Fraction ) * BinaryExp
+<span class="hljs-attr">Fraction</span> := toDec(fraction) / <span class="hljs-number">16</span> ^ fractionCount
+<span class="hljs-attr">BinaryExp</span> := <span class="hljs-number">2</span> ^ binaryExp
+<span class="hljs-attr">Number</span> := ( Digit + Fraction ) * BinaryExp
 </code></pre>
             </div>
             
@@ -3112,6 +3113,7 @@ if (bads.length)
     markLocation();
     <span class="hljs-keyword">if</span> (options.scope) createScope();
     <span class="hljs-keyword">var</span> flowContext = makeFlowContext();
+    flowContext.allowVararg = <span class="hljs-literal">true</span>;
     flowContext.pushScope();
     <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
     flowContext.popScope();
@@ -3151,7 +3153,7 @@ as its last statement.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseBlock</span>(<span class="hljs-params">flowContext, isRepeat</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseBlock</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> block = []
       , statement;
 
@@ -3261,7 +3263,7 @@ ignore some statements, such as EmptyStatement.</p>
       <span class="hljs-keyword">switch</span> (token.value) {
         <span class="hljs-keyword">case</span> <span class="hljs-string">'local'</span>:    next(); <span class="hljs-keyword">return</span> parseLocalStatement(flowContext);
         <span class="hljs-keyword">case</span> <span class="hljs-string">'if'</span>:       next(); <span class="hljs-keyword">return</span> parseIfStatement(flowContext);
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'return'</span>:   next(); <span class="hljs-keyword">return</span> parseReturnStatement();
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'return'</span>:   next(); <span class="hljs-keyword">return</span> parseReturnStatement(flowContext);
         <span class="hljs-keyword">case</span> <span class="hljs-string">'function'</span>: next();
           <span class="hljs-keyword">var</span> name = parseFunctionName();
           <span class="hljs-keyword">return</span> parseFunctionDeclaration(name);
@@ -3298,7 +3300,7 @@ ignore some statements, such as EmptyStatement.</p>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (trackLocations) locations.pop();
 
-    <span class="hljs-keyword">return</span> parseAssignmentOrCallStatement();
+    <span class="hljs-keyword">return</span> parseAssignmentOrCallStatement(flowContext);
   }</pre></div></div>
             
         </li>
@@ -3423,7 +3425,7 @@ ignore some statements, such as EmptyStatement.</p>
             
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseWhileStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
-    <span class="hljs-keyword">var</span> condition = parseExpectedExpression();
+    <span class="hljs-keyword">var</span> condition = parseExpectedExpression(flowContext);
     expect(<span class="hljs-string">'do'</span>);
     <span class="hljs-keyword">if</span> (options.scope) createScope();
     flowContext.pushScope(<span class="hljs-literal">true</span>);
@@ -3454,7 +3456,7 @@ ignore some statements, such as EmptyStatement.</p>
     <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
     expect(<span class="hljs-string">'until'</span>);
     flowContext.raiseDeferredErrors();
-    <span class="hljs-keyword">var</span> condition = parseExpectedExpression();
+    <span class="hljs-keyword">var</span> condition = parseExpectedExpression(flowContext);
     flowContext.popScope();
     <span class="hljs-keyword">if</span> (options.scope) destroyScope();
     <span class="hljs-keyword">return</span> finishNode(ast.repeatStatement(condition, body));
@@ -3474,14 +3476,14 @@ ignore some statements, such as EmptyStatement.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseReturnStatement</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseReturnStatement</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> expressions = [];
 
     <span class="hljs-keyword">if</span> (<span class="hljs-string">'end'</span> !== token.value) {
-      <span class="hljs-keyword">var</span> expression = parseExpression();
+      <span class="hljs-keyword">var</span> expression = parseExpression(flowContext);
       <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != expression) expressions.push(expression);
       <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>)) {
-        expression = parseExpectedExpression();
+        expression = parseExpectedExpression(flowContext);
         expressions.push(expression);
       }
       consume(<span class="hljs-string">';'</span>); <span class="hljs-comment">// grammar tells us ; is optional here.</span>
@@ -3499,7 +3501,7 @@ ignore some statements, such as EmptyStatement.</p>
                 <a class="pilcrow" href="#section-140">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">if</span> ::= <span class="hljs-string">'if'</span> exp <span class="hljs-string">'then'</span> block {elif} [<span class="hljs-string">'else'</span> block] <span class="hljs-string">'end'</span>
-elif ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string">'then'</span> block
+<span class="hljs-attr">elif</span> ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string">'then'</span> block
 </code></pre>
             </div>
             
@@ -3528,7 +3530,7 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
       marker = locations[locations.length - <span class="hljs-number">1</span>];
       locations.push(marker);
     }
-    condition = parseExpectedExpression();
+    condition = parseExpectedExpression(flowContext);
     expect(<span class="hljs-string">'then'</span>);
     <span class="hljs-keyword">if</span> (options.scope) createScope();
     flowContext.pushScope();
@@ -3540,7 +3542,7 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
     <span class="hljs-keyword">if</span> (trackLocations) marker = createLocationMarker();
     <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">'elseif'</span>)) {
       pushLocation(marker);
-      condition = parseExpectedExpression();
+      condition = parseExpectedExpression(flowContext);
       expect(<span class="hljs-string">'then'</span>);
       <span class="hljs-keyword">if</span> (options.scope) createScope();
       flowContext.pushScope();
@@ -3593,9 +3595,9 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
               </div>
               <p>There are two types of for statements, generic and numeric.</p>
 <pre><code><span class="hljs-keyword">for</span> ::= Name <span class="hljs-string">'='</span> exp <span class="hljs-string">','</span> exp [<span class="hljs-string">','</span> exp] <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
-<span class="hljs-keyword">for</span> ::= namelist <span class="hljs-string">'in'</span> explist <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
-namelist ::= Name {<span class="hljs-string">','</span> Name}
-explist ::= exp {<span class="hljs-string">','</span> exp}
+<span class="hljs-attr">for</span> ::= namelist <span class="hljs-string">'in'</span> explist <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
+<span class="hljs-attr">namelist</span> ::= Name {<span class="hljs-string">','</span> Name}
+<span class="hljs-attr">explist</span> ::= exp {<span class="hljs-string">','</span> exp}
 </code></pre>
             </div>
             
@@ -3652,7 +3654,7 @@ Numeric For Statement.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> start = parseExpectedExpression();
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> start = parseExpectedExpression(flowContext);
       expect(<span class="hljs-string">','</span>);</pre></div></div>
             
         </li>
@@ -3668,7 +3670,7 @@ Numeric For Statement.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> end = parseExpectedExpression();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> end = parseExpectedExpression(flowContext);</pre></div></div>
             
         </li>
         
@@ -3683,7 +3685,7 @@ Numeric For Statement.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> step = consume(<span class="hljs-string">','</span>) ? parseExpectedExpression() : <span class="hljs-literal">null</span>;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> step = consume(<span class="hljs-string">','</span>) ? parseExpectedExpression(flowContext) : <span class="hljs-literal">null</span>;
 
       expect(<span class="hljs-string">'do'</span>);
       flowContext.pushScope(<span class="hljs-literal">true</span>);
@@ -3760,7 +3762,7 @@ Numeric For Statement.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">do</span> {
-        <span class="hljs-keyword">var</span> expression = parseExpectedExpression();
+        <span class="hljs-keyword">var</span> expression = parseExpectedExpression(flowContext);
         iterators.push(expression);
       } <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>));
 
@@ -3812,7 +3814,7 @@ child.</p>
 
       <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'='</span>)) {
         <span class="hljs-keyword">do</span> {
-          <span class="hljs-keyword">var</span> expression = parseExpectedExpression();
+          <span class="hljs-keyword">var</span> expression = parseExpectedExpression(flowContext);
           init.push(expression);
         } <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>));
       }</pre></div></div>
@@ -3903,17 +3905,17 @@ shouldn’t be added to the scope until the statement is complete.</p>
                 <a class="pilcrow" href="#section-157">&#182;</a>
               </div>
               <pre><code>assignment ::= varlist <span class="hljs-string">'='</span> explist
-<span class="hljs-keyword">var</span> ::= Name | prefixexp <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> | prefixexp <span class="hljs-string">'.'</span> Name
-varlist ::= <span class="hljs-keyword">var</span> {<span class="hljs-string">','</span> <span class="hljs-keyword">var</span>}
-explist ::= exp {<span class="hljs-string">','</span> exp}
+<span class="hljs-attr">var</span> ::= Name | prefixexp <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> | prefixexp <span class="hljs-string">'.'</span> Name
+<span class="hljs-attr">varlist</span> ::= <span class="hljs-keyword">var</span> {<span class="hljs-string">','</span> <span class="hljs-keyword">var</span>}
+<span class="hljs-attr">explist</span> ::= exp {<span class="hljs-string">','</span> exp}
 
-call ::= callexp
-callexp ::= prefixexp args | prefixexp <span class="hljs-string">':'</span> Name args
+<span class="hljs-attr">call</span> ::= callexp
+<span class="hljs-attr">callexp</span> ::= prefixexp args | prefixexp <span class="hljs-string">':'</span> Name args
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseAssignmentOrCallStatement</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseAssignmentOrCallStatement</span>(<span class="hljs-params">flowContext</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -3933,7 +3935,7 @@ of invalid statement</p>
       , expression, marker;
 
     <span class="hljs-keyword">if</span> (trackLocations) marker = createLocationMarker();
-    expression = parsePrefixExpression();
+    expression = parsePrefixExpression(flowContext);
 
     <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == expression) <span class="hljs-keyword">return</span> unexpected(token);
     <span class="hljs-keyword">if</span> (<span class="hljs-string">',='</span>.indexOf(token.value) &gt;= <span class="hljs-number">0</span>) {
@@ -3943,14 +3945,14 @@ of invalid statement</p>
 
       validateVar(expression);
       <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>)) {
-        exp = parsePrefixExpression();
+        exp = parsePrefixExpression(flowContext);
         <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == exp) raiseUnexpectedToken(<span class="hljs-string">'&lt;expression&gt;'</span>, token);
         validateVar(exp);
         variables.push(exp);
       }
       expect(<span class="hljs-string">'='</span>);
       <span class="hljs-keyword">do</span> {
-        exp = parseExpectedExpression();
+        exp = parseExpectedExpression(flowContext);
         init.push(exp);
       } <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>));
 
@@ -4030,12 +4032,15 @@ this we allow for anonymous functions in expressions.</p>
 <p>For local functions there’s a boolean parameter which needs to be set
 when parsing the declaration.</p>
 <pre><code>funcdecl ::= <span class="hljs-string">'('</span> [parlist] <span class="hljs-string">')'</span> block <span class="hljs-string">'end'</span>
-parlist ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hljs-string">','</span> <span class="hljs-string">'...'</span>] | <span class="hljs-string">'...'</span>
+<span class="hljs-attr">parlist</span> ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hljs-string">','</span> <span class="hljs-string">'...'</span>] | <span class="hljs-string">'...'</span>
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseFunctionDeclaration</span>(<span class="hljs-params">name, isLocal</span>) </span>{
+    <span class="hljs-keyword">var</span> flowContext = makeFlowContext();
+    flowContext.pushScope();
+
     <span class="hljs-keyword">var</span> parameters = [];
     expect(<span class="hljs-string">'('</span>);</pre></div></div>
             
@@ -4106,7 +4111,8 @@ with a vararg.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (VarargLiteral === token.type) {
-          parameters.push(parsePrimaryExpression());
+          flowContext.allowVararg = <span class="hljs-literal">true</span>;
+          parameters.push(parsePrimaryExpression(flowContext));
         } <span class="hljs-keyword">else</span> {
           raiseUnexpectedToken(<span class="hljs-string">'&lt;name&gt; or \'...\''</span>, token);
         }
@@ -4115,8 +4121,6 @@ with a vararg.</p>
       }
     }
 
-    <span class="hljs-keyword">var</span> flowContext = makeFlowContext();
-    flowContext.pushScope();
     <span class="hljs-keyword">var</span> body = parseBlock(flowContext);
     flowContext.popScope();
     expect(<span class="hljs-string">'end'</span>);
@@ -4178,38 +4182,38 @@ with a vararg.</p>
                 <a class="pilcrow" href="#section-168">&#182;</a>
               </div>
               <pre><code>tableconstructor ::= <span class="hljs-string">'{'</span> [fieldlist] <span class="hljs-string">'}'</span>
-fieldlist ::= field {fieldsep field} fieldsep
-field ::= <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> <span class="hljs-string">'='</span> exp | Name = <span class="hljs-string">'exp'</span> | exp
+<span class="hljs-attr">fieldlist</span> ::= field {fieldsep field} fieldsep
+<span class="hljs-attr">field</span> ::= <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> <span class="hljs-string">'='</span> exp | Name = <span class="hljs-string">'exp'</span> | exp
 
-fieldsep ::= <span class="hljs-string">','</span> | <span class="hljs-string">';'</span>
+<span class="hljs-attr">fieldsep</span> ::= <span class="hljs-string">','</span> | <span class="hljs-string">';'</span>
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseTableConstructor</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseTableConstructor</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> fields = []
       , key, value;
 
     <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
       markLocation();
       <span class="hljs-keyword">if</span> (Punctuator === token.type &amp;&amp; consume(<span class="hljs-string">'['</span>)) {
-        key = parseExpectedExpression();
+        key = parseExpectedExpression(flowContext);
         expect(<span class="hljs-string">']'</span>);
         expect(<span class="hljs-string">'='</span>);
-        value = parseExpectedExpression();
+        value = parseExpectedExpression(flowContext);
         fields.push(finishNode(ast.tableKey(key, value)));
       } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (Identifier === token.type) {
         <span class="hljs-keyword">if</span> (<span class="hljs-string">'='</span> === lookahead.value) {
           key = parseIdentifier();
           next();
-          value = parseExpectedExpression();
+          value = parseExpectedExpression(flowContext);
           fields.push(finishNode(ast.tableKeyString(key, value)));
         } <span class="hljs-keyword">else</span> {
-          value = parseExpectedExpression();
+          value = parseExpectedExpression(flowContext);
           fields.push(finishNode(ast.tableValue(value)));
         }
       } <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == (value = parseExpression())) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == (value = parseExpression(flowContext))) {
           locations.pop();
           <span class="hljs-keyword">break</span>;
         }
@@ -4251,17 +4255,17 @@ fieldsep ::= <span class="hljs-string">','</span> | <span class="hljs-string">';
 matched null will be returned.</p>
 <pre><code>exp ::= (unop exp | primary | prefixexp ) { binop exp }
 
-primary ::= nil | <span class="hljs-literal">false</span> | <span class="hljs-literal">true</span> | <span class="hljs-built_in">Number</span> | <span class="hljs-built_in">String</span> | <span class="hljs-string">'...'</span>
+<span class="hljs-attr">primary</span> ::= nil | <span class="hljs-literal">false</span> | <span class="hljs-literal">true</span> | <span class="hljs-built_in">Number</span> | <span class="hljs-built_in">String</span> | <span class="hljs-string">'...'</span>
      | functiondef | tableconstructor
 
-prefixexp ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span> ) { <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span>
+<span class="hljs-attr">prefixexp</span> ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span> ) { <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span>
      | <span class="hljs-string">'.'</span> Name | <span class="hljs-string">':'</span> Name args | args }
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseExpression</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> expression = parseSubExpression(<span class="hljs-number">0</span>);
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseExpression</span>(<span class="hljs-params">flowContext</span>) </span>{
+    <span class="hljs-keyword">var</span> expression = parseSubExpression(<span class="hljs-number">0</span>, flowContext);
     <span class="hljs-keyword">return</span> expression;
   }</pre></div></div>
             
@@ -4279,8 +4283,8 @@ prefixexp ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseExpectedExpression</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> expression = parseExpression();
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseExpectedExpression</span>(<span class="hljs-params">flowContext</span>) </span>{
+    <span class="hljs-keyword">var</span> expression = parseExpression(flowContext);
     <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == expression) raiseUnexpectedToken(<span class="hljs-string">'&lt;expression&gt;'</span>, token);
     <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> expression;
   }</pre></div></div>
@@ -4350,7 +4354,7 @@ without excessive amounts of tests.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseSubExpression</span>(<span class="hljs-params">minPrecedence</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseSubExpression</span>(<span class="hljs-params">minPrecedence, flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> operator = token.value</pre></div></div>
             
         </li>
@@ -4386,7 +4390,7 @@ without excessive amounts of tests.</p>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (isUnary(token)) {
       markLocation();
       next();
-      <span class="hljs-keyword">var</span> argument = parseSubExpression(<span class="hljs-number">10</span>);
+      <span class="hljs-keyword">var</span> argument = parseSubExpression(<span class="hljs-number">10</span>, flowContext);
       <span class="hljs-keyword">if</span> (argument == <span class="hljs-literal">null</span>) raiseUnexpectedToken(<span class="hljs-string">'&lt;expression&gt;'</span>, token);
       expression = finishNode(ast.unaryExpression(operator, argument));
     }
@@ -4405,7 +4409,7 @@ without excessive amounts of tests.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      expression = parsePrimaryExpression();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      expression = parsePrimaryExpression(flowContext);</pre></div></div>
             
         </li>
         
@@ -4421,7 +4425,7 @@ without excessive amounts of tests.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == expression) {
-        expression = parsePrefixExpression();
+        expression = parsePrefixExpression(flowContext);
       }
     }</pre></div></div>
             
@@ -4464,7 +4468,7 @@ without excessive amounts of tests.</p>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'^'</span> === operator || <span class="hljs-string">'..'</span> === operator) --precedence;
       next();
-      <span class="hljs-keyword">var</span> right = parseSubExpression(precedence);
+      <span class="hljs-keyword">var</span> right = parseSubExpression(precedence, flowContext);
       <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == right) raiseUnexpectedToken(<span class="hljs-string">'&lt;expression&gt;'</span>, token);</pre></div></div>
             
         </li>
@@ -4497,15 +4501,15 @@ without excessive amounts of tests.</p>
                 <a class="pilcrow" href="#section-181">&#182;</a>
               </div>
               <pre><code>prefixexp ::= prefix {suffix}
-prefix ::= Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span>
-suffix ::= <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> | <span class="hljs-string">'.'</span> Name | <span class="hljs-string">':'</span> Name args | args
+<span class="hljs-attr">prefix</span> ::= Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span>
+<span class="hljs-attr">suffix</span> ::= <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> | <span class="hljs-string">'.'</span> Name | <span class="hljs-string">':'</span> Name args | args
 
-args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span>
+<span class="hljs-attr">args</span> ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span>
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parsePrefixExpression</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parsePrefixExpression</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> base, name, marker;
 
     <span class="hljs-keyword">if</span> (trackLocations) marker = createLocationMarker();</pre></div></div>
@@ -4542,7 +4546,7 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (options.scope) attachScope(base, scopeHasName(name));
     } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'('</span>)) {
-      base = parseExpectedExpression();
+      base = parseExpectedExpression(flowContext);
       expect(<span class="hljs-string">')'</span>);
       base.inParens = <span class="hljs-literal">true</span>; <span class="hljs-comment">// <span class="hljs-doctag">XXX:</span> quick and dirty. needed for validateVar</span>
     } <span class="hljs-keyword">else</span> {
@@ -4569,7 +4573,7 @@ args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string
           <span class="hljs-keyword">case</span> <span class="hljs-string">'['</span>:
             pushLocation(marker);
             next();
-            expression = parseExpectedExpression();
+            expression = parseExpectedExpression(flowContext);
             expect(<span class="hljs-string">']'</span>);
             base = finishNode(ast.indexExpression(base, expression));
             <span class="hljs-keyword">break</span>;
@@ -4600,18 +4604,18 @@ throw an error.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            pushLocation(marker);
-            base = parseCallExpression(base);
+            base = parseCallExpression(base, flowContext);
             <span class="hljs-keyword">break</span>;
           <span class="hljs-keyword">case</span> <span class="hljs-string">'('</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'{'</span>: <span class="hljs-comment">// args</span>
             pushLocation(marker);
-            base = parseCallExpression(base);
+            base = parseCallExpression(base, flowContext);
             <span class="hljs-keyword">break</span>;
           <span class="hljs-keyword">default</span>:
             <span class="hljs-keyword">return</span> base;
         }
       } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (StringLiteral === token.type) {
         pushLocation(marker);
-        base = parseCallExpression(base);
+        base = parseCallExpression(base, flowContext);
       } <span class="hljs-keyword">else</span> {
         <span class="hljs-keyword">break</span>;
       }
@@ -4634,7 +4638,7 @@ throw an error.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseCallExpression</span>(<span class="hljs-params">base</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseCallExpression</span>(<span class="hljs-params">base, flowContext</span>) </span>{
     <span class="hljs-keyword">if</span> (Punctuator === token.type) {
       <span class="hljs-keyword">switch</span> (token.value) {
         <span class="hljs-keyword">case</span> <span class="hljs-string">'('</span>:
@@ -4658,10 +4662,10 @@ throw an error.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">var</span> expressions = [];
-          <span class="hljs-keyword">var</span> expression = parseExpression();
+          <span class="hljs-keyword">var</span> expression = parseExpression(flowContext);
           <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> != expression) expressions.push(expression);
           <span class="hljs-keyword">while</span> (consume(<span class="hljs-string">','</span>)) {
-            expression = parseExpectedExpression();
+            expression = parseExpectedExpression(flowContext);
             expressions.push(expression);
           }
 
@@ -4671,11 +4675,11 @@ throw an error.</p>
         <span class="hljs-keyword">case</span> <span class="hljs-string">'{'</span>:
           markLocation();
           next();
-          <span class="hljs-keyword">var</span> table = parseTableConstructor();
+          <span class="hljs-keyword">var</span> table = parseTableConstructor(flowContext);
           <span class="hljs-keyword">return</span> finishNode(ast.tableCallExpression(base, table));
       }
     } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (StringLiteral === token.type) {
-      <span class="hljs-keyword">return</span> finishNode(ast.stringCallExpression(base, parsePrimaryExpression()));
+      <span class="hljs-keyword">return</span> finishNode(ast.stringCallExpression(base, parsePrimaryExpression(flowContext)));
     }
 
     raiseUnexpectedToken(<span class="hljs-string">'function arguments'</span>, token);
@@ -4696,13 +4700,17 @@ throw an error.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parsePrimaryExpression</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parsePrimaryExpression</span>(<span class="hljs-params">flowContext</span>) </span>{
     <span class="hljs-keyword">var</span> literals = StringLiteral | NumericLiteral | BooleanLiteral | NilLiteral | VarargLiteral
       , value = token.value
       , type = token.type
       , marker;
 
     <span class="hljs-keyword">if</span> (trackLocations) marker = createLocationMarker();
+
+    <span class="hljs-keyword">if</span> (type === VarargLiteral &amp;&amp; !flowContext.allowVararg) {
+      raise(token, errors.cannotUseVararg, token.value);
+    }
 
     <span class="hljs-keyword">if</span> (type &amp; literals) {
       pushLocation(marker);
@@ -4716,7 +4724,7 @@ throw an error.</p>
       <span class="hljs-keyword">return</span> parseFunctionDeclaration(<span class="hljs-literal">null</span>);
     } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (consume(<span class="hljs-string">'{'</span>)) {
       pushLocation(marker);
-      <span class="hljs-keyword">return</span> parseTableConstructor();
+      <span class="hljs-keyword">return</span> parseTableConstructor(flowContext);
     }
   }</pre></div></div>
             

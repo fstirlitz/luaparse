@@ -41,3 +41,7 @@ function a(p,q,r,...) end
 function a() local a local b end
 function a() local a; local b; end
 function a() end; function a() end;
+return ...
+function a(...) return ... end
+function a() return ... end                     -- FAIL
+function a(...) function b() return ... end end -- FAIL
