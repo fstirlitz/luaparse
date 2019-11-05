@@ -2268,6 +2268,218 @@
           }
         ]
       }
+    },
+    {
+      "source": "return ...",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "ReturnStatement",
+            "arguments": [
+              {
+                "type": "VarargLiteral",
+                "value": "...",
+                "raw": "...",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 7
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 10
+                  }
+                },
+                "range": [
+                  7,
+                  10
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              0,
+              10
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 10
+          }
+        },
+        "range": [
+          0,
+          10
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "function a(...) return ... end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "FunctionDeclaration",
+            "identifier": {
+              "type": "Identifier",
+              "name": "a",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 10
+                }
+              },
+              "range": [
+                9,
+                10
+              ],
+              "isLocal": false
+            },
+            "isLocal": false,
+            "parameters": [
+              {
+                "type": "VarargLiteral",
+                "value": "...",
+                "raw": "...",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
+                },
+                "range": [
+                  11,
+                  14
+                ]
+              }
+            ],
+            "body": [
+              {
+                "type": "ReturnStatement",
+                "arguments": [
+                  {
+                    "type": "VarargLiteral",
+                    "value": "...",
+                    "raw": "...",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 23
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 26
+                      }
+                    },
+                    "range": [
+                      23,
+                      26
+                    ]
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 16
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 26
+                  }
+                },
+                "range": [
+                  16,
+                  26
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 30
+              }
+            },
+            "range": [
+              0,
+              30
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 30
+          }
+        },
+        "range": [
+          0,
+          30
+        ],
+        "comments": [],
+        "globals": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            },
+            "range": [
+              9,
+              10
+            ],
+            "isLocal": false
+          }
+        ]
+      }
+    },
+    {
+      "source": "function a() return ... end",
+      "result": "[1:20] cannot use '...' outside a vararg function near '...'"
+    },
+    {
+      "source": "function a(...) function b() return ... end end",
+      "result": "[1:36] cannot use '...' outside a vararg function near '...'"
     }
   ];
 }));

@@ -125,6 +125,7 @@
     , labelAlreadyDefined: 'label \'%1\' already defined on line %2'
     , labelNotVisible: 'no visible label \'%1\' for <goto>'
     , gotoJumpInLocalScope: '<goto %1> jumps into the scope of local \'%2\''
+    , cannotUseVararg: 'cannot use \'...\' outside a vararg function near \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -1608,6 +1609,7 @@
     markLocation();
     if (options.scope) createScope();
     var flowContext = makeFlowContext();
+    flowContext.allowVararg = true;
     flowContext.pushScope();
     var body = parseBlock(flowContext);
     flowContext.popScope();
@@ -1623,7 +1625,7 @@
   //
   //     block ::= {stat} [retstat]
 
-  function parseBlock(flowContext, isRepeat) {
+  function parseBlock(flowContext) {
     var block = []
       , statement;
 
@@ -1672,7 +1674,7 @@
       switch (token.value) {
         case 'local':    next(); return parseLocalStatement(flowContext);
         case 'if':       next(); return parseIfStatement(flowContext);
-        case 'return':   next(); return parseReturnStatement();
+        case 'return':   next(); return parseReturnStatement(flowContext);
         case 'function': next();
           var name = parseFunctionName();
           return parseFunctionDeclaration(name);
@@ -1697,7 +1699,7 @@
     // Assignments memorizes the location and pushes it manually for wrapper nodes.
     if (trackLocations) locations.pop();
 
-    return parseAssignmentOrCallStatement();
+    return parseAssignmentOrCallStatement(flowContext);
   }
 
   // ## Statements
@@ -1751,7 +1753,7 @@
   //     while ::= 'while' exp 'do' block 'end'
 
   function parseWhileStatement(flowContext) {
-    var condition = parseExpectedExpression();
+    var condition = parseExpectedExpression(flowContext);
     expect('do');
     if (options.scope) createScope();
     flowContext.pushScope(true);
@@ -1770,7 +1772,7 @@
     var body = parseBlock(flowContext);
     expect('until');
     flowContext.raiseDeferredErrors();
-    var condition = parseExpectedExpression();
+    var condition = parseExpectedExpression(flowContext);
     flowContext.popScope();
     if (options.scope) destroyScope();
     return finishNode(ast.repeatStatement(condition, body));
@@ -1778,14 +1780,14 @@
 
   //     retstat ::= 'return' [exp {',' exp}] [';']
 
-  function parseReturnStatement() {
+  function parseReturnStatement(flowContext) {
     var expressions = [];
 
     if ('end' !== token.value) {
-      var expression = parseExpression();
+      var expression = parseExpression(flowContext);
       if (null != expression) expressions.push(expression);
       while (consume(',')) {
-        expression = parseExpectedExpression();
+        expression = parseExpectedExpression(flowContext);
         expressions.push(expression);
       }
       consume(';'); // grammar tells us ; is optional here.
@@ -1808,7 +1810,7 @@
       marker = locations[locations.length - 1];
       locations.push(marker);
     }
-    condition = parseExpectedExpression();
+    condition = parseExpectedExpression(flowContext);
     expect('then');
     if (options.scope) createScope();
     flowContext.pushScope();
@@ -1820,7 +1822,7 @@
     if (trackLocations) marker = createLocationMarker();
     while (consume('elseif')) {
       pushLocation(marker);
-      condition = parseExpectedExpression();
+      condition = parseExpectedExpression(flowContext);
       expect('then');
       if (options.scope) createScope();
       flowContext.pushScope();
@@ -1871,12 +1873,12 @@
     // Numeric For Statement.
     if (consume('=')) {
       // Start expression
-      var start = parseExpectedExpression();
+      var start = parseExpectedExpression(flowContext);
       expect(',');
       // End expression
-      var end = parseExpectedExpression();
+      var end = parseExpectedExpression(flowContext);
       // Optional step expression
-      var step = consume(',') ? parseExpectedExpression() : null;
+      var step = consume(',') ? parseExpectedExpression(flowContext) : null;
 
       expect('do');
       flowContext.pushScope(true);
@@ -1902,7 +1904,7 @@
 
       // One or more expressions in the explist.
       do {
-        var expression = parseExpectedExpression();
+        var expression = parseExpectedExpression(flowContext);
         iterators.push(expression);
       } while (consume(','));
 
@@ -1944,7 +1946,7 @@
 
       if (consume('=')) {
         do {
-          var expression = parseExpectedExpression();
+          var expression = parseExpectedExpression(flowContext);
           init.push(expression);
         } while (consume(','));
       }
@@ -1996,14 +1998,14 @@
   //     call ::= callexp
   //     callexp ::= prefixexp args | prefixexp ':' Name args
 
-  function parseAssignmentOrCallStatement() {
+  function parseAssignmentOrCallStatement(flowContext) {
     // Keep a reference to the previous token for better error messages in case
     // of invalid statement
     var previous = token
       , expression, marker;
 
     if (trackLocations) marker = createLocationMarker();
-    expression = parsePrefixExpression();
+    expression = parsePrefixExpression(flowContext);
 
     if (null == expression) return unexpected(token);
     if (',='.indexOf(token.value) >= 0) {
@@ -2013,14 +2015,14 @@
 
       validateVar(expression);
       while (consume(',')) {
-        exp = parsePrefixExpression();
+        exp = parsePrefixExpression(flowContext);
         if (null == exp) raiseUnexpectedToken('<expression>', token);
         validateVar(exp);
         variables.push(exp);
       }
       expect('=');
       do {
-        exp = parseExpectedExpression();
+        exp = parseExpectedExpression(flowContext);
         init.push(exp);
       } while (consume(','));
 
@@ -2062,6 +2064,9 @@
   //     parlist ::= Name {',' Name} | [',' '...'] | '...'
 
   function parseFunctionDeclaration(name, isLocal) {
+    var flowContext = makeFlowContext();
+    flowContext.pushScope();
+
     var parameters = [];
     expect('(');
 
@@ -2081,7 +2086,8 @@
         }
         // No arguments are allowed after a vararg.
         else if (VarargLiteral === token.type) {
-          parameters.push(parsePrimaryExpression());
+          flowContext.allowVararg = true;
+          parameters.push(parsePrimaryExpression(flowContext));
         } else {
           raiseUnexpectedToken('<name> or \'...\'', token);
         }
@@ -2090,8 +2096,6 @@
       }
     }
 
-    var flowContext = makeFlowContext();
-    flowContext.pushScope();
     var body = parseBlock(flowContext);
     flowContext.popScope();
     expect('end');
@@ -2138,30 +2142,30 @@
   //
   //     fieldsep ::= ',' | ';'
 
-  function parseTableConstructor() {
+  function parseTableConstructor(flowContext) {
     var fields = []
       , key, value;
 
     while (true) {
       markLocation();
       if (Punctuator === token.type && consume('[')) {
-        key = parseExpectedExpression();
+        key = parseExpectedExpression(flowContext);
         expect(']');
         expect('=');
-        value = parseExpectedExpression();
+        value = parseExpectedExpression(flowContext);
         fields.push(finishNode(ast.tableKey(key, value)));
       } else if (Identifier === token.type) {
         if ('=' === lookahead.value) {
           key = parseIdentifier();
           next();
-          value = parseExpectedExpression();
+          value = parseExpectedExpression(flowContext);
           fields.push(finishNode(ast.tableKeyString(key, value)));
         } else {
-          value = parseExpectedExpression();
+          value = parseExpectedExpression(flowContext);
           fields.push(finishNode(ast.tableValue(value)));
         }
       } else {
-        if (null == (value = parseExpression())) {
+        if (null == (value = parseExpression(flowContext))) {
           locations.pop();
           break;
         }
@@ -2192,15 +2196,15 @@
   //          | '.' Name | ':' Name args | args }
   //
 
-  function parseExpression() {
-    var expression = parseSubExpression(0);
+  function parseExpression(flowContext) {
+    var expression = parseSubExpression(0, flowContext);
     return expression;
   }
 
   // Parse an expression expecting it to be valid.
 
-  function parseExpectedExpression() {
-    var expression = parseExpression();
+  function parseExpectedExpression(flowContext) {
+    var expression = parseExpression(flowContext);
     if (null == expression) raiseUnexpectedToken('<expression>', token);
     else return expression;
   }
@@ -2251,7 +2255,7 @@
   //
   //     exp ::= (unop exp | primary | prefixexp ) { binop exp }
 
-  function parseSubExpression(minPrecedence) {
+  function parseSubExpression(minPrecedence, flowContext) {
     var operator = token.value
     // The left-hand side in binary operations.
       , expression, marker;
@@ -2262,17 +2266,17 @@
     if (isUnary(token)) {
       markLocation();
       next();
-      var argument = parseSubExpression(10);
+      var argument = parseSubExpression(10, flowContext);
       if (argument == null) raiseUnexpectedToken('<expression>', token);
       expression = finishNode(ast.unaryExpression(operator, argument));
     }
     if (null == expression) {
       // PrimaryExpression
-      expression = parsePrimaryExpression();
+      expression = parsePrimaryExpression(flowContext);
 
       // PrefixExpression
       if (null == expression) {
-        expression = parsePrefixExpression();
+        expression = parsePrefixExpression(flowContext);
       }
     }
     // This is not a valid left hand expression.
@@ -2289,7 +2293,7 @@
       // Right-hand precedence operators
       if ('^' === operator || '..' === operator) --precedence;
       next();
-      var right = parseSubExpression(precedence);
+      var right = parseSubExpression(precedence, flowContext);
       if (null == right) raiseUnexpectedToken('<expression>', token);
       // Push in the marker created before the loop to wrap its entirety.
       if (trackLocations) locations.push(marker);
@@ -2305,7 +2309,7 @@
   //
   //     args ::= '(' [explist] ')' | tableconstructor | String
 
-  function parsePrefixExpression() {
+  function parsePrefixExpression(flowContext) {
     var base, name, marker;
 
     if (trackLocations) marker = createLocationMarker();
@@ -2317,7 +2321,7 @@
       // Set the parent scope.
       if (options.scope) attachScope(base, scopeHasName(name));
     } else if (consume('(')) {
-      base = parseExpectedExpression();
+      base = parseExpectedExpression(flowContext);
       expect(')');
       base.inParens = true; // XXX: quick and dirty. needed for validateVar
     } else {
@@ -2332,7 +2336,7 @@
           case '[':
             pushLocation(marker);
             next();
-            expression = parseExpectedExpression();
+            expression = parseExpectedExpression(flowContext);
             expect(']');
             base = finishNode(ast.indexExpression(base, expression));
             break;
@@ -2350,18 +2354,18 @@
             // Once a : is found, this has to be a CallExpression, otherwise
             // throw an error.
             pushLocation(marker);
-            base = parseCallExpression(base);
+            base = parseCallExpression(base, flowContext);
             break;
           case '(': case '{': // args
             pushLocation(marker);
-            base = parseCallExpression(base);
+            base = parseCallExpression(base, flowContext);
             break;
           default:
             return base;
         }
       } else if (StringLiteral === token.type) {
         pushLocation(marker);
-        base = parseCallExpression(base);
+        base = parseCallExpression(base, flowContext);
       } else {
         break;
       }
@@ -2372,7 +2376,7 @@
 
   //     args ::= '(' [explist] ')' | tableconstructor | String
 
-  function parseCallExpression(base) {
+  function parseCallExpression(base, flowContext) {
     if (Punctuator === token.type) {
       switch (token.value) {
         case '(':
@@ -2384,10 +2388,10 @@
 
           // List of expressions
           var expressions = [];
-          var expression = parseExpression();
+          var expression = parseExpression(flowContext);
           if (null != expression) expressions.push(expression);
           while (consume(',')) {
-            expression = parseExpectedExpression();
+            expression = parseExpectedExpression(flowContext);
             expressions.push(expression);
           }
 
@@ -2397,11 +2401,11 @@
         case '{':
           markLocation();
           next();
-          var table = parseTableConstructor();
+          var table = parseTableConstructor(flowContext);
           return finishNode(ast.tableCallExpression(base, table));
       }
     } else if (StringLiteral === token.type) {
-      return finishNode(ast.stringCallExpression(base, parsePrimaryExpression()));
+      return finishNode(ast.stringCallExpression(base, parsePrimaryExpression(flowContext)));
     }
 
     raiseUnexpectedToken('function arguments', token);
@@ -2410,13 +2414,17 @@
   //     primary ::= String | Numeric | nil | true | false
   //          | functiondef | tableconstructor | '...'
 
-  function parsePrimaryExpression() {
+  function parsePrimaryExpression(flowContext) {
     var literals = StringLiteral | NumericLiteral | BooleanLiteral | NilLiteral | VarargLiteral
       , value = token.value
       , type = token.type
       , marker;
 
     if (trackLocations) marker = createLocationMarker();
+
+    if (type === VarargLiteral && !flowContext.allowVararg) {
+      raise(token, errors.cannotUseVararg, token.value);
+    }
 
     if (type & literals) {
       pushLocation(marker);
@@ -2430,7 +2438,7 @@
       return parseFunctionDeclaration(null);
     } else if (consume('{')) {
       pushLocation(marker);
-      return parseTableConstructor();
+      return parseTableConstructor(flowContext);
     }
   }
 
