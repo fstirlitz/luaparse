@@ -1,6 +1,6 @@
-# luaparse [![Build Status](https://travis-ci.org/oxyc/luaparse.svg)](https://travis-ci.org/oxyc/luaparse)
+# luaparse [![Build Status](https://travis-ci.org/fstirlitz/luaparse.svg)](https://travis-ci.org/fstirlitz/luaparse)
 
-A Lua parser written in JavaScript, for my bachelor's thesis at Arcada.
+A Lua parser written in JavaScript, originally written by Oskar Schöldström for his bachelor's thesis at Arcada.
 
 ## Installation
 
@@ -218,8 +218,8 @@ parser.lex(); // { type: 1, value: "<eof>", line: 1, lineStart: 0, range: [11 11
 
 ## Examples
 
-Have a look in the [examples directory](https://github.com/oxyc/luaparse/tree/master/examples)
-of the repository for some code examples or check them out [live](https://oxyc.github.io/luaparse/examples.html).
+Have a look in the [examples directory](https://github.com/fstirlitz/luaparse/tree/master/examples)
+of the repository for some code examples or check them out [live](https://fstirlitz.github.io/luaparse/examples.html).
 
 ## luaparse(1)
 
@@ -289,13 +289,13 @@ installed browser.
 
 - You can check the function complexity using [complexity-report](https://github.com/philbooth/complexityReport.js)
 using `make complexity-analysis`
-- Running `make coverage` will generate the [coverage report](https://oxyc.github.io/luaparse/coverage.html).
+- Running `make coverage` will generate the [coverage report](https://fstirlitz.github.io/luaparse/coverage.html).
 To simply check that all code has coverage you can run `make coverage-analysis`.
 - `make lint`, `make benchmark`, `make profile`.
 
 ### Documentation
 
-By running `make docs` all [documentation](https://oxyc.github.io/luaparse/)
+By running `make docs` all [documentation](https://fstirlitz.github.io/luaparse/)
 will be generated.
 
 ## Projects using/extending luaparse
