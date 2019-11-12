@@ -30,22 +30,25 @@ function PrintTable(tb, atIndent)
   local baseIndent = string.rep('    ', atIndent+1)
   local out = "{"..(useNewlines and '\n' or '')
   for k, v in pairs(tb) do
-    if type(v) ~= 'function' then
+    tmpType = type(v)
+    if tmpType ~= 'function' then
       out = out..(useNewlines and baseIndent or '')
-      if type(k) == 'number' then
+      if tmpType == 'number' then
         --nothing to do
-      elseif type(k) == 'string' and k:match("^[A-Za-z_][A-Za-z0-9_]*$") then 
-        out = out..k.." = "
-      elseif type(k) == 'string' then
-        out = out.."[\""..k.."\"] = "
+      elseif tmpType == 'string' then
+        if k:match("^[A-Za-z_][A-Za-z0-9_]*$") then 
+            out = out..k.." = "
+        else
+            out = out.."[\""..k.."\"] = "
+        end
       else
         out = out.."["..tostring(k).."] = "
       end
-      if type(v) == 'string' then
+      if tmpType == 'string' then
         out = out.."\""..v.."\""
-      elseif type(v) == 'number' then
+      elseif tmpType == 'number' then
         out = out..v
-      elseif type(v) == 'table' then
+      elseif tmpType == 'table' then
         out = out..PrintTable(v, atIndent+(useNewlines and 1 or 0))
       else
         out = out..tostring(v)
