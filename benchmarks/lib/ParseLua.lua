@@ -29,6 +29,7 @@ function PrintTable(tb, atIndent)
   local useNewlines = (CountTable(tb) > 1)
   local baseIndent = string.rep('    ', atIndent+1)
   local out = "{"..(useNewlines and '\n' or '')
+  local tmpType
   for k, v in pairs(tb) do
     tmpType = type(v)
     if tmpType ~= 'function' then
