@@ -39,13 +39,13 @@ function PrintTable(tb, atIndent)
         if k:match("^[A-Za-z_][A-Za-z0-9_]*$") then 
             out = out..k.." = "
         else
-            out = out.."[\""..k.."\"] = "
+            out = out.."["..string.format("%q", k).."] = "
         end
       else
         out = out.."["..tostring(k).."] = "
       end
       if tmpType == 'string' then
-        out = out.."\""..v.."\""
+        out = out..string.format("%q", v)
       elseif tmpType == 'number' then
         out = out..v
       elseif tmpType == 'table' then
