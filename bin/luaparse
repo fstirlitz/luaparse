@@ -113,7 +113,7 @@ else {
   // @TODO doesn't work in node 0.9.4-0.9.11 because `end` is never emitted.
   stdin.setEncoding('utf8');
   stdin.on('data', function(chunk) { input += chunk; });
-  stdin.on('end', function() { snippets.unshift(input.trim()); done(); });
+  stdin.on('end', function() { snippets.unshift({ code: input }); done(); });
   stdin.resume();
 }
 
