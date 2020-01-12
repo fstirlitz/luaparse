@@ -19,7 +19,7 @@
   exports.spec = [
     {
       "source": "a",
-      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+      "result": "[1:1] '=' expected near '<eof>'"
     },
     {
       "source": "a = 1",

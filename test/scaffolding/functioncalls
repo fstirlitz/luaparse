@@ -30,6 +30,7 @@ a:b():c()
 (a)[b]()
 (a):b()
 a"foo"
+a"foo                                   -- FAIL
 a[[foo]]
 a.b"foo"
 a[b]"foo"
@@ -56,6 +57,9 @@ a{}:c()
 a{}{}
 (a):b{}.c[d]:e{}
 (a):b{}[c].d:e{}
+(a"")                                   -- FAIL
+(a())                                   -- FAIL
+(a{})                                   -- FAIL
 a@n@()                                  -- FAIL
 a@n@""
 a@n@{}
@@ -66,8 +70,8 @@ a:b@n@()                                -- FAIL
 a:b@n@""
 a:b@n@{}
 (a@n@())                                -- FAIL
-(a@n@"")
-(a@n@{})
+(a@n@"")                                -- FAIL
+(a@n@{})                                -- FAIL
 (a)@n@()                                -- FAIL
 (a)@n@""
 (a)@n@{}
@@ -75,5 +79,5 @@ a:b@n@{}
 a@n@()
 a.b@n@()
 a:b@n@()
-(a@n@())
+(a@n@())                                -- FAIL
 (a)@n@()

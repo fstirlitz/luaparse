@@ -19,11 +19,11 @@
   exports.spec = [
     {
       "source": "a",
-      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+      "result": "[1:1] '=' expected near '<eof>'"
     },
     {
       "source": "a,",
-      "result": "[1:2] <expression> expected near '<eof>'"
+      "result": "[1:2] unexpected symbol near '<eof>'"
     },
     {
       "source": "a,b,c",
@@ -2161,8 +2161,7 @@
                   "range": [
                     1,
                     3
-                  ],
-                  "inParens": true
+                  ]
                 },
                 "index": {
                   "type": "Identifier",
@@ -2725,8 +2724,7 @@
                     "range": [
                       1,
                       5
-                    ],
-                    "inParens": true
+                    ]
                   },
                   "index": {
                     "type": "Identifier",
@@ -2937,8 +2935,7 @@
                     1,
                     2
                   ],
-                  "isLocal": false,
-                  "inParens": true
+                  "isLocal": false
                 },
                 "loc": {
                   "start": {
@@ -3026,8 +3023,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       }
@@ -3078,8 +3074,7 @@
                   "range": [
                     1,
                     2
-                  ],
-                  "inParens": true
+                  ]
                 },
                 "loc": {
                   "start": {
@@ -3166,7 +3161,7 @@
     },
     {
       "source": "(a) = 0",
-      "result": "[1:4] invalid left-hand side of assignment near '='"
+      "result": "[1:4] unexpected symbol '=' near '0'"
     },
     {
       "source": "{} = 0",
@@ -3174,23 +3169,23 @@
     },
     {
       "source": "a:b() = 0",
-      "result": "[1:6] invalid left-hand side of assignment near '='"
+      "result": "[1:6] unexpected symbol '=' near '0'"
     },
     {
       "source": "a() = 0",
-      "result": "[1:4] invalid left-hand side of assignment near '='"
+      "result": "[1:4] unexpected symbol '=' near '0'"
     },
     {
       "source": "a.b:c() = 0",
-      "result": "[1:8] invalid left-hand side of assignment near '='"
+      "result": "[1:8] unexpected symbol '=' near '0'"
     },
     {
       "source": "a[b]() = 0",
-      "result": "[1:7] invalid left-hand side of assignment near '='"
+      "result": "[1:7] unexpected symbol '=' near '0'"
     },
     {
       "source": "a = a b",
-      "result": "[1:6] unexpected identifier 'b' near '<eof>'"
+      "result": "[1:7] '=' expected near '<eof>'"
     },
     {
       "source": "a = 1 2",

@@ -139,7 +139,7 @@
     },
     {
       "source": "goto foo",
-      "result": "[1:0] unexpected identifier 'goto' near '<eof>'"
+      "result": "[1:5] '=' expected near 'foo'"
     },
     {
       "source": "::foo",
@@ -1732,7 +1732,7 @@
     },
     {
       "source": "goto goto",
-      "result": "[1:0] unexpected identifier 'goto' near '<eof>'",
+      "result": "[1:5] '=' expected near 'goto'",
       "options": {
         "comments": true,
         "locations": true,

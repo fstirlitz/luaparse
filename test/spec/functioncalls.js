@@ -806,15 +806,15 @@
     },
     {
       "source": "a.1",
-      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+      "result": "[1:1] '=' expected near '0.1'"
     },
     {
       "source": "a.b",
-      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+      "result": "[1:3] '=' expected near '<eof>'"
     },
     {
       "source": "a[b]",
-      "result": "[1:0] unexpected identifier 'a' near '<eof>'"
+      "result": "[1:4] '=' expected near '<eof>'"
     },
     {
       "source": "a.b.(",
@@ -2295,8 +2295,7 @@
                   1,
                   2
                 ],
-                "isLocal": false,
-                "inParens": true
+                "isLocal": false
               },
               "arguments": [],
               "loc": {
@@ -2363,8 +2362,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       }
@@ -2399,8 +2397,7 @@
                 "range": [
                   1,
                   6
-                ],
-                "inParens": true
+                ]
               },
               "arguments": [],
               "loc": {
@@ -2480,8 +2477,7 @@
                     1,
                     2
                   ],
-                  "isLocal": false,
-                  "inParens": true
+                  "isLocal": false
                 },
                 "arguments": [],
                 "loc": {
@@ -2564,8 +2560,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       }
@@ -2617,8 +2612,7 @@
                     1,
                     2
                   ],
-                  "isLocal": false,
-                  "inParens": true
+                  "isLocal": false
                 },
                 "loc": {
                   "start": {
@@ -2700,8 +2694,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       }
@@ -2734,8 +2727,7 @@
                     1,
                     2
                   ],
-                  "isLocal": false,
-                  "inParens": true
+                  "isLocal": false
                 },
                 "index": {
                   "type": "Identifier",
@@ -2836,8 +2828,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           },
           {
             "type": "Identifier",
@@ -2908,8 +2899,7 @@
                     1,
                     2
                   ],
-                  "isLocal": false,
-                  "inParens": true
+                  "isLocal": false
                 },
                 "loc": {
                   "start": {
@@ -2991,8 +2981,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       }
@@ -3112,6 +3101,10 @@
           }
         ]
       }
+    },
+    {
+      "source": "a\"foo",
+      "result": "[1:7] unfinished string near '\"foo'"
     },
     {
       "source": "a[[foo]]",
@@ -4897,8 +4890,7 @@
                             1,
                             2
                           ],
-                          "isLocal": false,
-                          "inParens": true
+                          "isLocal": false
                         },
                         "loc": {
                           "start": {
@@ -5096,8 +5088,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           },
           {
             "type": "Identifier",
@@ -5214,8 +5205,7 @@
                             1,
                             2
                           ],
-                          "isLocal": false,
-                          "inParens": true
+                          "isLocal": false
                         },
                         "loc": {
                           "start": {
@@ -5413,8 +5403,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           },
           {
             "type": "Identifier",
@@ -7211,8 +7200,7 @@
                             1,
                             2
                           ],
-                          "isLocal": false,
-                          "inParens": true
+                          "isLocal": false
                         },
                         "loc": {
                           "start": {
@@ -7408,8 +7396,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           },
           {
             "type": "Identifier",
@@ -7526,8 +7513,7 @@
                             1,
                             2
                           ],
-                          "isLocal": false,
-                          "inParens": true
+                          "isLocal": false
                         },
                         "loc": {
                           "start": {
@@ -7723,8 +7709,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           },
           {
             "type": "Identifier",
@@ -7747,6 +7732,18 @@
           }
         ]
       }
+    },
+    {
+      "source": "(a\"\")",
+      "result": "[1:5] unexpected symbol near '<eof>'"
+    },
+    {
+      "source": "(a())",
+      "result": "[1:5] unexpected symbol near '<eof>'"
+    },
+    {
+      "source": "(a{})",
+      "result": "[1:5] unexpected symbol near '<eof>'"
     },
     {
       "source": "a\n()",
@@ -8603,236 +8600,11 @@
     },
     {
       "source": "(a\n\"\")",
-      "result": {
-        "type": "Chunk",
-        "body": [
-          {
-            "type": "CallStatement",
-            "expression": {
-              "type": "StringCallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 2
-                  }
-                },
-                "range": [
-                  1,
-                  2
-                ],
-                "isLocal": false
-              },
-              "argument": {
-                "type": "StringLiteral",
-                "value": "",
-                "raw": "\"\"",
-                "loc": {
-                  "start": {
-                    "line": 2,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 2,
-                    "column": 2
-                  }
-                },
-                "range": [
-                  3,
-                  5
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 1
-                },
-                "end": {
-                  "line": 2,
-                  "column": 2
-                }
-              },
-              "range": [
-                1,
-                5
-              ],
-              "inParens": true
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 2,
-                "column": 3
-              }
-            },
-            "range": [
-              0,
-              6
-            ]
-          }
-        ],
-        "loc": {
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 2,
-            "column": 3
-          }
-        },
-        "range": [
-          0,
-          6
-        ],
-        "comments": [],
-        "globals": [
-          {
-            "type": "Identifier",
-            "name": "a",
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 1
-              },
-              "end": {
-                "line": 1,
-                "column": 2
-              }
-            },
-            "range": [
-              1,
-              2
-            ],
-            "isLocal": false
-          }
-        ]
-      }
+      "result": "[2:3] unexpected symbol near '<eof>'"
     },
     {
       "source": "(a\n{})",
-      "result": {
-        "type": "Chunk",
-        "body": [
-          {
-            "type": "CallStatement",
-            "expression": {
-              "type": "TableCallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 2
-                  }
-                },
-                "range": [
-                  1,
-                  2
-                ],
-                "isLocal": false
-              },
-              "arguments": {
-                "type": "TableConstructorExpression",
-                "fields": [],
-                "loc": {
-                  "start": {
-                    "line": 2,
-                    "column": 0
-                  },
-                  "end": {
-                    "line": 2,
-                    "column": 2
-                  }
-                },
-                "range": [
-                  3,
-                  5
-                ]
-              },
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 1
-                },
-                "end": {
-                  "line": 2,
-                  "column": 2
-                }
-              },
-              "range": [
-                1,
-                5
-              ],
-              "inParens": true
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 2,
-                "column": 3
-              }
-            },
-            "range": [
-              0,
-              6
-            ]
-          }
-        ],
-        "loc": {
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 2,
-            "column": 3
-          }
-        },
-        "range": [
-          0,
-          6
-        ],
-        "comments": [],
-        "globals": [
-          {
-            "type": "Identifier",
-            "name": "a",
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 1
-              },
-              "end": {
-                "line": 1,
-                "column": 2
-              }
-            },
-            "range": [
-              1,
-              2
-            ],
-            "isLocal": false
-          }
-        ]
-      }
+      "result": "[2:3] unexpected symbol near '<eof>'"
     },
     {
       "source": "(a)\n()",
@@ -8864,8 +8636,7 @@
                   1,
                   2
                 ],
-                "isLocal": false,
-                "inParens": true
+                "isLocal": false
               },
               "argument": {
                 "type": "StringLiteral",
@@ -8950,8 +8721,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       }
@@ -8982,8 +8752,7 @@
                   1,
                   2
                 ],
-                "isLocal": false,
-                "inParens": true
+                "isLocal": false
               },
               "arguments": {
                 "type": "TableConstructorExpression",
@@ -9067,8 +8836,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       }
@@ -9462,102 +9230,7 @@
     },
     {
       "source": "(a\n())",
-      "result": {
-        "type": "Chunk",
-        "body": [
-          {
-            "type": "CallStatement",
-            "expression": {
-              "type": "CallExpression",
-              "base": {
-                "type": "Identifier",
-                "name": "a",
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 2
-                  }
-                },
-                "range": [
-                  1,
-                  2
-                ],
-                "isLocal": false
-              },
-              "arguments": [],
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 1
-                },
-                "end": {
-                  "line": 2,
-                  "column": 2
-                }
-              },
-              "range": [
-                1,
-                5
-              ],
-              "inParens": true
-            },
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 2,
-                "column": 3
-              }
-            },
-            "range": [
-              0,
-              6
-            ]
-          }
-        ],
-        "loc": {
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 2,
-            "column": 3
-          }
-        },
-        "range": [
-          0,
-          6
-        ],
-        "comments": [],
-        "globals": [
-          {
-            "type": "Identifier",
-            "name": "a",
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 1
-              },
-              "end": {
-                "line": 1,
-                "column": 2
-              }
-            },
-            "range": [
-              1,
-              2
-            ],
-            "isLocal": false
-          }
-        ]
-      },
+      "result": "[2:3] unexpected symbol near '<eof>'",
       "options": {
         "comments": true,
         "locations": true,
@@ -9592,8 +9265,7 @@
                   1,
                   2
                 ],
-                "isLocal": false,
-                "inParens": true
+                "isLocal": false
               },
               "arguments": [],
               "loc": {
@@ -9660,8 +9332,7 @@
               1,
               2
             ],
-            "isLocal": false,
-            "inParens": true
+            "isLocal": false
           }
         ]
       },
