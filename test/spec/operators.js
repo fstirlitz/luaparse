@@ -3427,8 +3427,7 @@
                     "range": [
                       5,
                       6
-                    ],
-                    "inParens": true
+                    ]
                   },
                   "right": {
                     "type": "StringLiteral",
@@ -3447,8 +3446,7 @@
                     "range": [
                       13,
                       18
-                    ],
-                    "inParens": true
+                    ]
                   },
                   "loc": {
                     "start": {
@@ -3482,8 +3480,7 @@
                   "range": [
                     24,
                     27
-                  ],
-                  "inParens": true
+                  ]
                 },
                 "loc": {
                   "start": {

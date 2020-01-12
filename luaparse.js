@@ -108,11 +108,11 @@
 
   var errors = exports.errors = {
       unexpected: 'unexpected %1 \'%2\' near \'%3\''
+    , unexpectedEOF: 'unexpected symbol near \'<eof>\''
     , expected: '\'%1\' expected near \'%2\''
     , expectedToken: '%1 expected near \'%2\''
     , unfinishedString: 'unfinished string near \'%1\''
     , malformedNumber: 'malformed number near \'%1\''
-    , invalidVar: 'invalid left-hand side of assignment near \'%1\''
     , decimalEscapeTooLarge: 'decimal escape too large near \'%1\''
     , invalidEscape: 'invalid escape sequence near \'%1\''
     , hexadecimalDigitExpected: 'hexadecimal digit expected near \'%1\''
@@ -558,6 +558,8 @@
         case BooleanLiteral:  type = 'boolean';     break;
         case NilLiteral:
           return raise(found, errors.unexpected, 'symbol', 'nil', near);
+        case EOF:
+          return raise(found, errors.unexpectedEOF);
       }
       return raise(found, errors.unexpected, type, found.value, near);
     }
@@ -1296,17 +1298,6 @@
     return false;
   }
 
-  // @TODO this needs to be rethought.
-  function isCallExpression(expression) {
-    switch (expression.type) {
-      case 'CallExpression':
-      case 'TableCallExpression':
-      case 'StringCallExpression':
-        return true;
-    }
-    return false;
-  }
-
   // Check if the token syntactically closes a block.
 
   function isBlockFollow(token) {
@@ -1978,18 +1969,6 @@
     }
   }
 
-  function validateVar(node) {
-    // @TODO we need something not dependent on the exact AST used. see also isCallExpression()
-    switch (node.inParens ? null : node.type) {
-    case 'Identifier':
-    case 'MemberExpression':
-    case 'IndexExpression':
-      return;
-    default:
-      raise(token, errors.invalidVar, token.value);
-    }
-  }
-
   //     assignment ::= varlist '=' explist
   //     var ::= Name | prefixexp '[' exp ']' | prefixexp '.' Name
   //     varlist ::= var {',' var}
@@ -2002,44 +1981,85 @@
     // Keep a reference to the previous token for better error messages in case
     // of invalid statement
     var previous = token
-      , expression, marker;
+      , marker, startMarker;
+    var lvalue, base, name;
 
-    if (trackLocations) marker = createLocationMarker();
-    expression = parsePrefixExpression(flowContext);
+    var targets = [];
 
-    if (null == expression) return unexpected(token);
-    if (',='.indexOf(token.value) >= 0) {
-      var variables = [expression]
-        , init = []
-        , exp;
+    if (trackLocations) startMarker = createLocationMarker();
 
-      validateVar(expression);
-      while (consume(',')) {
-        exp = parsePrefixExpression(flowContext);
-        if (null == exp) raiseUnexpectedToken('<expression>', token);
-        validateVar(exp);
-        variables.push(exp);
+    do {
+      if (trackLocations) marker = createLocationMarker();
+
+      if (Identifier === token.type) {
+        name = token.value;
+        base = parseIdentifier();
+        // Set the parent scope.
+        if (options.scope) attachScope(base, scopeHasName(name));
+        lvalue = true;
+      } else if ('(' === token.value) {
+        next();
+        base = parseExpectedExpression(flowContext);
+        expect(')');
+        lvalue = false;
+      } else {
+        return unexpected(token);
       }
-      expect('=');
-      do {
-        exp = parseExpectedExpression(flowContext);
-        init.push(exp);
-      } while (consume(','));
 
+      both: for (;;) {
+        var newBase;
+
+        switch (StringLiteral === token.type ? '"' : token.value) {
+        case '.':
+        case '[':
+          lvalue = true;
+          break;
+        case ':':
+        case '(':
+        case '{':
+        case '"':
+          lvalue = null;
+          break;
+        default:
+          break both;
+        }
+
+        newBase = parsePrefixExpressionPart(base, marker, flowContext);
+        if (newBase === null)
+          break;
+        base = newBase;
+      }
+
+      targets.push(base);
+
+      if (',' !== token.value)
+        break;
+
+      if (!lvalue) {
+        return unexpected(token);
+      }
+
+      next();
+    } while (true);
+
+    if (targets.length === 1 && lvalue === null) {
       pushLocation(marker);
-      return finishNode(ast.assignmentStatement(variables, init));
+      return finishNode(ast.callStatement(targets[0]));
+    } else if (!lvalue) {
+      return unexpected(token);
     }
-    if (isCallExpression(expression)) {
-      pushLocation(marker);
-      return finishNode(ast.callStatement(expression));
-    }
-    // The prefix expression was neither part of an assignment or a
-    // callstatement, however as it was valid it's been consumed, so raise
-    // the exception on the previous token to provide a helpful message.
-    return unexpected(previous);
+
+    expect('=');
+
+    var values = [];
+
+    do {
+      values.push(parseExpectedExpression(flowContext));
+    } while (consume(','));
+
+    pushLocation(startMarker);
+    return finishNode(ast.assignmentStatement(targets, values));
   }
-
-
 
   // ### Non-statements
 
@@ -2309,6 +2329,43 @@
   //
   //     args ::= '(' [explist] ')' | tableconstructor | String
 
+  function parsePrefixExpressionPart(base, marker, flowContext) {
+    var expression, identifier;
+
+    if (Punctuator === token.type) {
+      switch (token.value) {
+        case '[':
+          pushLocation(marker);
+          next();
+          expression = parseExpectedExpression(flowContext);
+          expect(']');
+          return finishNode(ast.indexExpression(base, expression));
+        case '.':
+          pushLocation(marker);
+          next();
+          identifier = parseIdentifier();
+          return finishNode(ast.memberExpression(base, '.', identifier));
+        case ':':
+          pushLocation(marker);
+          next();
+          identifier = parseIdentifier();
+          base = finishNode(ast.memberExpression(base, ':', identifier));
+          // Once a : is found, this has to be a CallExpression, otherwise
+          // throw an error.
+          pushLocation(marker);
+          return parseCallExpression(base, flowContext);
+        case '(': case '{': // args
+          pushLocation(marker);
+          return parseCallExpression(base, flowContext);
+      }
+    } else if (StringLiteral === token.type) {
+      pushLocation(marker);
+      return parseCallExpression(base, flowContext);
+    }
+
+    return null;
+  }
+
   function parsePrefixExpression(flowContext) {
     var base, name, marker;
 
@@ -2323,52 +2380,16 @@
     } else if (consume('(')) {
       base = parseExpectedExpression(flowContext);
       expect(')');
-      base.inParens = true; // XXX: quick and dirty. needed for validateVar
     } else {
       return null;
     }
 
     // The suffix
-    var expression, identifier;
-    while (true) {
-      if (Punctuator === token.type) {
-        switch (token.value) {
-          case '[':
-            pushLocation(marker);
-            next();
-            expression = parseExpectedExpression(flowContext);
-            expect(']');
-            base = finishNode(ast.indexExpression(base, expression));
-            break;
-          case '.':
-            pushLocation(marker);
-            next();
-            identifier = parseIdentifier();
-            base = finishNode(ast.memberExpression(base, '.', identifier));
-            break;
-          case ':':
-            pushLocation(marker);
-            next();
-            identifier = parseIdentifier();
-            base = finishNode(ast.memberExpression(base, ':', identifier));
-            // Once a : is found, this has to be a CallExpression, otherwise
-            // throw an error.
-            pushLocation(marker);
-            base = parseCallExpression(base, flowContext);
-            break;
-          case '(': case '{': // args
-            pushLocation(marker);
-            base = parseCallExpression(base, flowContext);
-            break;
-          default:
-            return base;
-        }
-      } else if (StringLiteral === token.type) {
-        pushLocation(marker);
-        base = parseCallExpression(base, flowContext);
-      } else {
+    for (;;) {
+      var newBase = parsePrefixExpressionPart(base, marker, flowContext);
+      if (newBase === null)
         break;
-      }
+      base = newBase;
     }
 
     return base;

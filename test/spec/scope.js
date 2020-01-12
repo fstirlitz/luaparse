@@ -2663,8 +2663,7 @@
                         9,
                         10
                       ],
-                      "isLocal": true,
-                      "inParens": true
+                      "isLocal": true
                     },
                     "loc": {
                       "start": {
