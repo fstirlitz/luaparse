@@ -70,6 +70,9 @@ for (var i = 0, l = args.length; i < l; i++) {
       case 'L': case 'luaversion':
         options.luaVersion = args[++i];
         continue;
+      case 'X': case 'extendedidentifiers':
+        options.extendedIdentifiers = bool;
+        continue;
       case 'v': case 'version':
         console.log("luaparse v%s", luaparse.version);
         process.exit(0);
