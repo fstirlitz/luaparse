@@ -2647,6 +2647,17 @@
       integerDivision: true,
       relaxedBreak: true
     },
+    '5.4': {
+      labels: true,
+      emptyStatement: true,
+      hexEscapes: true,
+      skipWhitespaceEscape: true,
+      strictEscapes: true,
+      unicodeEscapes: true,
+      bitwiseOperators: true,
+      integerDivision: true,
+      relaxedBreak: true,
+    },
     'LuaJIT': {
       // XXX: LuaJIT language features may depend on compilation options; may need to
       // rethink how to handle this. Specifically, there is a LUAJIT_ENABLE_LUA52COMPAT
