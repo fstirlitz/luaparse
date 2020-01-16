@@ -106,16 +106,32 @@
         highMask | 0x80 | ((codepoint >>  6) & 0x3f),
         highMask | 0x80 | ( codepoint        & 0x3f)
       );
-    } else /* istanbul ignore else */ if (codepoint < 0x110000) {
+    } else if (codepoint < 0x200000) {
       return String.fromCharCode(
         highMask | 0xf0 |  (codepoint >> 18)        ,
         highMask | 0x80 | ((codepoint >> 12) & 0x3f),
         highMask | 0x80 | ((codepoint >>  6) & 0x3f),
         highMask | 0x80 | ( codepoint        & 0x3f)
       );
+    } else if (codepoint < 0x4000000) {
+      return String.fromCharCode(
+        highMask | 0xf8 |  (codepoint >> 24)        ,
+        highMask | 0x80 | ((codepoint >> 18) & 0x3f),
+        highMask | 0x80 | ((codepoint >> 12) & 0x3f),
+        highMask | 0x80 | ((codepoint >>  6) & 0x3f),
+        highMask | 0x80 | ( codepoint        & 0x3f)
+      );
+    } else /* istanbul ignore else */ if (codepoint <= 0x7fffffff) {
+      return String.fromCharCode(
+        highMask | 0xfc |  (codepoint >> 30)        ,
+        highMask | 0x80 | ((codepoint >> 24) & 0x3f),
+        highMask | 0x80 | ((codepoint >> 18) & 0x3f),
+        highMask | 0x80 | ((codepoint >> 12) & 0x3f),
+        highMask | 0x80 | ((codepoint >>  6) & 0x3f),
+        highMask | 0x80 | ( codepoint        & 0x3f)
+      );
     } else {
-      // TODO: Lua 5.4 allows up to six-byte sequences, as in UTF-8:1993
-      return null;
+      throw new Error('Should not happen');
     }
   }
 
@@ -1160,7 +1176,7 @@
 
     while (isHexDigit(input.charCodeAt(index))) {
       ++index;
-      if (index - escStart > 6)
+      if (index - escStart > (features.relaxedUTF8 ? 8 : 6))
         raise(null, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
     }
 
@@ -1175,7 +1191,7 @@
     var codepoint = parseInt(input.slice(escStart, index - 1) || '0', 16);
     var frag = '\\' + input.slice(sequenceStart, index);
 
-    if (codepoint > 0x10ffff) {
+    if (codepoint > (features.relaxedUTF8 ? 0x7fffffff : 0x10ffff)) {
       raise(null, errors.tooLargeCodepoint, frag);
     }
 
@@ -2716,7 +2732,8 @@
       integerDivision: true,
       relaxedBreak: true,
       noLabelShadowing: true,
-      attributes: { 'const': true, 'close': true }
+      attributes: { 'const': true, 'close': true },
+      relaxedUTF8: true
     },
     'LuaJIT': {
       // XXX: LuaJIT language features may depend on compilation options; may need to
