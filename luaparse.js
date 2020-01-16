@@ -1596,6 +1596,17 @@
     return false;
   };
 
+  FullFlowContext.prototype.findLabel = function (name) {
+    var i = this.scopes.length;
+    while (i --> 0) {
+      if (Object.prototype.hasOwnProperty.call(this.scopes[i].labels, name))
+        return this.scopes[i].labels[name];
+      if (!features.noLabelShadowing)
+        return null;
+    }
+    return null;
+  };
+
   FullFlowContext.prototype.pushScope = function (isLoop) {
     var scope = {
       labels: {},
@@ -1637,9 +1648,10 @@
 
   FullFlowContext.prototype.addLabel = function (name, token) {
     var scope = this.currentScope();
+    var definedLabel = this.findLabel(name);
 
-    if (Object.prototype.hasOwnProperty.call(scope.labels, name)) {
-      raise(token, errors.labelAlreadyDefined, name, scope.labels[name].line);
+    if (definedLabel !== null) {
+      raise(token, errors.labelAlreadyDefined, name, definedLabel.line);
     } else {
       var newGotos = [];
 
@@ -2657,6 +2669,7 @@
       bitwiseOperators: true,
       integerDivision: true,
       relaxedBreak: true,
+      noLabelShadowing: true
     },
     'LuaJIT': {
       // XXX: LuaJIT language features may depend on compilation options; may need to
