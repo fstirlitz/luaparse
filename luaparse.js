@@ -415,6 +415,7 @@
     return -1;
   };
 
+  /* istanbul ignore else */
   if (Array.prototype.indexOf)
     indexOf = function (array, element) {
       return array.indexOf(element);
@@ -2022,10 +2023,7 @@
           break both;
         }
 
-        newBase = parsePrefixExpressionPart(base, marker, flowContext);
-        if (newBase === null)
-          break;
-        base = newBase;
+        base = parsePrefixExpressionPart(base, marker, flowContext);
       }
 
       targets.push(base);
