@@ -92,7 +92,7 @@ docs-md: docs-index $(patsubst %.md,%.html, $(wildcard docs/*.md))
 
 coverage:
 	rm -rf html-report docs/coverage
-	$(BIN)/istanbul cover --report html --dir docs/coverage test/runner.js >/dev/null
+	$(BIN)/nyc --reporter=html --report-dir=docs/coverage node test/runner.js --console >/dev/null
 
 .PHONY: coverage
 
@@ -119,8 +119,7 @@ complexity-analysis:
 	$(BIN)/cr -lws --maxcc 22 luaparse.js
 
 coverage-analysis: coverage
-	$(BIN)/istanbul check-coverage --statements -0 --branches -0 --functions -0 \
-		docs/coverage/coverage.json
+	$(BIN)/nyc check-coverage --statements 100 --branches 100 --functions 100
 
 qa:
 	$(MAKE) test lint complexity-analysis coverage-analysis
