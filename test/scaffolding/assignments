@@ -25,6 +25,8 @@ a{}[b] = 1
 true = 0                                -- FAIL
 (a) = 0                                 -- FAIL
 {} = 0                                  -- FAIL
+a, b() c()                              -- FAIL
+a, b(), c                               -- FAIL
 a:b() = 0                               -- FAIL
 a() = 0                                 -- FAIL
 a.b:c() = 0                             -- FAIL

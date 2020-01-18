@@ -3168,6 +3168,14 @@
       "result": "[1:0] unexpected symbol '{' near '}'"
     },
     {
+      "source": "a, b() c()",
+      "result": "[1:7] unexpected identifier 'c' near '('"
+    },
+    {
+      "source": "a, b(), c",
+      "result": "[1:6] unexpected symbol ',' near 'c'"
+    },
+    {
       "source": "a:b() = 0",
       "result": "[1:6] unexpected symbol '=' near '0'"
     },

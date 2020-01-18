@@ -86,8 +86,6 @@
     // The version of Lua targeted by the parser (string; allowed values are
     // '5.1', '5.2', '5.3').
     , luaVersion: '5.1'
-    // Whether to allow code points outside the Basic Latin block in identifiers
-    , extendedIdentifiers: false
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -417,6 +415,7 @@
     return -1;
   };
 
+  /* istanbul ignore else */
   if (Array.prototype.indexOf)
     indexOf = function (array, element) {
       return array.indexOf(element);
@@ -1253,7 +1252,7 @@
   function isIdentifierStart(charCode) {
     if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode)
       return true;
-    if (options.extendedIdentifiers && charCode >= 128)
+    if (features.extendedIdentifiers && charCode >= 128)
       return true;
     return false;
   }
@@ -1261,7 +1260,7 @@
   function isIdentifierPart(charCode) {
     if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || 95 === charCode || (charCode >= 48 && charCode <= 57))
       return true;
-    if (options.extendedIdentifiers && charCode >= 128)
+    if (features.extendedIdentifiers && charCode >= 128)
       return true;
     return false;
   }
@@ -2024,10 +2023,7 @@
           break both;
         }
 
-        newBase = parsePrefixExpressionPart(base, marker, flowContext);
-        if (newBase === null)
-          break;
-        base = newBase;
+        base = parsePrefixExpressionPart(base, marker, flowContext);
       }
 
       targets.push(base);
@@ -2548,7 +2544,9 @@
       throw new Error(sprintf("Lua version '%1' not supported", options.luaVersion));
     }
 
-    features = versionFeatures[options.luaVersion];
+    features = assign({}, versionFeatures[options.luaVersion]);
+    if (options.extendedIdentifiers !== void 0)
+      features.extendedIdentifiers = !!options.extendedIdentifiers;
 
     if (options.comments) comments = [];
     if (!options.wait) return end();
