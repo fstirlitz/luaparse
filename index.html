@@ -46,27 +46,23 @@
 <p>Install through <code>bower install luaparse</code> or <code>npm install luaparse</code>.</p>
 <h2 id="usage">Usage</h2>
 <p>CommonJS</p>
-<pre><code class="lang-js">var parser = require(&#39;luaparse&#39;);
+<pre><code class="language-js">var parser = require(&#39;luaparse&#39;);
 var ast = parser.parse(&#39;i = 0&#39;);
-console.log(JSON.stringify(ast));
-</code></pre>
+console.log(JSON.stringify(ast));</code></pre>
 <p>AMD</p>
-<pre><code class="lang-js">require([&#39;luaparse&#39;], function(parser) {
+<pre><code class="language-js">require([&#39;luaparse&#39;], function(parser) {
   var ast = parser.parse(&#39;i = 0&#39;);
   console.log(JSON.stringify(ast));
-});
-</code></pre>
+});</code></pre>
 <p>Browser</p>
-<pre><code class="lang-html">&lt;script src=&quot;luaparse.js&quot;&gt;&lt;/script&gt;
+<pre><code class="language-html">&lt;script src=&quot;luaparse.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
 var ast = luaparse.parse(&#39;i = 0&#39;);
 console.log(JSON.stringify(ast));
-&lt;/script&gt;
-</code></pre>
+&lt;/script&gt;</code></pre>
 <h2 id="parser-interface">Parser Interface</h2>
 <p>Basic usage:</p>
-<pre><code class="lang-js">luaparse.parse(code, options);
-</code></pre>
+<pre><code class="language-js">luaparse.parse(code, options);</code></pre>
 <p>The output of the parser is an Abstract Syntax Tree (AST) formatted in JSON.</p>
 <p>The available options are:</p>
 <ul>
@@ -96,20 +92,17 @@ currently does <em>not</em> enable this option; this may change in the future.</
 they can be overriden globally.</p>
 <p>There is a second interface which might be preferable when using the <code>wait</code>
 option.</p>
-<pre><code class="lang-js">var parser = luaparse.parse({ wait: true });
+<pre><code class="language-js">var parser = luaparse.parse({ wait: true });
 parser.write(&#39;foo = &quot;&#39;);
 parser.write(&#39;bar&#39;);
-var ast = parser.end(&#39;&quot;&#39;);
-</code></pre>
+var ast = parser.end(&#39;&quot;&#39;);</code></pre>
 <p>This would be identical to:</p>
-<pre><code class="lang-js">var ast = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);
-</code></pre>
+<pre><code class="language-js">var ast = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
 <h3 id="ast-format">AST format</h3>
 <p>If the following code is executed:</p>
-<pre><code class="lang-js">luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);
-</code></pre>
+<pre><code class="language-js">luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
 <p>then the returned value will be:</p>
-<pre><code class="lang-js">{
+<pre><code class="language-js">{
   &quot;type&quot;: &quot;Chunk&quot;,
   &quot;body&quot;: [
     {
@@ -130,8 +123,7 @@ var ast = parser.end(&#39;&quot;&#39;);
     }
   ],
   &quot;comments&quot;: []
-}
-</code></pre>
+}</code></pre>
 <h4 id="note-on-character-encodings">Note on character encodings</h4>
 <p>Unlike strings in JavaScript, Lua strings are not Unicode strings, but
 bytestrings (sequences of 8-bit values); likewise, implementations of Lua
@@ -172,7 +164,7 @@ can easily be overriden to customize the structure or to inject custom logic.</p
 <p><code>luaparse.ast</code> is an object containing all functions used to create the AST, if
 you for example wanted to trigger an event on node creations you could use the
 following:</p>
-<pre><code class="lang-js">var luaparse = require(&#39;luaparse&#39;),
+<pre><code class="language-js">var luaparse = require(&#39;luaparse&#39;),
     events = new (require(&#39;events&#39;).EventEmitter);
 
 Object.keys(luaparse.ast).forEach(function(type) {
@@ -184,8 +176,7 @@ Object.keys(luaparse.ast).forEach(function(type) {
   };
 });
 events.on(&#39;Identifier&#39;, function(node) { console.log(node); });
-luaparse.parse(&#39;i = &quot;foo&quot;&#39;);
-</code></pre>
+luaparse.parse(&#39;i = &quot;foo&quot;&#39;);</code></pre>
 <p><em>this is only an example to illustrate what is possible and this particular
 example might not suit your needs as the end location of the node has not been
 determined yet. If you desire events you should use the <code>onCreateNode</code> callback
@@ -203,19 +194,18 @@ next token up until <code>EOF</code> is reached.</p>
 <code>StringLiteral</code> token with the value <code>bar</code>. Slicing out the range on the other
 hand will return <code>&quot;bar&quot;</code>.</li>
 </ul>
-<pre><code class="lang-js">var parser = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;, { wait: true });
+<pre><code class="language-js">var parser = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;, { wait: true });
 parser.lex(); // { type: 8, value: &quot;foo&quot;, line: 1, lineStart: 0, range: [0, 3] }
 parser.lex(); // { type: 32, value: &quot;=&quot;, line: 1, lineStart: 0, range: [4, 5]}
 parser.lex(); // { type: 2, value: &quot;bar&quot;, line: 1, lineStart: 0, range: [6, 11] }
 parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }
-parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }
-</code></pre>
+parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }</code></pre>
 <h2 id="examples">Examples</h2>
 <p>Have a look in the <a href="https://github.com/fstirlitz/luaparse/tree/master/examples">examples directory</a>
 of the repository for some code examples or check them out <a href="https://fstirlitz.github.io/luaparse/examples.html">live</a>.</p>
-<h2 id="luaparse-1-">luaparse(1)</h2>
+<h2 id="luaparse1">luaparse(1)</h2>
 <p>The <code>luaparse</code> executable can be used in your shell by installing <code>luaparse</code> globally using npm:</p>
-<pre><code class="lang-bash">$ npm install -g luaparse
+<pre><code class="language-bash">$ npm install -g luaparse
 $ luaparse --help
 
 Usage: luaparse [option]... [file|code]...
@@ -235,13 +225,11 @@ Options:
 
 Examples:
   luaparse --no-comments -c &quot;locale foo = \&quot;bar\&quot;&quot;
-  luaparse foo.lua bar.lua
-</code></pre>
+  luaparse foo.lua bar.lua</code></pre>
 <p>Example usage</p>
-<pre><code class="lang-bash">$ luaparse &quot;i = 0&quot;
+<pre><code class="language-bash">$ luaparse &quot;i = 0&quot;
 
-{&quot;type&quot;:&quot;Chunk&quot;,&quot;body&quot;:[{&quot;type&quot;:&quot;AssignmentStatement&quot;,&quot;variables&quot;:[{&quot;type&quot;:&quot;Identifier&quot;,&quot;name&quot;:&quot;i&quot;}],&quot;init&quot;:[{&quot;type&quot;:&quot;NumericLiteral&quot;,&quot;value&quot;:0,&quot;raw&quot;:&quot;0&quot;}]}],&quot;comments&quot;:[]}
-</code></pre>
+{&quot;type&quot;:&quot;Chunk&quot;,&quot;body&quot;:[{&quot;type&quot;:&quot;AssignmentStatement&quot;,&quot;variables&quot;:[{&quot;type&quot;:&quot;Identifier&quot;,&quot;name&quot;:&quot;i&quot;}],&quot;init&quot;:[{&quot;type&quot;:&quot;NumericLiteral&quot;,&quot;value&quot;:0,&quot;raw&quot;:&quot;0&quot;}]}],&quot;comments&quot;:[]}</code></pre>
 <h2 id="support">Support</h2>
 <p>Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+,
 Node 0.4.0+, RingoJS 0.8-0.9, Rhino 1.7R4-1.7R5, Nashorn 1.8.0.</p>
@@ -257,8 +245,10 @@ different javascript engines or even on locally installed browsers.</p>
 <h3 id="test-runners">Test runners</h3>
 <ul>
 <li><code>make test</code> uses node.</li>
-<li><code>make testem-engines</code> uses node, ringo and rhino
-1.7R5. This requires that you have the engines installed.</li>
+<li><code>make testem-engines</code> uses node, ringo and rhino</li>
+</ul>
+<p>1.7R5. This requires that you have the engines installed.</p>
+<ul>
 <li><code>make test-node</code> uses a custom command line reporter to make the output
 easier on the eyes while practicing TDD.</li>
 <li>By installing <code>testem</code> globally you can also run the tests in a locally
@@ -275,7 +265,7 @@ To simply check that all code has coverage you can run <code>make coverage-analy
 <h3 id="documentation">Documentation</h3>
 <p>By running <code>make docs</code> all <a href="https://fstirlitz.github.io/luaparse/">documentation</a>
 will be generated.</p>
-<h2 id="projects-using-extending-luaparse">Projects using/extending luaparse</h2>
+<h2 id="projects-usingextending-luaparse">Projects using/extending luaparse</h2>
 <ul>
 <li><a href="http://mths.be/luamin">luamin</a>, a Lua minifier written by Mathias Bynens.</li>
 <li><a href="https://github.com/ajaxorg/ace">Ace</a>, an online code editor.</li>

@@ -866,8 +866,7 @@ with a matching property.</p>
 arguments in the format string.</p>
 <p>Example:</p>
 <pre><code><span class="hljs-comment">// Unexpected function in token</span>
-sprintf(<span class="hljs-string">'Unexpected %2 in %1.'</span>, <span class="hljs-string">'token'</span>, <span class="hljs-string">'function'</span>);
-</code></pre>
+sprintf(<span class="hljs-string">'Unexpected %2 in %1.'</span>, <span class="hljs-string">'token'</span>, <span class="hljs-string">'function'</span>);</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -963,15 +962,14 @@ on the error thrown being an instance of SyntaxError. For example, the Ace edito
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
-              <h4 id="raise-an-exception-">Raise an exception.</h4>
+              <h4 id="raise-an-exception">Raise an exception.</h4>
 <p>Raise an exception by passing a token, a string format and its paramters.</p>
 <p>The passed tokens location will automatically be added to the error
 message if it exists, if not it will default to the lexers current
 position.</p>
 <p>Example:</p>
 <pre><code><span class="hljs-comment">// [1:0] expected [ near (</span>
-raise(token, <span class="hljs-string">"expected %1 near %2"</span>, <span class="hljs-string">'['</span>, token.value);
-</code></pre>
+raise(token, <span class="hljs-string">"expected %1 near %2"</span>, <span class="hljs-string">'['</span>, token.value);</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -1004,11 +1002,10 @@ raise(token, <span class="hljs-string">"expected %1 near %2"</span>, <span class
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
-              <h4 id="raise-an-unexpected-token-error-">Raise an unexpected token error.</h4>
+              <h4 id="raise-an-unexpected-token-error">Raise an unexpected token error.</h4>
 <p>Example:</p>
 <pre><code><span class="hljs-comment">// expected &lt;name&gt; near '0'</span>
-raiseUnexpectedToken(<span class="hljs-string">'&lt;name&gt;'</span>, token);
-</code></pre>
+raiseUnexpectedToken(<span class="hljs-string">'&lt;name&gt;'</span>, token);</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -1031,8 +1028,7 @@ expected. We can also specify a nearby token such as <eof>, this will
 default to the currently active token.</p>
 <p>Example:</p>
 <pre><code><span class="hljs-comment">// Unexpected symbol 'end' near '&lt;eof&gt;'</span>
-unexpected(token);
-</code></pre><p>If there’s no token in the buffer it means we have reached <eof>.</p>
+unexpected(token);</code></pre><p>If there’s no token in the buffer it means we have reached <eof>.</p>
 
             </div>
             
@@ -1650,8 +1646,7 @@ with the following algorithm.</p>
 <pre><code>Digit := toDec(digit)
 <span class="hljs-attr">Fraction</span> := toDec(fraction) / <span class="hljs-number">16</span> ^ fractionCount
 <span class="hljs-attr">BinaryExp</span> := <span class="hljs-number">2</span> ^ binaryExp
-<span class="hljs-attr">Number</span> := ( Digit + Fraction ) * BinaryExp
-</code></pre>
+<span class="hljs-attr">Number</span> := ( Digit + Fraction ) * BinaryExp</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -2320,7 +2315,7 @@ if it matches.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-91">&#182;</a>
               </div>
-              <h2 id="lex-functions-and-helpers-">Lex functions and helpers.</h2>
+              <h2 id="lex-functions-and-helpers">Lex functions and helpers.</h2>
 
             </div>
             
@@ -3068,8 +3063,7 @@ if (bads.length)
                 <a class="pilcrow" href="#section-121">&#182;</a>
               </div>
               <p>Chunk is the main program object. Syntactically it’s the same as a block.</p>
-<pre><code>chunk ::= block
-</code></pre>
+<pre><code>chunk ::= block</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3113,8 +3107,7 @@ if (bads.length)
               </div>
               <p>A block contains a list of statements with an optional return statement
 as its last statement.</p>
-<pre><code>block ::= {stat} [retstat]
-</code></pre>
+<pre><code>block ::= {stat} [retstat]</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3190,8 +3183,7 @@ ignore some statements, such as EmptyStatement.</p>
               <p>There are two types of statements, simple and compound.</p>
 <pre><code>statement ::= <span class="hljs-keyword">break</span> | goto | <span class="hljs-keyword">do</span> | <span class="hljs-keyword">while</span> | repeat | <span class="hljs-keyword">return</span>
      | <span class="hljs-keyword">if</span> | <span class="hljs-keyword">for</span> | <span class="hljs-function"><span class="hljs-keyword">function</span> | <span class="hljs-title">local</span> | <span class="hljs-title">label</span> | <span class="hljs-title">assignment</span>
-     | <span class="hljs-title">functioncall</span> | ';'</span>
-</code></pre>
+     | <span class="hljs-title">functioncall</span> | ';'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3290,8 +3282,7 @@ ignore some statements, such as EmptyStatement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-131">&#182;</a>
               </div>
-              <pre><code>label ::= <span class="hljs-string">'::'</span> Name <span class="hljs-string">'::'</span>
-</code></pre>
+              <pre><code>label ::= <span class="hljs-string">'::'</span> Name <span class="hljs-string">'::'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3319,8 +3310,7 @@ ignore some statements, such as EmptyStatement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-132">&#182;</a>
               </div>
-              <pre><code><span class="hljs-keyword">break</span> ::= <span class="hljs-string">'break'</span>
-</code></pre>
+              <pre><code><span class="hljs-keyword">break</span> ::= <span class="hljs-string">'break'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3337,8 +3327,7 @@ ignore some statements, such as EmptyStatement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-133">&#182;</a>
               </div>
-              <pre><code>goto ::= <span class="hljs-string">'goto'</span> Name
-</code></pre>
+              <pre><code>goto ::= <span class="hljs-string">'goto'</span> Name</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3360,8 +3349,7 @@ ignore some statements, such as EmptyStatement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-134">&#182;</a>
               </div>
-              <pre><code><span class="hljs-keyword">do</span> ::= <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
-</code></pre>
+              <pre><code><span class="hljs-keyword">do</span> ::= <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3384,8 +3372,7 @@ ignore some statements, such as EmptyStatement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-135">&#182;</a>
               </div>
-              <pre><code><span class="hljs-keyword">while</span> ::= <span class="hljs-string">'while'</span> exp <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
-</code></pre>
+              <pre><code><span class="hljs-keyword">while</span> ::= <span class="hljs-string">'while'</span> exp <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3410,8 +3397,7 @@ ignore some statements, such as EmptyStatement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-136">&#182;</a>
               </div>
-              <pre><code>repeat ::= <span class="hljs-string">'repeat'</span> block <span class="hljs-string">'until'</span> exp
-</code></pre>
+              <pre><code>repeat ::= <span class="hljs-string">'repeat'</span> block <span class="hljs-string">'until'</span> exp</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3436,8 +3422,7 @@ ignore some statements, such as EmptyStatement.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-137">&#182;</a>
               </div>
-              <pre><code>retstat ::= <span class="hljs-string">'return'</span> [exp {<span class="hljs-string">','</span> exp}] [<span class="hljs-string">';'</span>]
-</code></pre>
+              <pre><code>retstat ::= <span class="hljs-string">'return'</span> [exp {<span class="hljs-string">','</span> exp}] [<span class="hljs-string">';'</span>]</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3466,8 +3451,7 @@ ignore some statements, such as EmptyStatement.</p>
                 <a class="pilcrow" href="#section-138">&#182;</a>
               </div>
               <pre><code><span class="hljs-keyword">if</span> ::= <span class="hljs-string">'if'</span> exp <span class="hljs-string">'then'</span> block {elif} [<span class="hljs-string">'else'</span> block] <span class="hljs-string">'end'</span>
-<span class="hljs-attr">elif</span> ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string">'then'</span> block
-</code></pre>
+<span class="hljs-attr">elif</span> ::= <span class="hljs-string">'elseif'</span> exp <span class="hljs-string">'then'</span> block</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3562,8 +3546,7 @@ It ends at the start of <code>end</code>, <code>else</code>, or <code>elseif</co
 <pre><code><span class="hljs-keyword">for</span> ::= Name <span class="hljs-string">'='</span> exp <span class="hljs-string">','</span> exp [<span class="hljs-string">','</span> exp] <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
 <span class="hljs-attr">for</span> ::= namelist <span class="hljs-string">'in'</span> explist <span class="hljs-string">'do'</span> block <span class="hljs-string">'end'</span>
 <span class="hljs-attr">namelist</span> ::= Name {<span class="hljs-string">','</span> Name}
-<span class="hljs-attr">explist</span> ::= exp {<span class="hljs-string">','</span> exp}
-</code></pre>
+<span class="hljs-attr">explist</span> ::= exp {<span class="hljs-string">','</span> exp}</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3757,8 +3740,7 @@ definitions. If a function definition is found, it will be delegated to
 <p>This AST structure might change into a local assignment with a function
 child.</p>
 <pre><code>local ::= <span class="hljs-string">'local'</span> <span class="hljs-string">'function'</span> Name funcdecl
-   | <span class="hljs-string">'local'</span> Name {<span class="hljs-string">','</span> Name} [<span class="hljs-string">'='</span> exp {<span class="hljs-string">','</span> exp}]
-</code></pre>
+   | <span class="hljs-string">'local'</span> Name {<span class="hljs-string">','</span> Name} [<span class="hljs-string">'='</span> exp {<span class="hljs-string">','</span> exp}]</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3850,8 +3832,7 @@ shouldn’t be added to the scope until the statement is complete.</p>
 <span class="hljs-attr">explist</span> ::= exp {<span class="hljs-string">','</span> exp}
 
 <span class="hljs-attr">call</span> ::= callexp
-<span class="hljs-attr">callexp</span> ::= prefixexp args | prefixexp <span class="hljs-string">':'</span> Name args
-</code></pre>
+<span class="hljs-attr">callexp</span> ::= prefixexp args | prefixexp <span class="hljs-string">':'</span> Name args</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -3984,8 +3965,7 @@ of invalid statement</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-158">&#182;</a>
               </div>
-              <pre><code>Identifier ::= Name
-</code></pre>
+              <pre><code>Identifier ::= Name</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4012,8 +3992,7 @@ this we allow for anonymous functions in expressions.</p>
 <p>For local functions there’s a boolean parameter which needs to be set
 when parsing the declaration.</p>
 <pre><code>funcdecl ::= <span class="hljs-string">'('</span> [parlist] <span class="hljs-string">')'</span> block <span class="hljs-string">'end'</span>
-<span class="hljs-attr">parlist</span> ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hljs-string">','</span> <span class="hljs-string">'...'</span>] | <span class="hljs-string">'...'</span>
-</code></pre>
+<span class="hljs-attr">parlist</span> ::= Name {<span class="hljs-string">','</span> Name} | [<span class="hljs-string">','</span> <span class="hljs-string">'...'</span>] | <span class="hljs-string">'...'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4120,8 +4099,7 @@ with a vararg.</p>
                 <a class="pilcrow" href="#section-164">&#182;</a>
               </div>
               <p>Parse the function name as identifiers and member expressions.</p>
-<pre><code>Name {<span class="hljs-string">'.'</span> Name} [<span class="hljs-string">':'</span> Name]
-</code></pre>
+<pre><code>Name {<span class="hljs-string">'.'</span> Name} [<span class="hljs-string">':'</span> Name]</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4165,8 +4143,7 @@ with a vararg.</p>
 <span class="hljs-attr">fieldlist</span> ::= field {fieldsep field} fieldsep
 <span class="hljs-attr">field</span> ::= <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> <span class="hljs-string">'='</span> exp | Name = <span class="hljs-string">'exp'</span> | exp
 
-<span class="hljs-attr">fieldsep</span> ::= <span class="hljs-string">','</span> | <span class="hljs-string">';'</span>
-</code></pre>
+<span class="hljs-attr">fieldsep</span> ::= <span class="hljs-string">','</span> | <span class="hljs-string">';'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4239,8 +4216,7 @@ matched null will be returned.</p>
      | functiondef | tableconstructor
 
 <span class="hljs-attr">prefixexp</span> ::= (Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span> ) { <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span>
-     | <span class="hljs-string">'.'</span> Name | <span class="hljs-string">':'</span> Name args | args }
-</code></pre>
+     | <span class="hljs-string">'.'</span> Name | <span class="hljs-string">':'</span> Name args | args }</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4329,8 +4305,7 @@ precedence.</p>
 <p>We use this algorithm because it’s compact, it’s fast and Lua core uses
 the same so we can be sure our expressions are parsed in the same manner
 without excessive amounts of tests.</p>
-<pre><code>exp ::= (unop exp | primary | prefixexp ) { binop exp }
-</code></pre>
+<pre><code>exp ::= (unop exp | primary | prefixexp ) { binop exp }</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4484,8 +4459,7 @@ without excessive amounts of tests.</p>
 <span class="hljs-attr">prefix</span> ::= Name | <span class="hljs-string">'('</span> exp <span class="hljs-string">')'</span>
 <span class="hljs-attr">suffix</span> ::= <span class="hljs-string">'['</span> exp <span class="hljs-string">']'</span> | <span class="hljs-string">'.'</span> Name | <span class="hljs-string">':'</span> Name args | args
 
-<span class="hljs-attr">args</span> ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span>
-</code></pre>
+<span class="hljs-attr">args</span> ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4614,8 +4588,7 @@ throw an error.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-183">&#182;</a>
               </div>
-              <pre><code>args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span>
-</code></pre>
+              <pre><code>args ::= <span class="hljs-string">'('</span> [explist] <span class="hljs-string">')'</span> | tableconstructor | <span class="hljs-built_in">String</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4676,8 +4649,7 @@ throw an error.</p>
                 <a class="pilcrow" href="#section-185">&#182;</a>
               </div>
               <pre><code>primary ::= <span class="hljs-built_in">String</span> | Numeric | nil | <span class="hljs-literal">true</span> | <span class="hljs-literal">false</span>
-     | functiondef | tableconstructor | <span class="hljs-string">'...'</span>
-</code></pre>
+     | functiondef | tableconstructor | <span class="hljs-string">'...'</span></code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -4760,8 +4732,7 @@ is destroyed.</li>
 </ul>
 <p>Example:</p>
 <pre><code><span class="hljs-keyword">var</span> parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'luaparser'</span>);
-parser.parse(<span class="hljs-string">'i = 0'</span>);
-</code></pre>
+parser.parse(<span class="hljs-string">'i = 0'</span>);</code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>
