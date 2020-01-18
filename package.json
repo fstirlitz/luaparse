@@ -37,12 +37,12 @@
     "gulp-filelog": "^0.4.1",
     "gulp-header": "^2.0.9",
     "gulp-jshint": "^2.1.0",
-    "jshint": "^2.11.0",
     "gulp-rename": "^1.2.0",
     "gulp-striphtml": "0.0.1",
     "gulp-uglify": "^3.0.2",
-    "nyc": "^15.0.0",
+    "jshint": "^2.11.0",
     "marked": "^0.8.0",
+    "nyc": "^15.0.0",
     "spec": "1.0.1",
     "testem": "^3.0.2"
   }
