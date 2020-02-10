@@ -1826,7 +1826,7 @@
                 },
                 "right": {
                   "type": "StringLiteral",
-                  "value": "bar",
+                  "value": null,
                   "raw": "\"bar\"",
                   "loc": {
                     "start": {
@@ -1972,7 +1972,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "",
+                "value": null,
                 "raw": "[[\n]]",
                 "loc": {
                   "start": {
@@ -2079,7 +2079,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "bar",
+                "value": null,
                 "raw": "'bar'",
                 "loc": {
                   "start": {
@@ -2182,7 +2182,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "bar",
+                "value": null,
                 "raw": "\"bar\"",
                 "loc": {
                   "start": {
@@ -2701,7 +2701,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "hello\nworld",
+                "value": null,
                 "raw": "[[hello\nworld]]",
                 "loc": {
                   "start": {
@@ -2881,7 +2881,7 @@
                     "type": "TableValue",
                     "value": {
                       "type": "StringLiteral",
-                      "value": "hello\n\nworld",
+                      "value": null,
                       "raw": "[[hello\n\nworld]]",
                       "loc": {
                         "start": {
@@ -3051,7 +3051,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\n",
+                "value": null,
                 "raw": "\"\\\r\"",
                 "loc": {
                   "start": {
@@ -3154,7 +3154,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\n",
+                "value": null,
                 "raw": "\"\\\n\"",
                 "loc": {
                   "start": {
@@ -3257,7 +3257,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\n",
+                "value": null,
                 "raw": "\"\\\r\n\"",
                 "loc": {
                   "start": {
@@ -3360,7 +3360,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\n",
+                "value": null,
                 "raw": "\"\\\n\r\"",
                 "loc": {
                   "start": {
@@ -3463,7 +3463,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "u",
+                "value": null,
                 "raw": "\"\\u\"",
                 "loc": {
                   "start": {
@@ -3566,7 +3566,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "?",
+                "value": null,
                 "raw": "\"\\?\"",
                 "loc": {
                   "start": {

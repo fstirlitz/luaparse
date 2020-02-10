@@ -87,7 +87,7 @@
     // '5.1', '5.2', '5.3').
     , luaVersion: '5.1'
     // Encoding mode: how to interpret code units higher than U+007F in input
-    , encodingMode: 'latin1-wtf8'
+    , encodingMode: 'none'
   };
 
   function encodeUTF8(codepoint, highMask) {
@@ -136,25 +136,6 @@
   }
 
   var encodingModes = {
-    // `latin1-wtf8`: assume input was UTF-8, output AST as if it was interpreted as latin1
-    'latin1-wtf8': {
-      fixup: function (s) {
-        return s.replace(/[\ud800-\udbff][\udc00-\udfff]|[^\x00-\x7f]/g, function (m) {
-          if (m.length === 1)
-            return encodeUTF8(m.charCodeAt(0));
-          return encodeUTF8(0x10000 + (((m.charCodeAt(0) & 0x3ff) << 10) | (m.charCodeAt(1) & 0x3ff)));
-        });
-      },
-      encodeByte: function (value) {
-        if (value === null)
-          return '';
-        return String.fromCharCode(value);
-      },
-      encodeUTF8: function (codepoint) {
-        return encodeUTF8(codepoint);
-      }
-    },
-
     // `pseudo-latin1` encoding mode: assume the input was decoded with the latin1 encoding
     // WARNING: latin1 does **NOT** mean cp1252 here like in the bone-headed WHATWG standard;
     // it means true ISO/IEC 8859-1 identity-mapped to Basic Latin and Latin-1 Supplement blocks

@@ -47,7 +47,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -1524,7 +1524,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {

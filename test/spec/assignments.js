@@ -2306,7 +2306,7 @@
                   },
                   "argument": {
                     "type": "StringLiteral",
-                    "value": "",
+                    "value": null,
                     "raw": "\"\"",
                     "loc": {
                       "start": {

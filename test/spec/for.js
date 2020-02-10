@@ -1110,7 +1110,7 @@
             "iterators": [
               {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {

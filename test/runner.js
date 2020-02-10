@@ -571,24 +571,6 @@
 
   suite.addTest('Encoding modes', function () {
     var cases = [
-      { mode: 'latin1-wtf8', src: '"\\u{0}"', value: '\u0000' },
-      { mode: 'latin1-wtf8', src: '"\\u{80}"', value: '\u00c2\u0080' },
-      { mode: 'latin1-wtf8', src: '"\\u{d800}"', value: '\u00ed\u00a0\u0080' },
-      { mode: 'latin1-wtf8', src: '"\\u{20000}"', value: '\u00f0\u00a0\u0080\u0080' },
-      { mode: 'latin1-wtf8', src: '"\\x80"', value: '\u0080' },
-      { mode: 'latin1-wtf8', src: '"\\x61"', value: 'a' },
-      { mode: 'latin1-wtf8', src: '"\\128"', value: '\u0080' },
-      { mode: 'latin1-wtf8', src: '"\uf780"', value: '\u00ef\u009e\u0080' },
-      { mode: 'latin1-wtf8', src: '"\ud800"', value: '\u00ed\u00a0\u0080' },
-      { mode: 'latin1-wtf8', src: '"\u0080"', value: '\u00c2\u0080' },
-      { mode: 'latin1-wtf8', src: '[[\uf780]]', value: '\u00ef\u009e\u0080' },
-      { mode: 'latin1-wtf8', src: '[[\ud800]]', value: '\u00ed\u00a0\u0080' },
-      { mode: 'latin1-wtf8', src: '[[\u0080]]', value: '\u00c2\u0080' },
-      { mode: 'latin1-wtf8', src: '"a"', value: 'a' },
-      { mode: 'latin1-wtf8', src: '\uf780', name: '\xef\x9e\x80' },
-      { mode: 'latin1-wtf8', src: '\x80', name: '\xc2\x80' },
-      { mode: 'latin1-wtf8', src: 'a', name: 'a' },
-
       { mode: 'x-user-defined', src: '"\\u{0}"', value: '\u0000' },
       { mode: 'x-user-defined', src: '"\\u{80}"', value: '\uf7c2\uf780' },
       { mode: 'x-user-defined', src: '"\\u{d800}"', value: '\uf7ed\uf7a0\uf780' },

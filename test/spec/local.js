@@ -2725,7 +2725,7 @@
             "variables": [
               {
                 "type": "Identifier",
-                "name": "Ð\u0094Ð¾Ð¶Ð´Ñ\u008c",
+                "name": "Дождь",
                 "loc": {
                   "start": {
                     "line": 1,

@@ -56,7 +56,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "bar\n\r\t\tbaz",
+                "value": null,
                 "raw": "\"bar\\n\\r\\t\tbaz\"",
                 "loc": {
                   "start": {
@@ -159,7 +159,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "barPbaz\u0007P\u0000foo",
+                "value": null,
                 "raw": "\"bar\\80baz\\a\\80\\0foo\"",
                 "loc": {
                   "start": {
@@ -262,7 +262,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "bar\f\u000b\bbaz",
+                "value": null,
                 "raw": "\"bar\\f\\v\\bbaz\"",
                 "loc": {
                   "start": {
@@ -365,7 +365,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "bar\f\u000b\baz",
+                "value": null,
                 "raw": "\"bar\f\u000b\baz\"",
                 "loc": {
                   "start": {
@@ -468,7 +468,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\\",
+                "value": null,
                 "raw": "'\\\\'",
                 "loc": {
                   "start": {
@@ -571,7 +571,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "'",
+                "value": null,
                 "raw": "'\\''",
                 "loc": {
                   "start": {
@@ -674,7 +674,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "[",
+                "value": null,
                 "raw": "'\\['",
                 "loc": {
                   "start": {
@@ -777,7 +777,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "{",
+                "value": null,
                 "raw": "'\\123'",
                 "loc": {
                   "start": {
@@ -880,7 +880,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ÿ",
+                "value": null,
                 "raw": "'\\255'",
                 "loc": {
                   "start": {
@@ -991,7 +991,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "bar\\f\\v\\bbaz",
+                "value": null,
                 "raw": "[[bar\\f\\v\\bbaz]]",
                 "loc": {
                   "start": {
@@ -1094,7 +1094,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\\",
+                "value": null,
                 "raw": "[[\\]]",
                 "loc": {
                   "start": {
@@ -1197,7 +1197,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "z x",
+                "value": null,
                 "raw": "'\\z \\x'",
                 "loc": {
                   "start": {
@@ -1311,7 +1311,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "#",
+                "value": null,
                 "raw": "'\\x23'",
                 "loc": {
                   "start": {
@@ -1454,7 +1454,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "barbaz",
+                "value": null,
                 "raw": "\"bar\\z    baz\"",
                 "loc": {
                   "start": {
@@ -1564,7 +1564,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\u0000",
+                "value": null,
                 "raw": "'\\u{0}'",
                 "loc": {
                   "start": {
@@ -1674,7 +1674,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ð\u009f\u0092©",
+                "value": null,
                 "raw": "'\\u{1f4a9}'",
                 "loc": {
                   "start": {
@@ -1784,7 +1784,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "\u007fÂ\u0080",
+                "value": null,
                 "raw": "'\\u{7f}\\u{80}'",
                 "loc": {
                   "start": {
@@ -1894,7 +1894,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ß¿à \u0080",
+                "value": null,
                 "raw": "'\\u{7ff}\\u{800}'",
                 "loc": {
                   "start": {
@@ -2004,7 +2004,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ï¿¿ð\u009f\u0092©",
+                "value": null,
                 "raw": "'\\u{ffff}\\u{1f4a9}'",
                 "loc": {
                   "start": {
@@ -2114,7 +2114,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ô\u008f¿¿",
+                "value": null,
                 "raw": "'\\u{10ffff}'",
                 "loc": {
                   "start": {
@@ -2246,7 +2246,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "ð\u009f\u0092©",
+                "value": null,
                 "raw": "'\\u{000000001f4a9}'",
                 "loc": {
                   "start": {
