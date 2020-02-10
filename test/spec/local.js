@@ -1138,7 +1138,7 @@
     },
     {
       "source": "local \"foo\"",
-      "result": "[1:6] <name> expected near 'foo'"
+      "result": "[1:6] <name> expected near '\"foo\"'"
     },
     {
       "source": "local a = local",
@@ -1249,7 +1249,7 @@
     },
     {
       "source": "local function a(\"foo\"",
-      "result": "[1:17] <name> or '...' expected near 'foo'"
+      "result": "[1:17] <name> or '...' expected near '\"foo\"'"
     },
     {
       "source": "local function a(p",

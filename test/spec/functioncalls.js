@@ -806,7 +806,7 @@
     },
     {
       "source": "a.1",
-      "result": "[1:1] '=' expected near '0.1'"
+      "result": "[1:1] '=' expected near '.1'"
     },
     {
       "source": "a.b",

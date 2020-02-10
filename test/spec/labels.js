@@ -232,7 +232,7 @@
     },
     {
       "source": "goto \"foo\"",
-      "result": "[1:5] <name> expected near 'foo'",
+      "result": "[1:5] <name> expected near '\"foo\"'",
       "options": {
         "comments": true,
         "locations": true,

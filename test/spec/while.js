@@ -481,7 +481,7 @@
     },
     {
       "source": "while 1 do \"foo\" end",
-      "result": "[1:11] unexpected string 'foo' near 'end'"
+      "result": "[1:11] unexpected string '\"foo\"' near 'end'"
     },
     {
       "source": "while true do end",

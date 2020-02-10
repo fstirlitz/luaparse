@@ -520,6 +520,13 @@
     throw error;
   }
 
+  function tokenValue(token) {
+    var raw = input.slice(token.range[0], token.range[1]);
+    if (raw)
+      return raw;
+    return token.value;
+  }
+
   // #### Raise an unexpected token error.
   //
   // Example:
@@ -528,7 +535,7 @@
   //     raiseUnexpectedToken('<name>', token);
 
   function raiseUnexpectedToken(type, token) {
-    raise(token, errors.expectedToken, type, token.value);
+    raise(token, errors.expectedToken, type, tokenValue(token));
   }
 
   // #### Raise a general unexpected error
@@ -545,7 +552,7 @@
   // If there's no token in the buffer it means we have reached <eof>.
 
   function unexpected(found) {
-    var near = lookahead.value;
+    var near = tokenValue(lookahead);
     if ('undefined' !== typeof found.type) {
       var type;
       switch (found.type) {
@@ -560,7 +567,7 @@
         case EOF:
           return raise(found, errors.unexpectedEOF);
       }
-      return raise(found, errors.unexpected, type, found.value, near);
+      return raise(found, errors.unexpected, type, tokenValue(found), near);
     }
     return raise(found, errors.unexpected, 'symbol', found, near);
   }
@@ -838,7 +845,7 @@
       // ending delimiter by now, raise an exception.
       if (index > length || isLineTerminator(charCode)) {
         string += input.slice(stringStart, index - 1);
-        raise(null, errors.unfinishedString, String.fromCharCode(delimiter) + string);
+        raise(null, errors.unfinishedString, input.slice(tokenStart, index - 1));
       }
       if (92 === charCode) { // backslash
         string += fixupHighCharacters(input.slice(stringStart, index - 1)) + readEscapeSequence();
@@ -867,7 +874,7 @@
       , beginLineStart = lineStart
       , string = readLongString(false);
     // Fail if it's not a multiline literal.
-    if (false === string) raise(token, errors.expected, '[', token.value);
+    if (false === string) raise(token, errors.expected, '[', tokenValue(token));
 
     return {
         type: StringLiteral
@@ -1224,7 +1231,7 @@
 
   function expect(value) {
     if (value === token.value) next();
-    else raise(token, errors.expected, value, token.value);
+    else raise(token, errors.expected, value, tokenValue(token));
   }
 
   // ### Validation functions
