@@ -1024,7 +1024,7 @@
         raise(null, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
     }
 
-    var codepoint = parseInt(input.slice(escStart, index - 1), 16);
+    var codepoint = parseInt(input.slice(escStart, index - 1) || '0', 16);
 
     codepoint = encodeUTF8(codepoint);
     if (codepoint === null) {
