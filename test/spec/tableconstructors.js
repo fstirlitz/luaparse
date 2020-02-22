@@ -2154,7 +2154,7 @@
                       "operator": "or",
                       "left": {
                         "type": "StringLiteral",
-                        "value": "a",
+                        "value": null,
                         "raw": "\"a\"",
                         "loc": {
                           "start": {
@@ -2173,7 +2173,7 @@
                       },
                       "right": {
                         "type": "StringLiteral",
-                        "value": "b",
+                        "value": null,
                         "raw": "\"b\"",
                         "loc": {
                           "start": {
@@ -2575,7 +2575,7 @@
                     },
                     "value": {
                       "type": "StringLiteral",
-                      "value": "foo",
+                      "value": null,
                       "raw": "\"foo\"",
                       "loc": {
                         "start": {
@@ -2842,7 +2842,7 @@
                     },
                     "value": {
                       "type": "StringLiteral",
-                      "value": "foo",
+                      "value": null,
                       "raw": "\"foo\"",
                       "loc": {
                         "start": {
@@ -3104,7 +3104,7 @@
                     "type": "TableKey",
                     "key": {
                       "type": "StringLiteral",
-                      "value": "foo",
+                      "value": null,
                       "raw": "\"foo\"",
                       "loc": {
                         "start": {
@@ -3123,7 +3123,7 @@
                     },
                     "value": {
                       "type": "StringLiteral",
-                      "value": "bar",
+                      "value": null,
                       "raw": "\"bar\"",
                       "loc": {
                         "start": {
@@ -3584,7 +3584,7 @@
                     "type": "TableKey",
                     "key": {
                       "type": "StringLiteral",
-                      "value": "foo",
+                      "value": null,
                       "raw": "\"foo\"",
                       "loc": {
                         "start": {
@@ -3603,7 +3603,7 @@
                     },
                     "value": {
                       "type": "StringLiteral",
-                      "value": "bar",
+                      "value": null,
                       "raw": "\"bar\"",
                       "loc": {
                         "start": {

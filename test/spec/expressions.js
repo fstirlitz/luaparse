@@ -52,7 +52,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "[[foo]]",
                 "loc": {
                   "start": {
@@ -669,7 +669,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -772,7 +772,7 @@
             "init": [
               {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "[[foo]]",
                 "loc": {
                   "start": {
@@ -1621,7 +1621,7 @@
                 },
                 "index": {
                   "type": "StringLiteral",
-                  "value": "foo",
+                  "value": null,
                   "raw": "\"foo\"",
                   "loc": {
                     "start": {
@@ -2780,7 +2780,7 @@
                     "type": "TableValue",
                     "value": {
                       "type": "StringLiteral",
-                      "value": "-",
+                      "value": null,
                       "raw": "'-'",
                       "loc": {
                         "start": {
@@ -2919,7 +2919,7 @@
                     "type": "TableValue",
                     "value": {
                       "type": "StringLiteral",
-                      "value": "not",
+                      "value": null,
                       "raw": "'not'",
                       "loc": {
                         "start": {

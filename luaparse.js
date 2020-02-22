@@ -55,7 +55,7 @@
 
   exports.version = '0.2.1';
 
-  var input, options, length, features;
+  var input, options, length, features, encodingMode;
 
   // Options can be set either globally on the parser object through
   // defaultOptions, or during the parse call.
@@ -86,6 +86,99 @@
     // The version of Lua targeted by the parser (string; allowed values are
     // '5.1', '5.2', '5.3').
     , luaVersion: '5.1'
+    // Encoding mode: how to interpret code units higher than U+007F in input
+    , encodingMode: 'none'
+  };
+
+  function encodeUTF8(codepoint, highMask) {
+    highMask = highMask || 0;
+
+    if (codepoint < 0x80) {
+      return String.fromCharCode(codepoint);
+    } else if (codepoint < 0x800) {
+      return String.fromCharCode(
+        highMask | 0xc0 |  (codepoint >>  6)        ,
+        highMask | 0x80 | ( codepoint        & 0x3f)
+      );
+    } else if (codepoint < 0x10000) {
+      return String.fromCharCode(
+        highMask | 0xe0 |  (codepoint >> 12)        ,
+        highMask | 0x80 | ((codepoint >>  6) & 0x3f),
+        highMask | 0x80 | ( codepoint        & 0x3f)
+      );
+    } else /* istanbul ignore else */ if (codepoint < 0x110000) {
+      return String.fromCharCode(
+        highMask | 0xf0 |  (codepoint >> 18)        ,
+        highMask | 0x80 | ((codepoint >> 12) & 0x3f),
+        highMask | 0x80 | ((codepoint >>  6) & 0x3f),
+        highMask | 0x80 | ( codepoint        & 0x3f)
+      );
+    } else {
+      // TODO: Lua 5.4 allows up to six-byte sequences, as in UTF-8:1993
+      return null;
+    }
+  }
+
+  function toHex(num, digits) {
+    var result = num.toString(16);
+    while (result.length < digits)
+      result = '0' + result;
+    return result;
+  }
+
+  function checkChars(rx) {
+    return function (s) {
+      var m = rx.exec(s);
+      if (!m)
+        return s;
+      raise(null, errors.invalidCodeUnit, toHex(m[0].charCodeAt(0), 4).toUpperCase());
+    };
+  }
+
+  var encodingModes = {
+    // `pseudo-latin1` encoding mode: assume the input was decoded with the latin1 encoding
+    // WARNING: latin1 does **NOT** mean cp1252 here like in the bone-headed WHATWG standard;
+    // it means true ISO/IEC 8859-1 identity-mapped to Basic Latin and Latin-1 Supplement blocks
+    'pseudo-latin1': {
+      fixup: checkChars(/[^\x00-\xff]/),
+      encodeByte: function (value) {
+        if (value === null)
+          return '';
+        return String.fromCharCode(value);
+      },
+      encodeUTF8: function (codepoint) {
+        return encodeUTF8(codepoint);
+      },
+    },
+
+    // `x-user-defined` encoding mode: assume the input was decoded with the WHATWG `x-user-defined` encoding
+    'x-user-defined': {
+      fixup: checkChars(/[^\x00-\x7f\uf780-\uf7ff]/),
+      encodeByte: function (value) {
+        if (value === null)
+          return '';
+        if (value >= 0x80)
+          return String.fromCharCode(value | 0xf700);
+        return String.fromCharCode(value);
+      },
+      encodeUTF8: function (codepoint) {
+        return encodeUTF8(codepoint, 0xf700);
+      }
+    },
+
+    // `none` encoding mode: disregard intrepretation of string literals, leave identifiers as-is
+    'none': {
+      discardStrings: true,
+      fixup: function (s) {
+        return s;
+      },
+      encodeByte: function (value) {
+        return '';
+      },
+      encodeUTF8: function (codepoint) {
+        return '';
+      }
+    }
   };
 
   // The available tokens expressed as enum flags so they can be checked with
@@ -124,6 +217,7 @@
     , labelNotVisible: 'no visible label \'%1\' for <goto>'
     , gotoJumpInLocalScope: '<goto %1> jumps into the scope of local \'%2\''
     , cannotUseVararg: 'cannot use \'...\' outside a vararg function near \'%1\''
+    , invalidCodeUnit: 'code unit U+%1 is not allowed in the current encoding mode'
   };
 
   // ### Abstract Syntax Tree
@@ -520,6 +614,13 @@
     throw error;
   }
 
+  function tokenValue(token) {
+    var raw = input.slice(token.range[0], token.range[1]);
+    if (raw)
+      return raw;
+    return token.value;
+  }
+
   // #### Raise an unexpected token error.
   //
   // Example:
@@ -528,7 +629,7 @@
   //     raiseUnexpectedToken('<name>', token);
 
   function raiseUnexpectedToken(type, token) {
-    raise(token, errors.expectedToken, type, token.value);
+    raise(token, errors.expectedToken, type, tokenValue(token));
   }
 
   // #### Raise a general unexpected error
@@ -545,7 +646,7 @@
   // If there's no token in the buffer it means we have reached <eof>.
 
   function unexpected(found) {
-    var near = lookahead.value;
+    var near = tokenValue(lookahead);
     if ('undefined' !== typeof found.type) {
       var type;
       switch (found.type) {
@@ -560,7 +661,7 @@
         case EOF:
           return raise(found, errors.unexpectedEOF);
       }
-      return raise(found, errors.unexpected, type, found.value, near);
+      return raise(found, errors.unexpected, type, tokenValue(found), near);
     }
     return raise(found, errors.unexpected, 'symbol', found, near);
   }
@@ -719,47 +820,6 @@
     }
   }
 
-  function encodeUTF8(codepoint) {
-    if (codepoint < 0x80) {
-      return String.fromCharCode(codepoint);
-    } else if (codepoint < 0x800) {
-      return String.fromCharCode(
-        0xc0 |  (codepoint >>  6)        ,
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else if (codepoint < 0x10000) {
-      return String.fromCharCode(
-        0xe0 |  (codepoint >> 12)        ,
-        0x80 | ((codepoint >>  6) & 0x3f),
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else if (codepoint < 0x110000) {
-      return String.fromCharCode(
-        0xf0 |  (codepoint >> 18)        ,
-        0x80 | ((codepoint >> 12) & 0x3f),
-        0x80 | ((codepoint >>  6) & 0x3f),
-        0x80 | ( codepoint        & 0x3f)
-      );
-    } else {
-      return null;
-    }
-  }
-
-  // This function takes a JavaScript string, encodes it in WTF-8 and
-  // reinterprets the resulting code units as code points; i.e. it encodes
-  // the string in what was the original meaning of WTF-8.
-  //
-  // For a detailed rationale, see the README.md file, section
-  // "Note on character encodings".
-
-  function fixupHighCharacters(s) {
-    return s.replace(/[\ud800-\udbff][\udc00-\udfff]|[^\x00-\x7f]/g, function (m) {
-      if (m.length === 1)
-        return encodeUTF8(m.charCodeAt(0));
-      return encodeUTF8(0x10000 + (((m.charCodeAt(0) & 0x3ff) << 10) | (m.charCodeAt(1) & 0x3ff)));
-    });
-  }
-
   // Identifiers, keywords, booleans and nil all look the same syntax wise. We
   // simply go through them one by one and defaulting to an identifier if no
   // previous case matched.
@@ -770,7 +830,7 @@
     // Slicing the input string is prefered before string concatenation in a
     // loop for performance reasons.
     while (isIdentifierPart(input.charCodeAt(++index)));
-    value = fixupHighCharacters(input.slice(tokenStart, index));
+    value = encodingMode.fixup(input.slice(tokenStart, index));
 
     // Decide on the token type and possibly cast the value.
     if (isKeyword(value)) {
@@ -828,7 +888,7 @@
       , beginLine = line
       , beginLineStart = lineStart
       , stringStart = index
-      , string = ''
+      , string = encodingMode.discardStrings ? null : ''
       , charCode;
 
     for (;;) {
@@ -838,14 +898,23 @@
       // ending delimiter by now, raise an exception.
       if (index > length || isLineTerminator(charCode)) {
         string += input.slice(stringStart, index - 1);
-        raise(null, errors.unfinishedString, String.fromCharCode(delimiter) + string);
+        raise(null, errors.unfinishedString, input.slice(tokenStart, index - 1));
       }
       if (92 === charCode) { // backslash
-        string += fixupHighCharacters(input.slice(stringStart, index - 1)) + readEscapeSequence();
+        if (!encodingMode.discardStrings) {
+          var beforeEscape = input.slice(stringStart, index - 1);
+          string += encodingMode.fixup(beforeEscape);
+        }
+        var escapeValue = readEscapeSequence();
+        if (!encodingMode.discardStrings)
+          string += escapeValue;
         stringStart = index;
       }
     }
-    string += fixupHighCharacters(input.slice(stringStart, index - 1));
+    if (!encodingMode.discardStrings) {
+      string += encodingMode.encodeByte(null);
+      string += encodingMode.fixup(input.slice(stringStart, index - 1));
+    }
 
     return {
         type: StringLiteral
@@ -867,11 +936,11 @@
       , beginLineStart = lineStart
       , string = readLongString(false);
     // Fail if it's not a multiline literal.
-    if (false === string) raise(token, errors.expected, '[', token.value);
+    if (false === string) raise(token, errors.expected, '[', tokenValue(token));
 
     return {
         type: StringLiteral
-      , value: fixupHighCharacters(string)
+      , value: encodingMode.discardStrings ? null : encodingMode.fixup(string)
       , line: beginLine
       , lineStart: beginLineStart
       , lastLine: line
@@ -1017,13 +1086,14 @@
         raise(null, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index));
     }
 
-    var codepoint = parseInt(input.slice(escStart, index - 1), 16);
+    var codepoint = parseInt(input.slice(escStart, index - 1) || '0', 16);
+    var frag = '\\' + input.slice(sequenceStart, index);
 
-    codepoint = encodeUTF8(codepoint);
-    if (codepoint === null) {
-      raise(null, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
+    if (codepoint > 0x10ffff) {
+      raise(null, errors.tooLargeCodepoint, frag);
     }
-    return codepoint;
+
+    return encodingMode.encodeUTF8(codepoint, frag);
   }
 
   // Translate escape sequences to the actual characters.
@@ -1052,11 +1122,12 @@
         // \ddd, where ddd is a sequence of up to three decimal digits.
         while (isDecDigit(input.charCodeAt(index)) && index - sequenceStart < 3) ++index;
 
-        var ddd = parseInt(input.slice(sequenceStart, index), 10);
+        var frag = input.slice(sequenceStart, index);
+        var ddd = parseInt(frag, 10);
         if (ddd > 255) {
           raise(null, errors.decimalEscapeTooLarge, '\\' + ddd);
         }
-        return String.fromCharCode(ddd);
+        return encodingMode.encodeByte(ddd, '\\' + frag);
 
       case 'z':
         if (features.skipWhitespaceEscape) {
@@ -1072,7 +1143,7 @@
           if (isHexDigit(input.charCodeAt(index + 1)) &&
               isHexDigit(input.charCodeAt(index + 2))) {
             index += 3;
-            return String.fromCharCode(parseInt(input.slice(sequenceStart + 1, index), 16));
+            return encodingMode.encodeByte(parseInt(input.slice(sequenceStart + 1, index), 16), '\\' + input.slice(sequenceStart, index));
           }
           raise(null, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
         }
@@ -1224,7 +1295,7 @@
 
   function expect(value) {
     if (value === token.value) next();
-    else raise(token, errors.expected, value, token.value);
+    else raise(token, errors.expected, value, tokenValue(token));
   }
 
   // ### Validation functions
@@ -2547,6 +2618,12 @@
     features = assign({}, versionFeatures[options.luaVersion]);
     if (options.extendedIdentifiers !== void 0)
       features.extendedIdentifiers = !!options.extendedIdentifiers;
+
+    if (!Object.prototype.hasOwnProperty.call(encodingModes, options.encodingMode)) {
+      throw new Error(sprintf("Encoding mode '%1' not supported", options.encodingMode));
+    }
+
+    encodingMode = encodingModes[options.encodingMode];
 
     if (options.comments) comments = [];
     if (!options.wait) return end();

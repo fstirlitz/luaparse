@@ -470,21 +470,10 @@
     }, 'should ignore shebangs');
 
     this.parseError('', "Lua version '4.0' not supported", { luaVersion: '4.0' });
+    this.parseError('', "Encoding mode 'ebcdic' not supported", { encodingMode: 'ebcdic' });
     this.parseError('', "Lua version 'hasOwnProperty' not supported", { luaVersion: 'hasOwnProperty' });
 
-    this.done(13);
-  });
-
-  suite.addTest('Extended identifiers', function () {
-    var lcode = 'foo.\ud83d\udca9';
-    var rcode = 'foo["\ud83d\udca9"]';
-    var left = luaparse.parse('return ' + lcode,
-                              { "extendedIdentifiers": true }).body[0].arguments[0].identifier.name;
-    var right = luaparse.parse('return ' + rcode,
-                               { "extendedIdentifiers": true }).body[0].arguments[0].index.value;
-    this.equal(left, right, lcode + ' == ' + rcode);
-
-    this.done(1);
+    this.done(14);
   });
 
   suite.addTest('Interpretation of literals', function () {
@@ -578,6 +567,81 @@
     this.deepEqual(baseline, luaparse.parse('foo = 1\n\rbar = 1', options), 'newline followed by carriage return');
     this.deepEqual(baseline, luaparse.parse('foo = 1\r\nbar = 1', options), 'carriage return followed by newline');
     this.done(3);
+  });
+
+  suite.addTest('Encoding modes', function () {
+    var cases = [
+      { mode: 'x-user-defined', src: '"\\u{0}"', value: '\u0000' },
+      { mode: 'x-user-defined', src: '"\\u{80}"', value: '\uf7c2\uf780' },
+      { mode: 'x-user-defined', src: '"\\u{d800}"', value: '\uf7ed\uf7a0\uf780' },
+      { mode: 'x-user-defined', src: '"\\u{20000}"', value: '\uf7f0\uf7a0\uf780\uf780' },
+      { mode: 'x-user-defined', src: '"\\x80"', value: '\uf780' },
+      { mode: 'x-user-defined', src: '"\\x61"', value: 'a' },
+      { mode: 'x-user-defined', src: '"\\128"', value: '\uf780' },
+      { mode: 'x-user-defined', src: '"\uf780"', value: '\uf780' },
+      { mode: 'x-user-defined', src: '"\ud800"', error: true },
+      { mode: 'x-user-defined', src: '"\u0080"', error: true },
+      { mode: 'x-user-defined', src: '[[\uf780]]', value: '\uf780' },
+      { mode: 'x-user-defined', src: '[[\ud800]]', error: true },
+      { mode: 'x-user-defined', src: '[[\u0080]]', error: true },
+      { mode: 'x-user-defined', src: '"a"', value: 'a' },
+      { mode: 'x-user-defined', src: '\uf780', name: '\uf780' },
+      { mode: 'x-user-defined', src: '\x80', error: true },
+      { mode: 'x-user-defined', src: 'a', name: 'a' },
+
+      { mode: 'pseudo-latin1', src: '"\\u{0}"', value: '\u0000' },
+      { mode: 'pseudo-latin1', src: '"\\u{80}"', value: '\u00c2\u0080' },
+      { mode: 'pseudo-latin1', src: '"\\u{d800}"', value: '\u00ed\u00a0\u0080' },
+      { mode: 'pseudo-latin1', src: '"\\u{20000}"', value: '\u00f0\u00a0\u0080\u0080' },
+      { mode: 'pseudo-latin1', src: '"\\x80"', value: '\u0080' },
+      { mode: 'pseudo-latin1', src: '"\\x61"', value: 'a' },
+      { mode: 'pseudo-latin1', src: '"\\128"', value: '\u0080' },
+      { mode: 'pseudo-latin1', src: '"\uf780"', error: true },
+      { mode: 'pseudo-latin1', src: '"\ud800"', error: true },
+      { mode: 'pseudo-latin1', src: '"\u0080"', value: '\u0080' },
+      { mode: 'pseudo-latin1', src: '[[\uf780]]', error: true },
+      { mode: 'pseudo-latin1', src: '[[\ud800]]', error: true },
+      { mode: 'pseudo-latin1', src: '[[\u0080]]', value: '\u0080' },
+      { mode: 'pseudo-latin1', src: '"a"', value: 'a' },
+      { mode: 'pseudo-latin1', src: '\uf780', error: true },
+      { mode: 'pseudo-latin1', src: '\x80', name: '\x80' },
+      { mode: 'pseudo-latin1', src: 'a', name: 'a' },
+
+      { mode: 'none', src: '"\\u{80}"', value: null },
+      { mode: 'none', src: '"\\u{d800}"', value: null },
+      { mode: 'none', src: '"\\x80"', value: null },
+      { mode: 'none', src: '"\\x61"', value: null },
+      { mode: 'none', src: '"\\128"', value: null },
+      { mode: 'none', src: '"\uf780"', value: null },
+      { mode: 'none', src: '"\ud800"', value: null },
+      { mode: 'none', src: '"\u0080"', value: null },
+      { mode: 'none', src: '"a"', value: null },
+      { mode: 'none', src: '[[a]]', value: null },
+      { mode: 'none', src: '\uf780', name: '\uf780' },
+      { mode: 'none', src: '\x80', name: '\x80' },
+      { mode: 'none', src: 'a', name: 'a' },
+    ];
+
+    for (var i = 0; i < cases.length; ++i) {
+      var label = cases[i].src + ' (' + cases[i].mode + ')';
+      var opts = { luaVersion: "5.3", encodingMode: cases[i].mode, extendedIdentifiers: true };
+      if (cases[i].error) {
+        var ok = false;
+        try {
+          luaparse.parse("return " + cases[i].src, opts);
+        } catch (e) {
+          ok = true;
+        }
+        this.ok(ok, { 'message': label });
+        continue;
+      }
+      var node = luaparse.parse("return " + cases[i].src, opts).body[0].arguments[0];
+      if (cases[i].name)
+        this.deepEqual(node.name, cases[i].name, label);
+      else
+        this.deepEqual(node.value, cases[i].value, label);
+    }
+    this.done(cases.length);
   });
 
   if (isLoader) {

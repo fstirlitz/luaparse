@@ -554,7 +554,7 @@
     },
     {
       "source": "repeat \"foo\" until 1",
-      "result": "[1:7] unexpected string 'foo' near 'until'"
+      "result": "[1:7] unexpected string '\"foo\"' near 'until'"
     },
     {
       "source": "repeat return until 0",

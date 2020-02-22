@@ -545,7 +545,7 @@
     },
     {
       "source": "for a in b do \"foo\" end",
-      "result": "[1:14] unexpected string 'foo' near 'end'"
+      "result": "[1:14] unexpected string '\"foo\"' near 'end'"
     },
     {
       "source": "for a b in",
@@ -1110,7 +1110,7 @@
             "iterators": [
               {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -2461,7 +2461,7 @@
     },
     {
       "source": "for a = 1, 2 do \"foo\" end",
-      "result": "[1:16] unexpected string 'foo' near 'end'"
+      "result": "[1:16] unexpected string '\"foo\"' near 'end'"
     },
     {
       "source": "for a = p, q, r do end",

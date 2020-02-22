@@ -51,7 +51,7 @@
                 "operator": "-",
                 "argument": {
                   "type": "StringLiteral",
-                  "value": "foo",
+                  "value": null,
                   "raw": "\"foo\"",
                   "loc": {
                     "start": {
@@ -1380,7 +1380,7 @@
                 "operator": "+",
                 "left": {
                   "type": "StringLiteral",
-                  "value": "foo",
+                  "value": null,
                   "raw": "\"foo\"",
                   "loc": {
                     "start": {
@@ -1399,7 +1399,7 @@
                 },
                 "right": {
                   "type": "StringLiteral",
-                  "value": "bar",
+                  "value": null,
                   "raw": "\"bar\"",
                   "loc": {
                     "start": {
@@ -1520,7 +1520,7 @@
                 "operator": "..",
                 "left": {
                   "type": "StringLiteral",
-                  "value": "foo",
+                  "value": null,
                   "raw": "\"foo\"",
                   "loc": {
                     "start": {
@@ -1542,7 +1542,7 @@
                   "operator": "..",
                   "left": {
                     "type": "StringLiteral",
-                    "value": "bar",
+                    "value": null,
                     "raw": "\"bar\"",
                     "loc": {
                       "start": {
@@ -1561,7 +1561,7 @@
                   },
                   "right": {
                     "type": "StringLiteral",
-                    "value": "baz",
+                    "value": null,
                     "raw": "\"baz\"",
                     "loc": {
                       "start": {
@@ -3431,7 +3431,7 @@
                   },
                   "right": {
                     "type": "StringLiteral",
-                    "value": "foo",
+                    "value": null,
                     "raw": "\"foo\"",
                     "loc": {
                       "start": {

@@ -77,7 +77,7 @@
     },
     {
       "source": "do \"foo\" end",
-      "result": "[1:3] unexpected string 'foo' near 'end'"
+      "result": "[1:3] unexpected string '\"foo\"' near 'end'"
     },
     {
       "source": "do local a, b end",

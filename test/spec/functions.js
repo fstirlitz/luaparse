@@ -130,7 +130,7 @@
     },
     {
       "source": "function a(\"foo\"",
-      "result": "[1:11] <name> or '...' expected near 'foo'"
+      "result": "[1:11] <name> or '...' expected near '\"foo\"'"
     },
     {
       "source": "function a(p",
@@ -784,7 +784,7 @@
     },
     {
       "source": "function a.1",
-      "result": "[1:10] '(' expected near '0.1'"
+      "result": "[1:10] '(' expected near '.1'"
     },
     {
       "source": "function a.b() end",

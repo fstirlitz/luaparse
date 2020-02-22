@@ -22,6 +22,7 @@ a = '\x0x'                      -- FAIL
 a = '\xx'                       -- FAIL
 a = "bar\z    baz"
 // { "luaVersion": "5.3" }
+a = '\u{0}'
 a = '\u{1f4a9}'
 a = '\u{7f}\u{80}'
 a = '\u{7ff}\u{800}'

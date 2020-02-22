@@ -806,7 +806,7 @@
     },
     {
       "source": "a.1",
-      "result": "[1:1] '=' expected near '0.1'"
+      "result": "[1:1] '=' expected near '.1'"
     },
     {
       "source": "a.b",
@@ -2382,7 +2382,7 @@
               "type": "CallExpression",
               "base": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -3016,7 +3016,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -3136,7 +3136,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "[[foo]]",
                 "loc": {
                   "start": {
@@ -3288,7 +3288,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -3440,7 +3440,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -3611,7 +3611,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -3745,7 +3745,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -3863,7 +3863,7 @@
                 },
                 "argument": {
                   "type": "StringLiteral",
-                  "value": "foo",
+                  "value": null,
                   "raw": "\"foo\"",
                   "loc": {
                     "start": {
@@ -4018,7 +4018,7 @@
                   },
                   "argument": {
                     "type": "StringLiteral",
-                    "value": "foo",
+                    "value": null,
                     "raw": "\"foo\"",
                     "loc": {
                       "start": {
@@ -4169,7 +4169,7 @@
                   },
                   "argument": {
                     "type": "StringLiteral",
-                    "value": "foo",
+                    "value": null,
                     "raw": "\"foo\"",
                     "loc": {
                       "start": {
@@ -4377,7 +4377,7 @@
                   },
                   "argument": {
                     "type": "StringLiteral",
-                    "value": "foo",
+                    "value": null,
                     "raw": "\"foo\"",
                     "loc": {
                       "start": {
@@ -4526,7 +4526,7 @@
                 },
                 "argument": {
                   "type": "StringLiteral",
-                  "value": "foo",
+                  "value": null,
                   "raw": "\"foo\"",
                   "loc": {
                     "start": {
@@ -4560,7 +4560,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "bar",
+                "value": null,
                 "raw": "\"bar\"",
                 "loc": {
                   "start": {
@@ -4678,7 +4678,7 @@
                 },
                 "argument": {
                   "type": "StringLiteral",
-                  "value": "foo",
+                  "value": null,
                   "raw": "\"foo\"",
                   "loc": {
                     "start": {
@@ -4909,7 +4909,7 @@
                       },
                       "argument": {
                         "type": "StringLiteral",
-                        "value": "foo",
+                        "value": null,
                         "raw": "\"foo\"",
                         "loc": {
                           "start": {
@@ -5007,7 +5007,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "bar",
+                "value": null,
                 "raw": "\"bar\"",
                 "loc": {
                   "start": {
@@ -5224,7 +5224,7 @@
                       },
                       "argument": {
                         "type": "StringLiteral",
-                        "value": "foo",
+                        "value": null,
                         "raw": "\"foo\"",
                         "loc": {
                           "start": {
@@ -5322,7 +5322,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "bar",
+                "value": null,
                 "raw": "\"bar\"",
                 "loc": {
                   "start": {
@@ -5492,7 +5492,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "foo",
+                "value": null,
                 "raw": "\"foo\"",
                 "loc": {
                   "start": {
@@ -7779,7 +7779,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "",
+                "value": null,
                 "raw": "\"\"",
                 "loc": {
                   "start": {
@@ -8050,7 +8050,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "",
+                "value": null,
                 "raw": "\"\"",
                 "loc": {
                   "start": {
@@ -8357,7 +8357,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "",
+                "value": null,
                 "raw": "\"\"",
                 "loc": {
                   "start": {
@@ -8640,7 +8640,7 @@
               },
               "argument": {
                 "type": "StringLiteral",
-                "value": "",
+                "value": null,
                 "raw": "\"\"",
                 "loc": {
                   "start": {

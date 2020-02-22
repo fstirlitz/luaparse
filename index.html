@@ -84,9 +84,12 @@ variable is declared. The identifier will be passed as the only parameter.</li>
 <li><code>luaVersion: &#39;5.1&#39;</code> The version of Lua the parser will target; supported
 values are <code>&#39;5.1&#39;</code>, <code>&#39;5.2&#39;</code>, <code>&#39;5.3&#39;</code> and <code>&#39;LuaJIT&#39;</code>.</li>
 <li><code>extendedIdentifiers: false</code> Whether to allow code points ≥ U+0080 in
-identifiers, like LuaJIT does. See &#39;Note on character encodings&#39; below
-if you wish to use this option. <strong>Note:</strong> setting <code>luaVersion: &#39;LuaJIT&#39;</code>
+identifiers, like LuaJIT does. <strong>Note:</strong> setting <code>luaVersion: &#39;LuaJIT&#39;</code>
 currently does <em>not</em> enable this option; this may change in the future.</li>
+<li><code>encodingMode: &#39;none&#39;</code> Defines the relation between code points ≥ U+0080
+appearing in parser input and raw bytes in source code, and how Lua escape
+sequences in JavaScript strings should be interpreted. See the
+<a href="#encoding-modes">Encoding modes</a> section below for more information.</li>
 </ul>
 <p>The default options are also exposed through <code>luaparse.defaultOptions</code> where
 they can be overriden globally.</p>
@@ -124,7 +127,7 @@ var ast = parser.end(&#39;&quot;&#39;);</code></pre>
   ],
   &quot;comments&quot;: []
 }</code></pre>
-<h4 id="note-on-character-encodings">Note on character encodings</h4>
+<h3 id="encoding-modes">Encoding modes</h3>
 <p>Unlike strings in JavaScript, Lua strings are not Unicode strings, but
 bytestrings (sequences of 8-bit values); likewise, implementations of Lua
 parse the source code as a sequence of octets. However, the input to this
@@ -132,32 +135,21 @@ parser is a JavaScript string, i.e. a sequence of 16-bit code units (not
 necessarily well-formed UTF-16). This poses a problem of how those code
 units should be interpreted, particularly if they are outside the Basic
 Latin block (&#39;ASCII&#39;).</p>
-<p>Currently, this parser handles Unicode input by encoding it in <a href="https://simonsapin.github.io/wtf-8/">WTF-8</a>,
-and reinterpreting the resulting code units as Unicode code points. This
-applies to string literals and (if <code>extendedIdentifiers</code> is enabled) to
-identifiers as well. Lua byte escapes inside string literals are interpreted
-directly as code points, while Lua 5.3 <code>\u{}</code> escapes are similarly decoded
-as UTF-8 code units reinterpreted as code points. It is as if the parser input
-was being interpreted as ISO-8859-1, while actually being encoded in UTF-8.</p>
-<p>This ensures that no otherwise-valid input will be rejected due to encoding
-errors. Assuming the input was originally encoded in UTF-8 (which includes
-the case of only containing ASCII characters), it also preserves the following
-properties:</p>
+<p>The <code>encodingMode</code> option specifies how these issues should be handled.
+Possible values are as follows:</p>
 <ul>
-<li>String literal nodes representing the same string value in Lua (and
-identifier nodes, if <code>extendedIdentifiers</code> is enabled) will have the same
-interpretation in the AST: e.g. the Lua literals <code>&#39;💩&#39;</code>, <code>&#39;\u{1f4a9}&#39;</code> and
-<code>&#39;\240\159\146\169&#39;</code> will all have <code>&quot;\u00f0\u009f\u0092\u00a9&quot;</code> in their
-<code>.value</code> property, and likewise <code>local 💩</code> will have the same string in
-its <code>.name</code> property.</li>
-<li>The <code>.length</code> property of decoded string values in the AST is equal to
-the value that the <code>#</code> operator would return in Lua.</li>
+<li><code>&#39;none&#39;</code>: Source code characters all pass through as-is and string
+literals are not interpreted at all; the string literal nodes contain
+the value <code>null</code>. This is the default mode.</li>
+<li><code>&#39;x-user-defined&#39;</code>: Source code has been decoded with the WHATWG
+<code>x-user-defined</code> encoding; escapes of bytes in the range [0x80, 0xff]
+are mapped to the Unicode range [U+F780, U+F7FF].</li>
+<li><code>&#39;pseudo-latin1&#39;</code>: Source code has been decoded with the IANA
+<code>iso-8859-1</code> encoding; escapes of bytes in the range [0x80, 0xff]
+are mapped to Unicode range [U+0080, U+00FF]. Note that this is
+<strong>not</strong> the same as how WHATWG standards define the <code>iso-8859-1</code>
+encoding, which is to say, as a synonym of <code>windows-1252</code>.</li>
 </ul>
-<p>Maintaining those properties makes the logic of static analysers and code
-transformation tools simpler. However, it poses a problem when displaying
-strings to the user and serialising AST back into a string; to recover the
-original bytestrings, values transformed in this way will have to be encoded
-in ISO-8859-1.</p>
 <h3 id="custom-ast">Custom AST</h3>
 <p>The default AST structure is somewhat inspired by the Mozilla Parser API but
 can easily be overriden to customize the structure or to inject custom logic.</p>

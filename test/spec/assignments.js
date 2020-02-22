@@ -2306,7 +2306,7 @@
                   },
                   "argument": {
                     "type": "StringLiteral",
-                    "value": "",
+                    "value": null,
                     "raw": "\"\"",
                     "loc": {
                       "start": {
@@ -3153,7 +3153,7 @@
     },
     {
       "source": "\"foo\" = 0",
-      "result": "[1:0] unexpected string 'foo' near '='"
+      "result": "[1:0] unexpected string '\"foo\"' near '='"
     },
     {
       "source": "true = 0",
