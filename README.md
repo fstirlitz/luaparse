@@ -65,9 +65,12 @@ The available options are:
 - `luaVersion: '5.1'` The version of Lua the parser will target; supported
   values are `'5.1'`, `'5.2'`, `'5.3'` and `'LuaJIT'`.
 - `extendedIdentifiers: false` Whether to allow code points ≥ U+0080 in
-  identifiers, like LuaJIT does. See 'Note on character encodings' below
-  if you wish to use this option. **Note:** setting `luaVersion: 'LuaJIT'`
+  identifiers, like LuaJIT does. **Note:** setting `luaVersion: 'LuaJIT'`
   currently does *not* enable this option; this may change in the future.
+- `encodingMode: 'none'` Defines the relation between code points ≥ U+0080
+  appearing in parser input and raw bytes in source code, and how Lua escape
+  sequences in JavaScript strings should be interpreted. See the
+  [Encoding modes](#encoding-modes) section below for more information.
 
 The default options are also exposed through `luaparse.defaultOptions` where
 they can be overriden globally.
@@ -123,7 +126,7 @@ then the returned value will be:
 }
 ```
 
-#### Note on character encodings
+### Encoding modes
 
 Unlike strings in JavaScript, Lua strings are not Unicode strings, but
 bytestrings (sequences of 8-bit values); likewise, implementations of Lua
@@ -133,33 +136,20 @@ necessarily well-formed UTF-16). This poses a problem of how those code
 units should be interpreted, particularly if they are outside the Basic
 Latin block ('ASCII').
 
-Currently, this parser handles Unicode input by encoding it in [WTF-8][wtf8],
-and reinterpreting the resulting code units as Unicode code points. This
-applies to string literals and (if `extendedIdentifiers` is enabled) to
-identifiers as well. Lua byte escapes inside string literals are interpreted
-directly as code points, while Lua 5.3 `\u{}` escapes are similarly decoded
-as UTF-8 code units reinterpreted as code points. It is as if the parser input
-was being interpreted as ISO-8859-1, while actually being encoded in UTF-8.
+The `encodingMode` option specifies how these issues should be handled.
+Possible values are as follows:
 
-This ensures that no otherwise-valid input will be rejected due to encoding
-errors. Assuming the input was originally encoded in UTF-8 (which includes
-the case of only containing ASCII characters), it also preserves the following
-properties:
-
-- String literal nodes representing the same string value in Lua (and
-  identifier nodes, if `extendedIdentifiers` is enabled) will have the same
-  interpretation in the AST: e.g. the Lua literals `'💩'`, `'\u{1f4a9}'` and
-  `'\240\159\146\169'` will all have `"\u00f0\u009f\u0092\u00a9"` in their
-  `.value` property, and likewise `local 💩` will have the same string in
-  its `.name` property.
-- The `.length` property of decoded string values in the AST is equal to
-  the value that the `#` operator would return in Lua.
-
-Maintaining those properties makes the logic of static analysers and code
-transformation tools simpler. However, it poses a problem when displaying
-strings to the user and serialising AST back into a string; to recover the
-original bytestrings, values transformed in this way will have to be encoded
-in ISO-8859-1.
+- `'none'`: Source code characters all pass through as-is and string
+  literals are not interpreted at all; the string literal nodes contain
+  the value `null`. This is the default mode.
+- `'x-user-defined'`: Source code has been decoded with the WHATWG
+  `x-user-defined` encoding; escapes of bytes in the range \[0x80, 0xff]
+  are mapped to the Unicode range \[U+F780, U+F7FF].
+- `'pseudo-latin1'`: Source code has been decoded with the IANA
+  `iso-8859-1` encoding; escapes of bytes in the range \[0x80, 0xff]
+  are mapped to Unicode range \[U+0080, U+00FF]. Note that this is
+  **not** the same as how WHATWG standards define the `iso-8859-1`
+  encoding, which is to say, as a synonym of `windows-1252`.
 
 ### Custom AST
 
