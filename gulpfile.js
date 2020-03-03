@@ -22,7 +22,7 @@ gulp.task('build', function() {
   return gulp.src('luaparse.js')
     .pipe(header(banner, { pkg : pkg  } ))
     .pipe(gulp.dest('dist'))
-    .pipe(uglify({ preserveComments: 'some' }))
+    .pipe(uglify({ output: { comments: /^!|@preserve|@license|@cc_on/i } }))
     .pipe(rename({ extname: '.min.js' }))
     .pipe(gulp.dest('dist'));
 });
