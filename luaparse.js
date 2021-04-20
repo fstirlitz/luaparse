@@ -319,6 +319,15 @@
       };
     }
 
+    , compoundAssignmentStatement: function(variables, init, operator) {
+      return {
+          type: 'CompoundAssignmentStatement'
+        , operator: operator
+        , variables: variables
+        , init: init
+      }
+    }
+
     , callStatement: function(expression) {
       return {
           type: 'CallStatement'
@@ -733,6 +742,9 @@
         if (isDecDigit(next)) return scanNumericLiteral();
         if (46 === next) {
           if (46 === input.charCodeAt(index + 2)) return scanVarargLiteral();
+          if (features.compoundAssignments)
+            if (61 === input.charCodeAt(index + 2))
+              return scanPunctuator('..=');
           return scanPunctuator('..');
         }
         return scanPunctuator('.');
@@ -743,13 +755,23 @@
 
       case 62: // >
         if (features.bitwiseOperators)
-          if (62 === next) return scanPunctuator('>>');
+          if (62 === next) {
+            if (features.compoundAssignments)
+              if (61 === input.charCodeAt(index + 2))
+                return scanPunctuator('>>=');
+            return scanPunctuator('>>');
+          }
         if (61 === next) return scanPunctuator('>=');
         return scanPunctuator('>');
 
       case 60: // <
         if (features.bitwiseOperators)
-          if (60 === next) return scanPunctuator('<<');
+          if (60 === next) {
+            if (features.compoundAssignments)
+              if (61 === input.charCodeAt(index + 2))
+                return scanPunctuator('<<=');
+            return scanPunctuator('<<');
+          }
         if (61 === next) return scanPunctuator('<=');
         return scanPunctuator('<');
 
@@ -775,14 +797,24 @@
           if (47 === next) return scanPunctuator('//');
         return scanPunctuator('/');
 
+      case 33: // !
+        if (features.neAlias)
+          if (61 === next)
+            return scanPunctuator('!=');
+        break;
+
       case 38: case 124: // & |
         if (!features.bitwiseOperators)
           break;
 
         /* fall through */
-      case 42: case 94: case 37: case 44: case 123: case 125:
-      case 93: case 40: case 41: case 59: case 35: case 45:
-      case 43: // * ^ % , { } ] ( ) ; # - +
+      case 42: case 94: case 37: case 45: case 43:  // * ^ % - +
+        if (features.compoundAssignments && next===61)
+          return scanPunctuator(input.charAt(index)+"=");
+
+        /* fall through */
+      case 44: case 123: case 125: case 93:
+      case 40: case 41: case 59: case 35: // , { } ] ( ) ; #
         return scanPunctuator(input.charAt(index));
     }
 
@@ -2116,7 +2148,22 @@
       return unexpected(token);
     }
 
-    expect('=');
+    var nodeCreator = ast.assignmentStatement;
+    var assignOperator = '=';
+
+    if (features.compoundAssignments) {
+      switch(token.value) {
+      case '+=' : case '-=' :
+      case '*=' : case '/=' : case '%=' :
+      case '&=' : case '|=' : case '<<=' : case '>>=' :
+      case '..=' :
+        nodeCreator = ast.compoundAssignmentStatement;
+        assignOperator = token.value;
+        break;
+      }
+    }
+
+    expect(assignOperator);
 
     var values = [];
 
@@ -2125,7 +2172,7 @@
     } while (consume(','));
 
     pushLocation(startMarker);
-    return finishNode(ast.assignmentStatement(targets, values));
+    return finishNode(nodeCreator(targets, values, assignOperator));
   }
 
   // ### Non-statements
@@ -2326,7 +2373,7 @@
         case 60: case 62:
             if('<<' === operator || '>>' === operator) return 7; // << >>
             return 3; // <= >=
-        case 61: case 126: return 3; // == ~=
+        case 61: case 126: case 33: return 3; // == ~= !=
         case 111: return 1; // or
       }
     } else if (97 === charCode && 'and' === operator) return 2;
@@ -2587,6 +2634,11 @@
       skipWhitespaceEscape: true,
       strictEscapes: true,
       unicodeEscapes: true
+    },
+    'P8':{
+      compoundAssignments: true,
+      bitwiseOperators: true,
+      neAlias: true
     }
   };
 
