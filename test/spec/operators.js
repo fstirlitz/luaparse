@@ -3411,41 +3411,77 @@
                   "type": "LogicalExpression",
                   "operator": "and",
                   "left": {
-                    "type": "NumericLiteral",
-                    "value": 1,
-                    "raw": "1",
+                    "type": "UnaryExpression",
+                    "operator": "",
+                    "argument": {
+                      "type": "NumericLiteral",
+                      "value": 1,
+                      "raw": "1",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 5
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 6
+                        }
+                      },
+                      "range": [
+                        5,
+                        6
+                      ]
+                    },
                     "loc": {
                       "start": {
                         "line": 1,
-                        "column": 5
+                        "column": 4
                       },
                       "end": {
                         "line": 1,
-                        "column": 6
+                        "column": 7
                       }
                     },
                     "range": [
-                      5,
-                      6
+                      4,
+                      7
                     ]
                   },
                   "right": {
-                    "type": "StringLiteral",
-                    "value": null,
-                    "raw": "\"foo\"",
+                    "type": "UnaryExpression",
+                    "operator": "",
+                    "argument": {
+                      "type": "StringLiteral",
+                      "value": null,
+                      "raw": "\"foo\"",
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 13
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 18
+                        }
+                      },
+                      "range": [
+                        13,
+                        18
+                      ]
+                    },
                     "loc": {
                       "start": {
                         "line": 1,
-                        "column": 13
+                        "column": 12
                       },
                       "end": {
                         "line": 1,
-                        "column": 18
+                        "column": 19
                       }
                     },
                     "range": [
-                      13,
-                      18
+                      12,
+                      19
                     ]
                   },
                   "loc": {
@@ -3464,22 +3500,40 @@
                   ]
                 },
                 "right": {
-                  "type": "NilLiteral",
-                  "value": null,
-                  "raw": "nil",
+                  "type": "UnaryExpression",
+                  "operator": "",
+                  "argument": {
+                    "type": "NilLiteral",
+                    "value": null,
+                    "raw": "nil",
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 24
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 27
+                      }
+                    },
+                    "range": [
+                      24,
+                      27
+                    ]
+                  },
                   "loc": {
                     "start": {
                       "line": 1,
-                      "column": 24
+                      "column": 23
                     },
                     "end": {
                       "line": 1,
-                      "column": 27
+                      "column": 28
                     }
                   },
                   "range": [
-                    24,
-                    27
+                    23,
+                    28
                   ]
                 },
                 "loc": {

@@ -142,11 +142,12 @@
 
   Spec.Test.prototype.equalPrecedence = function (source, expected, options) {
     function normalise(node) {
-      if (!node || typeof node !== 'object')
+      if (typeof node !== 'object')
         return node;
-      node.inParens = null;
+      if (node.type === 'UnaryExpression' && node.operator === '')
+        return normalise(node.argument);
       for (var key in node) if (node.hasOwnProperty(key)) {
-        normalise(node[key]);
+        node[key] = normalise(node[key]);
       }
       return node;
     }
