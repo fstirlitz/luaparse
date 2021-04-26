@@ -959,16 +959,69 @@
     var character = input.charAt(index)
       , next = input.charAt(index + 1);
 
-    var value = ('0' === character && 'xX'.indexOf(next || null) >= 0) ?
+    var literal = ('0' === character && 'xX'.indexOf(next || null) >= 0) ?
       readHexLiteral() : readDecLiteral();
+
+    var foundImaginaryUnit = readImaginaryUnitSuffix()
+      , foundInt64Suffix = readInt64Suffix();
+
+    if (foundInt64Suffix && (foundImaginaryUnit || literal.hasFractionPart)) {
+      raise(null, errors.malformedNumber, input.slice(tokenStart, index));
+    }
 
     return {
         type: NumericLiteral
-      , value: value
+      , value: literal.value
       , line: line
       , lineStart: lineStart
       , range: [tokenStart, index]
     };
+  }
+
+  function readImaginaryUnitSuffix() {
+    if (!features.imaginaryNumbers) return;
+
+    // Imaginary unit number suffix is optional.
+    // See http://luajit.org/ext_ffi_api.html#literals
+    if ('iI'.indexOf(input.charAt(index) || null) >= 0) {
+      ++index;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function readInt64Suffix() {
+    if (!features.integerSuffixes) return;
+
+    // Int64/uint64 number suffix is optional.
+    // See http://luajit.org/ext_ffi_api.html#literals
+
+    if ('uU'.indexOf(input.charAt(index) || null) >= 0) {
+      ++index;
+      if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        ++index;
+        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+          ++index;
+          return 'ULL';
+        } else {
+          // UL but no L
+          raise(null, errors.malformedNumber, input.slice(tokenStart, index));
+        }
+      } else {
+        // U but no L
+        raise(null, errors.malformedNumber, input.slice(tokenStart, index));
+      }
+    } else if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+        ++index;
+        if ('lL'.indexOf(input.charAt(index) || null) >= 0) {
+          ++index;
+          return 'LL';
+        } else {
+          // First L but no second L
+          raise(null, errors.malformedNumber, input.slice(tokenStart, index));
+        }
+    }
   }
 
   // Lua hexadecimals have an optional fraction part and an optional binary
@@ -997,8 +1050,10 @@
     // Convert the hexadecimal digit to base 10.
     digit = parseInt(input.slice(digitStart, index), 16);
 
-    // Fraction part i optional.
+    // Fraction part is optional.
+    var foundFraction = false;
     if ('.' === input.charAt(index)) {
+      foundFraction = true;
       fractionStart = ++index;
 
       while (isHexDigit(input.charCodeAt(index))) ++index;
@@ -1011,7 +1066,9 @@
     }
 
     // Binary exponents are optional
+    var foundBinaryExponent = false;
     if ('pP'.indexOf(input.charAt(index) || null) >= 0) {
+      foundBinaryExponent = true;
       ++index;
 
       // Sign part is optional and defaults to 1 (positive).
@@ -1031,7 +1088,10 @@
       binaryExponent = Math.pow(2, binaryExponent * binarySign);
     }
 
-    return (digit + fraction) * binaryExponent;
+    return {
+      value: (digit + fraction) * binaryExponent,
+      hasFractionPart: foundFraction || foundBinaryExponent
+    };
   }
 
   // Decimal numbers are exactly the same in Lua and in JavaScript, because of
@@ -1041,13 +1101,18 @@
   function readDecLiteral() {
     while (isDecDigit(input.charCodeAt(index))) ++index;
     // Fraction part is optional
+    var foundFraction = false;
     if ('.' === input.charAt(index)) {
+      foundFraction = true;
       ++index;
       // Fraction part defaults to 0
       while (isDecDigit(input.charCodeAt(index))) ++index;
     }
+
     // Exponent part is optional.
+    var foundExponent = false;
     if ('eE'.indexOf(input.charAt(index) || null) >= 0) {
+      foundExponent = true;
       ++index;
       // Sign part is optional.
       if ('+-'.indexOf(input.charAt(index) || null) >= 0) ++index;
@@ -1058,7 +1123,10 @@
       while (isDecDigit(input.charCodeAt(index))) ++index;
     }
 
-    return parseFloat(input.slice(tokenStart, index));
+    return {
+      value: parseFloat(input.slice(tokenStart, index)),
+      hasFractionPart: foundFraction || foundExponent
+    };
   }
 
   function readUnicodeEscapeSequence() {
@@ -2586,7 +2654,9 @@
       hexEscapes: true,
       skipWhitespaceEscape: true,
       strictEscapes: true,
-      unicodeEscapes: true
+      unicodeEscapes: true,
+      imaginaryNumbers: true,
+      integerSuffixes: true
     }
   };
 
