@@ -122,6 +122,8 @@
     try {
       actual = luaparse.parse(source, options);
     } catch (exception) {
+      if (!(exception instanceof luaparse.SyntaxError))
+        throw exception;
       actual = exception.message;
       ok = actual === expected;
     }
@@ -469,11 +471,32 @@
       "type": "Chunk", "body": [{"type": "ReturnStatement", "arguments": [], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 6}}, "range": [15, 21]}], "loc": {"start": {"line": 2, "column": 0}, "end": {"line": 2, "column": 6}}, "range": [15, 21], "comments": []
     }, 'should ignore shebangs');
 
-    this.parseError('', "Lua version '4.0' not supported", { luaVersion: '4.0' });
-    this.parseError('', "Encoding mode 'ebcdic' not supported", { encodingMode: 'ebcdic' });
-    this.parseError('', "Lua version 'hasOwnProperty' not supported", { luaVersion: 'hasOwnProperty' });
+    this.done(11);
+  });
 
-    this.done(14);
+  suite.addTest('Option validation', function() {
+    var optionErrors = [
+      { options: { luaVersion: '4.0' }
+      , message: "Lua version '4.0' not supported"
+      },
+
+      { options: { encodingMode: 'ebcdic' }
+      , message: "Encoding mode 'ebcdic' not supported"
+      },
+
+      { options: { luaVersion: 'hasOwnProperty' }
+      , message: "Lua version 'hasOwnProperty' not supported"
+      },
+    ];
+
+    /*jshint loopfunc:true */
+    for (var i = 0; i < optionErrors.length; ++i) {
+      this.error(function () {
+        return luaparse.parse('', optionErrors[i].options);
+      }, optionErrors[i].message);
+    }
+
+    this.done(optionErrors.length);
   });
 
   suite.addTest('Interpretation of literals', function () {
@@ -630,6 +653,8 @@
         try {
           luaparse.parse("return " + cases[i].src, opts);
         } catch (e) {
+          if (!(e instanceof luaparse.SyntaxError))
+            throw e;
           ok = true;
         }
         this.ok(ok, { 'message': label });
