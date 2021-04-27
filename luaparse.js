@@ -565,6 +565,8 @@
 
   // ### Error functions
 
+  exports.SyntaxError = SyntaxError;
+
   // XXX: Eliminate this function and change the error type to be different from SyntaxError.
   // This will unfortunately be a breaking change, because some downstream users depend
   // on the error thrown being an instance of SyntaxError. For example, the Ace editor:

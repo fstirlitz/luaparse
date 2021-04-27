@@ -103,6 +103,8 @@ function done() {
       message = beautify ? JSON.stringify(ast, null, '  ')
         : JSON.stringify(ast);
     } catch(e) {
+      if (!(e instanceof luaparse.SyntaxError))
+        throw e;
       message = util.format("%s: %s", snippet.name, e.message);
       if (verbose) console.log(e.stack);
       success = false;

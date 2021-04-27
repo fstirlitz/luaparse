@@ -124,12 +124,16 @@ function scaffoldTestAssertion(snippet, options) {
       // For some reason it didnt throw a error.
       notifications.push('\x1B[33mExpected failure: \x1B[0m' + name);
     } catch (exception) {
+      if (!(exception instanceof luaparse.SyntaxError))
+        throw exception;
       expected = exception.message;
     }
   } else {
     try {
       expected = luaparse.parse(snippet, options);
     } catch (exception) {
+      if (!(exception instanceof luaparse.SyntaxError))
+        throw exception;
       notifications.push('\x1B[31m' + exception + ':\x1B[0m ' + name);
       success = false;
     }
