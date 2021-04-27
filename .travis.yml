@@ -6,12 +6,12 @@ before_install:
   - sudo chown "$USER:" /opt
   - sudo apt-get update -qq
   - sudo apt-get install -qq make gcc
-  - PACKAGE=duktape-2.4.0; ( cd /opt && wget "https://duktape.org/$PACKAGE.tar.xz" && tar xf "$PACKAGE.tar.xz" && make -C "$PACKAGE/" -f Makefile.cmdline DEFINES=-DDUK_CMDLINE_FILEIO && sudo install -Dm755 "$PACKAGE/duk" /usr/local/bin/duk && rm -rf "$PACKAGE.tar.xz" "$PACKAGE/" )
-  - PACKAGE=quickjs; VERSION=2020-07-05; ( cd /opt && git clone --bare 'https://gitlab.com/felix.s-git-mirrors/quickjs.git' && git --git-dir=quickjs.git worktree add "$PACKAGE/" "$VERSION" && make -C "$PACKAGE/" qjs && sudo install -Dm755 "$PACKAGE/qjs" /usr/local/bin/qjs && rm -rf "quickjs.git" "$PACKAGE/" )
-  - PACKAGE=Rhino1_7R4_RELEASE; wget https://github.com/mozilla/rhino/archive/$PACKAGE.zip && unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip
-  - PACKAGE=Rhino1_7R4_RELEASE; echo -e '#!/bin/sh\njava -jar /opt/Rhino1_7R4_RELEASE/js.jar $@' | sudo tee /usr/local/bin/rhino && sudo chmod +x /usr/local/bin/rhino
-  - PACKAGE=ringojs-0.9; wget http://ringojs.org/downloads/$PACKAGE.zip && unzip $PACKAGE -d /opt/ && rm $PACKAGE.zip
-  - PACKAGE=ringojs-0.9; sudo ln -s /opt/$PACKAGE/bin/ringo /usr/local/bin/ringo && sudo chmod +x /usr/local/bin/ringo
+  - PACKAGE=duktape-2.6.0; ( cd /opt && wget "https://duktape.org/$PACKAGE.tar.xz" && tar xf "$PACKAGE.tar.xz" && make -C "$PACKAGE/" -f Makefile.cmdline DEFINES=-DDUK_CMDLINE_FILEIO && sudo install -Dm755 "$PACKAGE/duk" /usr/local/bin/duk && rm -rf "$PACKAGE.tar.xz" "$PACKAGE/" )
+  - PACKAGE=quickjs; VERSION=2021-03-27; ( cd /opt && git clone --bare --single-branch --depth=1 --branch="$VERSION" 'https://gitlab.com/felix.s-git-mirrors/quickjs.git' && git --git-dir=quickjs.git worktree add "$PACKAGE/" "$VERSION" && make -C "$PACKAGE/" qjs && sudo install -Dm755 "$PACKAGE/qjs" /usr/local/bin/qjs && rm -rf "quickjs.git" "$PACKAGE/" )
+  - PACKAGE=Rhino1_7_13_Release; wget "https://github.com/mozilla/rhino/archive/$PACKAGE.zip" && unzip "$PACKAGE" -d /opt/ && rm "$PACKAGE.zip"
+  - PACKAGE=Rhino1_7_13_Release; echo -e "#!/bin/sh\\nexec java -jar /opt/'$PACKAGE'/js.jar \"\$@\"" | sudo tee /usr/local/bin/rhino && sudo chmod +x /usr/local/bin/rhino
+  - PACKAGE=ringojs-2.0.0; wget "https://github.com/ringo/ringojs/releases/download/v${PACKAGE#*-}/$PACKAGE.zip" && unzip "$PACKAGE" -d /opt/ && rm "$PACKAGE.zip"
+  - PACKAGE=ringojs-2.0.0; sudo ln -s "/opt/$PACKAGE/bin/ringo" /usr/local/bin/ringo && sudo chmod +x /usr/local/bin/ringo
 before_deploy:
   - make build
 deploy:
