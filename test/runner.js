@@ -267,7 +267,12 @@
           visitKey('base');
           visitKey('argument');
           break;
+        case 'IdentifierWithAttribute':
+          visitKey('name');
+          visitKey('attribute');
+          break;
         case 'Identifier':
+        case 'Attribute':
         case 'NumericLiteral':
         case 'BooleanLiteral':
         case 'StringLiteral':

@@ -55,3 +55,10 @@ local a = { b = { z = 1 } }
 local Дождь = {}                        -- FAIL
 // { "extendedIdentifiers": true }
 local Дождь = {}
+// { "luaVersion": "5.4" }
+local x <close> = {}
+local x <const> = {}
+local x <0> = {}                        -- FAIL
+local x <+> = {}                        -- FAIL
+local x <xyzzy> = {}                    -- FAIL
+local x = {}

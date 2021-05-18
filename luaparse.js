@@ -218,6 +218,7 @@
     , gotoJumpInLocalScope: '<goto %1> jumps into the scope of local \'%2\''
     , cannotUseVararg: 'cannot use \'...\' outside a vararg function near \'%1\''
     , invalidCodeUnit: 'code unit U+%1 is not allowed in the current encoding mode'
+    , unknownAttribute: 'unknown attribute \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -363,10 +364,25 @@
       };
     }
 
+    , attribute: function(name) {
+      return {
+          type: 'Attribute'
+        , name: name
+      };
+    }
+
     , identifier: function(name) {
       return {
           type: 'Identifier'
         , name: name
+      };
+    }
+
+    , identifierWithAttribute: function(name, attribute) {
+      return {
+          type: 'IdentifierWithAttribute'
+        , name: name
+        , attribute: attribute
       };
     }
 
@@ -2074,6 +2090,8 @@
 
   function parseLocalStatement(flowContext) {
     var name
+      , attribute
+      , marker
       , declToken = previousToken;
 
     if (Identifier === token.type) {
@@ -2081,9 +2099,22 @@
         , init = [];
 
       do {
+        if (trackLocations) marker = createLocationMarker();
+
         name = parseIdentifier();
 
-        variables.push(name);
+        attribute = null;
+        if (features.attributes) {
+          attribute = parseAttribute();
+        }
+
+        if (attribute !== null) {
+          if (trackLocations) pushLocation(marker);
+          variables.push(finishNode(ast.identifierWithAttribute(name, attribute)));
+        } else {
+          variables.push(name);
+        }
+
         flowContext.addLocal(name.name, declToken);
       } while (consume(','));
 
@@ -2220,6 +2251,21 @@
     if (Identifier !== token.type) raiseUnexpectedToken('<name>', token);
     next();
     return finishNode(ast.identifier(identifier));
+  }
+
+  function parseAttribute() {
+    markLocation();
+    if (consume('<')) {
+      if (Identifier !== token.type) raiseUnexpectedToken('<name>', token);
+      var identifier = token.value;
+      if (!features.attributes[identifier])
+        raise(token, errors.unknownAttribute, identifier);
+      next();
+      expect('>');
+      return finishNode(ast.attribute(identifier));
+    }
+    if (trackLocations) locations.pop();
+    return null;
   }
 
   // Parse the functions parameters and body block. The name should already
@@ -2669,7 +2715,8 @@
       bitwiseOperators: true,
       integerDivision: true,
       relaxedBreak: true,
-      noLabelShadowing: true
+      noLabelShadowing: true,
+      attributes: { 'const': true, 'close': true }
     },
     'LuaJIT': {
       // XXX: LuaJIT language features may depend on compilation options; may need to

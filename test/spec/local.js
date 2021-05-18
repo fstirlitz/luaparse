@@ -2803,6 +2803,382 @@
         "scope": true,
         "extendedIdentifiers": true
       }
+    },
+    {
+      "source": "local x <close> = {}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "LocalStatement",
+            "variables": [
+              {
+                "type": "IdentifierWithAttribute",
+                "name": {
+                  "type": "Identifier",
+                  "name": "x",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 6
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    6,
+                    7
+                  ]
+                },
+                "attribute": {
+                  "type": "Attribute",
+                  "name": "close",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 8
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 15
+                    }
+                  },
+                  "range": [
+                    8,
+                    15
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15
+                  }
+                },
+                "range": [
+                  6,
+                  15
+                ],
+                "isLocal": true
+              }
+            ],
+            "init": [
+              {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 18
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  18,
+                  20
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 20
+              }
+            },
+            "range": [
+              0,
+              20
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 20
+          }
+        },
+        "range": [
+          0,
+          20
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "extendedIdentifiers": true,
+        "luaVersion": "5.4"
+      }
+    },
+    {
+      "source": "local x <const> = {}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "LocalStatement",
+            "variables": [
+              {
+                "type": "IdentifierWithAttribute",
+                "name": {
+                  "type": "Identifier",
+                  "name": "x",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 6
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    6,
+                    7
+                  ]
+                },
+                "attribute": {
+                  "type": "Attribute",
+                  "name": "const",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 8
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 15
+                    }
+                  },
+                  "range": [
+                    8,
+                    15
+                  ]
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15
+                  }
+                },
+                "range": [
+                  6,
+                  15
+                ],
+                "isLocal": true
+              }
+            ],
+            "init": [
+              {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 18
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 20
+                  }
+                },
+                "range": [
+                  18,
+                  20
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 20
+              }
+            },
+            "range": [
+              0,
+              20
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 20
+          }
+        },
+        "range": [
+          0,
+          20
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "extendedIdentifiers": true,
+        "luaVersion": "5.4"
+      }
+    },
+    {
+      "source": "local x <0> = {}",
+      "result": "[1:9] <name> expected near '0'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "extendedIdentifiers": true,
+        "luaVersion": "5.4"
+      }
+    },
+    {
+      "source": "local x <+> = {}",
+      "result": "[1:9] <name> expected near '+'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "extendedIdentifiers": true,
+        "luaVersion": "5.4"
+      }
+    },
+    {
+      "source": "local x <xyzzy> = {}",
+      "result": "[1:9] unknown attribute 'xyzzy'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "extendedIdentifiers": true,
+        "luaVersion": "5.4"
+      }
+    },
+    {
+      "source": "local x = {}",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "LocalStatement",
+            "variables": [
+              {
+                "type": "Identifier",
+                "name": "x",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 7
+                  }
+                },
+                "range": [
+                  6,
+                  7
+                ],
+                "isLocal": true
+              }
+            ],
+            "init": [
+              {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 10
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "range": [
+                  10,
+                  12
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 12
+              }
+            },
+            "range": [
+              0,
+              12
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 12
+          }
+        },
+        "range": [
+          0,
+          12
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "extendedIdentifiers": true,
+        "luaVersion": "5.4"
+      }
     }
   ];
 }));
