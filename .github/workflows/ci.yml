@@ -1,0 +1,164 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 15.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 15.x
+      - run: npm ci
+      - run: make lint complexity-analysis
+
+  run-tests-node:
+    name: Test in Node.js
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [10.x, 12.x, 14.x, 15.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js ${{ matrix.version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.version }}
+      - run: node test/runner.js --console
+
+  run-tests-rhino:
+    name: Test in Rhino
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [1.7.13]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download Rhino ${{ matrix.version }}
+        run: |
+          VERSION="${{ matrix.version }}"
+          wget "https://github.com/mozilla/rhino/releases/download/Rhino${VERSION//./_}_Release/rhino-$VERSION.jar" -O /opt/rhino.jar
+      - name: Run tests
+        run: cd test; java -jar /opt/rhino.jar -opt -1 runner.js
+
+  run-tests-ringojs:
+    name: Test in RingoJS
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [2.0.0]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download and unpack RingoJS ${{ matrix.version }}
+        run: |
+          VERSION="${{ matrix.version }}"
+          wget "https://github.com/ringo/ringojs/releases/download/v${VERSION}/ringojs-${VERSION}.zip"
+          unzip "ringojs-${VERSION}.zip" -d /opt/
+          rm "ringojs-${VERSION}.zip"
+      - name: Install RingoJS ${{ matrix.version }}
+        run: |
+          VERSION="${{ matrix.version }}"
+          sed -i -e '/-jar/ i \    -Dringo.classpath="$RINGO_HOME/lib/**" \\' "/opt/ringojs-${VERSION}/bin/ringo"
+          sudo ln -s "/opt/ringojs-${VERSION}/bin/ringo" /usr/local/bin/ringo
+          sudo chmod +x /usr/local/bin/ringo
+      - name: Run tests
+        run: ringo -o -1 test/runner.js 2>&1
+
+  run-tests-quickjs:
+    name: Test in QuickJS
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['2020-09-06', '2020-11-08', '2021-03-27']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install QuickJS ${{ matrix.version }}
+        run: |
+          wget "https://bellard.org/quickjs/binary_releases/quickjs-linux-x86_64-${{ matrix.version }}.zip" -O quickjs.zip
+          unzip quickjs.zip qjs
+          sudo install -Dm755 qjs /usr/local/bin/qjs
+      - name: Run tests
+        # XXX: The default QuickJS stack size limit is 256 KiB;
+        # QuickJS likes to throw stack overflow errors when running the test suite at that limit,
+        # so we increase it to 8 MiB. The issue is intermittent and non-deterministic;
+        # it may or may not be an engine bug
+        run: cd test; qjs --stack-size 8388608 --std runner.js
+
+  run-tests-duktape:
+    name: Test in Duktape
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [2.4.0, 2.5.0, 2.6.0]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and install Duktape ${{ matrix.version }}
+        run: |
+          PACKAGE="duktape-${{ matrix.version }}"
+          cd /opt
+          wget "https://duktape.org/$PACKAGE.tar.xz"
+          tar xf "$PACKAGE.tar.xz"
+          make -C "$PACKAGE/" -f Makefile.cmdline DEFINES=-DDUK_CMDLINE_FILEIO
+          sudo install -Dm755 "$PACKAGE/duk" /usr/local/bin/duk
+          rm -rf "$PACKAGE.tar.xz" "$PACKAGE/"
+      - name: Run tests
+        run: cd test; duk runner.js
+
+  check-coverage:
+    name: Coverage analysis
+    needs: [run-tests-node, run-tests-rhino, run-tests-ringojs, run-tests-quickjs, run-tests-duktape]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: make coverage-analysis
+
+  update-docs:
+    name: Update documentation
+    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/master' }}
+    needs: check-coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          ref: refs/heads/gh-pages
+          path: gh-pages
+      - name: Check out luaparse
+        uses: actions/checkout@v2
+        with:
+          path: luaparse
+      - name: Rebuild documentation
+        run: |
+          ( cd luaparse && npm ci && make docs )
+          rm -rf gh-pages/coverage gh-pages/examples gh-pages/lib gh-pages/benchmarks
+          mv luaparse/docs/* gh-pages/
+          mv luaparse/examples gh-pages/
+          mv luaparse/luaparse.js gh-pages/
+          mv luaparse/benchmarks gh-pages/
+          cp -rf luaparse/test gh-pages/
+          cd gh-pages
+          git add .
+          git config --local user.email "actions@github.com.invalid"
+          git config --local user.name "GitHub Actions hook"
+          git commit --message "Rebuild documentation"
+      - name: Upload updated documentation to GitHub Pages
+        run: |
+          cd gh-pages
+          git push origin gh-pages
