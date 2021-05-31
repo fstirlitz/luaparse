@@ -1,0 +1,162 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+    name: Linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 15.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 15.x
+      - run: npm ci
+      - run: make lint complexity-analysis
+
+  run-tests:
+    name: Testsuite
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - engine: ringojs
+            version: 2.0.0
+          - engine: rhino
+            version: 1.7.13
+          - engine: quickjs
+            version: '2020-09-06'
+          - engine: quickjs
+            version: '2020-11-08'
+          - engine: quickjs
+            version: '2021-03-27'
+          - engine: node.js
+            version: 10.x
+          - engine: node.js
+            version: 12.x
+          - engine: node.js
+            version: 14.x
+          - engine: node.js
+            version: 15.x
+          - engine: duktape
+            version: 2.4.0
+          - engine: duktape
+            version: 2.5.0
+          - engine: duktape
+            version: 2.6.0
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Duktape
+      - name: Install Duktape ${{ matrix.version }}
+        if: ${{ matrix.engine == 'duktape' }}
+        run: |
+          PACKAGE="duktape-${{ matrix.version }}"
+          cd /opt
+          wget "https://duktape.org/$PACKAGE.tar.xz"
+          tar xf "$PACKAGE.tar.xz"
+          make -C "$PACKAGE/" -f Makefile.cmdline DEFINES=-DDUK_CMDLINE_FILEIO
+          sudo install -Dm755 "$PACKAGE/duk" /usr/local/bin/duk
+          rm -rf "$PACKAGE.tar.xz" "$PACKAGE/"
+      - name: Run tests
+        if: ${{ matrix.engine == 'duktape' }}
+        run: cd test; duk runner.js
+
+      # Node.js
+      - name: Install Node.js ${{ matrix.version }}
+        if: ${{ matrix.engine == 'node.js' }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.version }}
+      - run: node test/runner.js --console
+        if: ${{ matrix.engine == 'node.js' }}
+
+      # QuickJS
+      - name: Install QuickJS ${{ matrix.version }}
+        if: ${{ matrix.engine == 'quickjs' }}
+        run: |
+          cd /opt
+          git clone --bare 'https://gitlab.com/felix.s-git-mirrors/quickjs.git'
+          git --git-dir=quickjs.git worktree add quickjs "${{ matrix.version }}"
+          make -C quickjs qjs
+          sudo install -Dm755 quickjs/qjs /usr/local/bin/qjs
+          rm -rf quickjs.git quickjs
+      - name: Run tests
+        if: ${{ matrix.engine == 'quickjs' }}
+        # XXX: The default QuickJS stack size limit is 256 KiB;
+        # QuickJS likes to throw stack overflow errors when running the test suite at that limit,
+        # so we increase it to 8 MiB. The issue is intermittent and non-deterministic;
+        # it may or may not be an engine bug
+        run: cd test; qjs --stack-size 8388608 --std runner.js
+
+      # Rhino
+      - name: Download Rhino ${{ matrix.version }}
+        if: ${{ matrix.engine == 'rhino' }}
+        run: |
+          VERSION="${{ matrix.version }}"
+          wget "https://github.com/mozilla/rhino/releases/download/Rhino${VERSION//./_}_Release/rhino-$VERSION.jar" -O /opt/rhino.jar
+      - name: Run tests
+        if: ${{ matrix.engine == 'rhino' }}
+        run: cd test; java -jar /opt/rhino.jar -opt -1 runner.js
+
+      # RingoJS
+      - name: Download and unpack RingoJS ${{ matrix.version }}
+        if: ${{ matrix.engine == 'ringojs' }}
+        run: |
+          VERSION="${{ matrix.version }}"
+          wget "https://github.com/ringo/ringojs/releases/download/v${VERSION}/ringojs-${VERSION}.zip"
+          unzip "ringojs-${VERSION}.zip" -d /opt/
+          rm "ringojs-${VERSION}.zip"
+      - name: Install RingoJS ${{ matrix.version }}
+        if: ${{ matrix.engine == 'ringojs' }}
+        run: |
+          VERSION="${{ matrix.version }}"
+          sed -i -e '/-jar/ i \    -Dringo.classpath="$RINGO_HOME/lib/**" \\' "/opt/ringojs-${VERSION}/bin/ringo"
+          sudo ln -s "/opt/ringojs-${VERSION}/bin/ringo" /usr/local/bin/ringo
+          sudo chmod +x /usr/local/bin/ringo
+      - name: Run tests
+        if: ${{ matrix.engine == 'ringojs' }}
+        run: ringo -o -1 test/runner.js 2>&1
+
+  check-coverage:
+    name: Coverage analysis
+    needs: run-tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: make coverage-analysis
+
+  update-docs:
+    name: Update documentation
+    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/master' }}
+    needs: check-coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - env:
+          UPLOAD_KEY_PASSPHRASE: ${{ secrets.UPLOAD_KEY_PASSPHRASE }}
+        run: |
+          eval `ssh-agent -s`
+          export SSH_ASKPASS="$(mktemp ./askpass.sh.XXXXXXXXXXXX)"
+          printf %s '#!/bin/sh\nprintf %s "${UPLOAD_KEY_PASSPHRASE}"' > "$SSH_ASKPASS"
+          chmod +x "$SSH_ASKPASS"
+          export UPLOAD_KEY_PASSPHRASE
+          DISPLAY=none ssh-add .github/workflows/upload-key.id_rsa < /dev/null
+          unset UPLOAD_KEY_PASSPHRASE
+          git clone --depth=1 --branch gh-pages git@github.com:fstirlitz/luaparse.git gh-pages
+          cd gh-pages
+          make
+          git add .
+          git commit --message "build documentation"
+          git push origin gh-pages
