@@ -1465,7 +1465,7 @@
 
   // Create a new scope inheriting all declarations from the previous scope.
   function createScope() {
-    var scope = Array.apply(null, scopes[scopeDepth++]);
+    var scope = scopes[scopeDepth++].slice();
     scopes.push(scope);
     if (options.onCreateScope) options.onCreateScope();
   }
