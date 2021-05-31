@@ -1,4 +1,4 @@
-# luaparse [![Build Status](https://travis-ci.org/fstirlitz/luaparse.svg?branch=master)](https://travis-ci.org/fstirlitz/luaparse)
+# luaparse
 
 A Lua parser written in JavaScript, originally written by Oskar Schöldström for his bachelor's thesis at Arcada.
 
