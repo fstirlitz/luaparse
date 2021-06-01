@@ -31,7 +31,6 @@
   "devDependencies": {
     "benchmark": "~1.0.0",
     "complexity-report": "~0.10.5",
-    "docco": "^0.8.0",
     "gulp": "^4.0.0",
     "gulp-add-src": "^1.0.0",
     "gulp-filelog": "^0.4.1",
