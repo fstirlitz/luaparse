@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Luaparse</title>
+  <style>
+    body {
+      font-family: arial;
+      max-width: 1000px;
+      margin: 1em auto;
+    }
+    #editor {
+      width: 50%;
+      height: 500px;
+      position: relative;
+    }
+    #tree {
+      padding-left: 2%;
+      font-size: 11px;
+    }
+    #editor, #tree {
+      float: left;
+    }
+    .ygtvlabel {
+      white-space: nowrap;
+    }
+    #parse, #analyze { display: none; }
+    th { text-align: left; }
+    table { margin-bottom: 2em; }
+    td { padding-right: 2em; }
+  </style>
+</head>
+<body>
+  <button id="parse">Parse</button>
+  <button id="analyze">Analyze</button>
+
+  <div id="results"></div>
+<script src="../luaparse.js"></script>
+<script src="js/walker.js"></script>
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script>
+  (function(window, $, luaparse, walker) {
+    var path = window.location.href.replace(/([^\/]+)\/([^\/]+)$/, '')
+      , script = path + 'benchmarks/lib/ParseLua.lua'
+      , ast
+      , source;
+
+    function sortStats(stats) {
+      var sortable = [];
+      for (var key in stats) if (stats.hasOwnProperty(key)) {
+        sortable.push({ type: key, count: stats[key] });
+      }
+      sortable.sort(function(a, b) { return b.count - a.count; });
+      return sortable;
+    }
+
+    function createTable(name, stats) {
+      var caption = '<caption>' + name + '</caption>'
+        , thead = '<thead><tr><th>Type</th><th>Count</th></tr></thead>'
+        , tbody = '<tbody>'
+        , total = 0
+        , tfoot, res, i;
+
+      for (i = 0; i < stats.length; i++) {
+        res = stats[i];
+        total += res.count;
+        tbody += '<tr><td>' + res.type + '</td><td>' + res.count + '</td></tr>';
+      }
+
+      tbody += '</tbody>';
+
+      tfoot = '<tfoot><tr><th></th><th>' + total +'</th></tr></tfoot>';
+
+      return '<table>' + caption + thead + tbody + tfoot + '</table>';
+    }
+
+    $.get(script, function(data) {
+      source = data;
+      $('#parse').show();
+    });
+
+    $('#parse').on('click', function() {
+      ast = luaparse.parse(source);
+      $('#analyze').show();
+    });
+
+    $('#analyze').on('click', function() {
+        var nodes = {}
+          , expressions = {};
+
+      function increment(stats, type) {
+        if (!stats[type]) stats[type] = 1;
+        else stats[type]++;
+      }
+
+      walker(ast, function(node) {
+        increment(nodes, node.type);
+
+        switch (node.type) {
+          case 'BinaryExpression':
+          case 'LogicalExpression':
+          case 'UnaryExpression':
+            increment(expressions, node.operator);
+            break;
+        }
+      });
+
+      expressions = sortStats(expressions);
+      nodes = sortStats(nodes);
+
+      var $results = $('#results');
+      $results.append(createTable('Node types', nodes));
+      $results.append(createTable('Operators', expressions));
+    });
+  }(this, this.jQuery, this.luaparse, this.walker));
+</script>
+</body>
+</html>
