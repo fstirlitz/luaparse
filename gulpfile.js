@@ -6,7 +6,6 @@ var gulp = require('gulp')
   , jshint = require('gulp-jshint')
   , filelog = require('gulp-filelog')
   , addsrc = require('gulp-add-src')
-  , striphtml = require('gulp-striphtml')
   , pkg = require('./package.json')
   , banner = [
       '/*!'
@@ -17,6 +16,67 @@ var gulp = require('gulp')
     , ' */'
     , ''
   ].join('\n');
+
+var striphtml = (function () {
+  /* globals Buffer: true */
+  'use strict';
+
+  var PluginError = require('plugin-error')
+    , through = require('through2');
+
+  function removeHTML(src, patterns) {
+    var lines = src.split('\n')
+      , scriptSection = false
+      , commentingSection = false;
+
+    lines.forEach(function (line, i) {
+      var starts = (/<script/i).test(line)
+        , stops = (/<\/script/i).test(line)
+        , commentStart = (/<!--/).test(line)
+        , commentStop = (/-->/).test(line);
+
+      if (starts && !(starts && stops)) {
+        var type = line.match(/<script[^>]*type=['"]?([^\s"']*)[^>]*>/i);
+        scriptSection = (type === null || type[1] === 'text/javascript');
+        lines[i] = '';
+      } else if (stops) {
+        scriptSection = false;
+      }
+
+      if(!scriptSection && commentStart){
+        commentingSection = true;
+      }
+
+      if (!scriptSection || commentingSection) {
+        lines[i] = '';
+      }
+
+      if(commentStop){
+        commentingSection = false;
+      }
+    });
+
+    return lines.join('\n');
+  }
+
+  return function (options) {
+    return through.obj(function processContent(file, enc, cb) {
+      if (file.isNull()) {
+        cb(null, file);
+        return;
+      }
+      if (file.isStream()) {
+        cb(new PluginError('gulp-striphtml', 'Streaming not supported'));
+        return;
+      }
+
+      var res = removeHTML(file.contents.toString());
+      file.contents = new Buffer(res);
+      this.push(file);
+      cb();
+    });
+  };
+})();
 
 gulp.task('build', function() {
   return gulp.src('luaparse.js')
