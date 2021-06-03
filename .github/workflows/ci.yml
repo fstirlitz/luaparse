@@ -139,26 +139,26 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: refs/heads/gh-pages
-          path: gh-pages
+          path: .
       - name: Check out luaparse
         uses: actions/checkout@v2
         with:
           path: luaparse
       - name: Rebuild documentation
         run: |
-          ( cd luaparse && npm ci && make docs )
-          rm -rf gh-pages/coverage gh-pages/examples gh-pages/lib gh-pages/benchmarks
-          mv luaparse/docs/* gh-pages/
-          mv luaparse/examples gh-pages/
-          mv luaparse/luaparse.js gh-pages/
-          mv luaparse/benchmarks gh-pages/
-          cp -rf luaparse/test gh-pages/
-          cd gh-pages
-          git add .
-          git config --local user.email "actions@github.com.invalid"
-          git config --local user.name "GitHub Actions hook"
-          git commit --message "Rebuild documentation"
+          rm -rf coverage examples lib benchmarks
+          sed -i -e 's/\.\.\///g' luaparse/docs/layout/head.html luaparse/docs/*.md
+          make -C luaparse install docs
+          mv luaparse/docs/* .
+          mv luaparse/examples .
+          mv luaparse/luaparse.js .
+          mv luaparse/benchmarks .
+          cp -rf luaparse/test .
+          rm -rf *.md layout luaparse public
       - name: Upload updated documentation to GitHub Pages
         run: |
-          cd gh-pages
+          git add .
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions"
+          git commit --message "Rebuild documentation"
           git push origin gh-pages
