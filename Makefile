@@ -21,7 +21,6 @@ lint:
 
 install:
 	npm install
-	bower install
 
 # This is required if mocha, expect or benchmark is updated.
 update:
@@ -30,9 +29,9 @@ update:
 
 # Usage: make VERSION=0.1.0 version-bump
 version-bump:
-	sed -i 's|\("version": "\)[^"]*\("\)|\1$(VERSION)\2|' {bower,package,component}.json
+	sed -i 's|\("version": "\)[^"]*\("\)|\1$(VERSION)\2|' {package,component}.json
 	sed -i "s|\(exports\.version = '\)[^']*\('\)|\1$(VERSION)\2|" luaparse.js
-	git add {package,bower,component}.json luaparse.js
+	git add {package,component}.json luaparse.js
 	git commit -m "Version $(VERSION)"
 	git tag -a "v$(VERSION)" -m "v$(VERSION)"
 

@@ -98,7 +98,7 @@ gulp.task('lint', function() {
       , './test/{,spec}/*.js'
       , './{examples,benchmarks}/**/*.{js,json}'
       , '{bin,scripts}/*'
-      , '.{bowerrc,jshintrc}'
+      , '.jshintrc'
     ]))
     .pipe(filelog())
     .pipe(jshint())

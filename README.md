@@ -4,7 +4,7 @@ A Lua parser written in JavaScript, originally written by Oskar Schöldström fo
 
 ## Installation
 
-Install through `bower install luaparse` or `npm install luaparse`.
+Install through `npm install luaparse`.
 
 ## Usage
 
@@ -258,8 +258,7 @@ _TL;DR simply run `make qa`. This will run all quality assurance scripts but
 assumes you have it set up correctly._
 
 Begin by cloning the repository and installing the development dependencies
-with `npm install`. To test AMD loading for browsers you should run `bower
-install` which will download RequireJS.
+with `npm install`.
 
 The luaparse test suite uses [testem](https://github.com/airportyh/testem) as a
 test runner, and because of this it's very easy to run the tests using
