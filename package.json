@@ -1,6 +1,6 @@
 {
   "name": "luaparse",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A Lua parser in JavaScript",
   "keywords": [
     "ast",
@@ -19,7 +19,9 @@
     "bin/luaparse"
   ],
   "main": "luaparse.js",
-  "bin": "./bin/luaparse",
+  "bin": {
+    "luaparse": "bin/luaparse"
+  },
   "man": "./docs/luaparse.1",
   "repository": {
     "type": "git",
