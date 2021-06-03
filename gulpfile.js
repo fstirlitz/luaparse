@@ -105,3 +105,19 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
 });
+
+gulp.task('version-bump', function () {
+  var through = require('through2');
+
+  return gulp.src('luaparse.js')
+    .pipe(through.obj(function processContent(file, enc, cb) {
+      var data = file.contents.toString();
+      file.contents = new Buffer(data.replace(
+        /(exports\.version\s*=\s*)(?:'[^']+'|"[^"]+")(;)/, function (_, s0, s1) {
+          return s0 + JSON.stringify(pkg.version) + s1;
+        }));
+      this.push(file);
+      cb();
+    }))
+    .pipe(gulp.dest('.'));
+});

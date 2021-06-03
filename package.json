@@ -26,7 +26,8 @@
     "url": "https://github.com/fstirlitz/luaparse.git"
   },
   "scripts": {
-    "test": "make qa"
+    "test": "make qa",
+    "version": "make version-bump"
   },
   "devDependencies": {
     "benchmark": "~1.0.0",

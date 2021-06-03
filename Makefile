@@ -27,13 +27,9 @@ update:
 	cp -v $(LIB)/spec/lib/* test/lib/
 	cp -v $(LIB)/benchmark/benchmark.js test/lib/
 
-# Usage: make VERSION=0.1.0 version-bump
 version-bump:
-	sed -i 's|\("version": "\)[^"]*\("\)|\1$(VERSION)\2|' {package,component}.json
-	sed -i "s|\(exports\.version = '\)[^']*\('\)|\1$(VERSION)\2|" luaparse.js
-	git add {package,component}.json luaparse.js
-	git commit -m "Version $(VERSION)"
-	git tag -a "v$(VERSION)" -m "v$(VERSION)"
+	$(BIN)/gulp version-bump
+	git add luaparse.js
 
 .PHONY: install update version-bump
 
