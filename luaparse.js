@@ -461,6 +461,7 @@
           type: 'TableCallExpression'
         , base: base
         , 'arguments': args
+        , argument: args
       };
     }
 
