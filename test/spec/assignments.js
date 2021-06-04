@@ -2516,6 +2516,24 @@
                       3
                     ]
                   },
+                  "argument": {
+                    "type": "TableConstructorExpression",
+                    "fields": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      1,
+                      3
+                    ]
+                  },
                   "loc": {
                     "start": {
                       "line": 1,
