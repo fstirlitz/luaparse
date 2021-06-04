@@ -4728,6 +4728,24 @@
                   8
                 ]
               },
+              "argument": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 8
+                  }
+                },
+                "range": [
+                  6,
+                  8
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -5475,6 +5493,24 @@
                     3
                   ]
                 },
+                "argument": {
+                  "type": "TableConstructorExpression",
+                  "fields": [],
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    1,
+                    3
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
@@ -5607,6 +5643,24 @@
                 "isLocal": false
               },
               "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 3
+                  }
+                },
+                "range": [
+                  1,
+                  3
+                ]
+              },
+              "argument": {
                 "type": "TableConstructorExpression",
                 "fields": [],
                 "loc": {
@@ -5775,6 +5829,24 @@
                   5
                 ]
               },
+              "argument": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -5909,6 +5981,24 @@
                 ]
               },
               "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 6
+                  }
+                },
+                "range": [
+                  4,
+                  6
+                ]
+              },
+              "argument": {
                 "type": "TableConstructorExpression",
                 "fields": [],
                 "loc": {
@@ -6096,6 +6186,24 @@
                   5
                 ]
               },
+              "argument": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -6229,6 +6337,24 @@
                   5
                 ]
               },
+              "argument": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -6329,6 +6455,24 @@
                   "isLocal": false
                 },
                 "arguments": {
+                  "type": "TableConstructorExpression",
+                  "fields": [],
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    1,
+                    3
+                  ]
+                },
+                "argument": {
                   "type": "TableConstructorExpression",
                   "fields": [],
                   "loc": {
@@ -6500,6 +6644,24 @@
                       3
                     ]
                   },
+                  "argument": {
+                    "type": "TableConstructorExpression",
+                    "fields": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      1,
+                      3
+                    ]
+                  },
                   "loc": {
                     "start": {
                       "line": 1,
@@ -6633,6 +6795,24 @@
                     "isLocal": false
                   },
                   "arguments": {
+                    "type": "TableConstructorExpression",
+                    "fields": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      1,
+                      3
+                    ]
+                  },
+                  "argument": {
                     "type": "TableConstructorExpression",
                     "fields": [],
                     "loc": {
@@ -6857,6 +7037,24 @@
                       3
                     ]
                   },
+                  "argument": {
+                    "type": "TableConstructorExpression",
+                    "fields": [],
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 3
+                      }
+                    },
+                    "range": [
+                      1,
+                      3
+                    ]
+                  },
                   "loc": {
                     "start": {
                       "line": 1,
@@ -7005,6 +7203,24 @@
                     3
                   ]
                 },
+                "argument": {
+                  "type": "TableConstructorExpression",
+                  "fields": [],
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 3
+                    }
+                  },
+                  "range": [
+                    1,
+                    3
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
@@ -7021,6 +7237,24 @@
                 ]
               },
               "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 5
+                  }
+                },
+                "range": [
+                  3,
+                  5
+                ]
+              },
+              "argument": {
                 "type": "TableConstructorExpression",
                 "fields": [],
                 "loc": {
@@ -7235,6 +7469,24 @@
                           7
                         ]
                       },
+                      "argument": {
+                        "type": "TableConstructorExpression",
+                        "fields": [],
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 5
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 7
+                          }
+                        },
+                        "range": [
+                          5,
+                          7
+                        ]
+                      },
                       "loc": {
                         "start": {
                           "line": 1,
@@ -7315,6 +7567,24 @@
                 ]
               },
               "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  14,
+                  16
+                ]
+              },
+              "argument": {
                 "type": "TableConstructorExpression",
                 "fields": [],
                 "loc": {
@@ -7548,6 +7818,24 @@
                           7
                         ]
                       },
+                      "argument": {
+                        "type": "TableConstructorExpression",
+                        "fields": [],
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 5
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 7
+                          }
+                        },
+                        "range": [
+                          5,
+                          7
+                        ]
+                      },
                       "loc": {
                         "start": {
                           "line": 1,
@@ -7628,6 +7916,24 @@
                 ]
               },
               "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16
+                  }
+                },
+                "range": [
+                  14,
+                  16
+                ]
+              },
+              "argument": {
                 "type": "TableConstructorExpression",
                 "fields": [],
                 "loc": {
@@ -7894,6 +8200,24 @@
                 "isLocal": false
               },
               "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 2,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 2
+                  }
+                },
+                "range": [
+                  2,
+                  4
+                ]
+              },
+              "argument": {
                 "type": "TableConstructorExpression",
                 "fields": [],
                 "loc": {
@@ -8218,6 +8542,24 @@
                   6
                 ]
               },
+              "argument": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 2,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 2
+                  }
+                },
+                "range": [
+                  4,
+                  6
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -8525,6 +8867,24 @@
                   6
                 ]
               },
+              "argument": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 2,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 2
+                  }
+                },
+                "range": [
+                  4,
+                  6
+                ]
+              },
               "loc": {
                 "start": {
                   "line": 1,
@@ -8755,6 +9115,24 @@
                 "isLocal": false
               },
               "arguments": {
+                "type": "TableConstructorExpression",
+                "fields": [],
+                "loc": {
+                  "start": {
+                    "line": 2,
+                    "column": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 2
+                  }
+                },
+                "range": [
+                  4,
+                  6
+                ]
+              },
+              "argument": {
                 "type": "TableConstructorExpression",
                 "fields": [],
                 "loc": {
