@@ -260,9 +260,6 @@
           visitKey('arguments');
           break;
         case 'TableCallExpression':
-          visitKey('base');
-          visitKey('arguments');
-          break;
         case 'StringCallExpression':
           visitKey('base');
           visitKey('argument');
