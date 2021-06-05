@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.version }}
-      - run: node test/runner.js --console
+      - run: node test/runner.js | .github/tap_check.bash
 
   run-tests-rhino:
     name: Test in Rhino
@@ -49,7 +49,7 @@ jobs:
           VERSION="${{ matrix.version }}"
           wget "https://github.com/mozilla/rhino/releases/download/Rhino${VERSION//./_}_Release/rhino-$VERSION.jar" -O /opt/rhino.jar
       - name: Run tests
-        run: cd test; java -jar /opt/rhino.jar -opt -1 runner.js
+        run: cd test; java -jar /opt/rhino.jar -opt -1 runner.js | ../.github/tap_check.bash
 
   run-tests-ringojs:
     name: Test in RingoJS
@@ -73,7 +73,7 @@ jobs:
           sudo ln -s "/opt/ringojs-${VERSION}/bin/ringo" /usr/local/bin/ringo
           sudo chmod +x /usr/local/bin/ringo
       - name: Run tests
-        run: ringo -o -1 test/runner.js 2>&1
+        run: ringo -o -1 test/runner.js 2>&1 | .github/tap_check.bash
 
   run-tests-quickjs:
     name: Test in QuickJS
@@ -95,7 +95,7 @@ jobs:
         # QuickJS likes to throw stack overflow errors when running the test suite at that limit,
         # so we increase it to 8 MiB. The issue is intermittent and non-deterministic;
         # it may or may not be an engine bug
-        run: cd test; qjs --stack-size 8388608 --std runner.js
+        run: cd test; qjs --stack-size 8388608 --std runner.js | ../.github/tap_check.bash
 
   run-tests-duktape:
     name: Test in Duktape
@@ -116,7 +116,7 @@ jobs:
           sudo install -Dm755 "$PACKAGE/duk" /usr/local/bin/duk
           rm -rf "$PACKAGE.tar.xz" "$PACKAGE/"
       - name: Run tests
-        run: cd test; duk runner.js
+        run: cd test; duk runner.js | ../.github/tap_check.bash
 
   check-coverage:
     name: Coverage analysis
