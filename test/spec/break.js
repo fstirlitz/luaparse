@@ -592,6 +592,89 @@
       }
     },
     {
+      "source": "while 0 do break; end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "WhileStatement",
+            "condition": {
+              "type": "NumericLiteral",
+              "value": 0,
+              "raw": "0",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 6
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                6,
+                7
+              ]
+            },
+            "body": [
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 17
+                  }
+                },
+                "range": [
+                  11,
+                  17
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 21
+              }
+            },
+            "range": [
+              0,
+              21
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 21
+          }
+        },
+        "range": [
+          0,
+          21
+        ],
+        "comments": [],
+        "globals": []
+      }
+    },
+    {
+      "source": "while 0 do break;; end",
+      "result": "[1:17] 'end' expected near ';'"
+    },
+    {
       "source": "while 0 do do break end end",
       "result": {
         "type": "Chunk",
@@ -2424,6 +2507,92 @@
     {
       "source": "if 0 then else break end",
       "result": "[1:21] no loop to break near 'end'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
+    },
+    {
+      "source": "while 0 do break;; end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "WhileStatement",
+            "condition": {
+              "type": "NumericLiteral",
+              "value": 0,
+              "raw": "0",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 6
+                },
+                "end": {
+                  "line": 1,
+                  "column": 7
+                }
+              },
+              "range": [
+                6,
+                7
+              ]
+            },
+            "body": [
+              {
+                "type": "BreakStatement",
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 11
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 17
+                  }
+                },
+                "range": [
+                  11,
+                  17
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 22
+              }
+            },
+            "range": [
+              0,
+              22
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 22
+          }
+        },
+        "range": [
+          0,
+          22
+        ],
+        "comments": [],
+        "globals": []
+      },
       "options": {
         "comments": true,
         "locations": true,

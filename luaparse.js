@@ -1856,6 +1856,7 @@
   //     break ::= 'break'
 
   function parseBreakStatement() {
+    consume(';');
     return finishNode(ast.breakStatement());
   }
 
