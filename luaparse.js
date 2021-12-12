@@ -88,6 +88,9 @@
     , luaVersion: '5.1'
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
+    // If this option is true, parenthesized expressions are represented by (non-standard) ParenthesizedExpression nodes
+    // that have a single expression property containing the expression inside parentheses.
+    , preserveParens: false
   };
 
   function encodeUTF8(codepoint, highMask) {
@@ -230,6 +233,13 @@
       return {
           type: 'LabelStatement'
         , label: label
+      };
+    }
+    
+    , parenthesizedExpression: function(expression) {
+      return {
+          type: 'ParenthesizedExpression'
+        , expression: expression
       };
     }
 
@@ -2517,8 +2527,10 @@
       // Set the parent scope.
       if (options.scope) attachScope(base, scopeHasName(name));
     } else if (consume('(')) {
+      if (options.preserveParens) pushLocation(mark);
       base = parseExpectedExpression(flowContext);
       expect(')');
+      if (options.preserveParens) base = finishNode(ast.parenthesizedExpression(base));
     } else {
       return null;
     }
