@@ -71,6 +71,7 @@ The available options are:
   appearing in parser input and raw bytes in source code, and how Lua escape
   sequences in JavaScript strings should be interpreted. See the
   [Encoding modes](#encoding-modes) section below for more information.
+- `preserveParens: false` If this option is true, parenthesized expressions are represented by (non-standard) ParenthesizedExpression nodes that have a single expression property containing the expression inside parentheses.
 
 The default options are also exposed through `luaparse.defaultOptions` where
 they can be overriden globally.
