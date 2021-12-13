@@ -2527,7 +2527,7 @@
       // Set the parent scope.
       if (options.scope) attachScope(base, scopeHasName(name));
     } else if (consume('(')) {
-      if (options.preserveParens) pushLocation(mark);
+      if (options.preserveParens) pushLocation(marker);
       base = parseExpectedExpression(flowContext);
       expect(')');
       if (options.preserveParens) base = finishNode(ast.parenthesizedExpression(base));
