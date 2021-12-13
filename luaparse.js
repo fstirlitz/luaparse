@@ -88,8 +88,7 @@
     , luaVersion: '5.1'
     // Encoding mode: how to interpret code units higher than U+007F in input
     , encodingMode: 'none'
-    // If this option is true, parenthesized expressions are represented by (non-standard) ParenthesizedExpression nodes
-    // that have a single expression property containing the expression inside parentheses.
+    // Preserve parenthesis in the resulting tree.
     , preserveParens: false
   };
 
