@@ -36,7 +36,6 @@
     "complexity-report": "~0.10.5",
     "gulp": "^4.0.0",
     "gulp-add-src": "^1.0.0",
-    "gulp-filelog": "^0.4.1",
     "gulp-header": "^2.0.9",
     "gulp-jshint": "^2.1.0",
     "gulp-rename": "^1.2.0",

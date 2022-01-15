@@ -4,7 +4,6 @@ var gulp = require('gulp')
   , uglify = require('gulp-uglify')
   , rename = require('gulp-rename')
   , jshint = require('gulp-jshint')
-  , filelog = require('gulp-filelog')
   , addsrc = require('gulp-add-src')
   , pkg = require('./package.json')
   , banner = [
@@ -100,7 +99,6 @@ gulp.task('lint', function() {
       , '{bin,scripts}/*'
       , '.jshintrc'
     ]))
-    .pipe(filelog())
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
