@@ -42,7 +42,7 @@
     "gulp-rename": "^1.2.0",
     "gulp-uglify": "^3.0.2",
     "jshint": "^2.11.1",
-    "marked": "^0.8.2",
+    "marked": "^4.0.10",
     "nyc": "^15.1.0",
     "plugin-error": "^1.0.1",
     "spec": "1.0.1",
