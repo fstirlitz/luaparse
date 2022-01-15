@@ -47,21 +47,25 @@
 <p>CommonJS</p>
 <pre><code class="language-js">var parser = require(&#39;luaparse&#39;);
 var ast = parser.parse(&#39;i = 0&#39;);
-console.log(JSON.stringify(ast));</code></pre>
+console.log(JSON.stringify(ast));
+</code></pre>
 <p>AMD</p>
 <pre><code class="language-js">require([&#39;luaparse&#39;], function(parser) {
   var ast = parser.parse(&#39;i = 0&#39;);
   console.log(JSON.stringify(ast));
-});</code></pre>
+});
+</code></pre>
 <p>Browser</p>
 <pre><code class="language-html">&lt;script src=&quot;luaparse.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
 var ast = luaparse.parse(&#39;i = 0&#39;);
 console.log(JSON.stringify(ast));
-&lt;/script&gt;</code></pre>
+&lt;/script&gt;
+</code></pre>
 <h2 id="parser-interface">Parser Interface</h2>
 <p>Basic usage:</p>
-<pre><code class="language-js">luaparse.parse(code, options);</code></pre>
+<pre><code class="language-js">luaparse.parse(code, options);
+</code></pre>
 <p>The output of the parser is an Abstract Syntax Tree (AST) formatted in JSON.</p>
 <p>The available options are:</p>
 <ul>
@@ -97,12 +101,15 @@ option.</p>
 <pre><code class="language-js">var parser = luaparse.parse({ wait: true });
 parser.write(&#39;foo = &quot;&#39;);
 parser.write(&#39;bar&#39;);
-var ast = parser.end(&#39;&quot;&#39;);</code></pre>
+var ast = parser.end(&#39;&quot;&#39;);
+</code></pre>
 <p>This would be identical to:</p>
-<pre><code class="language-js">var ast = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
+<pre><code class="language-js">var ast = luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);
+</code></pre>
 <h3 id="ast-format">AST format</h3>
 <p>If the following code is executed:</p>
-<pre><code class="language-js">luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);</code></pre>
+<pre><code class="language-js">luaparse.parse(&#39;foo = &quot;bar&quot;&#39;);
+</code></pre>
 <p>then the returned value will be:</p>
 <pre><code class="language-js">{
   &quot;type&quot;: &quot;Chunk&quot;,
@@ -125,7 +132,8 @@ var ast = parser.end(&#39;&quot;&#39;);</code></pre>
     }
   ],
   &quot;comments&quot;: []
-}</code></pre>
+}
+</code></pre>
 <h3 id="encoding-modes">Encoding modes</h3>
 <p>Unlike strings in JavaScript, Lua strings are not Unicode strings, but
 bytestrings (sequences of 8-bit values); likewise, implementations of Lua
@@ -167,7 +175,8 @@ Object.keys(luaparse.ast).forEach(function(type) {
   };
 });
 events.on(&#39;Identifier&#39;, function(node) { console.log(node); });
-luaparse.parse(&#39;i = &quot;foo&quot;&#39;);</code></pre>
+luaparse.parse(&#39;i = &quot;foo&quot;&#39;);
+</code></pre>
 <p><em>this is only an example to illustrate what is possible and this particular
 example might not suit your needs as the end location of the node has not been
 determined yet. If you desire events you should use the <code>onCreateNode</code> callback
@@ -190,7 +199,8 @@ parser.lex(); // { type: 8, value: &quot;foo&quot;, line: 1, lineStart: 0, range
 parser.lex(); // { type: 32, value: &quot;=&quot;, line: 1, lineStart: 0, range: [4, 5]}
 parser.lex(); // { type: 2, value: &quot;bar&quot;, line: 1, lineStart: 0, range: [6, 11] }
 parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }
-parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }</code></pre>
+parser.lex(); // { type: 1, value: &quot;&lt;eof&gt;&quot;, line: 1, lineStart: 0, range: [11 11] }
+</code></pre>
 <h2 id="examples">Examples</h2>
 <p>Have a look in the <a href="https://github.com/fstirlitz/luaparse/tree/master/examples">examples directory</a>
 of the repository for some code examples or check them out <a href="https://fstirlitz.github.io/luaparse/examples.html">live</a>.</p>
@@ -216,11 +226,13 @@ Options:
 
 Examples:
   luaparse --no-comments -c &quot;locale foo = \&quot;bar\&quot;&quot;
-  luaparse foo.lua bar.lua</code></pre>
+  luaparse foo.lua bar.lua
+</code></pre>
 <p>Example usage</p>
 <pre><code class="language-bash">$ luaparse &quot;i = 0&quot;
 
-{&quot;type&quot;:&quot;Chunk&quot;,&quot;body&quot;:[{&quot;type&quot;:&quot;AssignmentStatement&quot;,&quot;variables&quot;:[{&quot;type&quot;:&quot;Identifier&quot;,&quot;name&quot;:&quot;i&quot;}],&quot;init&quot;:[{&quot;type&quot;:&quot;NumericLiteral&quot;,&quot;value&quot;:0,&quot;raw&quot;:&quot;0&quot;}]}],&quot;comments&quot;:[]}</code></pre>
+{&quot;type&quot;:&quot;Chunk&quot;,&quot;body&quot;:[{&quot;type&quot;:&quot;AssignmentStatement&quot;,&quot;variables&quot;:[{&quot;type&quot;:&quot;Identifier&quot;,&quot;name&quot;:&quot;i&quot;}],&quot;init&quot;:[{&quot;type&quot;:&quot;NumericLiteral&quot;,&quot;value&quot;:0,&quot;raw&quot;:&quot;0&quot;}]}],&quot;comments&quot;:[]}
+</code></pre>
 <h2 id="support">Support</h2>
 <p>Has been tested in at least IE6+, Firefox 3+, Safari 4+, Chrome 10+, Opera 10+,
 Node 0.4.0+, RingoJS 0.8-0.9, Rhino 1.7R4-1.7R5, Nashorn 1.8.0.</p>
