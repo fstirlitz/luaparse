@@ -2,6 +2,7 @@ return return                           -- FAIL
 return 1
 return local                            -- FAIL
 return "foo"
+return ,1                               -- FAIL
 return 1,                               -- FAIL
 return 1,2,3
 return a,b,c,d

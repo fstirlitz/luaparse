@@ -238,6 +238,10 @@
       }
     },
     {
+      "source": "a(,1)",
+      "result": "[1:2] ')' expected near ','"
+    },
+    {
       "source": "a(1,)",
       "result": "[1:4] <expression> expected near ')'"
     },
