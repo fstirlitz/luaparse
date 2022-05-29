@@ -1918,10 +1918,12 @@
 
     if ('end' !== token.value) {
       var expression = parseExpression(flowContext);
-      if (null != expression) expressions.push(expression);
-      while (consume(',')) {
-        expression = parseExpectedExpression(flowContext);
+      if (null != expression) {
         expressions.push(expression);
+        while (consume(',')) {
+          expression = parseExpectedExpression(flowContext);
+          expressions.push(expression);
+        }
       }
       consume(';'); // grammar tells us ; is optional here.
     }
@@ -2549,10 +2551,12 @@
           // List of expressions
           var expressions = [];
           var expression = parseExpression(flowContext);
-          if (null != expression) expressions.push(expression);
-          while (consume(',')) {
-            expression = parseExpectedExpression(flowContext);
+          if (null != expression) {
             expressions.push(expression);
+            while (consume(',')) {
+              expression = parseExpectedExpression(flowContext);
+              expressions.push(expression);
+            }
           }
 
           expect(')');

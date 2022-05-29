@@ -150,6 +150,10 @@
       }
     },
     {
+      "source": "return ,1",
+      "result": "[1:7] unexpected symbol ',' near '1'"
+    },
+    {
       "source": "return 1,",
       "result": "[1:9] <expression> expected near '<eof>'"
     },
