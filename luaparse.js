@@ -119,6 +119,21 @@
     }
   }
 
+  var fromCodePoint = /* istanbul ignore next */ function (codepoint) {
+    if (codepoint > 0x10ffff)
+      throw new RangeError(codepoint);
+    if (codepoint > 0xffff)
+      return String.fromCharCode(
+        0xd800 | ((codepoint >> 10) & 0x3ff),
+        0xdc00 | ( codepoint        & 0x3ff)
+      );
+    return String.fromCharCode(codepoint);
+  };
+
+  /* istanbul ignore else */
+  if (String.fromCodePoint)
+    fromCodePoint = String.fromCodePoint;
+
   function toHex(num, digits) {
     var result = num.toString(16);
     while (result.length < digits)
@@ -132,6 +147,97 @@
       if (!m)
         return s;
       raise(null, errors.invalidCodeUnit, toHex(m[0].charCodeAt(0), 4).toUpperCase());
+    };
+  }
+
+  function makeUTF8Mode(fallbackFuncByte, fallbackFuncUnicode) {
+    return {
+      fixup: function (s) {
+        return s.replace(/[\ud800-\udbff][\udc00-\udfff]|[\ud800-\udfff]/g, function (m) {
+          if (m.length === 2)
+            return m;
+          return fallbackFuncUnicode(m.charCodeAt(0), null);
+        });
+      },
+      initState: function () {
+        return {
+          byteBuffer: [],
+          rawBuffer: ''
+        };
+      },
+      encodeByte: function (value, raw, encodingState) {
+        var buffer = encodingState.byteBuffer;
+        if (value === null) {
+          var result = '';
+          var off = 0;
+          var rawBuffer = encodingState.rawBuffer;
+
+          encodingState.byteBuffer = [];
+          encodingState.rawBuffer = '';
+
+          while (off < buffer.length) {
+            var l = 1;
+            var m = 0;
+            var codepoint = null;
+
+            if (buffer[off] < 0x80) {
+              codepoint = buffer[off];
+            } else if (0xc2 <= buffer[off] && buffer[off] <= 0xdf) {
+              codepoint = buffer[off] & 0x1f;
+              l = 2;
+              m = 0x80;
+            } else if (0xe1 <= buffer[off] && buffer[off] <= 0xef) {
+              codepoint = buffer[off] & 0x0f;
+              l = 3;
+              m = 0x800;
+            } else if (0xf0 <= buffer[off] && buffer[off] <= 0xf4) {
+              codepoint = buffer[off] & 0x07;
+              l = 4;
+              m = 0x10000;
+            }
+
+            if (off + l > buffer.length)
+              codepoint = null;
+            else {
+              for (var j = 1; j < l; ++j) {
+                if ((buffer[off + j] & 0xc0) !== 0x80) {
+                  codepoint = null;
+                  break;
+                }
+                codepoint <<= 6;
+                codepoint |= buffer[off + j] & 0x3f;
+              }
+            }
+
+            if (codepoint > 0x10ffff)
+              codepoint = null;
+            if (codepoint < m)
+              codepoint = null;
+
+            if (codepoint === null) {
+              result += fallbackFuncByte(buffer[off], rawBuffer);
+              off++;
+            } else {
+              result += fromCodePoint(codepoint);
+              off += l;
+            }
+          }
+
+          return result;
+        }
+
+        buffer.push(value);
+        encodingState.rawBuffer += raw;
+        return '';
+      },
+      encodeUTF8: function (codepoint, raw, encodingState) {
+        /* istanbul ignore if */
+        if (codepoint > 0x10ffff)
+          return fallbackFuncUnicode(codepoint, raw);
+        if (0xd800 <= codepoint && codepoint <= 0xdfff)
+          return fallbackFuncUnicode(codepoint, raw);
+        return fromCodePoint(codepoint);
+      }
     };
   }
 
@@ -165,6 +271,13 @@
         return encodeUTF8(codepoint, 0xf700);
       }
     },
+
+    // `utf-8-lossy` encoding mode: replace non-UTF-8 escapes with U+FFFD
+    'utf-8-lossy': makeUTF8Mode(function (value, raw) {
+      return '\ufffd';
+    }, function (codepoint, raw) {
+      return '\ufffd';
+    }),
 
     // `none` encoding mode: disregard intrepretation of string literals, leave identifiers as-is
     'none': {
@@ -218,6 +331,8 @@
     , gotoJumpInLocalScope: '<goto %1> jumps into the scope of local \'%2\''
     , cannotUseVararg: 'cannot use \'...\' outside a vararg function near \'%1\''
     , invalidCodeUnit: 'code unit U+%1 is not allowed in the current encoding mode'
+    , invalidByteEscape: 'byte escape sequence \'%1\' is not allowed in the current encoding mode'
+    , invalidUTF8Escape: 'UTF-8 escape \'%1\' is not allowed in the current encoding mode'
   };
 
   // ### Abstract Syntax Tree
@@ -892,6 +1007,7 @@
       , beginLineStart = lineStart
       , stringStart = index
       , string = encodingMode.discardStrings ? null : ''
+      , encodingState = encodingMode.initState ? encodingMode.initState() : null
       , charCode;
 
     for (;;) {
@@ -900,22 +1016,21 @@
       // EOF or `\n` terminates a string literal. If we haven't found the
       // ending delimiter by now, raise an exception.
       if (index > length || isLineTerminator(charCode)) {
-        string += input.slice(stringStart, index - 1);
         raise(null, errors.unfinishedString, input.slice(tokenStart, index - 1));
       }
       if (92 === charCode) { // backslash
-        if (!encodingMode.discardStrings) {
+        if (string !== null) {
           var beforeEscape = input.slice(stringStart, index - 1);
           string += encodingMode.fixup(beforeEscape);
         }
-        var escapeValue = readEscapeSequence();
-        if (!encodingMode.discardStrings)
+        var escapeValue = readEscapeSequence(encodingState);
+        if (string !== null)
           string += escapeValue;
         stringStart = index;
       }
     }
-    if (!encodingMode.discardStrings) {
-      string += encodingMode.encodeByte(null);
+    if (string !== null) {
+      string += encodingMode.encodeByte(null, null, encodingState);
       string += encodingMode.fixup(input.slice(stringStart, index - 1));
     }
 
@@ -1132,7 +1247,7 @@
     };
   }
 
-  function readUnicodeEscapeSequence() {
+  function readUnicodeEscapeSequence(encodingState) {
     var sequenceStart = index++;
 
     if (input.charAt(index++) !== '{')
@@ -1161,14 +1276,14 @@
     var frag = '\\' + input.slice(sequenceStart, index);
 
     if (codepoint > 0x10ffff) {
-      raise(null, errors.tooLargeCodepoint, frag);
+      raise(null, errors.tooLargeCodepoint, frag, encodingState);
     }
 
-    return encodingMode.encodeUTF8(codepoint, frag);
+    return encodingMode.encodeUTF8(codepoint, frag, encodingState);
   }
 
   // Translate escape sequences to the actual characters.
-  function readEscapeSequence() {
+  function readEscapeSequence(encodingState) {
     var sequenceStart = index;
     switch (input.charAt(index)) {
       // Lua allow the following escape sequences.
@@ -1196,9 +1311,9 @@
         var frag = input.slice(sequenceStart, index);
         var ddd = parseInt(frag, 10);
         if (ddd > 255) {
-          raise(null, errors.decimalEscapeTooLarge, '\\' + ddd);
+          raise(null, errors.decimalEscapeTooLarge, '\\' + ddd, encodingState);
         }
-        return encodingMode.encodeByte(ddd, '\\' + frag);
+        return encodingMode.encodeByte(ddd, '\\' + frag, encodingState);
 
       case 'z':
         if (features.skipWhitespaceEscape) {
@@ -1214,7 +1329,11 @@
           if (isHexDigit(input.charCodeAt(index + 1)) &&
               isHexDigit(input.charCodeAt(index + 2))) {
             index += 3;
-            return encodingMode.encodeByte(parseInt(input.slice(sequenceStart + 1, index), 16), '\\' + input.slice(sequenceStart, index));
+            return encodingMode.encodeByte(
+              parseInt(input.slice(sequenceStart + 1, index), 16),
+              '\\' + input.slice(sequenceStart, index),
+              encodingState
+            );
           }
           raise(null, errors.hexadecimalDigitExpected, '\\' + input.slice(sequenceStart, index + 2));
         }
@@ -1222,7 +1341,7 @@
 
       case 'u':
         if (features.unicodeEscapes)
-          return readUnicodeEscapeSequence();
+          return readUnicodeEscapeSequence(encodingState);
         break;
 
       case '\\': case '"': case "'":
@@ -1288,7 +1407,7 @@
   // Read a multiline string by calculating the depth of `=` characters and
   // then appending until an equal depth is found.
 
-  function readLongString(isComment) {
+  function readLongString(isComment, encodingState) {
     var level = 0
       , content = ''
       , terminator = false

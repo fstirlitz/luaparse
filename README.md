@@ -141,15 +141,22 @@ Possible values are as follows:
 
 - `'none'`: Source code characters all pass through as-is and string
   literals are not interpreted at all; the string literal nodes contain
-  the value `null`. This is the default mode.
+  the value `null`. This is the default mode. Use it when you are not
+  interested in the concrete values of Lua string literals.
 - `'x-user-defined'`: Source code has been decoded with the WHATWG
   `x-user-defined` encoding; escapes of bytes in the range \[0x80, 0xff]
-  are mapped to the Unicode range \[U+F780, U+F7FF].
+  are mapped to the Unicode range \[U+F780, U+F7FF]. Use this mode to parse
+  files decoded with the WHATWG [`TextDecoder`] API.
 - `'pseudo-latin1'`: Source code has been decoded with the IANA
   `iso-8859-1` encoding; escapes of bytes in the range \[0x80, 0xff]
   are mapped to Unicode range \[U+0080, U+00FF]. Note that this is
   **not** the same as how WHATWG standards define the `iso-8859-1`
-  encoding, which is to say, as a synonym of `windows-1252`.
+  encoding, which is to say, as a synonym of `windows-1252`. Use this mode
+  to interoperate with an API like [`readAsBinaryString`], [`atob`] or
+  [`Buffer`].
+- `'utf-8-lossy'`: Source code has been decoded as UTF-8. Use this mode
+  when you expect most string literals to be UTF-8, but do not require
+  exact faithful representation in all circumstances.
 
 ### Custom AST
 
@@ -306,3 +313,7 @@ MIT
 [lua]: https://www.lua.org
 [esprima]: http://esprima.org
 [wtf8]: https://simonsapin.github.io/wtf-8/
+[`TextDecoder`]: https://encoding.spec.whatwg.org/#interface-textdecoder
+[`readAsBinaryString`]: https://w3c.github.io/FileAPI/#dfn-readAsBinaryString
+[`atob`]: https://html.spec.whatwg.org/multipage/webappapis.html#atob
+[`Buffer`]: https://nodejs.org/api/buffer.html
