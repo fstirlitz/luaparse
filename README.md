@@ -71,6 +71,7 @@ The available options are:
   appearing in parser input and raw bytes in source code, and how Lua escape
   sequences in JavaScript strings should be interpreted. See the
   [Encoding modes](#encoding-modes) section below for more information.
+- `preserveParens: false` Preserve parenthesis in the resulting tree.
 
 The default options are also exposed through `luaparse.defaultOptions` where
 they can be overriden globally.
