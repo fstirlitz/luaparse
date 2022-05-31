@@ -256,23 +256,41 @@
             ],
             "init": [
               {
-                "type": "Identifier",
-                "name": "a",
+                "type": "UnaryExpression",
+                "operator": "",
+                "argument": {
+                  "type": "Identifier",
+                  "name": "a",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 6
+                    }
+                  },
+                  "range": [
+                    5,
+                    6
+                  ],
+                  "isLocal": false
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 5
+                    "column": 4
                   },
                   "end": {
                     "line": 1,
-                    "column": 6
+                    "column": 7
                   }
                 },
                 "range": [
-                  5,
-                  6
-                ],
-                "isLocal": false
+                  4,
+                  7
+                ]
               }
             ],
             "loc": {
@@ -359,22 +377,40 @@
             ],
             "init": [
               {
-                "type": "NilLiteral",
-                "value": null,
-                "raw": "nil",
+                "type": "UnaryExpression",
+                "operator": "",
+                "argument": {
+                  "type": "NilLiteral",
+                  "value": null,
+                  "raw": "nil",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 8
+                    }
+                  },
+                  "range": [
+                    5,
+                    8
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 5
+                    "column": 4
                   },
                   "end": {
                     "line": 1,
-                    "column": 8
+                    "column": 9
                   }
                 },
                 "range": [
-                  5,
-                  8
+                  4,
+                  9
                 ]
               }
             ],
@@ -462,22 +498,40 @@
             ],
             "init": [
               {
-                "type": "BooleanLiteral",
-                "value": true,
-                "raw": "true",
+                "type": "UnaryExpression",
+                "operator": "",
+                "argument": {
+                  "type": "BooleanLiteral",
+                  "value": true,
+                  "raw": "true",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 9
+                    }
+                  },
+                  "range": [
+                    5,
+                    9
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 5
+                    "column": 4
                   },
                   "end": {
                     "line": 1,
-                    "column": 9
+                    "column": 10
                   }
                 },
                 "range": [
-                  5,
-                  9
+                  4,
+                  10
                 ]
               }
             ],
@@ -565,22 +619,40 @@
             ],
             "init": [
               {
-                "type": "NumericLiteral",
-                "value": 1,
-                "raw": "1",
+                "type": "UnaryExpression",
+                "operator": "",
+                "argument": {
+                  "type": "NumericLiteral",
+                  "value": 1,
+                  "raw": "1",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 6
+                    }
+                  },
+                  "range": [
+                    5,
+                    6
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 5
+                    "column": 4
                   },
                   "end": {
                     "line": 1,
-                    "column": 6
+                    "column": 7
                   }
                 },
                 "range": [
-                  5,
-                  6
+                  4,
+                  7
                 ]
               }
             ],
@@ -668,22 +740,40 @@
             ],
             "init": [
               {
-                "type": "StringLiteral",
-                "value": null,
-                "raw": "\"foo\"",
+                "type": "UnaryExpression",
+                "operator": "",
+                "argument": {
+                  "type": "StringLiteral",
+                  "value": null,
+                  "raw": "\"foo\"",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 10
+                    }
+                  },
+                  "range": [
+                    5,
+                    10
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 5
+                    "column": 4
                   },
                   "end": {
                     "line": 1,
-                    "column": 10
+                    "column": 11
                   }
                 },
                 "range": [
-                  5,
-                  10
+                  4,
+                  11
                 ]
               }
             ],
@@ -771,22 +861,40 @@
             ],
             "init": [
               {
-                "type": "StringLiteral",
-                "value": null,
-                "raw": "[[foo]]",
+                "type": "UnaryExpression",
+                "operator": "",
+                "argument": {
+                  "type": "StringLiteral",
+                  "value": null,
+                  "raw": "[[foo]]",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 12
+                    }
+                  },
+                  "range": [
+                    5,
+                    12
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 5
+                    "column": 4
                   },
                   "end": {
                     "line": 1,
-                    "column": 12
+                    "column": 13
                   }
                 },
                 "range": [
-                  5,
-                  12
+                  4,
+                  13
                 ]
               }
             ],
@@ -874,21 +982,39 @@
             ],
             "init": [
               {
-                "type": "TableConstructorExpression",
-                "fields": [],
+                "type": "UnaryExpression",
+                "operator": "",
+                "argument": {
+                  "type": "TableConstructorExpression",
+                  "fields": [],
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 7
+                    }
+                  },
+                  "range": [
+                    5,
+                    7
+                  ]
+                },
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 5
+                    "column": 4
                   },
                   "end": {
                     "line": 1,
-                    "column": 7
+                    "column": 8
                   }
                 },
                 "range": [
-                  5,
-                  7
+                  4,
+                  8
                 ]
               }
             ],

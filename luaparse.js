@@ -2508,7 +2508,7 @@
   }
 
   function parsePrefixExpression(flowContext) {
-    var base, name, marker;
+    var base, name, marker, inParens;
 
     if (trackLocations) marker = createLocationMarker();
 
@@ -2521,6 +2521,7 @@
     } else if (consume('(')) {
       base = parseExpectedExpression(flowContext);
       expect(')');
+      inParens = true;
     } else {
       return null;
     }
@@ -2531,6 +2532,12 @@
       if (newBase === null)
         break;
       base = newBase;
+      inParens = false;
+    }
+
+    if (inParens) {
+      pushLocation(marker);
+      return finishNode(ast.unaryExpression('', base));
     }
 
     return base;
