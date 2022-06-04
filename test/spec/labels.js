@@ -1428,6 +1428,139 @@
       }
     },
     {
+      "source": "::x:: do ::x:: end",
+      "result": {
+        "type": "Chunk",
+        "body": [
+          {
+            "type": "LabelStatement",
+            "label": {
+              "type": "Identifier",
+              "name": "x",
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 2
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3
+                }
+              },
+              "range": [
+                2,
+                3
+              ],
+              "isLocal": true
+            },
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 5
+              }
+            },
+            "range": [
+              0,
+              5
+            ]
+          },
+          {
+            "type": "DoStatement",
+            "body": [
+              {
+                "type": "LabelStatement",
+                "label": {
+                  "type": "Identifier",
+                  "name": "x",
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 11
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 12
+                    }
+                  },
+                  "range": [
+                    11,
+                    12
+                  ],
+                  "isLocal": true
+                },
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 14
+                  }
+                },
+                "range": [
+                  9,
+                  14
+                ]
+              }
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 6
+              },
+              "end": {
+                "line": 1,
+                "column": 18
+              }
+            },
+            "range": [
+              6,
+              18
+            ]
+          }
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 18
+          }
+        },
+        "range": [
+          0,
+          18
+        ],
+        "comments": [],
+        "globals": []
+      },
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.2"
+      }
+    },
+    {
+      "source": "::x:: do ::x:: end",
+      "result": "[1:11] label 'x' already defined on line 1",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.4"
+      }
+    },
+    {
       "source": "::foo::",
       "result": {
         "type": "Chunk",

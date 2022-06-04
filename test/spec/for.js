@@ -3878,6 +3878,17 @@
         "scope": true,
         "luaVersion": "5.2"
       }
+    },
+    {
+      "source": "for a <const> in b do end",
+      "result": "[1:6] 'in' expected near '<'",
+      "options": {
+        "comments": true,
+        "locations": true,
+        "ranges": true,
+        "scope": true,
+        "luaVersion": "5.4"
+      }
     }
   ];
 }));

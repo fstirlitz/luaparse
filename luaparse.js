@@ -106,16 +106,32 @@
         highMask | 0x80 | ((codepoint >>  6) & 0x3f),
         highMask | 0x80 | ( codepoint        & 0x3f)
       );
-    } else /* istanbul ignore else */ if (codepoint < 0x110000) {
+    } else if (codepoint < 0x200000) {
       return String.fromCharCode(
         highMask | 0xf0 |  (codepoint >> 18)        ,
         highMask | 0x80 | ((codepoint >> 12) & 0x3f),
         highMask | 0x80 | ((codepoint >>  6) & 0x3f),
         highMask | 0x80 | ( codepoint        & 0x3f)
       );
+    } else if (codepoint < 0x4000000) {
+      return String.fromCharCode(
+        highMask | 0xf8 |  (codepoint >> 24)        ,
+        highMask | 0x80 | ((codepoint >> 18) & 0x3f),
+        highMask | 0x80 | ((codepoint >> 12) & 0x3f),
+        highMask | 0x80 | ((codepoint >>  6) & 0x3f),
+        highMask | 0x80 | ( codepoint        & 0x3f)
+      );
+    } else /* istanbul ignore else */ if (codepoint <= 0x7fffffff) {
+      return String.fromCharCode(
+        highMask | 0xfc |  (codepoint >> 30)        ,
+        highMask | 0x80 | ((codepoint >> 24) & 0x3f),
+        highMask | 0x80 | ((codepoint >> 18) & 0x3f),
+        highMask | 0x80 | ((codepoint >> 12) & 0x3f),
+        highMask | 0x80 | ((codepoint >>  6) & 0x3f),
+        highMask | 0x80 | ( codepoint        & 0x3f)
+      );
     } else {
-      // TODO: Lua 5.4 allows up to six-byte sequences, as in UTF-8:1993
-      return null;
+      throw new Error('Should not happen');
     }
   }
 
@@ -218,6 +234,7 @@
     , gotoJumpInLocalScope: '<goto %1> jumps into the scope of local \'%2\''
     , cannotUseVararg: 'cannot use \'...\' outside a vararg function near \'%1\''
     , invalidCodeUnit: 'code unit U+%1 is not allowed in the current encoding mode'
+    , unknownAttribute: 'unknown attribute \'%1\''
   };
 
   // ### Abstract Syntax Tree
@@ -363,10 +380,25 @@
       };
     }
 
+    , attribute: function(name) {
+      return {
+          type: 'Attribute'
+        , name: name
+      };
+    }
+
     , identifier: function(name) {
       return {
           type: 'Identifier'
         , name: name
+      };
+    }
+
+    , identifierWithAttribute: function(name, attribute) {
+      return {
+          type: 'IdentifierWithAttribute'
+        , name: name
+        , attribute: attribute
       };
     }
 
@@ -1145,7 +1177,7 @@
 
     while (isHexDigit(input.charCodeAt(index))) {
       ++index;
-      if (index - escStart > 6)
+      if (index - escStart > (features.relaxedUTF8 ? 8 : 6))
         raise(null, errors.tooLargeCodepoint, '\\' + input.slice(sequenceStart, index));
     }
 
@@ -1160,7 +1192,7 @@
     var codepoint = parseInt(input.slice(escStart, index - 1) || '0', 16);
     var frag = '\\' + input.slice(sequenceStart, index);
 
-    if (codepoint > 0x10ffff) {
+    if (codepoint > (features.relaxedUTF8 ? 0x7fffffff : 0x10ffff)) {
       raise(null, errors.tooLargeCodepoint, frag);
     }
 
@@ -1597,6 +1629,17 @@
     return false;
   };
 
+  FullFlowContext.prototype.findLabel = function (name) {
+    var i = this.scopes.length;
+    while (i --> 0) {
+      if (Object.prototype.hasOwnProperty.call(this.scopes[i].labels, name))
+        return this.scopes[i].labels[name];
+      if (!features.noLabelShadowing)
+        return null;
+    }
+    return null;
+  };
+
   FullFlowContext.prototype.pushScope = function (isLoop) {
     var scope = {
       labels: {},
@@ -1638,9 +1681,10 @@
 
   FullFlowContext.prototype.addLabel = function (name, token) {
     var scope = this.currentScope();
+    var definedLabel = this.findLabel(name);
 
-    if (Object.prototype.hasOwnProperty.call(scope.labels, name)) {
-      raise(token, errors.labelAlreadyDefined, name, scope.labels[name].line);
+    if (definedLabel !== null) {
+      raise(token, errors.labelAlreadyDefined, name, definedLabel.line);
     } else {
       var newGotos = [];
 
@@ -2066,6 +2110,8 @@
 
   function parseLocalStatement(flowContext) {
     var name
+      , attribute
+      , marker
       , declToken = previousToken;
 
     if (Identifier === token.type) {
@@ -2073,9 +2119,22 @@
         , init = [];
 
       do {
+        if (trackLocations) marker = createLocationMarker();
+
         name = parseIdentifier();
 
-        variables.push(name);
+        attribute = null;
+        if (features.attributes) {
+          attribute = parseAttribute();
+        }
+
+        if (attribute !== null) {
+          if (trackLocations) pushLocation(marker);
+          variables.push(finishNode(ast.identifierWithAttribute(name, attribute)));
+        } else {
+          variables.push(name);
+        }
+
         flowContext.addLocal(name.name, declToken);
       } while (consume(','));
 
@@ -2212,6 +2271,21 @@
     if (Identifier !== token.type) raiseUnexpectedToken('<name>', token);
     next();
     return finishNode(ast.identifier(identifier));
+  }
+
+  function parseAttribute() {
+    markLocation();
+    if (consume('<')) {
+      if (Identifier !== token.type) raiseUnexpectedToken('<name>', token);
+      var identifier = token.value;
+      if (!features.attributes[identifier])
+        raise(token, errors.unknownAttribute, identifier);
+      next();
+      expect('>');
+      return finishNode(ast.attribute(identifier));
+    }
+    if (trackLocations) locations.pop();
+    return null;
   }
 
   // Parse the functions parameters and body block. The name should already
@@ -2652,6 +2726,20 @@
       bitwiseOperators: true,
       integerDivision: true,
       relaxedBreak: true
+    },
+    '5.4': {
+      labels: true,
+      emptyStatement: true,
+      hexEscapes: true,
+      skipWhitespaceEscape: true,
+      strictEscapes: true,
+      unicodeEscapes: true,
+      bitwiseOperators: true,
+      integerDivision: true,
+      relaxedBreak: true,
+      noLabelShadowing: true,
+      attributes: { 'const': true, 'close': true },
+      relaxedUTF8: true
     },
     'LuaJIT': {
       // XXX: LuaJIT language features may depend on compilation options; may need to

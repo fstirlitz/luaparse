@@ -266,7 +266,12 @@
           visitKey('base');
           visitKey('argument');
           break;
+        case 'IdentifierWithAttribute':
+          visitKey('name');
+          visitKey('attribute');
+          break;
         case 'Identifier':
+        case 'Attribute':
         case 'NumericLiteral':
         case 'BooleanLiteral':
         case 'StringLiteral':
@@ -514,9 +519,19 @@
       , [ '"\\u{1f4a9}"'
         , '"\\u{000001f4a9}"'
         , '"\\xf0\\x9f\\x92\\xa9"'
-        , '"\ud83d\udca9"'
-        , "'\ud83d\udca9'"
-        , '[[\ud83d\udca9]]'
+        , '[[\xf0\x9f\x92\xa9]]'
+        ]
+      , [ '"\\u{db80}"'
+        , '"\\xed\\xae\\x80"'
+        , '[[\xed\xae\x80]]'
+        ]
+      , [ '"\\u{1ffffff}"'
+        , '"\\xf9\\xbf\\xbf\\xbf\\xbf"'
+        , '[[\xf9\xbf\xbf\xbf\xbf]]'
+        ]
+      , [ '"\\u{7fffffff}"'
+        , '"\\xfd\\xbf\\xbf\\xbf\\xbf\\xbf"'
+        , '[[\xfd\xbf\xbf\xbf\xbf\xbf]]'
         ]
       , [ '"\\\\a"'
         , '[==[\\a]==]'
@@ -545,11 +560,13 @@
 
       var list = testcases[i];
       var left = luaparse.parse('return ' + list[0],
-                                { "luaVersion": "5.3" }).body[0].arguments[0];
+                                { "luaVersion": "5.4",
+                                  "encodingMode": "pseudo-latin1" }).body[0].arguments[0];
 
       for (var j = 1; j < list.length; ++j) {
         var right = luaparse.parse('return ' + list[j],
-                                   { "luaVersion": "5.3" }).body[0].arguments[0];
+                                   { "luaVersion": "5.4",
+                                     "encodingMode": "pseudo-latin1" }).body[0].arguments[0];
 
         this.equal(left.value, right.value, symbolicControlChars(left.raw) + ' == ' + symbolicControlChars(right.raw));
         left = right;

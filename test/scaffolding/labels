@@ -23,6 +23,9 @@ do goto x local a ::x:: ::y:: ::z:: end
 do do ::x:: end do goto x end end       -- FAIL
 do do goto x end do ::x:: end end       -- FAIL
 do do goto x end do end ::x:: end
+::x:: do ::x:: end
+// { "luaVersion": "5.4" }
+::x:: do ::x:: end                      -- FAIL
 // { "luaVersion": "LuaJIT" }
 ::foo::
 goto "foo"
